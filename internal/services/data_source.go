@@ -29,16 +29,16 @@ func NewDataSourceClient(client graphql.Client) DataSourceClient {
 func (c *DataSourceClient) CreateDataSource(ctx context.Context, ds types.DataSourceInput) (*types.DataSource, error) {
 	result, err := schema.CreateDataSource(ctx, c.client, ds)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.CreateDataSource.(type) {
 	case *schema.CreateDataSourceCreateDataSource:
 		return &response.DataSource, nil
 	case *schema.CreateDataSourceCreateDataSourceNotFoundError:
-		return nil, NewErrNotFound("", "datasource", response.Message)
+		return nil, types.NewErrNotFound("", "datasource", response.Message)
 	case *schema.CreateDataSourceCreateDataSourcePermissionDeniedError:
-		return nil, NewErrPermissionDenied("createDataSource", response.Message)
+		return nil, types.NewErrPermissionDenied("createDataSource", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.CreateDataSource)
 	}
@@ -50,16 +50,16 @@ func (c *DataSourceClient) CreateDataSource(ctx context.Context, ds types.DataSo
 func (c *DataSourceClient) UpdateDataSource(ctx context.Context, id string, ds types.DataSourceInput) (*types.DataSource, error) {
 	result, err := schema.UpdateDataSource(ctx, c.client, id, ds)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.UpdateDataSource.(type) {
 	case *schema.UpdateDataSourceUpdateDataSource:
 		return &response.DataSource, nil
 	case *schema.UpdateDataSourceUpdateDataSourceNotFoundError:
-		return nil, NewErrNotFound(id, "datasource", response.Message)
+		return nil, types.NewErrNotFound(id, "datasource", response.Message)
 	case *schema.UpdateDataSourceUpdateDataSourcePermissionDeniedError:
-		return nil, NewErrPermissionDenied("updateDataSource", response.Message)
+		return nil, types.NewErrPermissionDenied("updateDataSource", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.UpdateDataSource)
 	}
@@ -71,14 +71,14 @@ func (c *DataSourceClient) UpdateDataSource(ctx context.Context, id string, ds t
 func (c *DataSourceClient) DeleteDataSource(ctx context.Context, id string) error {
 	result, err := schema.DeleteDataSource(ctx, c.client, id)
 	if err != nil {
-		return NewErrClient(err)
+		return types.NewErrClient(err)
 	}
 
 	switch response := result.DeleteDataSource.(type) {
 	case *schema.DeleteDataSourceDeleteDataSource:
 		return nil
 	case *schema.DeleteDataSourceDeleteDataSourcePermissionDeniedError:
-		return NewErrPermissionDenied("deleteDataSource", response.Message)
+		return types.NewErrPermissionDenied("deleteDataSource", response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteDataSource)
 	}
@@ -90,16 +90,16 @@ func (c *DataSourceClient) DeleteDataSource(ctx context.Context, id string) erro
 func (c *DataSourceClient) AddIdentityStoreToDataSource(ctx context.Context, dsId string, isId string) error {
 	result, err := schema.AddIdentityStoreToDataSource(ctx, c.client, dsId, isId)
 	if err != nil {
-		return NewErrClient(err)
+		return types.NewErrClient(err)
 	}
 
 	switch response := result.AddIdentityStoreToDataSource.(type) {
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSource:
 		return nil
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError:
-		return NewErrNotFound(dsId, "datasource", response.Message)
+		return types.NewErrNotFound(dsId, "datasource", response.Message)
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSourcePermissionDeniedError:
-		return NewErrPermissionDenied("addIdentityStoreToDataSource", response.Message)
+		return types.NewErrPermissionDenied("addIdentityStoreToDataSource", response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.AddIdentityStoreToDataSource)
 	}
@@ -108,16 +108,16 @@ func (c *DataSourceClient) AddIdentityStoreToDataSource(ctx context.Context, dsI
 func (c *DataSourceClient) RemoveIdentityStoreFromDataSource(ctx context.Context, dsId string, isId string) error {
 	result, err := schema.RemoveIdentityStoreFromDataSource(ctx, c.client, dsId, isId)
 	if err != nil {
-		return NewErrClient(err)
+		return types.NewErrClient(err)
 	}
 
 	switch response := result.RemoveIdentityStoreFromDataSource.(type) {
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource:
 		return nil
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError:
-		return NewErrNotFound(dsId, "datasource", response.Message)
+		return types.NewErrNotFound(dsId, "datasource", response.Message)
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourcePermissionDeniedError:
-		return NewErrPermissionDenied("removeIdentityStoreFromDataSource", response.Message)
+		return types.NewErrPermissionDenied("removeIdentityStoreFromDataSource", response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.RemoveIdentityStoreFromDataSource)
 	}
@@ -127,14 +127,14 @@ func (c *DataSourceClient) RemoveIdentityStoreFromDataSource(ctx context.Context
 func (c *DataSourceClient) GetDataSource(ctx context.Context, id string) (*types.DataSource, error) {
 	result, err := schema.GetDataSource(ctx, c.client, id)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch ds := result.DataSource.(type) {
 	case *schema.GetDataSourceDataSource:
 		return &ds.DataSource, nil
 	case *schema.GetDataSourceDataSourcePermissionDeniedError:
-		return nil, NewErrPermissionDenied("dataSource", ds.Message)
+		return nil, types.NewErrPermissionDenied("dataSource", ds.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.DataSource)
 	}
@@ -173,14 +173,14 @@ func (c *DataSourceClient) ListDataSources(ctx context.Context, ops ...func(*Dat
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.DataSourcePageEdgesEdge, error) {
 		output, err := schema.ListDataSources(ctx, c.client, cursor, ptr.Int(25), options.filter, nil, options.order)
 		if err != nil {
-			return nil, nil, NewErrClient(err)
+			return nil, nil, types.NewErrClient(err)
 		}
 
 		switch page := output.DataSources.(type) {
 		case *schema.ListDataSourcesDataSourcesPagedResult:
 			return &page.PageInfo.PageInfo, page.Edges, nil
 		case *schema.ListDataSourcesDataSourcesPermissionDeniedError:
-			return nil, nil, NewErrPermissionDenied("listDataSources", page.Message)
+			return nil, nil, types.NewErrPermissionDenied("listDataSources", page.Message)
 		}
 
 		return nil, nil, errors.New("unreachable")
@@ -205,7 +205,7 @@ func (c *DataSourceClient) ListDataSources(ctx context.Context, ops ...func(*Dat
 func (c *DataSourceClient) ListIdentityStores(ctx context.Context, dsId string) ([]types.IdentityStore, error) {
 	result, err := schema.DataSourceIdentityStores(ctx, c.client, dsId)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch datasource := result.DataSource.(type) {
@@ -217,8 +217,8 @@ func (c *DataSourceClient) ListIdentityStores(ctx context.Context, dsId string) 
 
 		return iss, nil
 	case *schema.DataSourceIdentityStoresDataSourcePermissionDeniedError:
-		return nil, NewErrPermissionDenied("listIdentityStores", datasource.Message)
+		return nil, types.NewErrPermissionDenied("listIdentityStores", datasource.Message)
 	default:
-		return nil, fmt.Errorf("unexpected type '%T': %w", datasource, ErrUnknownType)
+		return nil, fmt.Errorf("unexpected type '%T': %w", datasource, types.ErrUnknownType)
 	}
 }

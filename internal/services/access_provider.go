@@ -29,14 +29,14 @@ func NewAccessProviderClient(client graphql.Client) AccessProviderClient {
 func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap types.AccessProviderInput) (*types.AccessProvider, error) {
 	result, err := schema.CreateAccessProvider(ctx, a.client, ap)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.CreateAccessProvider.(type) {
 	case *schema.CreateAccessProviderCreateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.CreateAccessProviderCreateAccessProviderPermissionDeniedError:
-		return nil, NewErrPermissionDenied("createAccessProvider", response.Message)
+		return nil, types.NewErrPermissionDenied("createAccessProvider", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.CreateAccessProvider)
 	}
@@ -48,14 +48,14 @@ func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap type
 func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id string, ap schema.AccessProviderInput) (*types.AccessProvider, error) {
 	result, err := schema.UpdateAccessProvider(ctx, a.client, id, ap)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.UpdateAccessProvider.(type) {
 	case *schema.UpdateAccessProviderUpdateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.UpdateAccessProviderUpdateAccessProviderPermissionDeniedError:
-		return nil, NewErrPermissionDenied("updateAccessProvider", response.Message)
+		return nil, types.NewErrPermissionDenied("updateAccessProvider", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.UpdateAccessProvider)
 	}
@@ -67,16 +67,16 @@ func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id stri
 func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id string) error {
 	result, err := schema.DeleteAccessProvider(ctx, a.client, id)
 	if err != nil {
-		return NewErrClient(err)
+		return types.NewErrClient(err)
 	}
 
 	switch response := result.DeleteAccessProvider.(type) {
 	case *schema.DeleteAccessProviderDeleteAccessProvider:
 		return nil
 	case *schema.DeleteAccessProviderDeleteAccessProviderPermissionDeniedError:
-		return NewErrPermissionDenied("deleteAccessProvider", response.Message)
+		return types.NewErrPermissionDenied("deleteAccessProvider", response.Message)
 	case *schema.DeleteAccessProviderDeleteAccessProviderNotFoundError:
-		return NewErrNotFound(id, "accessProvider", response.Message)
+		return types.NewErrNotFound(id, "accessProvider", response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteAccessProvider)
 	}
@@ -86,16 +86,16 @@ func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id stri
 func (a *AccessProviderClient) GetAccessProvider(ctx context.Context, id string) (*types.AccessProvider, error) {
 	result, err := schema.GetAccessProvider(ctx, a.client, id)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch ap := result.AccessProvider.(type) {
 	case *schema.GetAccessProviderAccessProvider:
 		return &ap.AccessProvider, nil
 	case *schema.GetAccessProviderAccessProviderNotFoundError:
-		return nil, NewErrNotFound(id, "accessProvider", ap.Message)
+		return nil, types.NewErrNotFound(id, "accessProvider", ap.Message)
 	case *schema.GetAccessProviderAccessProviderPermissionDeniedError:
-		return nil, NewErrPermissionDenied("getAccessProvider", ap.Message)
+		return nil, types.NewErrPermissionDenied("getAccessProvider", ap.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.AccessProvider)
 	}
@@ -134,14 +134,14 @@ func (a *AccessProviderClient) ListAccessProviders(ctx context.Context, ops ...f
 	loadPageFn := func(ctx context.Context, cursor *string) (*schema.PageInfo, []schema.AccessProviderPageEdgesEdge, error) {
 		output, err := schema.ListAccessProviders(ctx, a.client, cursor, ptr.Int(25), options.filter, options.order)
 		if err != nil {
-			return nil, nil, NewErrClient(err)
+			return nil, nil, types.NewErrClient(err)
 		}
 
 		switch page := output.AccessProviders.(type) {
 		case *schema.ListAccessProvidersAccessProvidersPagedResult:
 			return &page.PageInfo.PageInfo, page.Edges, nil
 		case *schema.ListAccessProvidersAccessProvidersPermissionDeniedError:
-			return nil, nil, NewErrPermissionDenied("listAccessProviders", page.Message)
+			return nil, nil, types.NewErrPermissionDenied("listAccessProviders", page.Message)
 		default:
 			return nil, nil, errors.New("unreachable")
 		}
@@ -186,7 +186,7 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhoListEdgesEdge, error) {
 		output, err := schema.GetAccessProviderWhoList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
 		if err != nil {
-			return nil, nil, NewErrClient(err)
+			return nil, nil, types.NewErrClient(err)
 		}
 
 		switch ap := output.AccessProvider.(type) {
@@ -195,14 +195,14 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 			case *schema.GetAccessProviderWhoListAccessProviderWhoListPagedResult:
 				return &whoList.PageInfo.PageInfo, whoList.Edges, nil
 			case *schema.GetAccessProviderWhoListAccessProviderWhoListPermissionDeniedError:
-				return nil, nil, NewErrPermissionDenied("accessProviderWhoList", whoList.Message)
+				return nil, nil, types.NewErrPermissionDenied("accessProviderWhoList", whoList.Message)
 			}
 		case *schema.GetAccessProviderWhoListAccessProviderNotFoundError:
-			return nil, nil, NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
 		case *schema.GetAccessProviderWhoListAccessProviderPermissionDeniedError:
-			return nil, nil, NewErrPermissionDenied("accessProvider", ap.Message)
+			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
-			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, ErrUnknownType)
+			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
 		}
 
 		return nil, nil, errors.New("unreachable")
@@ -247,7 +247,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatListEdgesEdge, error) {
 		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
 		if err != nil {
-			return nil, nil, NewErrClient(err)
+			return nil, nil, types.NewErrClient(err)
 		}
 
 		switch ap := output.AccessProvider.(type) {
@@ -256,14 +256,14 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 			case *schema.GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult:
 				return &whatList.PageInfo.PageInfo, whatList.Edges, nil
 			case *schema.GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPermissionDeniedError:
-				return nil, nil, NewErrPermissionDenied("accessProviderWhatDataObjectList", whatList.Message)
+				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatDataObjectList", whatList.Message)
 			}
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderNotFoundError:
-			return nil, nil, NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderPermissionDeniedError:
-			return nil, nil, NewErrPermissionDenied("accessProvider", ap.Message)
+			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
-			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, ErrUnknownType)
+			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
 		}
 
 		return nil, nil, errors.New("unreachable")

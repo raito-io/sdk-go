@@ -28,18 +28,18 @@ func NewIdentityStoreClient(client graphql.Client) IdentityStoreClient {
 func (c *IdentityStoreClient) CreateIdentityStore(ctx context.Context, is types.IdentityStoreInput) (*types.IdentityStore, error) {
 	result, err := schema.CreateIdentityStore(ctx, c.client, is)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.CreateIdentityStore.(type) {
 	case *types.CreateIdentityStoreCreateIdentityStore:
 		return &response.IdentityStore, nil
 	case *types.CreateIdentityStoreCreateIdentityStoreNotFoundError:
-		return nil, NewErrNotFound("", "identityStore", response.Message)
+		return nil, types.NewErrNotFound("", "identityStore", response.Message)
 	case *types.CreateIdentityStoreCreateIdentityStorePermissionDeniedError:
-		return nil, NewErrPermissionDenied("createIdentityStore", response.Message)
+		return nil, types.NewErrPermissionDenied("createIdentityStore", response.Message)
 	case *types.CreateIdentityStoreCreateIdentityStoreAlreadyExistsError:
-		return nil, NewErrAlreadyExists("identityStore", response.Message)
+		return nil, types.NewErrAlreadyExists("identityStore", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected type '%T'", response)
 	}
@@ -51,18 +51,18 @@ func (c *IdentityStoreClient) CreateIdentityStore(ctx context.Context, is types.
 func (c *IdentityStoreClient) UpdateIdentityStore(ctx context.Context, id string, is types.IdentityStoreInput) (*types.IdentityStore, error) {
 	result, err := schema.UpdateIdentityStore(ctx, c.client, id, is)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.UpdateIdentityStore.(type) {
 	case *types.UpdateIdentityStoreUpdateIdentityStore:
 		return &response.IdentityStore, nil
 	case *types.UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError:
-		return nil, NewErrAlreadyExists("identityStore", response.Message)
+		return nil, types.NewErrAlreadyExists("identityStore", response.Message)
 	case *types.UpdateIdentityStoreUpdateIdentityStoreNotFoundError:
-		return nil, NewErrNotFound(id, "identityStore", response.Message)
+		return nil, types.NewErrNotFound(id, "identityStore", response.Message)
 	case *types.UpdateIdentityStoreUpdateIdentityStorePermissionDeniedError:
-		return nil, NewErrPermissionDenied("updateIdentityStore", response.Message)
+		return nil, types.NewErrPermissionDenied("updateIdentityStore", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected type '%T'", response)
 	}
@@ -74,14 +74,14 @@ func (c *IdentityStoreClient) UpdateIdentityStore(ctx context.Context, id string
 func (c *IdentityStoreClient) DeleteIdentityStore(ctx context.Context, id string) error {
 	result, err := schema.DeleteIdentityStore(ctx, c.client, id)
 	if err != nil {
-		return NewErrClient(err)
+		return types.NewErrClient(err)
 	}
 
 	switch response := result.DeleteIdentityStore.(type) {
 	case *types.DeleteIdentityStoreDeleteIdentityStore:
 		return nil
 	case *types.DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError:
-		return NewErrPermissionDenied("deleteIdentityStore", response.Message)
+		return types.NewErrPermissionDenied("deleteIdentityStore", response.Message)
 	default:
 		return fmt.Errorf("unexpected type '%T'", response)
 	}
@@ -93,18 +93,18 @@ func (c *IdentityStoreClient) DeleteIdentityStore(ctx context.Context, id string
 func (c *IdentityStoreClient) GetIdentityStore(ctx context.Context, id string) (*types.IdentityStore, error) {
 	result, err := schema.GetIdentityStore(ctx, c.client, id)
 	if err != nil {
-		return nil, NewErrClient(err)
+		return nil, types.NewErrClient(err)
 	}
 
 	switch response := result.IdentityStore.(type) {
 	case *types.GetIdentityStoreIdentityStore:
 		return &response.IdentityStore, nil
 	case *types.GetIdentityStoreIdentityStoreAlreadyExistsError:
-		return nil, NewErrAlreadyExists("identityStore", response.Message)
+		return nil, types.NewErrAlreadyExists("identityStore", response.Message)
 	case *types.GetIdentityStoreIdentityStorePermissionDeniedError:
-		return nil, NewErrPermissionDenied("getIdentityStore", response.Message)
+		return nil, types.NewErrPermissionDenied("getIdentityStore", response.Message)
 	case *types.GetIdentityStoreIdentityStoreNotFoundError:
-		return nil, NewErrNotFound(id, "identityStore", response.Message)
+		return nil, types.NewErrNotFound(id, "identityStore", response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected type '%T'", response)
 	}
@@ -143,14 +143,14 @@ func (c *IdentityStoreClient) ListIdentityStores(ctx context.Context, ops ...fun
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.IdentityStorePageEdgesEdge, error) {
 		output, err := schema.ListIdentityStores(ctx, c.client, cursor, ptr.Int(25), nil, options.filter, options.order)
 		if err != nil {
-			return nil, nil, NewErrClient(err)
+			return nil, nil, types.NewErrClient(err)
 		}
 
 		switch page := output.IdentityStores.(type) {
 		case *schema.ListIdentityStoresIdentityStoresPagedResult:
 			return &page.PageInfo.PageInfo, page.Edges, nil
 		case *schema.ListIdentityStoresIdentityStoresPermissionDeniedError:
-			return nil, nil, NewErrPermissionDenied("listIdentityStores", page.Message)
+			return nil, nil, types.NewErrPermissionDenied("listIdentityStores", page.Message)
 		default:
 			return nil, nil, fmt.Errorf("unexpected type '%T'", page)
 		}

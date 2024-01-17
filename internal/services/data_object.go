@@ -7,6 +7,7 @@ import (
 	"github.com/Khan/genqlient/graphql"
 
 	"github.com/raito-io/sdk/internal/schema"
+	"github.com/raito-io/sdk/types"
 )
 
 type DataObjectClient struct {
@@ -23,7 +24,7 @@ func NewDataObjectClient(client graphql.Client) DataObjectClient {
 func (c *DataObjectClient) GetDataObjectIdByName(ctx context.Context, fullname string, dataSource string) (string, error) {
 	result, err := schema.DataObjectByExternalId(ctx, c.client, fullname, dataSource)
 	if err != nil {
-		return "", NewErrClient(err)
+		return "", types.NewErrClient(err)
 	}
 
 	if len(result.DataObjects.Edges) != 1 || result.DataObjects.Edges[0].Node == nil {
