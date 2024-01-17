@@ -1,0 +1,21 @@
+fragment DataObject on DataObject {
+    id
+    name
+    fullName
+    type
+    dataType
+    deleted
+}
+
+query DataObjectByExternalId($fullname: String!, $dataSourceId: ID!) {
+    dataObjects(filter: {
+        fullNames: [$fullname]
+        dataSources: [$dataSourceId]
+    }) {
+        edges {
+            node {
+                ... DataObject
+            }
+        }
+    }
+}

@@ -1,0 +1,180 @@
+fragment AccessProvider on AccessProvider {
+    id
+    isSample
+    createdAt
+    modifiedAt
+    name
+    namingHint
+    state
+    action
+    type
+    description
+    policyRule
+    override
+    external
+    notInternalizable
+    whoLocked
+    whoLockedReason
+    inheritanceLocked
+    inheritanceLockedReason
+    whatLocked
+    whatLockedReason
+    nameLocked
+    nameLockedReason
+    deleteLocked
+    deleteLockedReason
+    complete
+    dataSources {
+        ...DataSource
+    }
+}
+
+fragment AccessProviderPage on PagedResult {
+    pageInfo {
+        ... PageInfo
+    }
+    edges {
+        cursor
+        node {
+                ... AccessProvider
+        }
+    }
+}
+
+fragment AccessProviderWhatListItem on AccessWhatItem {
+    dataObject {
+        ...DataObject
+    }
+    globalPermissions
+    permissions
+}
+
+fragment AccessProviderWhatList on PagedResult {
+    pageInfo {
+        ...PageInfo
+    }
+    edges {
+        cursor
+        node {
+                ...AccessProviderWhatListItem
+        }
+    }
+}
+
+fragment AccessProviderWhoListItem on AccessWhoItem {
+    expiresAfter
+    expiresAt
+    promiseDuration
+    type
+    item {
+        ... on AccessProvider {
+            id
+            name
+        }
+        ... on Group {
+            name
+            id
+            identityStore {
+                id
+                name
+            }
+        }
+        ... on User {
+            name
+            id
+        }
+    }
+}
+
+fragment AccessProviderWhoList on PagedResult {
+    pageInfo {
+        ...PageInfo
+    }
+    edges {
+        cursor
+        node {
+            ...AccessProviderWhoListItem
+        }
+    }
+}
+
+mutation CreateAccessProvider($ap: AccessProviderInput!) {
+    createAccessProvider(input: $ap, enableAdditionalAccessRequests: false) {
+        __typename
+        ... AccessProvider
+        ... on AccessProviderWithOptionalAccessRequests {
+            accessProvider {
+                id
+                name
+                state
+                action
+            }
+            accessRequests {
+                id
+                name
+            }
+        }
+        ... PermissionDeniedError
+    }
+}
+
+mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!) {
+    updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
+        __typename
+        ...AccessProvider
+        ... PermissionDeniedError
+    }
+}
+
+mutation DeleteAccessProvider($id: ID!) {
+    deleteAccessProvider(id: $id) {
+        __typename
+        ...AccessProvider
+        ... NotFoundError
+        ... PermissionDeniedError
+    }
+}
+
+query GetAccessProvider($id: ID!) {
+    accessProvider(id: $id) {
+        __typename
+        ... AccessProvider
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+query ListAccessProviders($after: String, $limit: Int, $filter: AccessProviderFilterInput, $order: [AccessProviderOrderByInput!]) {
+    accessProviders(after: $after, limit: $limit, filter: $filter, order: $order) {
+        ... AccessProviderPage
+        ... PermissionDeniedError
+    }
+}
+
+query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+    accessProvider(id: $id) {
+        ... on AccessProvider {
+            whatDataObjects(after: $after, limit: $limit, search: $search, order: $order) {
+                __typename
+                ...AccessProviderWhatList
+                ... PermissionDeniedError
+            }
+        }
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+query GetAccessProviderWhoList($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessProviderWhoOrderByInput!]) {
+    accessProvider(id: $id) {
+        ... on AccessProvider {
+            whoList(after: $after, limit: $limit, search: $search, order: $order) {
+                __typename
+                ...AccessProviderWhoList
+                ... PermissionDeniedError
+            }
+        }
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
