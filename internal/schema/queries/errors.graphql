@@ -1,0 +1,12 @@
+fragment PermissionDeniedError on PermissionDeniedError {
+    message
+}
+
+fragment NotFoundError on NotFoundError {
+    message
+}
+
+fragment AlreadyExistsError on AlreadyExistsError {
+    message
+    existing_element_id: id
+}
