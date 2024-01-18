@@ -291,10 +291,8 @@ type AccessProviderInput struct {
 	NamingHint          *string                        `json:"namingHint"`
 	Action              *models.AccessProviderAction   `json:"action"`
 	Description         *string                        `json:"description"`
-	WhoDefinition       *string                        `json:"whoDefinition"`
 	Who                 *WhoInput                      `json:"who"`
 	WhoItems            []WhoItemInput                 `json:"whoItems"`
-	WhatDefinition      *string                        `json:"whatDefinition"`
 	PolicyRule          *string                        `json:"policyRule"`
 	FilterCriteria      *DataComparisonExpressionInput `json:"filterCriteria"`
 	DataSource          *string                        `json:"dataSource"`
@@ -304,9 +302,6 @@ type AccessProviderInput struct {
 	WhatAccessProviders []AccessProviderWhatInputAP    `json:"whatAccessProviders"`
 	Override            *bool                          `json:"override"`
 	External            *bool                          `json:"external"`
-	AutoGrantOnRequest  *bool                          `json:"autoGrantOnRequest"`
-	DefaultGrantLength  *int                           `json:"defaultGrantLength"`
-	AutoGrantOnAll      *bool                          `json:"autoGrantOnAll"`
 }
 
 // GetName returns AccessProviderInput.Name, and is useful for accessing the field via an interface.
@@ -321,17 +316,11 @@ func (v *AccessProviderInput) GetAction() *models.AccessProviderAction { return 
 // GetDescription returns AccessProviderInput.Description, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetDescription() *string { return v.Description }
 
-// GetWhoDefinition returns AccessProviderInput.WhoDefinition, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetWhoDefinition() *string { return v.WhoDefinition }
-
 // GetWho returns AccessProviderInput.Who, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWho() *WhoInput { return v.Who }
 
 // GetWhoItems returns AccessProviderInput.WhoItems, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWhoItems() []WhoItemInput { return v.WhoItems }
-
-// GetWhatDefinition returns AccessProviderInput.WhatDefinition, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetWhatDefinition() *string { return v.WhatDefinition }
 
 // GetPolicyRule returns AccessProviderInput.PolicyRule, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetPolicyRule() *string { return v.PolicyRule }
@@ -365,15 +354,6 @@ func (v *AccessProviderInput) GetOverride() *bool { return v.Override }
 
 // GetExternal returns AccessProviderInput.External, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetExternal() *bool { return v.External }
-
-// GetAutoGrantOnRequest returns AccessProviderInput.AutoGrantOnRequest, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetAutoGrantOnRequest() *bool { return v.AutoGrantOnRequest }
-
-// GetDefaultGrantLength returns AccessProviderInput.DefaultGrantLength, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetDefaultGrantLength() *int { return v.DefaultGrantLength }
-
-// GetAutoGrantOnAll returns AccessProviderInput.AutoGrantOnAll, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetAutoGrantOnAll() *bool { return v.AutoGrantOnAll }
 
 type AccessProviderOrderByInput struct {
 	Name       *Sort `json:"name"`
@@ -4343,10 +4323,14 @@ func __marshalAccessProviderWhoListItemItemAccessWhoItemItem(v *AccessProviderWh
 	case *AccessProviderWhoListItemItemUser:
 		typename = "User"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*AccessProviderWhoListItemItemUser
-		}{typename, v}
+			*__premarshalAccessProviderWhoListItemItemUser
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case nil:
 		return []byte("null"), nil
@@ -4401,18 +4385,73 @@ func (v *AccessProviderWhoListItemItemNotFoundError) GetTypename() *string { ret
 // AccessProviderWhoListItemItemUser includes the requested fields of the GraphQL type User.
 type AccessProviderWhoListItemItemUser struct {
 	Typename *string `json:"__typename"`
-	Name     string  `json:"name"`
-	Id       string  `json:"id"`
+	User     `json:"-"`
 }
 
 // GetTypename returns AccessProviderWhoListItemItemUser.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListItemItemUser) GetTypename() *string { return v.Typename }
 
-// GetName returns AccessProviderWhoListItemItemUser.Name, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListItemItemUser) GetName() string { return v.Name }
-
 // GetId returns AccessProviderWhoListItemItemUser.Id, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListItemItemUser) GetId() string { return v.Id }
+func (v *AccessProviderWhoListItemItemUser) GetId() string { return v.User.Id }
+
+// GetName returns AccessProviderWhoListItemItemUser.Name, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListItemItemUser) GetName() string { return v.User.Name }
+
+// GetEmail returns AccessProviderWhoListItemItemUser.Email, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListItemItemUser) GetEmail() *string { return v.User.Email }
+
+func (v *AccessProviderWhoListItemItemUser) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhoListItemItemUser
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhoListItemItemUser = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.User)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhoListItemItemUser struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	Email *string `json:"email"`
+}
+
+func (v *AccessProviderWhoListItemItemUser) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhoListItemItemUser) __premarshalJSON() (*__premarshalAccessProviderWhoListItemItemUser, error) {
+	var retval __premarshalAccessProviderWhoListItemItemUser
+
+	retval.Typename = v.Typename
+	retval.Id = v.User.Id
+	retval.Name = v.User.Name
+	retval.Email = v.User.Email
+	return &retval, nil
+}
 
 // AccessProviderWhoListPageInfo includes the requested fields of the GraphQL type PageInfo.
 type AccessProviderWhoListPageInfo struct {
@@ -4492,6 +4531,561 @@ const (
 	AccessWhoItemTypeWhogrant   AccessWhoItemType = "WhoGrant"
 	AccessWhoItemTypeWhopromise AccessWhoItemType = "WhoPromise"
 )
+
+// ActivateAccessProviderActivateAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type ActivateAccessProviderActivateAccessProvider struct {
+	Typename       *string `json:"__typename"`
+	AccessProvider `json:"-"`
+}
+
+// GetTypename returns ActivateAccessProviderActivateAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetTypename() *string { return v.Typename }
+
+// GetId returns ActivateAccessProviderActivateAccessProvider.Id, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetId() string { return v.AccessProvider.Id }
+
+// GetIsSample returns ActivateAccessProviderActivateAccessProvider.IsSample, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetIsSample() bool {
+	return v.AccessProvider.IsSample
+}
+
+// GetCreatedAt returns ActivateAccessProviderActivateAccessProvider.CreatedAt, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetCreatedAt() time.Time {
+	return v.AccessProvider.CreatedAt
+}
+
+// GetModifiedAt returns ActivateAccessProviderActivateAccessProvider.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetModifiedAt() time.Time {
+	return v.AccessProvider.ModifiedAt
+}
+
+// GetName returns ActivateAccessProviderActivateAccessProvider.Name, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetName() string { return v.AccessProvider.Name }
+
+// GetNamingHint returns ActivateAccessProviderActivateAccessProvider.NamingHint, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetNamingHint() *string {
+	return v.AccessProvider.NamingHint
+}
+
+// GetState returns ActivateAccessProviderActivateAccessProvider.State, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetState() models.AccessProviderState {
+	return v.AccessProvider.State
+}
+
+// GetAction returns ActivateAccessProviderActivateAccessProvider.Action, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetAction() models.AccessProviderAction {
+	return v.AccessProvider.Action
+}
+
+// GetType returns ActivateAccessProviderActivateAccessProvider.Type, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetType() *string {
+	return v.AccessProvider.Type
+}
+
+// GetDescription returns ActivateAccessProviderActivateAccessProvider.Description, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetDescription() string {
+	return v.AccessProvider.Description
+}
+
+// GetPolicyRule returns ActivateAccessProviderActivateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetPolicyRule() *string {
+	return v.AccessProvider.PolicyRule
+}
+
+// GetOverride returns ActivateAccessProviderActivateAccessProvider.Override, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetOverride() bool {
+	return v.AccessProvider.Override
+}
+
+// GetExternal returns ActivateAccessProviderActivateAccessProvider.External, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetExternal() bool {
+	return v.AccessProvider.External
+}
+
+// GetNotInternalizable returns ActivateAccessProviderActivateAccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetNotInternalizable() bool {
+	return v.AccessProvider.NotInternalizable
+}
+
+// GetWhoLocked returns ActivateAccessProviderActivateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetWhoLocked() *bool {
+	return v.AccessProvider.WhoLocked
+}
+
+// GetWhoLockedReason returns ActivateAccessProviderActivateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetWhoLockedReason() *string {
+	return v.AccessProvider.WhoLockedReason
+}
+
+// GetInheritanceLocked returns ActivateAccessProviderActivateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetInheritanceLocked() *bool {
+	return v.AccessProvider.InheritanceLocked
+}
+
+// GetInheritanceLockedReason returns ActivateAccessProviderActivateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetInheritanceLockedReason() *string {
+	return v.AccessProvider.InheritanceLockedReason
+}
+
+// GetWhatLocked returns ActivateAccessProviderActivateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetWhatLocked() *bool {
+	return v.AccessProvider.WhatLocked
+}
+
+// GetWhatLockedReason returns ActivateAccessProviderActivateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetWhatLockedReason() *string {
+	return v.AccessProvider.WhatLockedReason
+}
+
+// GetNameLocked returns ActivateAccessProviderActivateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetNameLocked() *bool {
+	return v.AccessProvider.NameLocked
+}
+
+// GetNameLockedReason returns ActivateAccessProviderActivateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetNameLockedReason() *string {
+	return v.AccessProvider.NameLockedReason
+}
+
+// GetDeleteLocked returns ActivateAccessProviderActivateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetDeleteLocked() *bool {
+	return v.AccessProvider.DeleteLocked
+}
+
+// GetDeleteLockedReason returns ActivateAccessProviderActivateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetDeleteLockedReason() *string {
+	return v.AccessProvider.DeleteLockedReason
+}
+
+// GetComplete returns ActivateAccessProviderActivateAccessProvider.Complete, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetComplete() *bool {
+	return v.AccessProvider.Complete
+}
+
+// GetDataSources returns ActivateAccessProviderActivateAccessProvider.DataSources, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
+	return v.AccessProvider.DataSources
+}
+
+func (v *ActivateAccessProviderActivateAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ActivateAccessProviderActivateAccessProvider
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ActivateAccessProviderActivateAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProvider)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalActivateAccessProviderActivateAccessProvider struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	IsSample bool `json:"isSample"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Name string `json:"name"`
+
+	NamingHint *string `json:"namingHint"`
+
+	State models.AccessProviderState `json:"state"`
+
+	Action models.AccessProviderAction `json:"action"`
+
+	Type *string `json:"type"`
+
+	Description string `json:"description"`
+
+	PolicyRule *string `json:"policyRule"`
+
+	Override bool `json:"override"`
+
+	External bool `json:"external"`
+
+	NotInternalizable bool `json:"notInternalizable"`
+
+	WhoLocked *bool `json:"whoLocked"`
+
+	WhoLockedReason *string `json:"whoLockedReason"`
+
+	InheritanceLocked *bool `json:"inheritanceLocked"`
+
+	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
+
+	WhatLocked *bool `json:"whatLocked"`
+
+	WhatLockedReason *string `json:"whatLockedReason"`
+
+	NameLocked *bool `json:"nameLocked"`
+
+	NameLockedReason *string `json:"nameLockedReason"`
+
+	DeleteLocked *bool `json:"deleteLocked"`
+
+	DeleteLockedReason *string `json:"deleteLockedReason"`
+
+	Complete *bool `json:"complete"`
+
+	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+}
+
+func (v *ActivateAccessProviderActivateAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__premarshalActivateAccessProviderActivateAccessProvider, error) {
+	var retval __premarshalActivateAccessProviderActivateAccessProvider
+
+	retval.Typename = v.Typename
+	retval.Id = v.AccessProvider.Id
+	retval.IsSample = v.AccessProvider.IsSample
+	retval.CreatedAt = v.AccessProvider.CreatedAt
+	retval.ModifiedAt = v.AccessProvider.ModifiedAt
+	retval.Name = v.AccessProvider.Name
+	retval.NamingHint = v.AccessProvider.NamingHint
+	retval.State = v.AccessProvider.State
+	retval.Action = v.AccessProvider.Action
+	retval.Type = v.AccessProvider.Type
+	retval.Description = v.AccessProvider.Description
+	retval.PolicyRule = v.AccessProvider.PolicyRule
+	retval.Override = v.AccessProvider.Override
+	retval.External = v.AccessProvider.External
+	retval.NotInternalizable = v.AccessProvider.NotInternalizable
+	retval.WhoLocked = v.AccessProvider.WhoLocked
+	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
+	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
+	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
+	retval.WhatLocked = v.AccessProvider.WhatLocked
+	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
+	retval.NameLocked = v.AccessProvider.NameLocked
+	retval.NameLockedReason = v.AccessProvider.NameLockedReason
+	retval.DeleteLocked = v.AccessProvider.DeleteLocked
+	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
+	retval.Complete = v.AccessProvider.Complete
+	retval.DataSources = v.AccessProvider.DataSources
+	return &retval, nil
+}
+
+// ActivateAccessProviderActivateAccessProviderAccessProviderResult includes the requested fields of the GraphQL interface AccessProviderResult.
+//
+// ActivateAccessProviderActivateAccessProviderAccessProviderResult is implemented by the following types:
+// ActivateAccessProviderActivateAccessProvider
+// ActivateAccessProviderActivateAccessProviderNotFoundError
+// ActivateAccessProviderActivateAccessProviderPermissionDeniedError
+type ActivateAccessProviderActivateAccessProviderAccessProviderResult interface {
+	implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *ActivateAccessProviderActivateAccessProvider) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
+}
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
+}
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
+}
+
+func __unmarshalActivateAccessProviderActivateAccessProviderAccessProviderResult(b []byte, v *ActivateAccessProviderActivateAccessProviderAccessProviderResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(ActivateAccessProviderActivateAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ActivateAccessProviderActivateAccessProviderNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(ActivateAccessProviderActivateAccessProviderPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing AccessProviderResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for ActivateAccessProviderActivateAccessProviderAccessProviderResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(v *ActivateAccessProviderActivateAccessProviderAccessProviderResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *ActivateAccessProviderActivateAccessProvider:
+		typename = "AccessProvider"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalActivateAccessProviderActivateAccessProvider
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *ActivateAccessProviderActivateAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalActivateAccessProviderActivateAccessProviderNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *ActivateAccessProviderActivateAccessProviderPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalActivateAccessProviderActivateAccessProviderPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for ActivateAccessProviderActivateAccessProviderAccessProviderResult: "%T"`, v)
+	}
+}
+
+// ActivateAccessProviderActivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ActivateAccessProviderActivateAccessProviderNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns ActivateAccessProviderActivateAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns ActivateAccessProviderActivateAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ActivateAccessProviderActivateAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ActivateAccessProviderActivateAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalActivateAccessProviderActivateAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) __premarshalJSON() (*__premarshalActivateAccessProviderActivateAccessProviderNotFoundError, error) {
+	var retval __premarshalActivateAccessProviderActivateAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// ActivateAccessProviderActivateAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type ActivateAccessProviderActivateAccessProviderPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns ActivateAccessProviderActivateAccessProviderPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns ActivateAccessProviderActivateAccessProviderPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ActivateAccessProviderActivateAccessProviderPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ActivateAccessProviderActivateAccessProviderPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalActivateAccessProviderActivateAccessProviderPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderPermissionDeniedError) __premarshalJSON() (*__premarshalActivateAccessProviderActivateAccessProviderPermissionDeniedError, error) {
+	var retval __premarshalActivateAccessProviderActivateAccessProviderPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// ActivateAccessProviderResponse is returned by ActivateAccessProvider on success.
+type ActivateAccessProviderResponse struct {
+	ActivateAccessProvider ActivateAccessProviderActivateAccessProviderAccessProviderResult `json:"-"`
+}
+
+// GetActivateAccessProvider returns ActivateAccessProviderResponse.ActivateAccessProvider, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderResponse) GetActivateAccessProvider() ActivateAccessProviderActivateAccessProviderAccessProviderResult {
+	return v.ActivateAccessProvider
+}
+
+func (v *ActivateAccessProviderResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ActivateAccessProviderResponse
+		ActivateAccessProvider json.RawMessage `json:"activateAccessProvider"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ActivateAccessProviderResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.ActivateAccessProvider
+		src := firstPass.ActivateAccessProvider
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalActivateAccessProviderActivateAccessProviderAccessProviderResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal ActivateAccessProviderResponse.ActivateAccessProvider: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalActivateAccessProviderResponse struct {
+	ActivateAccessProvider json.RawMessage `json:"activateAccessProvider"`
+}
+
+func (v *ActivateAccessProviderResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ActivateAccessProviderResponse) __premarshalJSON() (*__premarshalActivateAccessProviderResponse, error) {
+	var retval __premarshalActivateAccessProviderResponse
+
+	{
+
+		dst := &retval.ActivateAccessProvider
+		src := v.ActivateAccessProvider
+		var err error
+		*dst, err = __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal ActivateAccessProviderResponse.ActivateAccessProvider: %w", err)
+		}
+	}
+	return &retval, nil
+}
 
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSource includes the requested fields of the GraphQL type DataSource.
 type AddIdentityStoreToDataSourceAddIdentityStoreToDataSource struct {
@@ -5192,9 +5786,8 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 
 // CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests includes the requested fields of the GraphQL type AccessProviderWithOptionalAccessRequests.
 type CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests struct {
-	Typename       *string                                                                                                       `json:"__typename"`
-	AccessProvider CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider                `json:"accessProvider"`
-	AccessRequests []CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest `json:"accessRequests"`
+	Typename       *string                                                                                        `json:"__typename"`
+	AccessProvider CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider `json:"accessProvider"`
 }
 
 // GetTypename returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests.Typename, and is useful for accessing the field via an interface.
@@ -5207,53 +5800,258 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider
 }
 
-// GetAccessRequests returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests.AccessRequests, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests) GetAccessRequests() []CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest {
-	return v.AccessRequests
-}
-
 // CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider includes the requested fields of the GraphQL type AccessProvider.
 type CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider struct {
-	Id     string                      `json:"id"`
-	Name   string                      `json:"name"`
-	State  models.AccessProviderState  `json:"state"`
-	Action models.AccessProviderAction `json:"action"`
+	AccessProvider `json:"-"`
 }
 
 // GetId returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Id, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetId() string {
-	return v.Id
+	return v.AccessProvider.Id
+}
+
+// GetIsSample returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.IsSample, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetIsSample() bool {
+	return v.AccessProvider.IsSample
+}
+
+// GetCreatedAt returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.CreatedAt, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCreatedAt() time.Time {
+	return v.AccessProvider.CreatedAt
+}
+
+// GetModifiedAt returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetModifiedAt() time.Time {
+	return v.AccessProvider.ModifiedAt
 }
 
 // GetName returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Name, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetName() string {
-	return v.Name
+	return v.AccessProvider.Name
+}
+
+// GetNamingHint returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NamingHint, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNamingHint() *string {
+	return v.AccessProvider.NamingHint
 }
 
 // GetState returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.State, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetState() models.AccessProviderState {
-	return v.State
+	return v.AccessProvider.State
 }
 
 // GetAction returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetAction() models.AccessProviderAction {
-	return v.Action
+	return v.AccessProvider.Action
 }
 
-// CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest includes the requested fields of the GraphQL type AccessRequest.
-type CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest struct {
-	Id   string  `json:"id"`
-	Name *string `json:"name"`
+// GetType returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Type, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetType() *string {
+	return v.AccessProvider.Type
 }
 
-// GetId returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest.Id, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest) GetId() string {
-	return v.Id
+// GetDescription returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDescription() string {
+	return v.AccessProvider.Description
 }
 
-// GetName returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest.Name, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessRequestsAccessRequest) GetName() *string {
-	return v.Name
+// GetPolicyRule returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetPolicyRule() *string {
+	return v.AccessProvider.PolicyRule
+}
+
+// GetOverride returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Override, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetOverride() bool {
+	return v.AccessProvider.Override
+}
+
+// GetExternal returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.External, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetExternal() bool {
+	return v.AccessProvider.External
+}
+
+// GetNotInternalizable returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNotInternalizable() bool {
+	return v.AccessProvider.NotInternalizable
+}
+
+// GetWhoLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLocked() *bool {
+	return v.AccessProvider.WhoLocked
+}
+
+// GetWhoLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLockedReason() *string {
+	return v.AccessProvider.WhoLockedReason
+}
+
+// GetInheritanceLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLocked() *bool {
+	return v.AccessProvider.InheritanceLocked
+}
+
+// GetInheritanceLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLockedReason() *string {
+	return v.AccessProvider.InheritanceLockedReason
+}
+
+// GetWhatLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLocked() *bool {
+	return v.AccessProvider.WhatLocked
+}
+
+// GetWhatLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLockedReason() *string {
+	return v.AccessProvider.WhatLockedReason
+}
+
+// GetNameLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLocked, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLocked() *bool {
+	return v.AccessProvider.NameLocked
+}
+
+// GetNameLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLockedReason() *string {
+	return v.AccessProvider.NameLockedReason
+}
+
+// GetDeleteLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLocked() *bool {
+	return v.AccessProvider.DeleteLocked
+}
+
+// GetDeleteLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLockedReason() *string {
+	return v.AccessProvider.DeleteLockedReason
+}
+
+// GetComplete returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Complete, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetComplete() *bool {
+	return v.AccessProvider.Complete
+}
+
+// GetDataSources returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DataSources, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
+	return v.AccessProvider.DataSources
+}
+
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProvider)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider struct {
+	Id string `json:"id"`
+
+	IsSample bool `json:"isSample"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Name string `json:"name"`
+
+	NamingHint *string `json:"namingHint"`
+
+	State models.AccessProviderState `json:"state"`
+
+	Action models.AccessProviderAction `json:"action"`
+
+	Type *string `json:"type"`
+
+	Description string `json:"description"`
+
+	PolicyRule *string `json:"policyRule"`
+
+	Override bool `json:"override"`
+
+	External bool `json:"external"`
+
+	NotInternalizable bool `json:"notInternalizable"`
+
+	WhoLocked *bool `json:"whoLocked"`
+
+	WhoLockedReason *string `json:"whoLockedReason"`
+
+	InheritanceLocked *bool `json:"inheritanceLocked"`
+
+	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
+
+	WhatLocked *bool `json:"whatLocked"`
+
+	WhatLockedReason *string `json:"whatLockedReason"`
+
+	NameLocked *bool `json:"nameLocked"`
+
+	NameLockedReason *string `json:"nameLockedReason"`
+
+	DeleteLocked *bool `json:"deleteLocked"`
+
+	DeleteLockedReason *string `json:"deleteLockedReason"`
+
+	Complete *bool `json:"complete"`
+
+	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+}
+
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) __premarshalJSON() (*__premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider, error) {
+	var retval __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider
+
+	retval.Id = v.AccessProvider.Id
+	retval.IsSample = v.AccessProvider.IsSample
+	retval.CreatedAt = v.AccessProvider.CreatedAt
+	retval.ModifiedAt = v.AccessProvider.ModifiedAt
+	retval.Name = v.AccessProvider.Name
+	retval.NamingHint = v.AccessProvider.NamingHint
+	retval.State = v.AccessProvider.State
+	retval.Action = v.AccessProvider.Action
+	retval.Type = v.AccessProvider.Type
+	retval.Description = v.AccessProvider.Description
+	retval.PolicyRule = v.AccessProvider.PolicyRule
+	retval.Override = v.AccessProvider.Override
+	retval.External = v.AccessProvider.External
+	retval.NotInternalizable = v.AccessProvider.NotInternalizable
+	retval.WhoLocked = v.AccessProvider.WhoLocked
+	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
+	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
+	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
+	retval.WhatLocked = v.AccessProvider.WhatLocked
+	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
+	retval.NameLocked = v.AccessProvider.NameLocked
+	retval.NameLockedReason = v.AccessProvider.NameLockedReason
+	retval.DeleteLocked = v.AccessProvider.DeleteLocked
+	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
+	retval.Complete = v.AccessProvider.Complete
+	retval.DataSources = v.AccessProvider.DataSources
+	return &retval, nil
 }
 
 // CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult includes the requested fields of the GraphQL interface AccessProviderWithOptionalAccessRequestsResult.
@@ -9371,6 +10169,563 @@ const (
 	DataSourceSyncMethodCloudManualTrigger DataSourceSyncMethod = "CLOUD_MANUAL_TRIGGER"
 )
 
+// DeactivateAccessProviderDeactivateAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type DeactivateAccessProviderDeactivateAccessProvider struct {
+	Typename       *string `json:"__typename"`
+	AccessProvider `json:"-"`
+}
+
+// GetTypename returns DeactivateAccessProviderDeactivateAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetTypename() *string { return v.Typename }
+
+// GetId returns DeactivateAccessProviderDeactivateAccessProvider.Id, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetId() string { return v.AccessProvider.Id }
+
+// GetIsSample returns DeactivateAccessProviderDeactivateAccessProvider.IsSample, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetIsSample() bool {
+	return v.AccessProvider.IsSample
+}
+
+// GetCreatedAt returns DeactivateAccessProviderDeactivateAccessProvider.CreatedAt, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetCreatedAt() time.Time {
+	return v.AccessProvider.CreatedAt
+}
+
+// GetModifiedAt returns DeactivateAccessProviderDeactivateAccessProvider.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetModifiedAt() time.Time {
+	return v.AccessProvider.ModifiedAt
+}
+
+// GetName returns DeactivateAccessProviderDeactivateAccessProvider.Name, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetName() string {
+	return v.AccessProvider.Name
+}
+
+// GetNamingHint returns DeactivateAccessProviderDeactivateAccessProvider.NamingHint, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNamingHint() *string {
+	return v.AccessProvider.NamingHint
+}
+
+// GetState returns DeactivateAccessProviderDeactivateAccessProvider.State, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetState() models.AccessProviderState {
+	return v.AccessProvider.State
+}
+
+// GetAction returns DeactivateAccessProviderDeactivateAccessProvider.Action, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetAction() models.AccessProviderAction {
+	return v.AccessProvider.Action
+}
+
+// GetType returns DeactivateAccessProviderDeactivateAccessProvider.Type, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetType() *string {
+	return v.AccessProvider.Type
+}
+
+// GetDescription returns DeactivateAccessProviderDeactivateAccessProvider.Description, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDescription() string {
+	return v.AccessProvider.Description
+}
+
+// GetPolicyRule returns DeactivateAccessProviderDeactivateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetPolicyRule() *string {
+	return v.AccessProvider.PolicyRule
+}
+
+// GetOverride returns DeactivateAccessProviderDeactivateAccessProvider.Override, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetOverride() bool {
+	return v.AccessProvider.Override
+}
+
+// GetExternal returns DeactivateAccessProviderDeactivateAccessProvider.External, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetExternal() bool {
+	return v.AccessProvider.External
+}
+
+// GetNotInternalizable returns DeactivateAccessProviderDeactivateAccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNotInternalizable() bool {
+	return v.AccessProvider.NotInternalizable
+}
+
+// GetWhoLocked returns DeactivateAccessProviderDeactivateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhoLocked() *bool {
+	return v.AccessProvider.WhoLocked
+}
+
+// GetWhoLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhoLockedReason() *string {
+	return v.AccessProvider.WhoLockedReason
+}
+
+// GetInheritanceLocked returns DeactivateAccessProviderDeactivateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetInheritanceLocked() *bool {
+	return v.AccessProvider.InheritanceLocked
+}
+
+// GetInheritanceLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetInheritanceLockedReason() *string {
+	return v.AccessProvider.InheritanceLockedReason
+}
+
+// GetWhatLocked returns DeactivateAccessProviderDeactivateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhatLocked() *bool {
+	return v.AccessProvider.WhatLocked
+}
+
+// GetWhatLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhatLockedReason() *string {
+	return v.AccessProvider.WhatLockedReason
+}
+
+// GetNameLocked returns DeactivateAccessProviderDeactivateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNameLocked() *bool {
+	return v.AccessProvider.NameLocked
+}
+
+// GetNameLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNameLockedReason() *string {
+	return v.AccessProvider.NameLockedReason
+}
+
+// GetDeleteLocked returns DeactivateAccessProviderDeactivateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDeleteLocked() *bool {
+	return v.AccessProvider.DeleteLocked
+}
+
+// GetDeleteLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDeleteLockedReason() *string {
+	return v.AccessProvider.DeleteLockedReason
+}
+
+// GetComplete returns DeactivateAccessProviderDeactivateAccessProvider.Complete, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetComplete() *bool {
+	return v.AccessProvider.Complete
+}
+
+// GetDataSources returns DeactivateAccessProviderDeactivateAccessProvider.DataSources, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
+	return v.AccessProvider.DataSources
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeactivateAccessProviderDeactivateAccessProvider
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeactivateAccessProviderDeactivateAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProvider)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	IsSample bool `json:"isSample"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Name string `json:"name"`
+
+	NamingHint *string `json:"namingHint"`
+
+	State models.AccessProviderState `json:"state"`
+
+	Action models.AccessProviderAction `json:"action"`
+
+	Type *string `json:"type"`
+
+	Description string `json:"description"`
+
+	PolicyRule *string `json:"policyRule"`
+
+	Override bool `json:"override"`
+
+	External bool `json:"external"`
+
+	NotInternalizable bool `json:"notInternalizable"`
+
+	WhoLocked *bool `json:"whoLocked"`
+
+	WhoLockedReason *string `json:"whoLockedReason"`
+
+	InheritanceLocked *bool `json:"inheritanceLocked"`
+
+	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
+
+	WhatLocked *bool `json:"whatLocked"`
+
+	WhatLockedReason *string `json:"whatLockedReason"`
+
+	NameLocked *bool `json:"nameLocked"`
+
+	NameLockedReason *string `json:"nameLockedReason"`
+
+	DeleteLocked *bool `json:"deleteLocked"`
+
+	DeleteLockedReason *string `json:"deleteLockedReason"`
+
+	Complete *bool `json:"complete"`
+
+	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*__premarshalDeactivateAccessProviderDeactivateAccessProvider, error) {
+	var retval __premarshalDeactivateAccessProviderDeactivateAccessProvider
+
+	retval.Typename = v.Typename
+	retval.Id = v.AccessProvider.Id
+	retval.IsSample = v.AccessProvider.IsSample
+	retval.CreatedAt = v.AccessProvider.CreatedAt
+	retval.ModifiedAt = v.AccessProvider.ModifiedAt
+	retval.Name = v.AccessProvider.Name
+	retval.NamingHint = v.AccessProvider.NamingHint
+	retval.State = v.AccessProvider.State
+	retval.Action = v.AccessProvider.Action
+	retval.Type = v.AccessProvider.Type
+	retval.Description = v.AccessProvider.Description
+	retval.PolicyRule = v.AccessProvider.PolicyRule
+	retval.Override = v.AccessProvider.Override
+	retval.External = v.AccessProvider.External
+	retval.NotInternalizable = v.AccessProvider.NotInternalizable
+	retval.WhoLocked = v.AccessProvider.WhoLocked
+	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
+	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
+	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
+	retval.WhatLocked = v.AccessProvider.WhatLocked
+	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
+	retval.NameLocked = v.AccessProvider.NameLocked
+	retval.NameLockedReason = v.AccessProvider.NameLockedReason
+	retval.DeleteLocked = v.AccessProvider.DeleteLocked
+	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
+	retval.Complete = v.AccessProvider.Complete
+	retval.DataSources = v.AccessProvider.DataSources
+	return &retval, nil
+}
+
+// DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult includes the requested fields of the GraphQL interface AccessProviderResult.
+//
+// DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult is implemented by the following types:
+// DeactivateAccessProviderDeactivateAccessProvider
+// DeactivateAccessProviderDeactivateAccessProviderNotFoundError
+// DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError
+type DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult interface {
+	implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProvider) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
+}
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
+}
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
+}
+
+func __unmarshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult(b []byte, v *DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(DeactivateAccessProviderDeactivateAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DeactivateAccessProviderDeactivateAccessProviderNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing AccessProviderResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult(v *DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *DeactivateAccessProviderDeactivateAccessProvider:
+		typename = "AccessProvider"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeactivateAccessProviderDeactivateAccessProvider
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeactivateAccessProviderDeactivateAccessProviderNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult: "%T"`, v)
+	}
+}
+
+// DeactivateAccessProviderDeactivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DeactivateAccessProviderDeactivateAccessProviderNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns DeactivateAccessProviderDeactivateAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DeactivateAccessProviderDeactivateAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeactivateAccessProviderDeactivateAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeactivateAccessProviderDeactivateAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeactivateAccessProviderDeactivateAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) __premarshalJSON() (*__premarshalDeactivateAccessProviderDeactivateAccessProviderNotFoundError, error) {
+	var retval __premarshalDeactivateAccessProviderDeactivateAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError) __premarshalJSON() (*__premarshalDeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError, error) {
+	var retval __premarshalDeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// DeactivateAccessProviderResponse is returned by DeactivateAccessProvider on success.
+type DeactivateAccessProviderResponse struct {
+	DeactivateAccessProvider DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult `json:"-"`
+}
+
+// GetDeactivateAccessProvider returns DeactivateAccessProviderResponse.DeactivateAccessProvider, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderResponse) GetDeactivateAccessProvider() DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult {
+	return v.DeactivateAccessProvider
+}
+
+func (v *DeactivateAccessProviderResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeactivateAccessProviderResponse
+		DeactivateAccessProvider json.RawMessage `json:"deactivateAccessProvider"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeactivateAccessProviderResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.DeactivateAccessProvider
+		src := firstPass.DeactivateAccessProvider
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal DeactivateAccessProviderResponse.DeactivateAccessProvider: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalDeactivateAccessProviderResponse struct {
+	DeactivateAccessProvider json.RawMessage `json:"deactivateAccessProvider"`
+}
+
+func (v *DeactivateAccessProviderResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeactivateAccessProviderResponse) __premarshalJSON() (*__premarshalDeactivateAccessProviderResponse, error) {
+	var retval __premarshalDeactivateAccessProviderResponse
+
+	{
+
+		dst := &retval.DeactivateAccessProvider
+		src := v.DeactivateAccessProvider
+		var err error
+		*dst, err = __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DeactivateAccessProviderResponse.DeactivateAccessProvider: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
 // DeleteAccessProviderDeleteAccessProvider includes the requested fields of the GraphQL type AccessProvider.
 type DeleteAccessProviderDeleteAccessProvider struct {
 	Typename       *string `json:"__typename"`
@@ -12913,6 +14268,459 @@ func (v *GetIdentityStoreResponse) __premarshalJSON() (*__premarshalGetIdentityS
 	return &retval, nil
 }
 
+// GetUserByEmailResponse is returned by GetUserByEmail on success.
+type GetUserByEmailResponse struct {
+	UserByEmail *GetUserByEmailUserByEmailUserResult `json:"-"`
+}
+
+// GetUserByEmail returns GetUserByEmailResponse.UserByEmail, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailResponse) GetUserByEmail() *GetUserByEmailUserByEmailUserResult {
+	return v.UserByEmail
+}
+
+func (v *GetUserByEmailResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetUserByEmailResponse
+		UserByEmail json.RawMessage `json:"userByEmail"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetUserByEmailResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UserByEmail
+		src := firstPass.UserByEmail
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(GetUserByEmailUserByEmailUserResult)
+			err = __unmarshalGetUserByEmailUserByEmailUserResult(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetUserByEmailResponse.UserByEmail: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetUserByEmailResponse struct {
+	UserByEmail json.RawMessage `json:"userByEmail"`
+}
+
+func (v *GetUserByEmailResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetUserByEmailResponse) __premarshalJSON() (*__premarshalGetUserByEmailResponse, error) {
+	var retval __premarshalGetUserByEmailResponse
+
+	{
+
+		dst := &retval.UserByEmail
+		src := v.UserByEmail
+		if src != nil {
+			var err error
+			*dst, err = __marshalGetUserByEmailUserByEmailUserResult(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetUserByEmailResponse.UserByEmail: %w", err)
+			}
+		}
+	}
+	return &retval, nil
+}
+
+// GetUserByEmailUserByEmailInvalidEmailError includes the requested fields of the GraphQL type InvalidEmailError.
+type GetUserByEmailUserByEmailInvalidEmailError struct {
+	Typename          *string `json:"__typename"`
+	InvalidEmailError `json:"-"`
+}
+
+// GetTypename returns GetUserByEmailUserByEmailInvalidEmailError.Typename, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailInvalidEmailError) GetTypename() *string { return v.Typename }
+
+// GetErrEmail returns GetUserByEmailUserByEmailInvalidEmailError.ErrEmail, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailInvalidEmailError) GetErrEmail() string {
+	return v.InvalidEmailError.ErrEmail
+}
+
+// GetMessage returns GetUserByEmailUserByEmailInvalidEmailError.Message, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailInvalidEmailError) GetMessage() string {
+	return v.InvalidEmailError.Message
+}
+
+func (v *GetUserByEmailUserByEmailInvalidEmailError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetUserByEmailUserByEmailInvalidEmailError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetUserByEmailUserByEmailInvalidEmailError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidEmailError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetUserByEmailUserByEmailInvalidEmailError struct {
+	Typename *string `json:"__typename"`
+
+	ErrEmail string `json:"errEmail"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetUserByEmailUserByEmailInvalidEmailError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetUserByEmailUserByEmailInvalidEmailError) __premarshalJSON() (*__premarshalGetUserByEmailUserByEmailInvalidEmailError, error) {
+	var retval __premarshalGetUserByEmailUserByEmailInvalidEmailError
+
+	retval.Typename = v.Typename
+	retval.ErrEmail = v.InvalidEmailError.ErrEmail
+	retval.Message = v.InvalidEmailError.Message
+	return &retval, nil
+}
+
+// GetUserByEmailUserByEmailNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetUserByEmailUserByEmailNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns GetUserByEmailUserByEmailNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailNotFoundError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetUserByEmailUserByEmailNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailNotFoundError) GetMessage() string { return v.NotFoundError.Message }
+
+func (v *GetUserByEmailUserByEmailNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetUserByEmailUserByEmailNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetUserByEmailUserByEmailNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetUserByEmailUserByEmailNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetUserByEmailUserByEmailNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetUserByEmailUserByEmailNotFoundError) __premarshalJSON() (*__premarshalGetUserByEmailUserByEmailNotFoundError, error) {
+	var retval __premarshalGetUserByEmailUserByEmailNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// GetUserByEmailUserByEmailPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type GetUserByEmailUserByEmailPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns GetUserByEmailUserByEmailPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetUserByEmailUserByEmailPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetUserByEmailUserByEmailPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetUserByEmailUserByEmailPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetUserByEmailUserByEmailPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) __premarshalJSON() (*__premarshalGetUserByEmailUserByEmailPermissionDeniedError, error) {
+	var retval __premarshalGetUserByEmailUserByEmailPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// GetUserByEmailUserByEmailUser includes the requested fields of the GraphQL type User.
+type GetUserByEmailUserByEmailUser struct {
+	Typename *string `json:"__typename"`
+	User     `json:"-"`
+}
+
+// GetTypename returns GetUserByEmailUserByEmailUser.Typename, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailUser) GetTypename() *string { return v.Typename }
+
+// GetId returns GetUserByEmailUserByEmailUser.Id, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailUser) GetId() string { return v.User.Id }
+
+// GetName returns GetUserByEmailUserByEmailUser.Name, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailUser) GetName() string { return v.User.Name }
+
+// GetEmail returns GetUserByEmailUserByEmailUser.Email, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailUser) GetEmail() *string { return v.User.Email }
+
+func (v *GetUserByEmailUserByEmailUser) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetUserByEmailUserByEmailUser
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetUserByEmailUserByEmailUser = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.User)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetUserByEmailUserByEmailUser struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	Email *string `json:"email"`
+}
+
+func (v *GetUserByEmailUserByEmailUser) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetUserByEmailUserByEmailUser) __premarshalJSON() (*__premarshalGetUserByEmailUserByEmailUser, error) {
+	var retval __premarshalGetUserByEmailUserByEmailUser
+
+	retval.Typename = v.Typename
+	retval.Id = v.User.Id
+	retval.Name = v.User.Name
+	retval.Email = v.User.Email
+	return &retval, nil
+}
+
+// GetUserByEmailUserByEmailUserResult includes the requested fields of the GraphQL interface UserResult.
+//
+// GetUserByEmailUserByEmailUserResult is implemented by the following types:
+// GetUserByEmailUserByEmailInvalidEmailError
+// GetUserByEmailUserByEmailNotFoundError
+// GetUserByEmailUserByEmailPermissionDeniedError
+// GetUserByEmailUserByEmailUser
+type GetUserByEmailUserByEmailUserResult interface {
+	implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *GetUserByEmailUserByEmailInvalidEmailError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
+}
+func (v *GetUserByEmailUserByEmailNotFoundError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
+}
+func (v *GetUserByEmailUserByEmailPermissionDeniedError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
+}
+func (v *GetUserByEmailUserByEmailUser) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
+}
+
+func __unmarshalGetUserByEmailUserByEmailUserResult(b []byte, v *GetUserByEmailUserByEmailUserResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "InvalidEmailError":
+		*v = new(GetUserByEmailUserByEmailInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetUserByEmailUserByEmailNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(GetUserByEmailUserByEmailPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(GetUserByEmailUserByEmailUser)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing UserResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetUserByEmailUserByEmailUserResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetUserByEmailUserByEmailUserResult(v *GetUserByEmailUserByEmailUserResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetUserByEmailUserByEmailInvalidEmailError:
+		typename = "InvalidEmailError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetUserByEmailUserByEmailInvalidEmailError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetUserByEmailUserByEmailNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetUserByEmailUserByEmailNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetUserByEmailUserByEmailPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetUserByEmailUserByEmailPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetUserByEmailUserByEmailUser:
+		typename = "User"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetUserByEmailUserByEmailUser
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetUserByEmailUserByEmailUserResult: "%T"`, v)
+	}
+}
+
 // IdentityStore includes the GraphQL fields of IdentityStore requested by the fragment IdentityStore.
 type IdentityStore struct {
 	Id          string    `json:"id"`
@@ -14172,6 +15980,18 @@ func (v *IdentityStorePagePageInfo) __premarshalJSON() (*__premarshalIdentitySto
 	retval.StartCursor = v.PageInfo.StartCursor
 	return &retval, nil
 }
+
+// InvalidEmailError includes the GraphQL fields of InvalidEmailError requested by the fragment InvalidEmailError.
+type InvalidEmailError struct {
+	ErrEmail string `json:"errEmail"`
+	Message  string `json:"message"`
+}
+
+// GetErrEmail returns InvalidEmailError.ErrEmail, and is useful for accessing the field via an interface.
+func (v *InvalidEmailError) GetErrEmail() string { return v.ErrEmail }
+
+// GetMessage returns InvalidEmailError.Message, and is useful for accessing the field via an interface.
+func (v *InvalidEmailError) GetMessage() string { return v.Message }
 
 // ListAccessProvidersAccessProvidersPagedResult includes the requested fields of the GraphQL type PagedResult.
 type ListAccessProvidersAccessProvidersPagedResult struct {
@@ -15811,12 +17631,272 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 
 // UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests includes the requested fields of the GraphQL type AccessProviderWithOptionalAccessRequests.
 type UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests struct {
-	Typename *string `json:"__typename"`
+	Typename       *string                                                                                        `json:"__typename"`
+	AccessProvider UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider `json:"accessProvider"`
 }
 
 // GetTypename returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests.Typename, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests) GetTypename() *string {
 	return v.Typename
+}
+
+// GetAccessProvider returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests.AccessProvider, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests) GetAccessProvider() UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider {
+	return v.AccessProvider
+}
+
+// UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider struct {
+	AccessProvider `json:"-"`
+}
+
+// GetId returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Id, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetId() string {
+	return v.AccessProvider.Id
+}
+
+// GetIsSample returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.IsSample, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetIsSample() bool {
+	return v.AccessProvider.IsSample
+}
+
+// GetCreatedAt returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.CreatedAt, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCreatedAt() time.Time {
+	return v.AccessProvider.CreatedAt
+}
+
+// GetModifiedAt returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetModifiedAt() time.Time {
+	return v.AccessProvider.ModifiedAt
+}
+
+// GetName returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Name, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetName() string {
+	return v.AccessProvider.Name
+}
+
+// GetNamingHint returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NamingHint, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNamingHint() *string {
+	return v.AccessProvider.NamingHint
+}
+
+// GetState returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.State, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetState() models.AccessProviderState {
+	return v.AccessProvider.State
+}
+
+// GetAction returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Action, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetAction() models.AccessProviderAction {
+	return v.AccessProvider.Action
+}
+
+// GetType returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Type, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetType() *string {
+	return v.AccessProvider.Type
+}
+
+// GetDescription returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDescription() string {
+	return v.AccessProvider.Description
+}
+
+// GetPolicyRule returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetPolicyRule() *string {
+	return v.AccessProvider.PolicyRule
+}
+
+// GetOverride returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Override, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetOverride() bool {
+	return v.AccessProvider.Override
+}
+
+// GetExternal returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.External, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetExternal() bool {
+	return v.AccessProvider.External
+}
+
+// GetNotInternalizable returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNotInternalizable() bool {
+	return v.AccessProvider.NotInternalizable
+}
+
+// GetWhoLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLocked() *bool {
+	return v.AccessProvider.WhoLocked
+}
+
+// GetWhoLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLockedReason() *string {
+	return v.AccessProvider.WhoLockedReason
+}
+
+// GetInheritanceLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLocked() *bool {
+	return v.AccessProvider.InheritanceLocked
+}
+
+// GetInheritanceLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLockedReason() *string {
+	return v.AccessProvider.InheritanceLockedReason
+}
+
+// GetWhatLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLocked() *bool {
+	return v.AccessProvider.WhatLocked
+}
+
+// GetWhatLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLockedReason() *string {
+	return v.AccessProvider.WhatLockedReason
+}
+
+// GetNameLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLocked, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLocked() *bool {
+	return v.AccessProvider.NameLocked
+}
+
+// GetNameLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLockedReason() *string {
+	return v.AccessProvider.NameLockedReason
+}
+
+// GetDeleteLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLocked() *bool {
+	return v.AccessProvider.DeleteLocked
+}
+
+// GetDeleteLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLockedReason() *string {
+	return v.AccessProvider.DeleteLockedReason
+}
+
+// GetComplete returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Complete, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetComplete() *bool {
+	return v.AccessProvider.Complete
+}
+
+// GetDataSources returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DataSources, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
+	return v.AccessProvider.DataSources
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProvider)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider struct {
+	Id string `json:"id"`
+
+	IsSample bool `json:"isSample"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Name string `json:"name"`
+
+	NamingHint *string `json:"namingHint"`
+
+	State models.AccessProviderState `json:"state"`
+
+	Action models.AccessProviderAction `json:"action"`
+
+	Type *string `json:"type"`
+
+	Description string `json:"description"`
+
+	PolicyRule *string `json:"policyRule"`
+
+	Override bool `json:"override"`
+
+	External bool `json:"external"`
+
+	NotInternalizable bool `json:"notInternalizable"`
+
+	WhoLocked *bool `json:"whoLocked"`
+
+	WhoLockedReason *string `json:"whoLockedReason"`
+
+	InheritanceLocked *bool `json:"inheritanceLocked"`
+
+	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
+
+	WhatLocked *bool `json:"whatLocked"`
+
+	WhatLockedReason *string `json:"whatLockedReason"`
+
+	NameLocked *bool `json:"nameLocked"`
+
+	NameLockedReason *string `json:"nameLockedReason"`
+
+	DeleteLocked *bool `json:"deleteLocked"`
+
+	DeleteLockedReason *string `json:"deleteLockedReason"`
+
+	Complete *bool `json:"complete"`
+
+	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) __premarshalJSON() (*__premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider, error) {
+	var retval __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider
+
+	retval.Id = v.AccessProvider.Id
+	retval.IsSample = v.AccessProvider.IsSample
+	retval.CreatedAt = v.AccessProvider.CreatedAt
+	retval.ModifiedAt = v.AccessProvider.ModifiedAt
+	retval.Name = v.AccessProvider.Name
+	retval.NamingHint = v.AccessProvider.NamingHint
+	retval.State = v.AccessProvider.State
+	retval.Action = v.AccessProvider.Action
+	retval.Type = v.AccessProvider.Type
+	retval.Description = v.AccessProvider.Description
+	retval.PolicyRule = v.AccessProvider.PolicyRule
+	retval.Override = v.AccessProvider.Override
+	retval.External = v.AccessProvider.External
+	retval.NotInternalizable = v.AccessProvider.NotInternalizable
+	retval.WhoLocked = v.AccessProvider.WhoLocked
+	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
+	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
+	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
+	retval.WhatLocked = v.AccessProvider.WhatLocked
+	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
+	retval.NameLocked = v.AccessProvider.NameLocked
+	retval.NameLockedReason = v.AccessProvider.NameLockedReason
+	retval.DeleteLocked = v.AccessProvider.DeleteLocked
+	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
+	retval.Complete = v.AccessProvider.Complete
+	retval.DataSources = v.AccessProvider.DataSources
+	return &retval, nil
 }
 
 // UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult includes the requested fields of the GraphQL interface AccessProviderWithOptionalAccessRequestsResult.
@@ -16872,6 +18952,22 @@ func (v *UpdateIdentityStoreUpdateIdentityStorePermissionDeniedError) __premarsh
 	return &retval, nil
 }
 
+// User includes the GraphQL fields of User requested by the fragment User.
+type User struct {
+	Id    string  `json:"id"`
+	Name  string  `json:"name"`
+	Email *string `json:"email"`
+}
+
+// GetId returns User.Id, and is useful for accessing the field via an interface.
+func (v *User) GetId() string { return v.Id }
+
+// GetName returns User.Name, and is useful for accessing the field via an interface.
+func (v *User) GetName() string { return v.Name }
+
+// GetEmail returns User.Email, and is useful for accessing the field via an interface.
+func (v *User) GetEmail() *string { return v.Email }
+
 type WhatInput struct {
 	Permissions       []*string `json:"permissions"`
 	GlobalPermissions []*string `json:"globalPermissions"`
@@ -16933,6 +19029,14 @@ func (v *WhoItemInput) GetType() *AccessWhoItemType { return v.Type }
 // GetPromiseDuration returns WhoItemInput.PromiseDuration, and is useful for accessing the field via an interface.
 func (v *WhoItemInput) GetPromiseDuration() *time.Duration { return v.PromiseDuration }
 
+// __ActivateAccessProviderInput is used internally by genqlient
+type __ActivateAccessProviderInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __ActivateAccessProviderInput.Id, and is useful for accessing the field via an interface.
+func (v *__ActivateAccessProviderInput) GetId() string { return v.Id }
+
 // __AddIdentityStoreToDataSourceInput is used internally by genqlient
 type __AddIdentityStoreToDataSourceInput struct {
 	DsId string `json:"dsId"`
@@ -16988,6 +19092,14 @@ type __DataSourceIdentityStoresInput struct {
 
 // GetId returns __DataSourceIdentityStoresInput.Id, and is useful for accessing the field via an interface.
 func (v *__DataSourceIdentityStoresInput) GetId() string { return v.Id }
+
+// __DeactivateAccessProviderInput is used internally by genqlient
+type __DeactivateAccessProviderInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __DeactivateAccessProviderInput.Id, and is useful for accessing the field via an interface.
+func (v *__DeactivateAccessProviderInput) GetId() string { return v.Id }
 
 // __DeleteAccessProviderInput is used internally by genqlient
 type __DeleteAccessProviderInput struct {
@@ -17086,6 +19198,14 @@ type __GetIdentityStoreInput struct {
 
 // GetId returns __GetIdentityStoreInput.Id, and is useful for accessing the field via an interface.
 func (v *__GetIdentityStoreInput) GetId() string { return v.Id }
+
+// __GetUserByEmailInput is used internally by genqlient
+type __GetUserByEmailInput struct {
+	Email string `json:"email"`
+}
+
+// GetEmail returns __GetUserByEmailInput.Email, and is useful for accessing the field via an interface.
+func (v *__GetUserByEmailInput) GetEmail() string { return v.Email }
 
 // __ListAccessProvidersInput is used internally by genqlient
 type __ListAccessProvidersInput struct {
@@ -17203,6 +19323,93 @@ func (v *__UpdateIdentityStoreInput) GetId() string { return v.Id }
 // GetInput returns __UpdateIdentityStoreInput.Input, and is useful for accessing the field via an interface.
 func (v *__UpdateIdentityStoreInput) GetInput() IdentityStoreInput { return v.Input }
 
+// The query or mutation executed by ActivateAccessProvider.
+const ActivateAccessProvider_Operation = `
+mutation ActivateAccessProvider ($id: ID!) {
+	activateAccessProvider(id: $id) {
+		__typename
+		... AccessProvider
+		... NotFoundError
+		... PermissionDeniedError
+	}
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	type
+	description
+	policyRule
+	override
+	external
+	notInternalizable
+	whoLocked
+	whoLockedReason
+	inheritanceLocked
+	inheritanceLockedReason
+	whatLocked
+	whatLockedReason
+	nameLocked
+	nameLockedReason
+	deleteLocked
+	deleteLockedReason
+	complete
+	dataSources {
+		... DataSource
+	}
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+`
+
+func ActivateAccessProvider(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+) (*ActivateAccessProviderResponse, error) {
+	req := &graphql.Request{
+		OpName: "ActivateAccessProvider",
+		Query:  ActivateAccessProvider_Operation,
+		Variables: &__ActivateAccessProviderInput{
+			Id: id,
+		},
+	}
+	var err error
+
+	var data ActivateAccessProviderResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 // The query or mutation executed by AddIdentityStoreToDataSource.
 const AddIdentityStoreToDataSource_Operation = `
 mutation AddIdentityStoreToDataSource ($dsId: ID!, $isId: ID!) {
@@ -17270,14 +19477,7 @@ mutation CreateAccessProvider ($ap: AccessProviderInput!) {
 		... AccessProvider
 		... on AccessProviderWithOptionalAccessRequests {
 			accessProvider {
-				id
-				name
-				state
-				action
-			}
-			accessRequests {
-				id
-				name
+				... AccessProvider
 			}
 		}
 		... PermissionDeniedError
@@ -17566,6 +19766,93 @@ func DataSourceIdentityStores(
 	var err error
 
 	var data DataSourceIdentityStoresResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by DeactivateAccessProvider.
+const DeactivateAccessProvider_Operation = `
+mutation DeactivateAccessProvider ($id: ID!) {
+	deactivateAccessProvider(id: $id) {
+		__typename
+		... AccessProvider
+		... NotFoundError
+		... PermissionDeniedError
+	}
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	type
+	description
+	policyRule
+	override
+	external
+	notInternalizable
+	whoLocked
+	whoLockedReason
+	inheritanceLocked
+	inheritanceLockedReason
+	whatLocked
+	whatLockedReason
+	nameLocked
+	nameLockedReason
+	deleteLocked
+	deleteLockedReason
+	complete
+	dataSources {
+		... DataSource
+	}
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+`
+
+func DeactivateAccessProvider(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+) (*DeactivateAccessProviderResponse, error) {
+	req := &graphql.Request{
+		OpName: "DeactivateAccessProvider",
+		Query:  DeactivateAccessProvider_Operation,
+		Variables: &__DeactivateAccessProviderInput{
+			Id: id,
+		},
+	}
+	var err error
+
+	var data DeactivateAccessProviderResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(
@@ -17982,10 +20269,14 @@ fragment AccessProviderWhoListItem on AccessWhoItem {
 			}
 		}
 		... on User {
-			name
-			id
+			... User
 		}
 	}
+}
+fragment User on User {
+	id
+	name
+	email
 }
 `
 
@@ -18124,6 +20415,60 @@ func GetIdentityStore(
 	var err error
 
 	var data GetIdentityStoreResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by GetUserByEmail.
+const GetUserByEmail_Operation = `
+query GetUserByEmail ($email: String!) {
+	userByEmail(email: $email) {
+		__typename
+		... User
+		... PermissionDeniedError
+		... NotFoundError
+		... InvalidEmailError
+	}
+}
+fragment User on User {
+	id
+	name
+	email
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidEmailError on InvalidEmailError {
+	errEmail: email
+	message
+}
+`
+
+func GetUserByEmail(
+	ctx context.Context,
+	client graphql.Client,
+	email string,
+) (*GetUserByEmailResponse, error) {
+	req := &graphql.Request{
+		OpName: "GetUserByEmail",
+		Query:  GetUserByEmail_Operation,
+		Variables: &__GetUserByEmailInput{
+			Email: email,
+		},
+	}
+	var err error
+
+	var data GetUserByEmailResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(
@@ -18456,6 +20801,11 @@ mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!) {
 	updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
 		__typename
 		... AccessProvider
+		... on AccessProviderWithOptionalAccessRequests {
+			accessProvider {
+				... AccessProvider
+			}
+		}
 		... PermissionDeniedError
 	}
 }

@@ -35,6 +35,8 @@ func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap type
 	switch response := result.CreateAccessProvider.(type) {
 	case *schema.CreateAccessProviderCreateAccessProvider:
 		return &response.AccessProvider, nil
+	case *schema.CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests:
+		return &response.AccessProvider.AccessProvider, nil
 	case *schema.CreateAccessProviderCreateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("createAccessProvider", response.Message)
 	default:
@@ -54,6 +56,8 @@ func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id stri
 	switch response := result.UpdateAccessProvider.(type) {
 	case *schema.UpdateAccessProviderUpdateAccessProvider:
 		return &response.AccessProvider, nil
+	case *schema.UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests:
+		return &response.AccessProvider.AccessProvider, nil
 	case *schema.UpdateAccessProviderUpdateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("updateAccessProvider", response.Message)
 	default:
@@ -79,6 +83,42 @@ func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id stri
 		return types.NewErrNotFound(id, "accessProvider", response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteAccessProvider)
+	}
+}
+
+func (a *AccessProviderClient) ActivateAccessProvider(ctx context.Context, id string) (*types.AccessProvider, error) {
+	result, err := schema.ActivateAccessProvider(ctx, a.client, id)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch response := result.ActivateAccessProvider.(type) {
+	case *schema.ActivateAccessProviderActivateAccessProvider:
+		return &response.AccessProvider, nil
+	case *schema.ActivateAccessProviderActivateAccessProviderNotFoundError:
+		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+	case *schema.ActivateAccessProviderActivateAccessProviderPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("activateAccessProvider", response.Message)
+	default:
+		return nil, fmt.Errorf("unexpected response type: %T", result.ActivateAccessProvider)
+	}
+}
+
+func (a *AccessProviderClient) DeactivateAccessProvider(ctx context.Context, id string) (*types.AccessProvider, error) {
+	result, err := schema.DeactivateAccessProvider(ctx, a.client, id)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch response := result.DeactivateAccessProvider.(type) {
+	case *schema.DeactivateAccessProviderDeactivateAccessProvider:
+		return &response.AccessProvider, nil
+	case *schema.DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
+		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+	case *schema.DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("deactivateAccessProvider", response.Message)
+	default:
+		return nil, fmt.Errorf("unexpected response type: %T", result.DeactivateAccessProvider)
 	}
 }
 

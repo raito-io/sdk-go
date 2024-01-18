@@ -80,8 +80,7 @@ fragment AccessProviderWhoListItem on AccessWhoItem {
             }
         }
         ... on User {
-            name
-            id
+            ...User
         }
     }
 }
@@ -104,14 +103,7 @@ mutation CreateAccessProvider($ap: AccessProviderInput!) {
         ... AccessProvider
         ... on AccessProviderWithOptionalAccessRequests {
             accessProvider {
-                id
-                name
-                state
-                action
-            }
-            accessRequests {
-                id
-                name
+                ...AccessProvider
             }
         }
         ... PermissionDeniedError
@@ -122,6 +114,11 @@ mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!) {
     updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
         __typename
         ...AccessProvider
+        ... on AccessProviderWithOptionalAccessRequests {
+            accessProvider {
+                ...AccessProvider
+            }
+        }
         ... PermissionDeniedError
     }
 }
@@ -132,6 +129,22 @@ mutation DeleteAccessProvider($id: ID!) {
         ...AccessProvider
         ... NotFoundError
         ... PermissionDeniedError
+    }
+}
+
+mutation ActivateAccessProvider($id: ID!) {
+    activateAccessProvider(id: $id) {
+        ...AccessProvider
+        ...NotFoundError
+        ...PermissionDeniedError
+    }
+}
+
+mutation DeactivateAccessProvider($id: ID!) {
+    deactivateAccessProvider(id: $id) {
+        ...AccessProvider
+        ...NotFoundError
+        ...PermissionDeniedError
     }
 }
 
