@@ -1,0 +1,19 @@
+fragment User on User {
+    id
+    name
+    email
+}
+
+fragment InvalidEmailError on InvalidEmailError {
+    errEmail: email
+    message
+}
+
+query GetUserByEmail($email: String!) {
+    userByEmail(email: $email) {
+        ... User
+        ... PermissionDeniedError
+        ... NotFoundError
+        ... InvalidEmailError
+    }
+}
