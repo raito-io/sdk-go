@@ -12,7 +12,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.32.1
 	github.com/aws/smithy-go v1.19.0
 	github.com/raito-io/enumer v0.1.3
-	golang.org/x/tools v0.13.0
+	golang.org/x/tools v0.17.0
 )
 
 require (
@@ -28,7 +28,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.26.7 // indirect
 	github.com/pascaldekloe/name v1.0.1 // indirect
 	github.com/vektah/gqlparser/v2 v2.5.1 // indirect
-	golang.org/x/mod v0.12.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/mod v0.14.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
