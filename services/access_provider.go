@@ -323,3 +323,70 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 
 	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)
 }
+
+// AccessProviderWhatAccessProviderListOptions options for listing what access providers of an AccessProvider in Raito Cloud.
+type AccessProviderWhatAccessProviderListOptions struct {
+	order  []types.AccessWhatOrderByInput
+	filter *types.AccessProviderWhatAccessProviderFilterInput
+}
+
+// WithAccessProviderWhatAccessProviderListOrder can be used to specify the order of the returned AccessProviderWhatAccessProviderList
+func WithAccessProviderWhatAccessProviderListOrder(input ...schema.AccessWhatOrderByInput) func(options *AccessProviderWhatAccessProviderListOptions) {
+	return func(options *AccessProviderWhatAccessProviderListOptions) {
+		options.order = append(options.order, input...)
+	}
+}
+
+// WithAccessProviderWhatAccessProviderListFilter can be used to specify the filter of the returned AccessProviderWhatAccessProviderList.
+func WithAccessProviderWhatAccessProviderListFilter(filter *types.AccessProviderWhatAccessProviderFilterInput) func(options *AccessProviderWhatAccessProviderListOptions) {
+	return func(options *AccessProviderWhatAccessProviderListOptions) {
+		options.filter = filter
+	}
+}
+
+// GetAccessProviderWhatAccessProviderList returns all what access providers of an AccessProvider in Raito Cloud.
+func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx context.Context, id string, ops ...func(*AccessProviderWhatAccessProviderListOptions)) <-chan types.ListItem[types.AccessWhatAccessProviderItem] {
+	options := AccessProviderWhatAccessProviderListOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatAccessProviderListEdgesEdge, error) {
+		output, err := schema.GetAccessProviderWhatAccessProviders(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order, options.filter)
+		if err != nil {
+			return nil, nil, types.NewErrClient(err)
+		}
+
+		switch ap := output.AccessProvider.(type) {
+		case *schema.GetAccessProviderWhatAccessProvidersAccessProvider:
+			switch whatList := ap.WhatAccessProviders.(type) {
+			case *schema.GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult:
+				return &whatList.PageInfo.PageInfo, whatList.Edges, nil
+			case *schema.GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError:
+				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatAccessProviderList", whatList.Message)
+			default:
+				return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
+			}
+		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError:
+			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError:
+			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
+		default:
+			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
+		}
+	}
+
+	edgeFn := func(edge *types.AccessProviderWhatAccessProviderListEdgesEdge) (*string, *types.AccessWhatAccessProviderItem, error) {
+		cursor := edge.Cursor
+
+		if edge.Node == nil {
+			return cursor, nil, nil
+		}
+
+		listItem := (*edge.Node).(*types.AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem)
+
+		return cursor, &listItem.AccessWhatAccessProviderItem, nil
+	}
+
+	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)
+}

@@ -135,14 +135,41 @@ func (c *DataSourceClient) GetDataSource(ctx context.Context, id string) (*types
 		return &ds.DataSource, nil
 	case *schema.GetDataSourceDataSourcePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("dataSource", ds.Message)
+	case *schema.GetDataSourceDataSourceNotFoundError:
+		return nil, types.NewErrNotFound(id, "datasource", ds.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.DataSource)
 	}
 }
 
+// GetMaskingMetadata Get masking information for a DataSource
+func (c *DataSourceClient) GetMaskingMetadata(ctx context.Context, id string) (*types.MaskingMetadata, error) {
+	result, err := schema.DataSourceMaskInformation(ctx, c.client, id)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch ds := result.DataSource.(type) {
+	case *schema.DataSourceMaskInformationDataSource:
+		if ds.MaskingMetadata != nil {
+			return &ds.MaskingMetadata.MaskingMetadata, nil
+		} else {
+			return nil, nil
+		}
+	case *schema.DataSourceMaskInformationDataSourcePermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("dataSource", ds.Message)
+	case *schema.DataSourceMaskInformationDataSourceNotFoundError:
+		return nil, types.NewErrNotFound(id, "datasource", ds.Message)
+	default:
+		return nil, fmt.Errorf("unexpected response type: %T", result.DataSource)
+	}
+}
+
+// DataSourceListOptions list options for listing DataSources.
 type DataSourceListOptions struct {
 	order  []types.DataSourceOrderByInput
 	filter *types.DataSourceFilterInput
+	search *string
 }
 
 // WithDataSourceListOrder sets the order of the returned DataSources in the ListDataSources call.
@@ -156,6 +183,13 @@ func WithDataSourceListOrder(input ...types.DataSourceOrderByInput) func(options
 func WithDataSourceListFilter(input *types.DataSourceFilterInput) func(options *DataSourceListOptions) {
 	return func(options *DataSourceListOptions) {
 		options.filter = input
+	}
+}
+
+// WithDataSourceListSearch sets the search query of the returned DataSources in the ListDataSources call.
+func WithDataSourceListSearch(input *string) func(options *DataSourceListOptions) {
+	return func(options *DataSourceListOptions) {
+		options.search = input
 	}
 }
 

@@ -49,6 +49,13 @@ fragment AccessProviderWhatListItem on AccessWhatItem {
     permissions
 }
 
+fragment AccessWhatAccessProviderItem on AccessWhatAccessProviderItem {
+    accessProvider {
+        ... AccessProvider
+    }
+    expiresAt
+}
+
 fragment AccessProviderWhatList on PagedResult {
     pageInfo {
         ...PageInfo
@@ -57,6 +64,18 @@ fragment AccessProviderWhatList on PagedResult {
         cursor
         node {
                 ...AccessProviderWhatListItem
+        }
+    }
+}
+
+fragment AccessProviderWhatAccessProviderList on PagedResult {
+    pageInfo {
+       ...PageInfo
+    }
+    edges {
+        cursor
+        node {
+            ...AccessWhatAccessProviderItem
         }
     }
 }
@@ -175,6 +194,20 @@ query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int,
         }
         ... PermissionDeniedError
         ... NotFoundError
+    }
+}
+
+query GetAccessProviderWhatAccessProviders($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!], $filter: AccessProviderWhatAccessProviderFilterInput) {
+    accessProvider(id: $id) {
+        ... on AccessProvider {
+            whatAccessProviders(after: $after, limit: $limit, search: $search, filter: $filter, order: $order) {
+                __typename
+                ...AccessProviderWhatAccessProviderList
+                ...PermissionDeniedError
+            }
+        }
+        ...PermissionDeniedError
+        ...NotFoundError
     }
 }
 
