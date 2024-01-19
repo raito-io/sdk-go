@@ -1713,6 +1713,1222 @@ func (v *AccessProviderPagePageInfo) __premarshalJSON() (*__premarshalAccessProv
 	return &retval, nil
 }
 
+type AccessProviderWhatAccessProviderFilterInput struct {
+	Actions []models.AccessProviderAction `json:"actions"`
+}
+
+// GetActions returns AccessProviderWhatAccessProviderFilterInput.Actions, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderFilterInput) GetActions() []models.AccessProviderAction {
+	return v.Actions
+}
+
+// AccessProviderWhatAccessProviderList includes the GraphQL fields of PagedResult requested by the fragment AccessProviderWhatAccessProviderList.
+type AccessProviderWhatAccessProviderList struct {
+	PageInfo *AccessProviderWhatAccessProviderListPageInfo   `json:"pageInfo"`
+	Edges    []AccessProviderWhatAccessProviderListEdgesEdge `json:"edges"`
+}
+
+// GetPageInfo returns AccessProviderWhatAccessProviderList.PageInfo, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderList) GetPageInfo() *AccessProviderWhatAccessProviderListPageInfo {
+	return v.PageInfo
+}
+
+// GetEdges returns AccessProviderWhatAccessProviderList.Edges, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderList) GetEdges() []AccessProviderWhatAccessProviderListEdgesEdge {
+	return v.Edges
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdge includes the requested fields of the GraphQL type Edge.
+type AccessProviderWhatAccessProviderListEdgesEdge struct {
+	Cursor *string                                                `json:"cursor"`
+	Node   *AccessProviderWhatAccessProviderListEdgesEdgeNodeItem `json:"-"`
+}
+
+// GetCursor returns AccessProviderWhatAccessProviderListEdgesEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdge) GetCursor() *string { return v.Cursor }
+
+// GetNode returns AccessProviderWhatAccessProviderListEdgesEdge.Node, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdge) GetNode() *AccessProviderWhatAccessProviderListEdgesEdgeNodeItem {
+	return v.Node
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdge) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAccessProviderListEdgesEdge
+		Node json.RawMessage `json:"node"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAccessProviderListEdgesEdge = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Node
+		src := firstPass.Node
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeItem)
+			err = __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal AccessProviderWhatAccessProviderListEdgesEdge.Node: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAccessProviderListEdgesEdge struct {
+	Cursor *string `json:"cursor"`
+
+	Node json.RawMessage `json:"node"`
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdge) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdge) __premarshalJSON() (*__premarshalAccessProviderWhatAccessProviderListEdgesEdge, error) {
+	var retval __premarshalAccessProviderWhatAccessProviderListEdgesEdge
+
+	retval.Cursor = v.Cursor
+	{
+
+		dst := &retval.Node
+		src := v.Node
+		if src != nil {
+			var err error
+			*dst, err = __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal AccessProviderWhatAccessProviderListEdgesEdge.Node: %w", err)
+			}
+		}
+	}
+	return &retval, nil
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail includes the requested fields of the GraphQL type AccessProviderMaskDetail.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch includes the requested fields of the GraphQL type AccessProviderMatch.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest includes the requested fields of the GraphQL type AccessRequest.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification includes the requested fields of the GraphQL type AccessRequestNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem includes the requested fields of the GraphQL type AccessRequestWhatItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem includes the requested fields of the GraphQL type AccessWhatAccessProviderItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem struct {
+	Typename                     *string `json:"__typename"`
+	AccessWhatAccessProviderItem `json:"-"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) GetTypename() *string {
+	return v.Typename
+}
+
+// GetAccessProvider returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem.AccessProvider, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) GetAccessProvider() *AccessWhatAccessProviderItemAccessProvider {
+	return v.AccessWhatAccessProviderItem.AccessProvider
+}
+
+// GetExpiresAt returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem.ExpiresAt, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) GetExpiresAt() *time.Time {
+	return v.AccessWhatAccessProviderItem.ExpiresAt
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessWhatAccessProviderItem)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem struct {
+	Typename *string `json:"__typename"`
+
+	AccessProvider *AccessWhatAccessProviderItemAccessProvider `json:"accessProvider"`
+
+	ExpiresAt *time.Time `json:"expiresAt"`
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) __premarshalJSON() (*__premarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem, error) {
+	var retval __premarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem
+
+	retval.Typename = v.Typename
+	retval.AccessProvider = v.AccessWhatAccessProviderItem.AccessProvider
+	retval.ExpiresAt = v.AccessWhatAccessProviderItem.ExpiresAt
+	return &retval, nil
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem includes the requested fields of the GraphQL type AccessWhatItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem includes the requested fields of the GraphQL type AccessWhoItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount includes the requested fields of the GraphQL type Account.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog includes the requested fields of the GraphQL type AuditDiffLog.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeComment includes the requested fields of the GraphQL type Comment.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeComment struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeComment.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeComment) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem includes the requested fields of the GraphQL type DataAccessReturnItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject includes the requested fields of the GraphQL type DataObject.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource includes the requested fields of the GraphQL type DataSource.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage includes the requested fields of the GraphQL type DataUsage.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification includes the requested fields of the GraphQL type DatasourceNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification includes the requested fields of the GraphQL type GlobalRoleAssignmentNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup includes the requested fields of the GraphQL type Group.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem includes the requested fields of the GraphQL type GroupedDataAccessReturnItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem includes the requested fields of the GraphQL type GroupedUserAccessReturnItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore includes the requested fields of the GraphQL type IdentityStore.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult includes the requested fields of the GraphQL type InsightsResult.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeItem includes the requested fields of the GraphQL interface Item.
+//
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeItem is implemented by the following types:
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeComment
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeJob
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg
+// AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRole
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTag
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTask
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUser
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeItem interface {
+	implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeComment) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeJob) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTask) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUser) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+
+func __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(b []byte, v *AccessProviderWhatAccessProviderListEdgesEdgeNodeItem) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "AccessProviderMaskDetail":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail)
+		return json.Unmarshal(b, *v)
+	case "AccessProviderMatch":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch)
+		return json.Unmarshal(b, *v)
+	case "AccessRequest":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest)
+		return json.Unmarshal(b, *v)
+	case "AccessRequestNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification)
+		return json.Unmarshal(b, *v)
+	case "AccessRequestWhatItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhatAccessProviderItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhatItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhoItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem)
+		return json.Unmarshal(b, *v)
+	case "Account":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount)
+		return json.Unmarshal(b, *v)
+	case "AuditDiffLog":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog)
+		return json.Unmarshal(b, *v)
+	case "Comment":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeComment)
+		return json.Unmarshal(b, *v)
+	case "DataAccessReturnItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "DataObject":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectType":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType)
+		return json.Unmarshal(b, *v)
+	case "DataSource":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource)
+		return json.Unmarshal(b, *v)
+	case "DataUsage":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage)
+		return json.Unmarshal(b, *v)
+	case "DatasourceNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification)
+		return json.Unmarshal(b, *v)
+	case "GlobalRoleAssignmentNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "Group":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup)
+		return json.Unmarshal(b, *v)
+	case "GroupedDataAccessReturnItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "GroupedUserAccessReturnItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "IdentityStore":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InsightsResult":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult)
+		return json.Unmarshal(b, *v)
+	case "Issue":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue)
+		return json.Unmarshal(b, *v)
+	case "Job":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeJob)
+		return json.Unmarshal(b, *v)
+	case "JobLogMsg":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg)
+		return json.Unmarshal(b, *v)
+	case "PromiseDetails":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRole)
+		return json.Unmarshal(b, *v)
+	case "RoleAssignment":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment)
+		return json.Unmarshal(b, *v)
+	case "RoleAssignmentNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "SearchResultItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "Tag":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeTag)
+		return json.Unmarshal(b, *v)
+	case "Task":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeTask)
+		return json.Unmarshal(b, *v)
+	case "TaskNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeUser)
+		return json.Unmarshal(b, *v)
+	case "UserAccessReturnItem":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "UserSubtask":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask)
+		return json.Unmarshal(b, *v)
+	case "UserTask":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing Item.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for AccessProviderWhatAccessProviderListEdgesEdgeNodeItem: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(v *AccessProviderWhatAccessProviderListEdgesEdgeNodeItem) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider:
+		typename = "AccessProvider"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProvider
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail:
+		typename = "AccessProviderMaskDetail"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMaskDetail
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch:
+		typename = "AccessProviderMatch"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessProviderMatch
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest:
+		typename = "AccessRequest"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequest
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification:
+		typename = "AccessRequestNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem:
+		typename = "AccessRequestWhatItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessRequestWhatItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem:
+		typename = "AccessWhatAccessProviderItem"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem:
+		typename = "AccessWhatItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem:
+		typename = "AccessWhoItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhoItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount:
+		typename = "Account"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAccount
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog:
+		typename = "AuditDiffLog"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeAuditDiffLog
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeComment:
+		typename = "Comment"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeComment
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem:
+		typename = "DataAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject:
+		typename = "DataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType:
+		typename = "DataObjectType"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource:
+		typename = "DataSource"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage:
+		typename = "DataUsage"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification:
+		typename = "DatasourceNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDatasourceNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification:
+		typename = "GlobalRoleAssignmentNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeGlobalRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup:
+		typename = "Group"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeGroup
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem:
+		typename = "GroupedDataAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedDataAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem:
+		typename = "GroupedUserAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeGroupedUserAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore:
+		typename = "IdentityStore"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeIdentityStore
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult:
+		typename = "InsightsResult"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeInsightsResult
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue:
+		typename = "Issue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeJob:
+		typename = "Job"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeJob
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg:
+		typename = "JobLogMsg"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails:
+		typename = "PromiseDetails"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeRole:
+		typename = "Role"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeRole
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment:
+		typename = "RoleAssignment"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification:
+		typename = "RoleAssignmentNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem:
+		typename = "SearchResultItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeTag:
+		typename = "Tag"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeTag
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeTask:
+		typename = "Task"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeTask
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification:
+		typename = "TaskNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeUser:
+		typename = "User"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeUser
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem:
+		typename = "UserAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask:
+		typename = "UserSubtask"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask:
+		typename = "UserTask"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for AccessProviderWhatAccessProviderListEdgesEdgeNodeItem: "%T"`, v)
+	}
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeJob includes the requested fields of the GraphQL type Job.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeJob struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeJob.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeJob) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg includes the requested fields of the GraphQL type JobLogMsg.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails includes the requested fields of the GraphQL type PromiseDetails.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeRole struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeRole.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRole) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment includes the requested fields of the GraphQL type RoleAssignment.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification includes the requested fields of the GraphQL type RoleAssignmentNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem includes the requested fields of the GraphQL type SearchResultItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeTag struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeTag.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTag) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTask includes the requested fields of the GraphQL type Task.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeTask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeTask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTask) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification includes the requested fields of the GraphQL type TaskNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUser includes the requested fields of the GraphQL type User.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeUser struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeUser.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUser) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem includes the requested fields of the GraphQL type UserAccessReturnItem.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask includes the requested fields of the GraphQL type UserSubtask.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserSubtask) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask includes the requested fields of the GraphQL type UserTask.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeUserTask) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListPageInfo includes the requested fields of the GraphQL type PageInfo.
+type AccessProviderWhatAccessProviderListPageInfo struct {
+	PageInfo `json:"-"`
+}
+
+// GetHasNextPage returns AccessProviderWhatAccessProviderListPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListPageInfo) GetHasNextPage() *bool {
+	return v.PageInfo.HasNextPage
+}
+
+// GetStartCursor returns AccessProviderWhatAccessProviderListPageInfo.StartCursor, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListPageInfo) GetStartCursor() *string {
+	return v.PageInfo.StartCursor
+}
+
+func (v *AccessProviderWhatAccessProviderListPageInfo) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAccessProviderListPageInfo
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAccessProviderListPageInfo = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PageInfo)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAccessProviderListPageInfo struct {
+	HasNextPage *bool `json:"hasNextPage"`
+
+	StartCursor *string `json:"startCursor"`
+}
+
+func (v *AccessProviderWhatAccessProviderListPageInfo) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAccessProviderListPageInfo) __premarshalJSON() (*__premarshalAccessProviderWhatAccessProviderListPageInfo, error) {
+	var retval __premarshalAccessProviderWhatAccessProviderListPageInfo
+
+	retval.HasNextPage = v.PageInfo.HasNextPage
+	retval.StartCursor = v.PageInfo.StartCursor
+	return &retval, nil
+}
+
 type AccessProviderWhatInputAP struct {
 	AccessProvider string     `json:"accessProvider"`
 	ExpiresAt      *time.Time `json:"expiresAt"`
@@ -3175,7 +4391,7 @@ type AccessProviderWhoListEdgesEdgeNodeAccessWhoItem struct {
 func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetTypename() *string { return v.Typename }
 
 // GetExpiresAfter returns AccessProviderWhoListEdgesEdgeNodeAccessWhoItem.ExpiresAfter, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetExpiresAfter() *time.Duration {
+func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetExpiresAfter() *int64 {
 	return v.AccessProviderWhoListItem.ExpiresAfter
 }
 
@@ -3185,7 +4401,7 @@ func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetExpiresAt() *time.T
 }
 
 // GetPromiseDuration returns AccessProviderWhoListEdgesEdgeNodeAccessWhoItem.PromiseDuration, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetPromiseDuration() *time.Duration {
+func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) GetPromiseDuration() *int64 {
 	return v.AccessProviderWhoListItem.PromiseDuration
 }
 
@@ -3227,11 +4443,11 @@ func (v *AccessProviderWhoListEdgesEdgeNodeAccessWhoItem) UnmarshalJSON(b []byte
 type __premarshalAccessProviderWhoListEdgesEdgeNodeAccessWhoItem struct {
 	Typename *string `json:"__typename"`
 
-	ExpiresAfter *time.Duration `json:"expiresAfter"`
+	ExpiresAfter *int64 `json:"expiresAfter"`
 
 	ExpiresAt *time.Time `json:"expiresAt"`
 
-	PromiseDuration *time.Duration `json:"promiseDuration"`
+	PromiseDuration *int64 `json:"promiseDuration"`
 
 	Type AccessWhoItemType `json:"type"`
 
@@ -4120,21 +5336,21 @@ func (v *AccessProviderWhoListEdgesEdgeNodeUserTask) GetTypename() *string { ret
 
 // AccessProviderWhoListItem includes the GraphQL fields of AccessWhoItem requested by the fragment AccessProviderWhoListItem.
 type AccessProviderWhoListItem struct {
-	ExpiresAfter    *time.Duration                                 `json:"expiresAfter"`
+	ExpiresAfter    *int64                                         `json:"expiresAfter"`
 	ExpiresAt       *time.Time                                     `json:"expiresAt"`
-	PromiseDuration *time.Duration                                 `json:"promiseDuration"`
+	PromiseDuration *int64                                         `json:"promiseDuration"`
 	Type            AccessWhoItemType                              `json:"type"`
 	Item            AccessProviderWhoListItemItemAccessWhoItemItem `json:"-"`
 }
 
 // GetExpiresAfter returns AccessProviderWhoListItem.ExpiresAfter, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListItem) GetExpiresAfter() *time.Duration { return v.ExpiresAfter }
+func (v *AccessProviderWhoListItem) GetExpiresAfter() *int64 { return v.ExpiresAfter }
 
 // GetExpiresAt returns AccessProviderWhoListItem.ExpiresAt, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListItem) GetExpiresAt() *time.Time { return v.ExpiresAt }
 
 // GetPromiseDuration returns AccessProviderWhoListItem.PromiseDuration, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoListItem) GetPromiseDuration() *time.Duration { return v.PromiseDuration }
+func (v *AccessProviderWhoListItem) GetPromiseDuration() *int64 { return v.PromiseDuration }
 
 // GetType returns AccessProviderWhoListItem.Type, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListItem) GetType() AccessWhoItemType { return v.Type }
@@ -4178,11 +5394,11 @@ func (v *AccessProviderWhoListItem) UnmarshalJSON(b []byte) error {
 }
 
 type __premarshalAccessProviderWhoListItem struct {
-	ExpiresAfter *time.Duration `json:"expiresAfter"`
+	ExpiresAfter *int64 `json:"expiresAfter"`
 
 	ExpiresAt *time.Time `json:"expiresAt"`
 
-	PromiseDuration *time.Duration `json:"promiseDuration"`
+	PromiseDuration *int64 `json:"promiseDuration"`
 
 	Type AccessWhoItemType `json:"type"`
 
@@ -4517,6 +5733,268 @@ type AccessProviderWhoOrderByInput struct {
 
 // GetName returns AccessProviderWhoOrderByInput.Name, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoOrderByInput) GetName() *Sort { return v.Name }
+
+// AccessWhatAccessProviderItem includes the GraphQL fields of AccessWhatAccessProviderItem requested by the fragment AccessWhatAccessProviderItem.
+type AccessWhatAccessProviderItem struct {
+	AccessProvider *AccessWhatAccessProviderItemAccessProvider `json:"accessProvider"`
+	ExpiresAt      *time.Time                                  `json:"expiresAt"`
+}
+
+// GetAccessProvider returns AccessWhatAccessProviderItem.AccessProvider, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItem) GetAccessProvider() *AccessWhatAccessProviderItemAccessProvider {
+	return v.AccessProvider
+}
+
+// GetExpiresAt returns AccessWhatAccessProviderItem.ExpiresAt, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItem) GetExpiresAt() *time.Time { return v.ExpiresAt }
+
+// AccessWhatAccessProviderItemAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type AccessWhatAccessProviderItemAccessProvider struct {
+	AccessProvider `json:"-"`
+}
+
+// GetId returns AccessWhatAccessProviderItemAccessProvider.Id, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetId() string { return v.AccessProvider.Id }
+
+// GetIsSample returns AccessWhatAccessProviderItemAccessProvider.IsSample, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetIsSample() bool {
+	return v.AccessProvider.IsSample
+}
+
+// GetCreatedAt returns AccessWhatAccessProviderItemAccessProvider.CreatedAt, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetCreatedAt() time.Time {
+	return v.AccessProvider.CreatedAt
+}
+
+// GetModifiedAt returns AccessWhatAccessProviderItemAccessProvider.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetModifiedAt() time.Time {
+	return v.AccessProvider.ModifiedAt
+}
+
+// GetName returns AccessWhatAccessProviderItemAccessProvider.Name, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetName() string { return v.AccessProvider.Name }
+
+// GetNamingHint returns AccessWhatAccessProviderItemAccessProvider.NamingHint, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetNamingHint() *string {
+	return v.AccessProvider.NamingHint
+}
+
+// GetState returns AccessWhatAccessProviderItemAccessProvider.State, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetState() models.AccessProviderState {
+	return v.AccessProvider.State
+}
+
+// GetAction returns AccessWhatAccessProviderItemAccessProvider.Action, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetAction() models.AccessProviderAction {
+	return v.AccessProvider.Action
+}
+
+// GetType returns AccessWhatAccessProviderItemAccessProvider.Type, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetType() *string { return v.AccessProvider.Type }
+
+// GetDescription returns AccessWhatAccessProviderItemAccessProvider.Description, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetDescription() string {
+	return v.AccessProvider.Description
+}
+
+// GetPolicyRule returns AccessWhatAccessProviderItemAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetPolicyRule() *string {
+	return v.AccessProvider.PolicyRule
+}
+
+// GetOverride returns AccessWhatAccessProviderItemAccessProvider.Override, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetOverride() bool {
+	return v.AccessProvider.Override
+}
+
+// GetExternal returns AccessWhatAccessProviderItemAccessProvider.External, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetExternal() bool {
+	return v.AccessProvider.External
+}
+
+// GetNotInternalizable returns AccessWhatAccessProviderItemAccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetNotInternalizable() bool {
+	return v.AccessProvider.NotInternalizable
+}
+
+// GetWhoLocked returns AccessWhatAccessProviderItemAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetWhoLocked() *bool {
+	return v.AccessProvider.WhoLocked
+}
+
+// GetWhoLockedReason returns AccessWhatAccessProviderItemAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetWhoLockedReason() *string {
+	return v.AccessProvider.WhoLockedReason
+}
+
+// GetInheritanceLocked returns AccessWhatAccessProviderItemAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetInheritanceLocked() *bool {
+	return v.AccessProvider.InheritanceLocked
+}
+
+// GetInheritanceLockedReason returns AccessWhatAccessProviderItemAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetInheritanceLockedReason() *string {
+	return v.AccessProvider.InheritanceLockedReason
+}
+
+// GetWhatLocked returns AccessWhatAccessProviderItemAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetWhatLocked() *bool {
+	return v.AccessProvider.WhatLocked
+}
+
+// GetWhatLockedReason returns AccessWhatAccessProviderItemAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetWhatLockedReason() *string {
+	return v.AccessProvider.WhatLockedReason
+}
+
+// GetNameLocked returns AccessWhatAccessProviderItemAccessProvider.NameLocked, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetNameLocked() *bool {
+	return v.AccessProvider.NameLocked
+}
+
+// GetNameLockedReason returns AccessWhatAccessProviderItemAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetNameLockedReason() *string {
+	return v.AccessProvider.NameLockedReason
+}
+
+// GetDeleteLocked returns AccessWhatAccessProviderItemAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetDeleteLocked() *bool {
+	return v.AccessProvider.DeleteLocked
+}
+
+// GetDeleteLockedReason returns AccessWhatAccessProviderItemAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetDeleteLockedReason() *string {
+	return v.AccessProvider.DeleteLockedReason
+}
+
+// GetComplete returns AccessWhatAccessProviderItemAccessProvider.Complete, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetComplete() *bool {
+	return v.AccessProvider.Complete
+}
+
+// GetDataSources returns AccessWhatAccessProviderItemAccessProvider.DataSources, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
+	return v.AccessProvider.DataSources
+}
+
+func (v *AccessWhatAccessProviderItemAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessWhatAccessProviderItemAccessProvider
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessWhatAccessProviderItemAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProvider)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
+	Id string `json:"id"`
+
+	IsSample bool `json:"isSample"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Name string `json:"name"`
+
+	NamingHint *string `json:"namingHint"`
+
+	State models.AccessProviderState `json:"state"`
+
+	Action models.AccessProviderAction `json:"action"`
+
+	Type *string `json:"type"`
+
+	Description string `json:"description"`
+
+	PolicyRule *string `json:"policyRule"`
+
+	Override bool `json:"override"`
+
+	External bool `json:"external"`
+
+	NotInternalizable bool `json:"notInternalizable"`
+
+	WhoLocked *bool `json:"whoLocked"`
+
+	WhoLockedReason *string `json:"whoLockedReason"`
+
+	InheritanceLocked *bool `json:"inheritanceLocked"`
+
+	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
+
+	WhatLocked *bool `json:"whatLocked"`
+
+	WhatLockedReason *string `json:"whatLockedReason"`
+
+	NameLocked *bool `json:"nameLocked"`
+
+	NameLockedReason *string `json:"nameLockedReason"`
+
+	DeleteLocked *bool `json:"deleteLocked"`
+
+	DeleteLockedReason *string `json:"deleteLockedReason"`
+
+	Complete *bool `json:"complete"`
+
+	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+}
+
+func (v *AccessWhatAccessProviderItemAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__premarshalAccessWhatAccessProviderItemAccessProvider, error) {
+	var retval __premarshalAccessWhatAccessProviderItemAccessProvider
+
+	retval.Id = v.AccessProvider.Id
+	retval.IsSample = v.AccessProvider.IsSample
+	retval.CreatedAt = v.AccessProvider.CreatedAt
+	retval.ModifiedAt = v.AccessProvider.ModifiedAt
+	retval.Name = v.AccessProvider.Name
+	retval.NamingHint = v.AccessProvider.NamingHint
+	retval.State = v.AccessProvider.State
+	retval.Action = v.AccessProvider.Action
+	retval.Type = v.AccessProvider.Type
+	retval.Description = v.AccessProvider.Description
+	retval.PolicyRule = v.AccessProvider.PolicyRule
+	retval.Override = v.AccessProvider.Override
+	retval.External = v.AccessProvider.External
+	retval.NotInternalizable = v.AccessProvider.NotInternalizable
+	retval.WhoLocked = v.AccessProvider.WhoLocked
+	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
+	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
+	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
+	retval.WhatLocked = v.AccessProvider.WhatLocked
+	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
+	retval.NameLocked = v.AccessProvider.NameLocked
+	retval.NameLockedReason = v.AccessProvider.NameLockedReason
+	retval.DeleteLocked = v.AccessProvider.DeleteLocked
+	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
+	retval.Complete = v.AccessProvider.Complete
+	retval.DataSources = v.AccessProvider.DataSources
+	return &retval, nil
+}
 
 type AccessWhatOrderByInput struct {
 	Name *Sort `json:"name"`
@@ -8674,10 +10152,14 @@ func __marshalDataSourceIdentityStoresDataSourceDataSourceResult(v *DataSourceId
 	case *DataSourceIdentityStoresDataSourceNotFoundError:
 		typename = "NotFoundError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*DataSourceIdentityStoresDataSourceNotFoundError
-		}{typename, v}
+			*__premarshalDataSourceIdentityStoresDataSourceNotFoundError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *DataSourceIdentityStoresDataSourcePermissionDeniedError:
 		typename = "PermissionDeniedError"
@@ -8811,11 +10293,64 @@ func (v *DataSourceIdentityStoresDataSourceIdentityStoresIdentityStore) __premar
 
 // DataSourceIdentityStoresDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type DataSourceIdentityStoresDataSourceNotFoundError struct {
-	Typename *string `json:"__typename"`
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
 }
 
 // GetTypename returns DataSourceIdentityStoresDataSourceNotFoundError.Typename, and is useful for accessing the field via an interface.
 func (v *DataSourceIdentityStoresDataSourceNotFoundError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns DataSourceIdentityStoresDataSourceNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *DataSourceIdentityStoresDataSourceNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *DataSourceIdentityStoresDataSourceNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataSourceIdentityStoresDataSourceNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataSourceIdentityStoresDataSourceNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDataSourceIdentityStoresDataSourceNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DataSourceIdentityStoresDataSourceNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataSourceIdentityStoresDataSourceNotFoundError) __premarshalJSON() (*__premarshalDataSourceIdentityStoresDataSourceNotFoundError, error) {
+	var retval __premarshalDataSourceIdentityStoresDataSourceNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
 
 // DataSourceIdentityStoresDataSourcePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
 type DataSourceIdentityStoresDataSourcePermissionDeniedError struct {
@@ -8971,6 +10506,374 @@ func (v *DataSourceInput) GetParent() *string { return v.Parent }
 
 // GetSyncMethod returns DataSourceInput.SyncMethod, and is useful for accessing the field via an interface.
 func (v *DataSourceInput) GetSyncMethod() *DataSourceSyncMethod { return v.SyncMethod }
+
+// DataSourceMaskInformationDataSource includes the requested fields of the GraphQL type DataSource.
+type DataSourceMaskInformationDataSource struct {
+	Typename        *string                                             `json:"__typename"`
+	MaskingMetadata *DataSourceMaskInformationDataSourceMaskingMetadata `json:"maskingMetadata"`
+}
+
+// GetTypename returns DataSourceMaskInformationDataSource.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSource) GetTypename() *string { return v.Typename }
+
+// GetMaskingMetadata returns DataSourceMaskInformationDataSource.MaskingMetadata, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSource) GetMaskingMetadata() *DataSourceMaskInformationDataSourceMaskingMetadata {
+	return v.MaskingMetadata
+}
+
+// DataSourceMaskInformationDataSourceDataSourceResult includes the requested fields of the GraphQL interface DataSourceResult.
+//
+// DataSourceMaskInformationDataSourceDataSourceResult is implemented by the following types:
+// DataSourceMaskInformationDataSource
+// DataSourceMaskInformationDataSourceNotFoundError
+// DataSourceMaskInformationDataSourcePermissionDeniedError
+type DataSourceMaskInformationDataSourceDataSourceResult interface {
+	implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *DataSourceMaskInformationDataSource) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
+}
+func (v *DataSourceMaskInformationDataSourceNotFoundError) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
+}
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
+}
+
+func __unmarshalDataSourceMaskInformationDataSourceDataSourceResult(b []byte, v *DataSourceMaskInformationDataSourceDataSourceResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "DataSource":
+		*v = new(DataSourceMaskInformationDataSource)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DataSourceMaskInformationDataSourceNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(DataSourceMaskInformationDataSourcePermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing DataSourceResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for DataSourceMaskInformationDataSourceDataSourceResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalDataSourceMaskInformationDataSourceDataSourceResult(v *DataSourceMaskInformationDataSourceDataSourceResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *DataSourceMaskInformationDataSource:
+		typename = "DataSource"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourceMaskInformationDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourceMaskInformationDataSourceNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDataSourceMaskInformationDataSourceNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DataSourceMaskInformationDataSourcePermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDataSourceMaskInformationDataSourcePermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for DataSourceMaskInformationDataSourceDataSourceResult: "%T"`, v)
+	}
+}
+
+// DataSourceMaskInformationDataSourceMaskingMetadata includes the requested fields of the GraphQL type MaskingMetadata.
+type DataSourceMaskInformationDataSourceMaskingMetadata struct {
+	MaskingMetadata `json:"-"`
+}
+
+// GetDefaultMaskExternalName returns DataSourceMaskInformationDataSourceMaskingMetadata.DefaultMaskExternalName, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourceMaskingMetadata) GetDefaultMaskExternalName() *string {
+	return v.MaskingMetadata.DefaultMaskExternalName
+}
+
+// GetMaskTypes returns DataSourceMaskInformationDataSourceMaskingMetadata.MaskTypes, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourceMaskingMetadata) GetMaskTypes() []MaskingMetadataMaskTypesMaskType {
+	return v.MaskingMetadata.MaskTypes
+}
+
+func (v *DataSourceMaskInformationDataSourceMaskingMetadata) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataSourceMaskInformationDataSourceMaskingMetadata
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataSourceMaskInformationDataSourceMaskingMetadata = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.MaskingMetadata)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDataSourceMaskInformationDataSourceMaskingMetadata struct {
+	DefaultMaskExternalName *string `json:"defaultMaskExternalName"`
+
+	MaskTypes []MaskingMetadataMaskTypesMaskType `json:"maskTypes"`
+}
+
+func (v *DataSourceMaskInformationDataSourceMaskingMetadata) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataSourceMaskInformationDataSourceMaskingMetadata) __premarshalJSON() (*__premarshalDataSourceMaskInformationDataSourceMaskingMetadata, error) {
+	var retval __premarshalDataSourceMaskInformationDataSourceMaskingMetadata
+
+	retval.DefaultMaskExternalName = v.MaskingMetadata.DefaultMaskExternalName
+	retval.MaskTypes = v.MaskingMetadata.MaskTypes
+	return &retval, nil
+}
+
+// DataSourceMaskInformationDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DataSourceMaskInformationDataSourceNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns DataSourceMaskInformationDataSourceNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourceNotFoundError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns DataSourceMaskInformationDataSourceNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourceNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *DataSourceMaskInformationDataSourceNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataSourceMaskInformationDataSourceNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataSourceMaskInformationDataSourceNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDataSourceMaskInformationDataSourceNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DataSourceMaskInformationDataSourceNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataSourceMaskInformationDataSourceNotFoundError) __premarshalJSON() (*__premarshalDataSourceMaskInformationDataSourceNotFoundError, error) {
+	var retval __premarshalDataSourceMaskInformationDataSourceNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// DataSourceMaskInformationDataSourcePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type DataSourceMaskInformationDataSourcePermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns DataSourceMaskInformationDataSourcePermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DataSourceMaskInformationDataSourcePermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataSourceMaskInformationDataSourcePermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataSourceMaskInformationDataSourcePermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDataSourceMaskInformationDataSourcePermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataSourceMaskInformationDataSourcePermissionDeniedError) __premarshalJSON() (*__premarshalDataSourceMaskInformationDataSourcePermissionDeniedError, error) {
+	var retval __premarshalDataSourceMaskInformationDataSourcePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// DataSourceMaskInformationResponse is returned by DataSourceMaskInformation on success.
+type DataSourceMaskInformationResponse struct {
+	DataSource DataSourceMaskInformationDataSourceDataSourceResult `json:"-"`
+}
+
+// GetDataSource returns DataSourceMaskInformationResponse.DataSource, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationResponse) GetDataSource() DataSourceMaskInformationDataSourceDataSourceResult {
+	return v.DataSource
+}
+
+func (v *DataSourceMaskInformationResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataSourceMaskInformationResponse
+		DataSource json.RawMessage `json:"dataSource"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataSourceMaskInformationResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.DataSource
+		src := firstPass.DataSource
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalDataSourceMaskInformationDataSourceDataSourceResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal DataSourceMaskInformationResponse.DataSource: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalDataSourceMaskInformationResponse struct {
+	DataSource json.RawMessage `json:"dataSource"`
+}
+
+func (v *DataSourceMaskInformationResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataSourceMaskInformationResponse) __premarshalJSON() (*__premarshalDataSourceMaskInformationResponse, error) {
+	var retval __premarshalDataSourceMaskInformationResponse
+
+	{
+
+		dst := &retval.DataSource
+		src := v.DataSource
+		var err error
+		*dst, err = __marshalDataSourceMaskInformationDataSourceDataSourceResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DataSourceMaskInformationResponse.DataSource: %w", err)
+		}
+	}
+	return &retval, nil
+}
 
 type DataSourceOrderByInput struct {
 	Name *Sort `json:"name"`
@@ -12260,6 +14163,599 @@ func (v *GetAccessProviderResponse) __premarshalJSON() (*__premarshalGetAccessPr
 	return &retval, nil
 }
 
+// GetAccessProviderWhatAccessProvidersAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type GetAccessProviderWhatAccessProvidersAccessProvider struct {
+	Typename            *string                                                                           `json:"__typename"`
+	WhatAccessProviders GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults `json:"-"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) GetTypename() *string { return v.Typename }
+
+// GetWhatAccessProviders returns GetAccessProviderWhatAccessProvidersAccessProvider.WhatAccessProviders, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) GetWhatAccessProviders() GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults {
+	return v.WhatAccessProviders
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersAccessProvider
+		WhatAccessProviders json.RawMessage `json:"whatAccessProviders"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.WhatAccessProviders
+		src := firstPass.WhatAccessProviders
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetAccessProviderWhatAccessProvidersAccessProvider.WhatAccessProviders: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersAccessProvider struct {
+	Typename *string `json:"__typename"`
+
+	WhatAccessProviders json.RawMessage `json:"whatAccessProviders"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersAccessProvider, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersAccessProvider
+
+	retval.Typename = v.Typename
+	{
+
+		dst := &retval.WhatAccessProviders
+		src := v.WhatAccessProviders
+		var err error
+		*dst, err = __marshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal GetAccessProviderWhatAccessProvidersAccessProvider.WhatAccessProviders: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult includes the requested fields of the GraphQL interface AccessProviderResult.
+//
+// GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult is implemented by the following types:
+// GetAccessProviderWhatAccessProvidersAccessProvider
+// GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError
+// GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
+type GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult interface {
+	implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProvider) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
+}
+
+func __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult(b []byte, v *GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing AccessProviderResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult(v *GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetAccessProviderWhatAccessProvidersAccessProvider:
+		typename = "AccessProvider"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetAccessProviderWhatAccessProvidersAccessProvider
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult: "%T"`, v)
+	}
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderNotFoundError, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult includes the requested fields of the GraphQL type PagedResult.
+type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult struct {
+	Typename                             *string `json:"__typename"`
+	AccessProviderWhatAccessProviderList `json:"-"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) GetTypename() *string {
+	return v.Typename
+}
+
+// GetPageInfo returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult.PageInfo, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) GetPageInfo() *AccessProviderWhatAccessProviderListPageInfo {
+	return v.AccessProviderWhatAccessProviderList.PageInfo
+}
+
+// GetEdges returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult.Edges, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) GetEdges() []AccessProviderWhatAccessProviderListEdgesEdge {
+	return v.AccessProviderWhatAccessProviderList.Edges
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProviderWhatAccessProviderList)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult struct {
+	Typename *string `json:"__typename"`
+
+	PageInfo *AccessProviderWhatAccessProviderListPageInfo `json:"pageInfo"`
+
+	Edges []AccessProviderWhatAccessProviderListEdgesEdge `json:"edges"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult
+
+	retval.Typename = v.Typename
+	retval.PageInfo = v.AccessProviderWhatAccessProviderList.PageInfo
+	retval.Edges = v.AccessProviderWhatAccessProviderList.Edges
+	return &retval, nil
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults includes the requested fields of the GraphQL interface PagedResults.
+//
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults is implemented by the following types:
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError
+type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults interface {
+	implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
+}
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
+}
+
+func __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults(b []byte, v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "PagedResult":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing PagedResults.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults(v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult:
+		typename = "PagedResult"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults: "%T"`, v)
+	}
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// GetAccessProviderWhatAccessProvidersResponse is returned by GetAccessProviderWhatAccessProviders on success.
+type GetAccessProviderWhatAccessProvidersResponse struct {
+	AccessProvider GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult `json:"-"`
+}
+
+// GetAccessProvider returns GetAccessProviderWhatAccessProvidersResponse.AccessProvider, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersResponse) GetAccessProvider() GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult {
+	return v.AccessProvider
+}
+
+func (v *GetAccessProviderWhatAccessProvidersResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderWhatAccessProvidersResponse
+		AccessProvider json.RawMessage `json:"accessProvider"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderWhatAccessProvidersResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.AccessProvider
+		src := firstPass.AccessProvider
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetAccessProviderWhatAccessProvidersResponse.AccessProvider: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderWhatAccessProvidersResponse struct {
+	AccessProvider json.RawMessage `json:"accessProvider"`
+}
+
+func (v *GetAccessProviderWhatAccessProvidersResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderWhatAccessProvidersResponse) __premarshalJSON() (*__premarshalGetAccessProviderWhatAccessProvidersResponse, error) {
+	var retval __premarshalGetAccessProviderWhatAccessProvidersResponse
+
+	{
+
+		dst := &retval.AccessProvider
+		src := v.AccessProvider
+		var err error
+		*dst, err = __marshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal GetAccessProviderWhatAccessProvidersResponse.AccessProvider: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
 // GetAccessProviderWhatDataObjectListAccessProvider includes the requested fields of the GraphQL type AccessProvider.
 type GetAccessProviderWhatDataObjectListAccessProvider struct {
 	Typename        *string                                                                      `json:"__typename"`
@@ -13619,10 +16115,14 @@ func __marshalGetDataSourceDataSourceDataSourceResult(v *GetDataSourceDataSource
 	case *GetDataSourceDataSourceNotFoundError:
 		typename = "NotFoundError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*GetDataSourceDataSourceNotFoundError
-		}{typename, v}
+			*__premarshalGetDataSourceDataSourceNotFoundError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *GetDataSourceDataSourcePermissionDeniedError:
 		typename = "PermissionDeniedError"
@@ -13646,11 +16146,62 @@ func __marshalGetDataSourceDataSourceDataSourceResult(v *GetDataSourceDataSource
 
 // GetDataSourceDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetDataSourceDataSourceNotFoundError struct {
-	Typename *string `json:"__typename"`
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
 }
 
 // GetTypename returns GetDataSourceDataSourceNotFoundError.Typename, and is useful for accessing the field via an interface.
 func (v *GetDataSourceDataSourceNotFoundError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetDataSourceDataSourceNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *GetDataSourceDataSourceNotFoundError) GetMessage() string { return v.NotFoundError.Message }
+
+func (v *GetDataSourceDataSourceNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetDataSourceDataSourceNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetDataSourceDataSourceNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetDataSourceDataSourceNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetDataSourceDataSourceNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetDataSourceDataSourceNotFoundError) __premarshalJSON() (*__premarshalGetDataSourceDataSourceNotFoundError, error) {
+	var retval __premarshalGetDataSourceDataSourceNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
 
 // GetDataSourceDataSourcePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
 type GetDataSourceDataSourcePermissionDeniedError struct {
@@ -16849,6 +19400,108 @@ func (v *ListIdentityStoresResponse) __premarshalJSON() (*__premarshalListIdenti
 	return &retval, nil
 }
 
+// MaskType includes the GraphQL fields of MaskType requested by the fragment MaskType.
+type MaskType struct {
+	ExternalId  string   `json:"externalId"`
+	DisplayName string   `json:"displayName"`
+	Description string   `json:"description"`
+	DataTypes   []string `json:"dataTypes"`
+}
+
+// GetExternalId returns MaskType.ExternalId, and is useful for accessing the field via an interface.
+func (v *MaskType) GetExternalId() string { return v.ExternalId }
+
+// GetDisplayName returns MaskType.DisplayName, and is useful for accessing the field via an interface.
+func (v *MaskType) GetDisplayName() string { return v.DisplayName }
+
+// GetDescription returns MaskType.Description, and is useful for accessing the field via an interface.
+func (v *MaskType) GetDescription() string { return v.Description }
+
+// GetDataTypes returns MaskType.DataTypes, and is useful for accessing the field via an interface.
+func (v *MaskType) GetDataTypes() []string { return v.DataTypes }
+
+// MaskingMetadata includes the GraphQL fields of MaskingMetadata requested by the fragment MaskingMetadata.
+type MaskingMetadata struct {
+	DefaultMaskExternalName *string                            `json:"defaultMaskExternalName"`
+	MaskTypes               []MaskingMetadataMaskTypesMaskType `json:"maskTypes"`
+}
+
+// GetDefaultMaskExternalName returns MaskingMetadata.DefaultMaskExternalName, and is useful for accessing the field via an interface.
+func (v *MaskingMetadata) GetDefaultMaskExternalName() *string { return v.DefaultMaskExternalName }
+
+// GetMaskTypes returns MaskingMetadata.MaskTypes, and is useful for accessing the field via an interface.
+func (v *MaskingMetadata) GetMaskTypes() []MaskingMetadataMaskTypesMaskType { return v.MaskTypes }
+
+// MaskingMetadataMaskTypesMaskType includes the requested fields of the GraphQL type MaskType.
+type MaskingMetadataMaskTypesMaskType struct {
+	MaskType `json:"-"`
+}
+
+// GetExternalId returns MaskingMetadataMaskTypesMaskType.ExternalId, and is useful for accessing the field via an interface.
+func (v *MaskingMetadataMaskTypesMaskType) GetExternalId() string { return v.MaskType.ExternalId }
+
+// GetDisplayName returns MaskingMetadataMaskTypesMaskType.DisplayName, and is useful for accessing the field via an interface.
+func (v *MaskingMetadataMaskTypesMaskType) GetDisplayName() string { return v.MaskType.DisplayName }
+
+// GetDescription returns MaskingMetadataMaskTypesMaskType.Description, and is useful for accessing the field via an interface.
+func (v *MaskingMetadataMaskTypesMaskType) GetDescription() string { return v.MaskType.Description }
+
+// GetDataTypes returns MaskingMetadataMaskTypesMaskType.DataTypes, and is useful for accessing the field via an interface.
+func (v *MaskingMetadataMaskTypesMaskType) GetDataTypes() []string { return v.MaskType.DataTypes }
+
+func (v *MaskingMetadataMaskTypesMaskType) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*MaskingMetadataMaskTypesMaskType
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.MaskingMetadataMaskTypesMaskType = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.MaskType)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalMaskingMetadataMaskTypesMaskType struct {
+	ExternalId string `json:"externalId"`
+
+	DisplayName string `json:"displayName"`
+
+	Description string `json:"description"`
+
+	DataTypes []string `json:"dataTypes"`
+}
+
+func (v *MaskingMetadataMaskTypesMaskType) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *MaskingMetadataMaskTypesMaskType) __premarshalJSON() (*__premarshalMaskingMetadataMaskTypesMaskType, error) {
+	var retval __premarshalMaskingMetadataMaskTypesMaskType
+
+	retval.ExternalId = v.MaskType.ExternalId
+	retval.DisplayName = v.MaskType.DisplayName
+	retval.Description = v.MaskType.Description
+	retval.DataTypes = v.MaskType.DataTypes
+	return &retval, nil
+}
+
 // NotFoundError includes the GraphQL fields of NotFoundError requested by the fragment NotFoundError.
 type NotFoundError struct {
 	Message string `json:"message"`
@@ -19003,9 +21656,9 @@ type WhoItemInput struct {
 	Group           *string            `json:"group"`
 	AccessProvider  *string            `json:"accessProvider"`
 	ExpiresAt       *time.Time         `json:"expiresAt"`
-	ExpiresAfter    *time.Duration     `json:"expiresAfter"`
+	ExpiresAfter    *int64             `json:"expiresAfter"`
 	Type            *AccessWhoItemType `json:"type"`
-	PromiseDuration *time.Duration     `json:"promiseDuration"`
+	PromiseDuration *int64             `json:"promiseDuration"`
 }
 
 // GetUser returns WhoItemInput.User, and is useful for accessing the field via an interface.
@@ -19021,13 +21674,13 @@ func (v *WhoItemInput) GetAccessProvider() *string { return v.AccessProvider }
 func (v *WhoItemInput) GetExpiresAt() *time.Time { return v.ExpiresAt }
 
 // GetExpiresAfter returns WhoItemInput.ExpiresAfter, and is useful for accessing the field via an interface.
-func (v *WhoItemInput) GetExpiresAfter() *time.Duration { return v.ExpiresAfter }
+func (v *WhoItemInput) GetExpiresAfter() *int64 { return v.ExpiresAfter }
 
 // GetType returns WhoItemInput.Type, and is useful for accessing the field via an interface.
 func (v *WhoItemInput) GetType() *AccessWhoItemType { return v.Type }
 
 // GetPromiseDuration returns WhoItemInput.PromiseDuration, and is useful for accessing the field via an interface.
-func (v *WhoItemInput) GetPromiseDuration() *time.Duration { return v.PromiseDuration }
+func (v *WhoItemInput) GetPromiseDuration() *int64 { return v.PromiseDuration }
 
 // __ActivateAccessProviderInput is used internally by genqlient
 type __ActivateAccessProviderInput struct {
@@ -19093,6 +21746,14 @@ type __DataSourceIdentityStoresInput struct {
 // GetId returns __DataSourceIdentityStoresInput.Id, and is useful for accessing the field via an interface.
 func (v *__DataSourceIdentityStoresInput) GetId() string { return v.Id }
 
+// __DataSourceMaskInformationInput is used internally by genqlient
+type __DataSourceMaskInformationInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __DataSourceMaskInformationInput.Id, and is useful for accessing the field via an interface.
+func (v *__DataSourceMaskInformationInput) GetId() string { return v.Id }
+
 // __DeactivateAccessProviderInput is used internally by genqlient
 type __DeactivateAccessProviderInput struct {
 	Id string `json:"id"`
@@ -19132,6 +21793,38 @@ type __GetAccessProviderInput struct {
 
 // GetId returns __GetAccessProviderInput.Id, and is useful for accessing the field via an interface.
 func (v *__GetAccessProviderInput) GetId() string { return v.Id }
+
+// __GetAccessProviderWhatAccessProvidersInput is used internally by genqlient
+type __GetAccessProviderWhatAccessProvidersInput struct {
+	Id     string                                       `json:"id"`
+	After  *string                                      `json:"after"`
+	Limit  *int                                         `json:"limit"`
+	Search *string                                      `json:"search"`
+	Order  []AccessWhatOrderByInput                     `json:"order"`
+	Filter *AccessProviderWhatAccessProviderFilterInput `json:"filter"`
+}
+
+// GetId returns __GetAccessProviderWhatAccessProvidersInput.Id, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetId() string { return v.Id }
+
+// GetAfter returns __GetAccessProviderWhatAccessProvidersInput.After, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetAfter() *string { return v.After }
+
+// GetLimit returns __GetAccessProviderWhatAccessProvidersInput.Limit, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetLimit() *int { return v.Limit }
+
+// GetSearch returns __GetAccessProviderWhatAccessProvidersInput.Search, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetSearch() *string { return v.Search }
+
+// GetOrder returns __GetAccessProviderWhatAccessProvidersInput.Order, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetOrder() []AccessWhatOrderByInput {
+	return v.Order
+}
+
+// GetFilter returns __GetAccessProviderWhatAccessProvidersInput.Filter, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatAccessProvidersInput) GetFilter() *AccessProviderWhatAccessProviderFilterInput {
+	return v.Filter
+}
 
 // __GetAccessProviderWhatDataObjectListInput is used internally by genqlient
 type __GetAccessProviderWhatDataObjectListInput struct {
@@ -19734,6 +22427,7 @@ query DataSourceIdentityStores ($id: ID!) {
 			}
 		}
 		... PermissionDeniedError
+		... NotFoundError
 	}
 }
 fragment IdentityStore on IdentityStore {
@@ -19747,6 +22441,9 @@ fragment IdentityStore on IdentityStore {
 	native
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
 	message
 }
 `
@@ -19766,6 +22463,66 @@ func DataSourceIdentityStores(
 	var err error
 
 	var data DataSourceIdentityStoresResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by DataSourceMaskInformation.
+const DataSourceMaskInformation_Operation = `
+query DataSourceMaskInformation ($id: ID!) {
+	dataSource(id: $id) {
+		__typename
+		... on DataSource {
+			maskingMetadata {
+				... MaskingMetadata
+			}
+		}
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment MaskingMetadata on MaskingMetadata {
+	defaultMaskExternalName
+	maskTypes {
+		... MaskType
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
+}
+`
+
+func DataSourceMaskInformation(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+) (*DataSourceMaskInformationResponse, error) {
+	req := &graphql.Request{
+		OpName: "DataSourceMaskInformation",
+		Query:  DataSourceMaskInformation_Operation,
+		Variables: &__DataSourceMaskInformationInput{
+			Id: id,
+		},
+	}
+	var err error
+
+	var data DataSourceMaskInformationResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(
@@ -20122,6 +22879,131 @@ func GetAccessProvider(
 	return &data, err
 }
 
+// The query or mutation executed by GetAccessProviderWhatAccessProviders.
+const GetAccessProviderWhatAccessProviders_Operation = `
+query GetAccessProviderWhatAccessProviders ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!], $filter: AccessProviderWhatAccessProviderFilterInput) {
+	accessProvider(id: $id) {
+		__typename
+		... on AccessProvider {
+			whatAccessProviders(after: $after, limit: $limit, search: $search, filter: $filter, order: $order) {
+				__typename
+				... AccessProviderWhatAccessProviderList
+				... PermissionDeniedError
+			}
+		}
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment AccessProviderWhatAccessProviderList on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessWhatAccessProviderItem
+		}
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment PageInfo on PageInfo {
+	hasNextPage
+	startCursor
+}
+fragment AccessWhatAccessProviderItem on AccessWhatAccessProviderItem {
+	accessProvider {
+		... AccessProvider
+	}
+	expiresAt
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	type
+	description
+	policyRule
+	override
+	external
+	notInternalizable
+	whoLocked
+	whoLockedReason
+	inheritanceLocked
+	inheritanceLockedReason
+	whatLocked
+	whatLockedReason
+	nameLocked
+	nameLockedReason
+	deleteLocked
+	deleteLockedReason
+	complete
+	dataSources {
+		... DataSource
+	}
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+`
+
+func GetAccessProviderWhatAccessProviders(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+	after *string,
+	limit *int,
+	search *string,
+	order []AccessWhatOrderByInput,
+	filter *AccessProviderWhatAccessProviderFilterInput,
+) (*GetAccessProviderWhatAccessProvidersResponse, error) {
+	req := &graphql.Request{
+		OpName: "GetAccessProviderWhatAccessProviders",
+		Query:  GetAccessProviderWhatAccessProviders_Operation,
+		Variables: &__GetAccessProviderWhatAccessProvidersInput{
+			Id:     id,
+			After:  after,
+			Limit:  limit,
+			Search: search,
+			Order:  order,
+			Filter: filter,
+		},
+	}
+	var err error
+
+	var data GetAccessProviderWhatAccessProvidersResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 // The query or mutation executed by GetAccessProviderWhatDataObjectList.
 const GetAccessProviderWhatDataObjectList_Operation = `
 query GetAccessProviderWhatDataObjectList ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
@@ -20321,6 +23203,7 @@ query GetDataSource ($id: ID!) {
 		__typename
 		... DataSource
 		... PermissionDeniedError
+		... NotFoundError
 	}
 }
 fragment DataSource on DataSource {
@@ -20337,6 +23220,9 @@ fragment DataSource on DataSource {
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
 	message
 }
 `

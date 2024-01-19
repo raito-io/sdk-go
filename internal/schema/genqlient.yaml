@@ -16,4 +16,4 @@ bindings:
   AccessProviderAction:
     type: github.com/raito-io/sdk/types/models.AccessProviderAction
   Duration:
-    type: time.Duration
+    type: int64

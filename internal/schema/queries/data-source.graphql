@@ -12,6 +12,20 @@ fragment DataSource on DataSource {
     }
 }
 
+fragment MaskType on MaskType {
+    externalId
+    displayName
+    description
+    dataTypes
+}
+
+fragment MaskingMetadata on MaskingMetadata {
+    defaultMaskExternalName
+    maskTypes {
+        ... MaskType
+    }
+}
+
 fragment DataSourcePage on PagedResult {
     pageInfo {
         ... PageInfo
@@ -28,6 +42,7 @@ query GetDataSource($id: ID!) {
     dataSource(id: $id) {
         ... DataSource
         ... PermissionDeniedError
+        ... NotFoundError
     }
 }
 
@@ -46,6 +61,19 @@ query DataSourceIdentityStores($id: ID!) {
             }
         }
         ...PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+query DataSourceMaskInformation($id: ID!) {
+    dataSource(id: $id) {
+        ... on DataSource {
+            maskingMetadata {
+                ...MaskingMetadata
+            }
+        }
+        ... PermissionDeniedError
+        ... NotFoundError
     }
 }
 

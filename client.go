@@ -6,7 +6,7 @@ import (
 	gql "github.com/Khan/genqlient/graphql"
 
 	"github.com/raito-io/sdk/internal"
-	"github.com/raito-io/sdk/internal/services"
+	"github.com/raito-io/sdk/services"
 )
 
 type RaitoClient struct {
