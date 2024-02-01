@@ -35,7 +35,7 @@ func (c *IdentityStoreClient) CreateIdentityStore(ctx context.Context, is types.
 	case *types.CreateIdentityStoreCreateIdentityStore:
 		return &response.IdentityStore, nil
 	case *types.CreateIdentityStoreCreateIdentityStoreNotFoundError:
-		return nil, types.NewErrNotFound("", "identityStore", response.Message)
+		return nil, types.NewErrNotFound("", response.Typename, response.Message)
 	case *types.CreateIdentityStoreCreateIdentityStorePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("createIdentityStore", response.Message)
 	case *types.CreateIdentityStoreCreateIdentityStoreAlreadyExistsError:
@@ -60,7 +60,7 @@ func (c *IdentityStoreClient) UpdateIdentityStore(ctx context.Context, id string
 	case *types.UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError:
 		return nil, types.NewErrAlreadyExists("identityStore", response.Message)
 	case *types.UpdateIdentityStoreUpdateIdentityStoreNotFoundError:
-		return nil, types.NewErrNotFound(id, "identityStore", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *types.UpdateIdentityStoreUpdateIdentityStorePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("updateIdentityStore", response.Message)
 	default:
@@ -104,7 +104,7 @@ func (c *IdentityStoreClient) GetIdentityStore(ctx context.Context, id string) (
 	case *types.GetIdentityStoreIdentityStorePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("getIdentityStore", response.Message)
 	case *types.GetIdentityStoreIdentityStoreNotFoundError:
-		return nil, types.NewErrNotFound(id, "identityStore", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected type '%T'", response)
 	}
@@ -141,7 +141,7 @@ func (c *IdentityStoreClient) ListIdentityStores(ctx context.Context, ops ...fun
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.IdentityStorePageEdgesEdge, error) {
-		output, err := schema.ListIdentityStores(ctx, c.client, cursor, ptr.Int(25), nil, options.filter, options.order)
+		output, err := schema.ListIdentityStores(ctx, c.client, cursor, ptr.Int(internal.MaxPageSize), nil, options.filter, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}

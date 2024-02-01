@@ -36,7 +36,7 @@ func (c *DataSourceClient) CreateDataSource(ctx context.Context, ds types.DataSo
 	case *schema.CreateDataSourceCreateDataSource:
 		return &response.DataSource, nil
 	case *schema.CreateDataSourceCreateDataSourceNotFoundError:
-		return nil, types.NewErrNotFound("", "datasource", response.Message)
+		return nil, types.NewErrNotFound("", response.Typename, response.Message)
 	case *schema.CreateDataSourceCreateDataSourcePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("createDataSource", response.Message)
 	default:
@@ -57,7 +57,7 @@ func (c *DataSourceClient) UpdateDataSource(ctx context.Context, id string, ds t
 	case *schema.UpdateDataSourceUpdateDataSource:
 		return &response.DataSource, nil
 	case *schema.UpdateDataSourceUpdateDataSourceNotFoundError:
-		return nil, types.NewErrNotFound(id, "datasource", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *schema.UpdateDataSourceUpdateDataSourcePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("updateDataSource", response.Message)
 	default:
@@ -97,7 +97,7 @@ func (c *DataSourceClient) AddIdentityStoreToDataSource(ctx context.Context, dsI
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSource:
 		return nil
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError:
-		return types.NewErrNotFound(dsId, "datasource", response.Message)
+		return types.NewErrNotFound(dsId, response.Typename, response.Message)
 	case *schema.AddIdentityStoreToDataSourceAddIdentityStoreToDataSourcePermissionDeniedError:
 		return types.NewErrPermissionDenied("addIdentityStoreToDataSource", response.Message)
 	default:
@@ -115,7 +115,7 @@ func (c *DataSourceClient) RemoveIdentityStoreFromDataSource(ctx context.Context
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource:
 		return nil
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError:
-		return types.NewErrNotFound(dsId, "datasource", response.Message)
+		return types.NewErrNotFound(dsId, response.Typename, response.Message)
 	case *schema.RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourcePermissionDeniedError:
 		return types.NewErrPermissionDenied("removeIdentityStoreFromDataSource", response.Message)
 	default:
@@ -136,7 +136,7 @@ func (c *DataSourceClient) GetDataSource(ctx context.Context, id string) (*types
 	case *schema.GetDataSourceDataSourcePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("dataSource", ds.Message)
 	case *schema.GetDataSourceDataSourceNotFoundError:
-		return nil, types.NewErrNotFound(id, "datasource", ds.Message)
+		return nil, types.NewErrNotFound(id, ds.Typename, ds.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.DataSource)
 	}
@@ -159,7 +159,7 @@ func (c *DataSourceClient) GetMaskingMetadata(ctx context.Context, id string) (*
 	case *schema.DataSourceMaskInformationDataSourcePermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("dataSource", ds.Message)
 	case *schema.DataSourceMaskInformationDataSourceNotFoundError:
-		return nil, types.NewErrNotFound(id, "datasource", ds.Message)
+		return nil, types.NewErrNotFound(id, ds.Typename, ds.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.DataSource)
 	}
@@ -205,7 +205,7 @@ func (c *DataSourceClient) ListDataSources(ctx context.Context, ops ...func(*Dat
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.DataSourcePageEdgesEdge, error) {
-		output, err := schema.ListDataSources(ctx, c.client, cursor, ptr.Int(25), options.filter, nil, options.order)
+		output, err := schema.ListDataSources(ctx, c.client, cursor, ptr.Int(internal.MaxPageSize), options.filter, nil, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}

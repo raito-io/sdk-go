@@ -42,6 +42,8 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 
 	pkgPath := pkg[0].PkgPath + "/" + filePath
 
+	constAssignments := make(map[string][]string)
+
 	// Write package declaration
 	fmt.Fprintf(outputStringBuilder, "package %s\n\n", outputPackageName)
 
@@ -71,6 +73,8 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 						if it, ok := vs.Type.(*ast.Ident); ok {
 							for i := range vs.Names {
 								if unicode.IsUpper(rune(vs.Names[i].Name[0])) {
+									constAssignments[it.Name] = append(constAssignments[it.Name], vs.Names[i].Name)
+
 									assignments = append(assignments, fmt.Sprintf("%s %s = %s.%s", vs.Names[i].Name, it.Name, pkgAlias, vs.Names[i].Name))
 								}
 							}
@@ -79,10 +83,18 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 				}
 
 				if len(assignments) > 0 {
-					fmt.Fprintf(outputStringBuilder, "const (%s\n)\n", strings.Join(assignments, "\n\t"))
+					fmt.Fprintf(outputStringBuilder, "const (%s\n)\n\n", strings.Join(assignments, "\n\t"))
 				}
 			}
 		}
+	}
+
+	if len(constAssignments) > 0 {
+		fmt.Fprintf(outputStringBuilder, "\n")
+	}
+
+	for constType, assignments := range constAssignments {
+		fmt.Fprintf(outputStringBuilder, "var All%s = []%s{%s}\n", constType, constType, strings.Join(assignments, ", "))
 	}
 
 	// Format the output file

@@ -14,6 +14,7 @@ type RaitoClient struct {
 	dataObjectClient     services.DataObjectClient
 	dataSourceClient     services.DataSourceClient
 	identityStoreClient  services.IdentityStoreClient
+	roleClient           services.RoleClient
 	userClient           services.UserClient
 }
 
@@ -50,6 +51,7 @@ func NewClient(ctx context.Context, domain, user, secret string, ops ...func(opt
 		dataObjectClient:     services.NewDataObjectClient(client),
 		dataSourceClient:     services.NewDataSourceClient(client),
 		identityStoreClient:  services.NewIdentityStoreClient(client),
+		roleClient:           services.NewRoleClient(client),
 		userClient:           services.NewUserClient(client),
 	}
 }
@@ -74,6 +76,12 @@ func (c *RaitoClient) IdentityStore() *services.IdentityStoreClient {
 	return &c.identityStoreClient
 }
 
+// Role returns the RoleClient
+func (c *RaitoClient) Role() *services.RoleClient {
+	return &c.roleClient
+}
+
+// User returns the UserClient
 func (c *RaitoClient) User() *services.UserClient {
 	return &c.userClient
 }

@@ -80,7 +80,7 @@ func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id stri
 	case *schema.DeleteAccessProviderDeleteAccessProviderPermissionDeniedError:
 		return types.NewErrPermissionDenied("deleteAccessProvider", response.Message)
 	case *schema.DeleteAccessProviderDeleteAccessProviderNotFoundError:
-		return types.NewErrNotFound(id, "accessProvider", response.Message)
+		return types.NewErrNotFound(id, response.Typename, response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteAccessProvider)
 	}
@@ -96,7 +96,7 @@ func (a *AccessProviderClient) ActivateAccessProvider(ctx context.Context, id st
 	case *schema.ActivateAccessProviderActivateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.ActivateAccessProviderActivateAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *schema.ActivateAccessProviderActivateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("activateAccessProvider", response.Message)
 	default:
@@ -114,7 +114,7 @@ func (a *AccessProviderClient) DeactivateAccessProvider(ctx context.Context, id 
 	case *schema.DeactivateAccessProviderDeactivateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *schema.DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("deactivateAccessProvider", response.Message)
 	default:
@@ -133,7 +133,7 @@ func (a *AccessProviderClient) GetAccessProvider(ctx context.Context, id string)
 	case *schema.GetAccessProviderAccessProvider:
 		return &ap.AccessProvider, nil
 	case *schema.GetAccessProviderAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", ap.Message)
+		return nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 	case *schema.GetAccessProviderAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("getAccessProvider", ap.Message)
 	default:
@@ -172,7 +172,7 @@ func (a *AccessProviderClient) ListAccessProviders(ctx context.Context, ops ...f
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*schema.PageInfo, []schema.AccessProviderPageEdgesEdge, error) {
-		output, err := schema.ListAccessProviders(ctx, a.client, cursor, ptr.Int(25), options.filter, options.order)
+		output, err := schema.ListAccessProviders(ctx, a.client, cursor, ptr.Int(internal.MaxPageSize), options.filter, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -224,7 +224,7 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhoListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhoList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
+		output, err := schema.GetAccessProviderWhoList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -238,7 +238,7 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 				return nil, nil, types.NewErrPermissionDenied("accessProviderWhoList", whoList.Message)
 			}
 		case *schema.GetAccessProviderWhoListAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhoListAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
@@ -285,7 +285,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
+		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -299,7 +299,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatDataObjectList", whatList.Message)
 			}
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
@@ -352,7 +352,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatAccessProviderListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhatAccessProviders(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order, options.filter)
+		output, err := schema.GetAccessProviderWhatAccessProviders(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order, options.filter)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -368,7 +368,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 				return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
 			}
 		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:

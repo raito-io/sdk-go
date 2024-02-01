@@ -12,6 +12,17 @@ fragment AccessProvider on AccessProvider {
     policyRule
     override
     external
+
+    whatType
+    whatAbacRule {
+        ... WhatAbacRule
+    }
+
+    whoType
+    whoAbacRule {
+        ... WhoAbacRule
+    }
+
     notInternalizable
     whoLocked
     whoLockedReason
@@ -26,6 +37,90 @@ fragment AccessProvider on AccessProvider {
     complete
     dataSources {
         ...DataSource
+    }
+}
+
+fragment WhoAbacRule on WhoAbacRule {
+    promiseDuration
+    type
+    rule {
+        ... BinaryExpressionLiteralBool
+        ... AbacComparisonExpressionComparison
+        ... AbacComparisonExpressionAggregator
+    }
+}
+
+fragment WhatAbacRule on WhatAbacRule {
+    permissions
+    globalPermissions
+    doTypes
+    rule {
+        ... BinaryExpressionLiteralBool
+        ... AbacComparisonExpressionComparison
+        ... AbacComparisonExpressionAggregator
+    }
+}
+
+fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
+    value
+}
+
+fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
+    booleanLiteralValue: value
+}
+
+fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
+    stringListValue: value
+}
+
+fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
+    stringLiteralValue: value
+}
+
+fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
+   aggregatorOperator: operator
+    operands {
+        ... AbacComparisonExpressionAggregatorLevel2
+        ... AbacComparisonExpressionComparison
+        ... BinaryExpressionLiteralBool
+        ... AbacComparisonExpressionUnaryExpression
+    }
+}
+
+fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
+    aggregatorOperator: operator
+    operands {
+        ... AbacComparisonExpressionComparison
+        ... BinaryExpressionLiteralBool
+    }
+}
+
+fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
+    unaryOperator: operator
+    operand {
+        ...BinaryExpressionLiteralBool
+        ...AbacComparisonExpressionComparison
+        ...AbacComparisonExpressionAggregatorLevel2
+        ...AbacComparisonExpressionUnaryExpressionLevel2
+    }
+}
+
+
+fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
+    unaryOperator: operator
+    operand {
+        ...BinaryExpressionLiteralBool
+        ...AbacComparisonExpressionComparison
+    }
+}
+
+fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
+    leftOperand
+    comparisonOperator: operator
+    rightOperand {
+        ... AbacComparisonExpressionBinaryLiteral
+        ... AbacComparisonExpressionStringListLiteral
+        ... AbacComparisonExpressionStringLiteral
     }
 }
 
