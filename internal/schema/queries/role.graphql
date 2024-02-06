@@ -205,3 +205,44 @@ mutation UnassignGlobalRole($role: ID!, $to: [ID!]!) {
         ... NotFoundError
     }
 }
+
+mutation UpdateRoleAssigneesOnIdentityStore($isId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+    updateRoleAssigneesOnIdentityStore(identityStore: $isId, roleInput: {roleID: $roleID, assignees: $assignees}) {
+        ... Role
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+mutation UpdateRoleAssigneesOnDataObject($doId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+    updateRoleAssigneesOnDataObject(dataObject: $doId, roleInput: {roleID: $roleID, assignees: $assignees}) {
+       ... Role
+       ... PermissionDeniedError
+       ... NotFoundError
+    }
+}
+
+mutation UpdateRoleAssigneesOnDataSource($dsId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+    updateRoleAssigneesOnDataSource(dataSource: $dsId, roleInput: {roleID: $roleID, assignees: $assignees}) {
+      ... Role
+      ... PermissionDeniedError
+      ... NotFoundError
+    }
+}
+
+mutation UpdateRoleAssigneesOnAccessProvider($apId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+    updateRoleAssigneesOnAccessProvider(accessProvider: $apId, roleInput: {roleID: $roleID, assignees: $assignees}) {
+       ... Role
+       ... PermissionDeniedError
+       ... NotFoundError
+    }
+}
+
+mutation SetGlobalRolesForUser($user: ID!, $roles: [ID!]!) {
+    setGlobalRolesForUser(user: $user, roles: $roles) {
+        ... on SetGlobalRolesForUser{
+            success
+        }
+        ... PermissionDeniedError
+    }
+}

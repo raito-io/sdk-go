@@ -44,11 +44,26 @@ func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap type
 	}
 }
 
+type UpdateAccessProviderOptions struct {
+	overrideLocks bool
+}
+
+func WithAccessProviderOverrideLocks() func(options *UpdateAccessProviderOptions) {
+	return func(options *UpdateAccessProviderOptions) {
+		options.overrideLocks = true
+	}
+}
+
 // UpdateAccessProvider updates an existing AccessProvider in Raito Cloud.
 // The updated AccessProvider is returned if the update is successful.
 // Otherwise, an error is returned.
-func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id string, ap schema.AccessProviderInput) (*types.AccessProvider, error) {
-	result, err := schema.UpdateAccessProvider(ctx, a.client, id, ap)
+func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id string, ap schema.AccessProviderInput, ops ...func(options *UpdateAccessProviderOptions)) (*types.AccessProvider, error) {
+	options := UpdateAccessProviderOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	result, err := schema.UpdateAccessProvider(ctx, a.client, id, ap, &options.overrideLocks)
 	if err != nil {
 		return nil, types.NewErrClient(err)
 	}
@@ -386,6 +401,69 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 		listItem := (*edge.Node).(*types.AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem)
 
 		return cursor, &listItem.AccessWhatAccessProviderItem, nil
+	}
+
+	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)
+}
+
+type AccessProviderAbacWhatScopeListOptions struct {
+	order  []types.AccessWhatOrderByInput
+	search *string
+}
+
+func WithAccessProviderAbacWhatScopeListOrder(input ...types.AccessWhatOrderByInput) func(options *AccessProviderAbacWhatScopeListOptions) {
+	return func(options *AccessProviderAbacWhatScopeListOptions) {
+		options.order = append(options.order, input...)
+	}
+}
+
+func WithAccessProviderAbacWhatScopeListSearch(search string) func(options *AccessProviderAbacWhatScopeListOptions) {
+	return func(options *AccessProviderAbacWhatScopeListOptions) {
+		options.search = &search
+	}
+}
+
+func (a *AccessProviderClient) GetAccessProviderAbacWhatScope(ctx context.Context, id string, ops ...func(*AccessProviderAbacWhatScopeListOptions)) <-chan types.ListItem[types.DataObject] {
+	options := AccessProviderAbacWhatScopeListOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatAbacScopeListEdgesEdge, error) {
+		output, err := schema.ListAccessProviderAbacWhatScope(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), options.search, options.order)
+		if err != nil {
+			return nil, nil, types.NewErrClient(err)
+		}
+
+		switch ap := output.AccessProvider.(type) {
+		case *schema.ListAccessProviderAbacWhatScopeAccessProvider:
+			switch whatList := ap.WhatAbacScope.(type) {
+			case *schema.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult:
+				return &whatList.PageInfo.PageInfo, whatList.Edges, nil
+			case *schema.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError:
+				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatAbacScopeList", whatList.Message)
+			default:
+				return nil, nil, fmt.Errorf("unexpected type '%T': %w", whatList)
+			}
+		case *schema.ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError:
+			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
+		case *schema.ListAccessProviderAbacWhatScopeAccessProviderNotFoundError:
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
+		default:
+			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
+		}
+	}
+
+	edgeFn := func(edge *types.AccessProviderWhatAbacScopeListEdgesEdge) (*string, *types.DataObject, error) {
+		cursor := edge.Cursor
+
+		if edge.Node == nil {
+			return cursor, nil, nil
+		}
+
+		listItem := (*edge.Node).(*types.AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject)
+
+		return cursor, &listItem.DataObject, nil
 	}
 
 	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)

@@ -12,100 +12,6 @@ import (
 	"github.com/raito-io/sdk/types/models"
 )
 
-// AbacComparisonExpressionAggregator includes the GraphQL fields of AbacComparisonExpressionAggregator requested by the fragment AbacComparisonExpressionAggregator.
-type AbacComparisonExpressionAggregator struct {
-	AggregatorOperator BinaryExpressionAggregatorOperator                                   `json:"aggregatorOperator"`
-	Operands           []AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression `json:"-"`
-}
-
-// GetAggregatorOperator returns AbacComparisonExpressionAggregator.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregator) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AggregatorOperator
-}
-
-// GetOperands returns AbacComparisonExpressionAggregator.Operands, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregator) GetOperands() []AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression {
-	return v.Operands
-}
-
-func (v *AbacComparisonExpressionAggregator) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregator
-		Operands []json.RawMessage `json:"operands"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregator = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Operands
-		src := firstPass.Operands
-		*dst = make(
-			[]AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			if len(src) != 0 && string(src) != "null" {
-				err = __unmarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(
-					src, dst)
-				if err != nil {
-					return fmt.Errorf(
-						"unable to unmarshal AbacComparisonExpressionAggregator.Operands: %w", err)
-				}
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregator struct {
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *AbacComparisonExpressionAggregator) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregator) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregator, error) {
-	var retval __premarshalAbacComparisonExpressionAggregator
-
-	retval.AggregatorOperator = v.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionAggregator.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
 type AbacComparisonExpressionAggregatorInput struct {
 	Operator BinaryExpressionAggregatorOperator `json:"operator"`
 	Operands []AbacComparisonExpressionInput    `json:"operands"`
@@ -119,923 +25,6 @@ func (v *AbacComparisonExpressionAggregatorInput) GetOperator() BinaryExpression
 // GetOperands returns AbacComparisonExpressionAggregatorInput.Operands, and is useful for accessing the field via an interface.
 func (v *AbacComparisonExpressionAggregatorInput) GetOperands() []AbacComparisonExpressionInput {
 	return v.Operands
-}
-
-// AbacComparisonExpressionAggregatorLevel2 includes the GraphQL fields of AbacComparisonExpressionAggregator requested by the fragment AbacComparisonExpressionAggregatorLevel2.
-type AbacComparisonExpressionAggregatorLevel2 struct {
-	AggregatorOperator BinaryExpressionAggregatorOperator                                         `json:"aggregatorOperator"`
-	Operands           []AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression `json:"-"`
-}
-
-// GetAggregatorOperator returns AbacComparisonExpressionAggregatorLevel2.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AggregatorOperator
-}
-
-// GetOperands returns AbacComparisonExpressionAggregatorLevel2.Operands, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2) GetOperands() []AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression {
-	return v.Operands
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorLevel2
-		Operands []json.RawMessage `json:"operands"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorLevel2 = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Operands
-		src := firstPass.Operands
-		*dst = make(
-			[]AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			if len(src) != 0 && string(src) != "null" {
-				err = __unmarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(
-					src, dst)
-				if err != nil {
-					return fmt.Errorf(
-						"unable to unmarshal AbacComparisonExpressionAggregatorLevel2.Operands: %w", err)
-				}
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorLevel2 struct {
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorLevel2, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorLevel2
-
-	retval.AggregatorOperator = v.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionAggregatorLevel2.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression is implemented by the following types:
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression
-// AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool
-type AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression interface {
-	implementsGraphQLInterfaceAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression() {
-}
-
-func __unmarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(b []byte, v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator
-		}{typename, v}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression
-		}{typename, v}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionAggregator) GetTypename() *string {
-	return v.Typename
-}
-
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) GetTypename() *string {
-	return v.Typename
-}
-
-// GetLeftOperand returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) GetTypename() *string {
-	return v.Typename
-}
-
-// GetValue returns AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorLevel2OperandsBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression is implemented by the following types:
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression
-// AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool
-type AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression interface {
-	implementsGraphQLInterfaceAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) implementsGraphQLInterfaceAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression() {
-}
-
-func __unmarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(b []byte, v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator struct {
-	Typename                                 *string `json:"__typename"`
-	AbacComparisonExpressionAggregatorLevel2 `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) GetTypename() *string {
-	return v.Typename
-}
-
-// GetAggregatorOperator returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AbacComparisonExpressionAggregatorLevel2.AggregatorOperator
-}
-
-// GetOperands returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator.Operands, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) GetOperands() []AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression {
-	return v.AbacComparisonExpressionAggregatorLevel2.Operands
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionAggregatorLevel2)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator
-
-	retval.Typename = v.Typename
-	retval.AggregatorOperator = v.AbacComparisonExpressionAggregatorLevel2.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.AbacComparisonExpressionAggregatorLevel2.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionAggregator.AbacComparisonExpressionAggregatorLevel2.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) GetTypename() *string {
-	return v.Typename
-}
-
-// GetLeftOperand returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression struct {
-	Typename                                *string `json:"__typename"`
-	AbacComparisonExpressionUnaryExpression `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// GetUnaryOperator returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression.UnaryOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) GetUnaryOperator() BinaryExpressionUnaryExpressionOperator {
-	return v.AbacComparisonExpressionUnaryExpression.UnaryOperator
-}
-
-// GetOperand returns AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression.Operand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) GetOperand() *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression {
-	return v.AbacComparisonExpressionUnaryExpression.Operand
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionUnaryExpression)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-
-	UnaryOperator BinaryExpressionUnaryExpressionOperator `json:"unaryOperator"`
-
-	Operand json.RawMessage `json:"operand"`
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression
-
-	retval.Typename = v.Typename
-	retval.UnaryOperator = v.AbacComparisonExpressionUnaryExpression.UnaryOperator
-	{
-
-		dst := &retval.Operand
-		src := v.AbacComparisonExpressionUnaryExpression.Operand
-		if src != nil {
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionAggregatorOperandsAbacComparisonExpressionUnaryExpression.AbacComparisonExpressionUnaryExpression.Operand: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) GetTypename() *string {
-	return v.Typename
-}
-
-// GetValue returns AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalAbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool, error) {
-	var retval __premarshalAbacComparisonExpressionAggregatorOperandsBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
-}
-
-// AbacComparisonExpressionBinaryLiteral includes the GraphQL fields of AbacComparisonExpressionBinaryLiteral requested by the fragment AbacComparisonExpressionBinaryLiteral.
-type AbacComparisonExpressionBinaryLiteral struct {
-	BooleanLiteralValue bool `json:"booleanLiteralValue"`
-}
-
-// GetBooleanLiteralValue returns AbacComparisonExpressionBinaryLiteral.BooleanLiteralValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionBinaryLiteral) GetBooleanLiteralValue() bool {
-	return v.BooleanLiteralValue
-}
-
-// AbacComparisonExpressionComparison includes the GraphQL fields of AbacComparisonExpressionComparison requested by the fragment AbacComparisonExpressionComparison.
-type AbacComparisonExpressionComparison struct {
-	LeftOperand        string                                                                        `json:"leftOperand"`
-	ComparisonOperator AbacComparisonExpressionComparisonOperator                                    `json:"comparisonOperator"`
-	RightOperand       AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand `json:"-"`
-}
-
-// GetLeftOperand returns AbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparison) GetLeftOperand() string { return v.LeftOperand }
-
-// GetComparisonOperator returns AbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.ComparisonOperator
-}
-
-// GetRightOperand returns AbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.RightOperand
-}
-
-func (v *AbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionComparison
-		RightOperand json.RawMessage `json:"rightOperand"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.RightOperand
-		src := firstPass.RightOperand
-		if len(src) != 0 && string(src) != "null" {
-			err = __unmarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-				src, dst)
-			if err != nil {
-				return fmt.Errorf(
-					"unable to unmarshal AbacComparisonExpressionComparison.RightOperand: %w", err)
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionComparison struct {
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *AbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalAbacComparisonExpressionComparison, error) {
-	var retval __premarshalAbacComparisonExpressionComparison
-
-	retval.LeftOperand = v.LeftOperand
-	retval.ComparisonOperator = v.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
 }
 
 type AbacComparisonExpressionComparisonInput struct {
@@ -1065,294 +54,6 @@ const (
 	AbacComparisonExpressionComparisonOperatorHastag      AbacComparisonExpressionComparisonOperator = "HasTag"
 	AbacComparisonExpressionComparisonOperatorContainstag AbacComparisonExpressionComparisonOperator = "ContainsTag"
 )
-
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral includes the requested fields of the GraphQL type AbacComparisonExpressionBinaryLiteral.
-type AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral struct {
-	Typename                              *string `json:"__typename"`
-	AbacComparisonExpressionBinaryLiteral `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) GetTypename() *string {
-	return v.Typename
-}
-
-// GetBooleanLiteralValue returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral.BooleanLiteralValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) GetBooleanLiteralValue() bool {
-	return v.AbacComparisonExpressionBinaryLiteral.BooleanLiteralValue
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionBinaryLiteral)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral struct {
-	Typename *string `json:"__typename"`
-
-	BooleanLiteralValue bool `json:"booleanLiteralValue"`
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) __premarshalJSON() (*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral, error) {
-	var retval __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral
-
-	retval.Typename = v.Typename
-	retval.BooleanLiteralValue = v.AbacComparisonExpressionBinaryLiteral.BooleanLiteralValue
-	return &retval, nil
-}
-
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand includes the requested fields of the GraphQL interface AbacComparisonExpressionOperand.
-//
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand is implemented by the following types:
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral
-type AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand interface {
-	implementsGraphQLInterfaceAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral) implementsGraphQLInterfaceAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand() {
-}
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) implementsGraphQLInterfaceAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand() {
-}
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) implementsGraphQLInterfaceAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand() {
-}
-
-func __unmarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(b []byte, v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionBinaryLiteral":
-		*v = new(AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionStringListLiteral":
-		*v = new(AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionStringLiteral":
-		*v = new(AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpressionOperand.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral:
-		typename = "AbacComparisonExpressionBinaryLiteral"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionBinaryLiteral
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral:
-		typename = "AbacComparisonExpressionStringListLiteral"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral:
-		typename = "AbacComparisonExpressionStringLiteral"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand: "%T"`, v)
-	}
-}
-
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral includes the requested fields of the GraphQL type AbacComparisonExpressionStringListLiteral.
-type AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral struct {
-	Typename                                  *string `json:"__typename"`
-	AbacComparisonExpressionStringListLiteral `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) GetTypename() *string {
-	return v.Typename
-}
-
-// GetStringListValue returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral.StringListValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) GetStringListValue() []string {
-	return v.AbacComparisonExpressionStringListLiteral.StringListValue
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionStringListLiteral)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral struct {
-	Typename *string `json:"__typename"`
-
-	StringListValue []string `json:"stringListValue"`
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral) __premarshalJSON() (*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral, error) {
-	var retval __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringListLiteral
-
-	retval.Typename = v.Typename
-	retval.StringListValue = v.AbacComparisonExpressionStringListLiteral.StringListValue
-	return &retval, nil
-}
-
-// AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral includes the requested fields of the GraphQL type AbacComparisonExpressionStringLiteral.
-type AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral struct {
-	Typename                              *string `json:"__typename"`
-	AbacComparisonExpressionStringLiteral `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) GetTypename() *string {
-	return v.Typename
-}
-
-// GetStringLiteralValue returns AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral.StringLiteralValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) GetStringLiteralValue() string {
-	return v.AbacComparisonExpressionStringLiteral.StringLiteralValue
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionStringLiteral)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral struct {
-	Typename *string `json:"__typename"`
-
-	StringLiteralValue string `json:"stringLiteralValue"`
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral) __premarshalJSON() (*__premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral, error) {
-	var retval __premarshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionStringLiteral
-
-	retval.Typename = v.Typename
-	retval.StringLiteralValue = v.AbacComparisonExpressionStringLiteral.StringLiteralValue
-	return &retval, nil
-}
 
 type AbacComparisonExpressionInput struct {
 	Literal         *bool                                         `json:"literal"`
@@ -1403,111 +104,6 @@ func (v *AbacComparisonExpressionOperandInput) GetLiteral() *AbacComparisonExpre
 	return v.Literal
 }
 
-// AbacComparisonExpressionStringListLiteral includes the GraphQL fields of AbacComparisonExpressionStringListLiteral requested by the fragment AbacComparisonExpressionStringListLiteral.
-type AbacComparisonExpressionStringListLiteral struct {
-	StringListValue []string `json:"stringListValue"`
-}
-
-// GetStringListValue returns AbacComparisonExpressionStringListLiteral.StringListValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionStringListLiteral) GetStringListValue() []string {
-	return v.StringListValue
-}
-
-// AbacComparisonExpressionStringLiteral includes the GraphQL fields of AbacComparisonExpressionStringLiteral requested by the fragment AbacComparisonExpressionStringLiteral.
-type AbacComparisonExpressionStringLiteral struct {
-	StringLiteralValue string `json:"stringLiteralValue"`
-}
-
-// GetStringLiteralValue returns AbacComparisonExpressionStringLiteral.StringLiteralValue, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionStringLiteral) GetStringLiteralValue() string {
-	return v.StringLiteralValue
-}
-
-// AbacComparisonExpressionUnaryExpression includes the GraphQL fields of AbacComparisonExpressionUnaryExpression requested by the fragment AbacComparisonExpressionUnaryExpression.
-type AbacComparisonExpressionUnaryExpression struct {
-	UnaryOperator BinaryExpressionUnaryExpressionOperator                                 `json:"unaryOperator"`
-	Operand       *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression `json:"-"`
-}
-
-// GetUnaryOperator returns AbacComparisonExpressionUnaryExpression.UnaryOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpression) GetUnaryOperator() BinaryExpressionUnaryExpressionOperator {
-	return v.UnaryOperator
-}
-
-// GetOperand returns AbacComparisonExpressionUnaryExpression.Operand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpression) GetOperand() *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression {
-	return v.Operand
-}
-
-func (v *AbacComparisonExpressionUnaryExpression) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpression
-		Operand json.RawMessage `json:"operand"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpression = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Operand
-		src := firstPass.Operand
-		if len(src) != 0 && string(src) != "null" {
-			*dst = new(AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression)
-			err = __unmarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression(
-				src, *dst)
-			if err != nil {
-				return fmt.Errorf(
-					"unable to unmarshal AbacComparisonExpressionUnaryExpression.Operand: %w", err)
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpression struct {
-	UnaryOperator BinaryExpressionUnaryExpressionOperator `json:"unaryOperator"`
-
-	Operand json.RawMessage `json:"operand"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpression) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpression) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpression, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpression
-
-	retval.UnaryOperator = v.UnaryOperator
-	{
-
-		dst := &retval.Operand
-		src := v.Operand
-		if src != nil {
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionUnaryExpression.Operand: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
 type AbacComparisonExpressionUnaryExpressionInput struct {
 	Operator BinaryExpressionUnaryExpressionOperator `json:"operator"`
 	Operand  AbacComparisonExpressionInput           `json:"operand"`
@@ -1521,815 +117,6 @@ func (v *AbacComparisonExpressionUnaryExpressionInput) GetOperator() BinaryExpre
 // GetOperand returns AbacComparisonExpressionUnaryExpressionInput.Operand, and is useful for accessing the field via an interface.
 func (v *AbacComparisonExpressionUnaryExpressionInput) GetOperand() AbacComparisonExpressionInput {
 	return v.Operand
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2 includes the GraphQL fields of AbacComparisonExpressionUnaryExpression requested by the fragment AbacComparisonExpressionUnaryExpressionLevel2.
-type AbacComparisonExpressionUnaryExpressionLevel2 struct {
-	UnaryOperator BinaryExpressionUnaryExpressionOperator                                       `json:"unaryOperator"`
-	Operand       *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression `json:"-"`
-}
-
-// GetUnaryOperator returns AbacComparisonExpressionUnaryExpressionLevel2.UnaryOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2) GetUnaryOperator() BinaryExpressionUnaryExpressionOperator {
-	return v.UnaryOperator
-}
-
-// GetOperand returns AbacComparisonExpressionUnaryExpressionLevel2.Operand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2) GetOperand() *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression {
-	return v.Operand
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionLevel2
-		Operand json.RawMessage `json:"operand"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionLevel2 = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Operand
-		src := firstPass.Operand
-		if len(src) != 0 && string(src) != "null" {
-			*dst = new(AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression)
-			err = __unmarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression(
-				src, *dst)
-			if err != nil {
-				return fmt.Errorf(
-					"unable to unmarshal AbacComparisonExpressionUnaryExpressionLevel2.Operand: %w", err)
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionLevel2 struct {
-	UnaryOperator BinaryExpressionUnaryExpressionOperator `json:"unaryOperator"`
-
-	Operand json.RawMessage `json:"operand"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionLevel2, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionLevel2
-
-	retval.UnaryOperator = v.UnaryOperator
-	{
-
-		dst := &retval.Operand
-		src := v.Operand
-		if src != nil {
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionUnaryExpressionLevel2.Operand: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression is implemented by the following types:
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression
-// AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool
-type AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression interface {
-	implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression() {
-}
-
-func __unmarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression(b []byte, v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression(v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator
-		}{typename, v}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression
-		}{typename, v}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionAggregator) GetTypename() *string {
-	return v.Typename
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) GetTypename() *string {
-	return v.Typename
-}
-
-// GetLeftOperand returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) GetTypename() *string {
-	return v.Typename
-}
-
-// GetValue returns AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionLevel2OperandBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression is implemented by the following types:
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression
-// AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool
-type AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression interface {
-	implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression() {
-}
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) implementsGraphQLInterfaceAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression() {
-}
-
-func __unmarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression(b []byte, v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression(v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalAbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator struct {
-	Typename                                 *string `json:"__typename"`
-	AbacComparisonExpressionAggregatorLevel2 `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) GetTypename() *string {
-	return v.Typename
-}
-
-// GetAggregatorOperator returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AbacComparisonExpressionAggregatorLevel2.AggregatorOperator
-}
-
-// GetOperands returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator.Operands, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) GetOperands() []AbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression {
-	return v.AbacComparisonExpressionAggregatorLevel2.Operands
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionAggregatorLevel2)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator
-
-	retval.Typename = v.Typename
-	retval.AggregatorOperator = v.AbacComparisonExpressionAggregatorLevel2.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.AbacComparisonExpressionAggregatorLevel2.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorLevel2OperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionAggregator.AbacComparisonExpressionAggregatorLevel2.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) GetTypename() *string {
-	return v.Typename
-}
-
-// GetLeftOperand returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression struct {
-	Typename                                      *string `json:"__typename"`
-	AbacComparisonExpressionUnaryExpressionLevel2 `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// GetUnaryOperator returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression.UnaryOperator, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) GetUnaryOperator() BinaryExpressionUnaryExpressionOperator {
-	return v.AbacComparisonExpressionUnaryExpressionLevel2.UnaryOperator
-}
-
-// GetOperand returns AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression.Operand, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) GetOperand() *AbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression {
-	return v.AbacComparisonExpressionUnaryExpressionLevel2.Operand
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionUnaryExpressionLevel2)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-
-	UnaryOperator BinaryExpressionUnaryExpressionOperator `json:"unaryOperator"`
-
-	Operand json.RawMessage `json:"operand"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression
-
-	retval.Typename = v.Typename
-	retval.UnaryOperator = v.AbacComparisonExpressionUnaryExpressionLevel2.UnaryOperator
-	{
-
-		dst := &retval.Operand
-		src := v.AbacComparisonExpressionUnaryExpressionLevel2.Operand
-		if src != nil {
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionUnaryExpressionLevel2OperandAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AbacComparisonExpressionUnaryExpressionOperandAbacComparisonExpressionUnaryExpression.AbacComparisonExpressionUnaryExpressionLevel2.Operand: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) GetTypename() *string {
-	return v.Typename
-}
-
-// GetValue returns AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalAbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool, error) {
-	var retval __premarshalAbacComparisonExpressionUnaryExpressionOperandBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
 }
 
 // AccessProvider includes the GraphQL fields of AccessProvider requested by the fragment AccessProvider.
@@ -2364,7 +151,8 @@ type AccessProvider struct {
 	DeleteLockedReason      *string                     `json:"deleteLockedReason"`
 	Complete                *bool                       `json:"complete"`
 	// Fetches the data sources that this AP will get deployed to.
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+	DataSources []AccessProviderDataSourcesDataSource       `json:"dataSources"`
+	Locks       []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 // GetId returns AccessProvider.Id, and is useful for accessing the field via an interface.
@@ -2456,6 +244,9 @@ func (v *AccessProvider) GetComplete() *bool { return v.Complete }
 
 // GetDataSources returns AccessProvider.DataSources, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource { return v.DataSources }
+
+// GetLocks returns AccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *AccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData { return v.Locks }
 
 // AccessProviderDataSourcesDataSource includes the requested fields of the GraphQL type DataSource.
 type AccessProviderDataSourcesDataSource struct {
@@ -2640,6 +431,7 @@ type AccessProviderInput struct {
 	What                []WhatInput                    `json:"what"`
 	WhatDataObjects     []AccessProviderWhatInputDO    `json:"whatDataObjects"`
 	WhatAccessProviders []AccessProviderWhatInputAP    `json:"whatAccessProviders"`
+	Locks               []AccessProviderLockDataInput  `json:"locks"`
 	Override            *bool                          `json:"override"`
 	External            *bool                          `json:"external"`
 }
@@ -2701,11 +493,181 @@ func (v *AccessProviderInput) GetWhatAccessProviders() []AccessProviderWhatInput
 	return v.WhatAccessProviders
 }
 
+// GetLocks returns AccessProviderInput.Locks, and is useful for accessing the field via an interface.
+func (v *AccessProviderInput) GetLocks() []AccessProviderLockDataInput { return v.Locks }
+
 // GetOverride returns AccessProviderInput.Override, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetOverride() *bool { return v.Override }
 
 // GetExternal returns AccessProviderInput.External, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetExternal() *bool { return v.External }
+
+type AccessProviderLock string
+
+const (
+	AccessProviderLockWholock         AccessProviderLock = "WhoLock"
+	AccessProviderLockInheritancelock AccessProviderLock = "InheritanceLock"
+	AccessProviderLockWhatlock        AccessProviderLock = "WhatLock"
+	AccessProviderLockNamelock        AccessProviderLock = "NameLock"
+	AccessProviderLockDeletelock      AccessProviderLock = "DeleteLock"
+	AccessProviderLockOwnerlock       AccessProviderLock = "OwnerLock"
+)
+
+type AccessProviderLockDataInput struct {
+	LockKey AccessProviderLock              `json:"lockKey"`
+	Details *AccessProviderLockDetailsInput `json:"details"`
+}
+
+// GetLockKey returns AccessProviderLockDataInput.LockKey, and is useful for accessing the field via an interface.
+func (v *AccessProviderLockDataInput) GetLockKey() AccessProviderLock { return v.LockKey }
+
+// GetDetails returns AccessProviderLockDataInput.Details, and is useful for accessing the field via an interface.
+func (v *AccessProviderLockDataInput) GetDetails() *AccessProviderLockDetailsInput { return v.Details }
+
+// AccessProviderLockDetails includes the GraphQL fields of AccessProviderLockDetails requested by the fragment AccessProviderLockDetails.
+type AccessProviderLockDetails struct {
+	Reason *string `json:"reason"`
+}
+
+// GetReason returns AccessProviderLockDetails.Reason, and is useful for accessing the field via an interface.
+func (v *AccessProviderLockDetails) GetReason() *string { return v.Reason }
+
+type AccessProviderLockDetailsInput struct {
+	Reason *string `json:"reason"`
+}
+
+// GetReason returns AccessProviderLockDetailsInput.Reason, and is useful for accessing the field via an interface.
+func (v *AccessProviderLockDetailsInput) GetReason() *string { return v.Reason }
+
+// AccessProviderLocks includes the GraphQL fields of AccessProviderLockData requested by the fragment AccessProviderLocks.
+type AccessProviderLocks struct {
+	LockKey AccessProviderLock                                  `json:"lockKey"`
+	Details AccessProviderLocksDetailsAccessProviderLockDetails `json:"details"`
+}
+
+// GetLockKey returns AccessProviderLocks.LockKey, and is useful for accessing the field via an interface.
+func (v *AccessProviderLocks) GetLockKey() AccessProviderLock { return v.LockKey }
+
+// GetDetails returns AccessProviderLocks.Details, and is useful for accessing the field via an interface.
+func (v *AccessProviderLocks) GetDetails() AccessProviderLocksDetailsAccessProviderLockDetails {
+	return v.Details
+}
+
+// AccessProviderLocksAccessProviderLockData includes the requested fields of the GraphQL type AccessProviderLockData.
+type AccessProviderLocksAccessProviderLockData struct {
+	AccessProviderLocks `json:"-"`
+}
+
+// GetLockKey returns AccessProviderLocksAccessProviderLockData.LockKey, and is useful for accessing the field via an interface.
+func (v *AccessProviderLocksAccessProviderLockData) GetLockKey() AccessProviderLock {
+	return v.AccessProviderLocks.LockKey
+}
+
+// GetDetails returns AccessProviderLocksAccessProviderLockData.Details, and is useful for accessing the field via an interface.
+func (v *AccessProviderLocksAccessProviderLockData) GetDetails() AccessProviderLocksDetailsAccessProviderLockDetails {
+	return v.AccessProviderLocks.Details
+}
+
+func (v *AccessProviderLocksAccessProviderLockData) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderLocksAccessProviderLockData
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderLocksAccessProviderLockData = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProviderLocks)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderLocksAccessProviderLockData struct {
+	LockKey AccessProviderLock `json:"lockKey"`
+
+	Details AccessProviderLocksDetailsAccessProviderLockDetails `json:"details"`
+}
+
+func (v *AccessProviderLocksAccessProviderLockData) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderLocksAccessProviderLockData) __premarshalJSON() (*__premarshalAccessProviderLocksAccessProviderLockData, error) {
+	var retval __premarshalAccessProviderLocksAccessProviderLockData
+
+	retval.LockKey = v.AccessProviderLocks.LockKey
+	retval.Details = v.AccessProviderLocks.Details
+	return &retval, nil
+}
+
+// AccessProviderLocksDetailsAccessProviderLockDetails includes the requested fields of the GraphQL type AccessProviderLockDetails.
+type AccessProviderLocksDetailsAccessProviderLockDetails struct {
+	AccessProviderLockDetails `json:"-"`
+}
+
+// GetReason returns AccessProviderLocksDetailsAccessProviderLockDetails.Reason, and is useful for accessing the field via an interface.
+func (v *AccessProviderLocksDetailsAccessProviderLockDetails) GetReason() *string {
+	return v.AccessProviderLockDetails.Reason
+}
+
+func (v *AccessProviderLocksDetailsAccessProviderLockDetails) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderLocksDetailsAccessProviderLockDetails
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderLocksDetailsAccessProviderLockDetails = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProviderLockDetails)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderLocksDetailsAccessProviderLockDetails struct {
+	Reason *string `json:"reason"`
+}
+
+func (v *AccessProviderLocksDetailsAccessProviderLockDetails) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderLocksDetailsAccessProviderLockDetails) __premarshalJSON() (*__premarshalAccessProviderLocksDetailsAccessProviderLockDetails, error) {
+	var retval __premarshalAccessProviderLocksDetailsAccessProviderLockDetails
+
+	retval.Reason = v.AccessProviderLockDetails.Reason
+	return &retval, nil
+}
 
 type AccessProviderOrderByInput struct {
 	Name       *Sort `json:"name"`
@@ -2984,6 +946,11 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDataSources() []Acces
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns AccessProviderPageEdgesEdgeNodeAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -3071,6 +1038,8 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) MarshalJSON() ([]byte, error) {
@@ -3115,6 +1084,7 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -3374,6 +1344,7 @@ func (v *AccessProviderPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // AccessProviderPageEdgesEdgeNodeRoleAssignment
 // AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification
 // AccessProviderPageEdgesEdgeNodeSearchResultItem
+// AccessProviderPageEdgesEdgeNodeStringValue
 // AccessProviderPageEdgesEdgeNodeTag
 // AccessProviderPageEdgesEdgeNodeTask
 // AccessProviderPageEdgesEdgeNodeTaskNotification
@@ -3452,6 +1423,8 @@ func (v *AccessProviderPageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfa
 func (v *AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderPageEdgesEdgeNodeStringValue) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
@@ -3580,6 +1553,9 @@ func __unmarshalAccessProviderPageEdgesEdgeNodeItem(b []byte, v *AccessProviderP
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderPageEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(AccessProviderPageEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(AccessProviderPageEdgesEdgeNodeTag)
@@ -3883,6 +1859,14 @@ func __marshalAccessProviderPageEdgesEdgeNodeItem(v *AccessProviderPageEdgesEdge
 			*AccessProviderPageEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderPageEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderPageEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderPageEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -4004,6 +1988,14 @@ type AccessProviderPageEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns AccessProviderPageEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
+
+// AccessProviderPageEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type AccessProviderPageEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderPageEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // AccessProviderPageEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type AccessProviderPageEdgesEdgeNodeTag struct {
@@ -4137,10 +2129,8 @@ func (v *AccessProviderWhatAbacRule) GetGlobalPermissions() []string {
 // GetDoTypes returns AccessProviderWhatAbacRule.DoTypes, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatAbacRule) GetDoTypes() []string { return v.WhatAbacRule.DoTypes }
 
-// GetRule returns AccessProviderWhatAbacRule.Rule, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhatAbacRule) GetRule() *WhatAbacRuleRuleAbacComparisonExpression {
-	return v.WhatAbacRule.Rule
-}
+// GetRuleJson returns AccessProviderWhatAbacRule.RuleJson, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacRule) GetRuleJson() *string { return v.WhatAbacRule.RuleJson }
 
 func (v *AccessProviderWhatAbacRule) UnmarshalJSON(b []byte) error {
 
@@ -4174,7 +2164,7 @@ type __premarshalAccessProviderWhatAbacRule struct {
 
 	DoTypes []string `json:"doTypes"`
 
-	Rule json.RawMessage `json:"rule"`
+	RuleJson *string `json:"ruleJson"`
 }
 
 func (v *AccessProviderWhatAbacRule) MarshalJSON() ([]byte, error) {
@@ -4191,20 +2181,1280 @@ func (v *AccessProviderWhatAbacRule) __premarshalJSON() (*__premarshalAccessProv
 	retval.Permissions = v.WhatAbacRule.Permissions
 	retval.GlobalPermissions = v.WhatAbacRule.GlobalPermissions
 	retval.DoTypes = v.WhatAbacRule.DoTypes
-	{
+	retval.RuleJson = v.WhatAbacRule.RuleJson
+	return &retval, nil
+}
 
-		dst := &retval.Rule
-		src := v.WhatAbacRule.Rule
-		if src != nil {
-			var err error
-			*dst, err = __marshalWhatAbacRuleRuleAbacComparisonExpression(
-				src)
+// AccessProviderWhatAbacScopeList includes the GraphQL fields of PagedResult requested by the fragment AccessProviderWhatAbacScopeList.
+type AccessProviderWhatAbacScopeList struct {
+	PageInfo *AccessProviderWhatAbacScopeListPageInfo   `json:"pageInfo"`
+	Edges    []AccessProviderWhatAbacScopeListEdgesEdge `json:"edges"`
+}
+
+// GetPageInfo returns AccessProviderWhatAbacScopeList.PageInfo, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeList) GetPageInfo() *AccessProviderWhatAbacScopeListPageInfo {
+	return v.PageInfo
+}
+
+// GetEdges returns AccessProviderWhatAbacScopeList.Edges, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeList) GetEdges() []AccessProviderWhatAbacScopeListEdgesEdge {
+	return v.Edges
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdge includes the requested fields of the GraphQL type Edge.
+type AccessProviderWhatAbacScopeListEdgesEdge struct {
+	Cursor *string                                           `json:"cursor"`
+	Node   *AccessProviderWhatAbacScopeListEdgesEdgeNodeItem `json:"-"`
+}
+
+// GetCursor returns AccessProviderWhatAbacScopeListEdgesEdge.Cursor, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdge) GetCursor() *string { return v.Cursor }
+
+// GetNode returns AccessProviderWhatAbacScopeListEdgesEdge.Node, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdge) GetNode() *AccessProviderWhatAbacScopeListEdgesEdgeNodeItem {
+	return v.Node
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdge) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAbacScopeListEdgesEdge
+		Node json.RawMessage `json:"node"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAbacScopeListEdgesEdge = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Node
+		src := firstPass.Node
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeItem)
+			err = __unmarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(
+				src, *dst)
 			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AccessProviderWhatAbacRule.WhatAbacRule.Rule: %w", err)
+				return fmt.Errorf(
+					"unable to unmarshal AccessProviderWhatAbacScopeListEdgesEdge.Node: %w", err)
 			}
 		}
 	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAbacScopeListEdgesEdge struct {
+	Cursor *string `json:"cursor"`
+
+	Node json.RawMessage `json:"node"`
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdge) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdge) __premarshalJSON() (*__premarshalAccessProviderWhatAbacScopeListEdgesEdge, error) {
+	var retval __premarshalAccessProviderWhatAbacScopeListEdgesEdge
+
+	retval.Cursor = v.Cursor
+	{
+
+		dst := &retval.Node
+		src := v.Node
+		if src != nil {
+			var err error
+			*dst, err = __marshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal AccessProviderWhatAbacScopeListEdgesEdge.Node: %w", err)
+			}
+		}
+	}
+	return &retval, nil
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail includes the requested fields of the GraphQL type AccessProviderFilterDetail.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail includes the requested fields of the GraphQL type AccessProviderMaskDetail.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch includes the requested fields of the GraphQL type AccessProviderMatch.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest includes the requested fields of the GraphQL type AccessRequest.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification includes the requested fields of the GraphQL type AccessRequestNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem includes the requested fields of the GraphQL type AccessRequestWhatItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem includes the requested fields of the GraphQL type AccessWhatAccessProviderItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem includes the requested fields of the GraphQL type AccessWhatItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem includes the requested fields of the GraphQL type AccessWhoItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount includes the requested fields of the GraphQL type Account.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog includes the requested fields of the GraphQL type AuditDiffLog.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeComment includes the requested fields of the GraphQL type Comment.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeComment struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeComment.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeComment) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem includes the requested fields of the GraphQL type DataAccessReturnItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject includes the requested fields of the GraphQL type DataObject.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject struct {
+	Typename   *string `json:"__typename"`
+	DataObject `json:"-"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Id, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetId() string {
+	return v.DataObject.Id
+}
+
+// GetName returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Name, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetName() string {
+	return v.DataObject.Name
+}
+
+// GetFullName returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.FullName, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetFullName() string {
+	return v.DataObject.FullName
+}
+
+// GetType returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Type, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetType() string {
+	return v.DataObject.Type
+}
+
+// GetDataType returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.DataType, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetDataType() *string {
+	return v.DataObject.DataType
+}
+
+// GetDeleted returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Deleted, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetDeleted() bool {
+	return v.DataObject.Deleted
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.DataObject)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	FullName string `json:"fullName"`
+
+	Type string `json:"type"`
+
+	DataType *string `json:"dataType"`
+
+	Deleted bool `json:"deleted"`
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) __premarshalJSON() (*__premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject, error) {
+	var retval __premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
+
+	retval.Typename = v.Typename
+	retval.Id = v.DataObject.Id
+	retval.Name = v.DataObject.Name
+	retval.FullName = v.DataObject.FullName
+	retval.Type = v.DataObject.Type
+	retval.DataType = v.DataObject.DataType
+	retval.Deleted = v.DataObject.Deleted
+	return &retval, nil
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource includes the requested fields of the GraphQL type DataSource.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage includes the requested fields of the GraphQL type DataUsage.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification includes the requested fields of the GraphQL type DatasourceNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification includes the requested fields of the GraphQL type GlobalRoleAssignmentNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup includes the requested fields of the GraphQL type Group.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem includes the requested fields of the GraphQL type GroupedDataAccessReturnItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem includes the requested fields of the GraphQL type GroupedUserAccessReturnItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore includes the requested fields of the GraphQL type IdentityStore.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult includes the requested fields of the GraphQL type InsightsResult.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue includes the requested fields of the GraphQL type Issue.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeItem includes the requested fields of the GraphQL interface Item.
+//
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeItem is implemented by the following types:
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeComment
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeJob
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg
+// AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRole
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTag
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTask
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUser
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeItem interface {
+	implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeComment) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeJob) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTask) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUser) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+
+func __unmarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(b []byte, v *AccessProviderWhatAbacScopeListEdgesEdgeNodeItem) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "AccessProviderFilterDetail":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail)
+		return json.Unmarshal(b, *v)
+	case "AccessProviderMaskDetail":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail)
+		return json.Unmarshal(b, *v)
+	case "AccessProviderMatch":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch)
+		return json.Unmarshal(b, *v)
+	case "AccessRequest":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest)
+		return json.Unmarshal(b, *v)
+	case "AccessRequestNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification)
+		return json.Unmarshal(b, *v)
+	case "AccessRequestWhatItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhatAccessProviderItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhatItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem)
+		return json.Unmarshal(b, *v)
+	case "AccessWhoItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem)
+		return json.Unmarshal(b, *v)
+	case "Account":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount)
+		return json.Unmarshal(b, *v)
+	case "AuditDiffLog":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog)
+		return json.Unmarshal(b, *v)
+	case "Comment":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeComment)
+		return json.Unmarshal(b, *v)
+	case "DataAccessReturnItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "DataObject":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectType":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType)
+		return json.Unmarshal(b, *v)
+	case "DataSource":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource)
+		return json.Unmarshal(b, *v)
+	case "DataUsage":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage)
+		return json.Unmarshal(b, *v)
+	case "DatasourceNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification)
+		return json.Unmarshal(b, *v)
+	case "GlobalRoleAssignmentNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "Group":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup)
+		return json.Unmarshal(b, *v)
+	case "GroupedDataAccessReturnItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "GroupedUserAccessReturnItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "IdentityStore":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InsightsResult":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult)
+		return json.Unmarshal(b, *v)
+	case "Issue":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue)
+		return json.Unmarshal(b, *v)
+	case "Job":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeJob)
+		return json.Unmarshal(b, *v)
+	case "JobLogMsg":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg)
+		return json.Unmarshal(b, *v)
+	case "PromiseDetails":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRole)
+		return json.Unmarshal(b, *v)
+	case "RoleAssignment":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment)
+		return json.Unmarshal(b, *v)
+	case "RoleAssignmentNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "SearchResultItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue)
+		return json.Unmarshal(b, *v)
+	case "Tag":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeTag)
+		return json.Unmarshal(b, *v)
+	case "Task":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeTask)
+		return json.Unmarshal(b, *v)
+	case "TaskNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification)
+		return json.Unmarshal(b, *v)
+	case "User":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeUser)
+		return json.Unmarshal(b, *v)
+	case "UserAccessReturnItem":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem)
+		return json.Unmarshal(b, *v)
+	case "UserSubtask":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask)
+		return json.Unmarshal(b, *v)
+	case "UserTask":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing Item.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for AccessProviderWhatAbacScopeListEdgesEdgeNodeItem: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(v *AccessProviderWhatAbacScopeListEdgesEdgeNodeItem) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider:
+		typename = "AccessProvider"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProvider
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail:
+		typename = "AccessProviderFilterDetail"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderFilterDetail
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail:
+		typename = "AccessProviderMaskDetail"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMaskDetail
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch:
+		typename = "AccessProviderMatch"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessProviderMatch
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest:
+		typename = "AccessRequest"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequest
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification:
+		typename = "AccessRequestNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem:
+		typename = "AccessRequestWhatItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessRequestWhatItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem:
+		typename = "AccessWhatAccessProviderItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatAccessProviderItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem:
+		typename = "AccessWhatItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhatItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem:
+		typename = "AccessWhoItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccessWhoItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount:
+		typename = "Account"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAccount
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog:
+		typename = "AuditDiffLog"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeAuditDiffLog
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeComment:
+		typename = "Comment"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeComment
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem:
+		typename = "DataAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject:
+		typename = "DataObject"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType:
+		typename = "DataObjectType"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource:
+		typename = "DataSource"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage:
+		typename = "DataUsage"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification:
+		typename = "DatasourceNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDatasourceNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification:
+		typename = "GlobalRoleAssignmentNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeGlobalRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup:
+		typename = "Group"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeGroup
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem:
+		typename = "GroupedDataAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedDataAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem:
+		typename = "GroupedUserAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeGroupedUserAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore:
+		typename = "IdentityStore"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeIdentityStore
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult:
+		typename = "InsightsResult"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeInsightsResult
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue:
+		typename = "Issue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeJob:
+		typename = "Job"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeJob
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg:
+		typename = "JobLogMsg"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails:
+		typename = "PromiseDetails"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeRole:
+		typename = "Role"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeRole
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment:
+		typename = "RoleAssignment"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification:
+		typename = "RoleAssignmentNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem:
+		typename = "SearchResultItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeTag:
+		typename = "Tag"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeTag
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeTask:
+		typename = "Task"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeTask
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification:
+		typename = "TaskNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeUser:
+		typename = "User"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeUser
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem:
+		typename = "UserAccessReturnItem"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask:
+		typename = "UserSubtask"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask:
+		typename = "UserTask"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for AccessProviderWhatAbacScopeListEdgesEdgeNodeItem: "%T"`, v)
+	}
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeJob includes the requested fields of the GraphQL type Job.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeJob struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeJob.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeJob) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg includes the requested fields of the GraphQL type JobLogMsg.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails includes the requested fields of the GraphQL type PromiseDetails.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeRole struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeRole.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRole) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment includes the requested fields of the GraphQL type RoleAssignment.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification includes the requested fields of the GraphQL type RoleAssignmentNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem includes the requested fields of the GraphQL type SearchResultItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeTag struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeTag.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTag) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTask includes the requested fields of the GraphQL type Task.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeTask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeTask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTask) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification includes the requested fields of the GraphQL type TaskNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeTaskNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUser includes the requested fields of the GraphQL type User.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeUser struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeUser.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUser) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem includes the requested fields of the GraphQL type UserAccessReturnItem.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserAccessReturnItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask includes the requested fields of the GraphQL type UserSubtask.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserSubtask) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask includes the requested fields of the GraphQL type UserTask.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeUserTask) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListPageInfo includes the requested fields of the GraphQL type PageInfo.
+type AccessProviderWhatAbacScopeListPageInfo struct {
+	PageInfo `json:"-"`
+}
+
+// GetHasNextPage returns AccessProviderWhatAbacScopeListPageInfo.HasNextPage, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListPageInfo) GetHasNextPage() *bool {
+	return v.PageInfo.HasNextPage
+}
+
+// GetStartCursor returns AccessProviderWhatAbacScopeListPageInfo.StartCursor, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListPageInfo) GetStartCursor() *string {
+	return v.PageInfo.StartCursor
+}
+
+func (v *AccessProviderWhatAbacScopeListPageInfo) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderWhatAbacScopeListPageInfo
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderWhatAbacScopeListPageInfo = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PageInfo)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderWhatAbacScopeListPageInfo struct {
+	HasNextPage *bool `json:"hasNextPage"`
+
+	StartCursor *string `json:"startCursor"`
+}
+
+func (v *AccessProviderWhatAbacScopeListPageInfo) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderWhatAbacScopeListPageInfo) __premarshalJSON() (*__premarshalAccessProviderWhatAbacScopeListPageInfo, error) {
+	var retval __premarshalAccessProviderWhatAbacScopeListPageInfo
+
+	retval.HasNextPage = v.PageInfo.HasNextPage
+	retval.StartCursor = v.PageInfo.StartCursor
 	return &retval, nil
 }
 
@@ -4673,6 +3923,7 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue) GetTypename() *
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeTag
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeTask
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeTaskNotification
@@ -4751,6 +4002,8 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment) implem
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
@@ -4879,6 +4132,9 @@ func __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(b []byte, 
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeTag)
@@ -5182,6 +4438,14 @@ func __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(v *AccessPro
 			*AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -5313,6 +4577,16 @@ type AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue) GetTypename() *string {
 	return v.Typename
 }
 
@@ -5448,6 +4722,17 @@ func (v *AccessProviderWhatAccessProviderListPageInfo) __premarshalJSON() (*__pr
 	return &retval, nil
 }
 
+type AccessProviderWhatDoByNameInput struct {
+	Fullname   string `json:"fullname"`
+	Datasource string `json:"datasource"`
+}
+
+// GetFullname returns AccessProviderWhatDoByNameInput.Fullname, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatDoByNameInput) GetFullname() string { return v.Fullname }
+
+// GetDatasource returns AccessProviderWhatDoByNameInput.Datasource, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatDoByNameInput) GetDatasource() string { return v.Datasource }
+
 type AccessProviderWhatInputAP struct {
 	AccessProvider string     `json:"accessProvider"`
 	ExpiresAt      *time.Time `json:"expiresAt"`
@@ -5460,9 +4745,10 @@ func (v *AccessProviderWhatInputAP) GetAccessProvider() string { return v.Access
 func (v *AccessProviderWhatInputAP) GetExpiresAt() *time.Time { return v.ExpiresAt }
 
 type AccessProviderWhatInputDO struct {
-	Permissions       []*string `json:"permissions"`
-	GlobalPermissions []*string `json:"globalPermissions"`
-	DataObjects       []*string `json:"dataObjects"`
+	Permissions       []*string                         `json:"permissions"`
+	GlobalPermissions []*string                         `json:"globalPermissions"`
+	DataObjects       []*string                         `json:"dataObjects"`
+	DataObjectByName  []AccessProviderWhatDoByNameInput `json:"dataObjectByName"`
 }
 
 // GetPermissions returns AccessProviderWhatInputDO.Permissions, and is useful for accessing the field via an interface.
@@ -5473,6 +4759,11 @@ func (v *AccessProviderWhatInputDO) GetGlobalPermissions() []*string { return v.
 
 // GetDataObjects returns AccessProviderWhatInputDO.DataObjects, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatInputDO) GetDataObjects() []*string { return v.DataObjects }
+
+// GetDataObjectByName returns AccessProviderWhatInputDO.DataObjectByName, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatInputDO) GetDataObjectByName() []AccessProviderWhatDoByNameInput {
+	return v.DataObjectByName
+}
 
 // AccessProviderWhatList includes the GraphQL fields of PagedResult requested by the fragment AccessProviderWhatList.
 type AccessProviderWhatList struct {
@@ -5904,6 +5195,7 @@ func (v *AccessProviderWhatListEdgesEdgeNodeIssue) GetTypename() *string { retur
 // AccessProviderWhatListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification
 // AccessProviderWhatListEdgesEdgeNodeSearchResultItem
+// AccessProviderWhatListEdgesEdgeNodeStringValue
 // AccessProviderWhatListEdgesEdgeNodeTag
 // AccessProviderWhatListEdgesEdgeNodeTask
 // AccessProviderWhatListEdgesEdgeNodeTaskNotification
@@ -5982,6 +5274,8 @@ func (v *AccessProviderWhatListEdgesEdgeNodeRoleAssignment) implementsGraphQLInt
 func (v *AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatListEdgesEdgeNodeStringValue) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
@@ -6110,6 +5404,9 @@ func __unmarshalAccessProviderWhatListEdgesEdgeNodeItem(b []byte, v *AccessProvi
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(AccessProviderWhatListEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeTag)
@@ -6413,6 +5710,14 @@ func __marshalAccessProviderWhatListEdgesEdgeNodeItem(v *AccessProviderWhatListE
 			*AccessProviderWhatListEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhatListEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatListEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhatListEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -6536,6 +5841,14 @@ type AccessProviderWhatListEdgesEdgeNodeSearchResultItem struct {
 func (v *AccessProviderWhatListEdgesEdgeNodeSearchResultItem) GetTypename() *string {
 	return v.Typename
 }
+
+// AccessProviderWhatListEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type AccessProviderWhatListEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatListEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // AccessProviderWhatListEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type AccessProviderWhatListEdgesEdgeNodeTag struct {
@@ -6766,10 +6079,8 @@ func (v *AccessProviderWhoAbacRule) GetPromiseDuration() *int64 { return v.WhoAb
 // GetType returns AccessProviderWhoAbacRule.Type, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoAbacRule) GetType() AccessWhoItemType { return v.WhoAbacRule.Type }
 
-// GetRule returns AccessProviderWhoAbacRule.Rule, and is useful for accessing the field via an interface.
-func (v *AccessProviderWhoAbacRule) GetRule() *WhoAbacRuleRuleAbacComparisonExpression {
-	return v.WhoAbacRule.Rule
-}
+// GetRuleJson returns AccessProviderWhoAbacRule.RuleJson, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoAbacRule) GetRuleJson() *string { return v.WhoAbacRule.RuleJson }
 
 func (v *AccessProviderWhoAbacRule) UnmarshalJSON(b []byte) error {
 
@@ -6801,7 +6112,7 @@ type __premarshalAccessProviderWhoAbacRule struct {
 
 	Type AccessWhoItemType `json:"type"`
 
-	Rule json.RawMessage `json:"rule"`
+	RuleJson *string `json:"ruleJson"`
 }
 
 func (v *AccessProviderWhoAbacRule) MarshalJSON() ([]byte, error) {
@@ -6817,20 +6128,7 @@ func (v *AccessProviderWhoAbacRule) __premarshalJSON() (*__premarshalAccessProvi
 
 	retval.PromiseDuration = v.WhoAbacRule.PromiseDuration
 	retval.Type = v.WhoAbacRule.Type
-	{
-
-		dst := &retval.Rule
-		src := v.WhoAbacRule.Rule
-		if src != nil {
-			var err error
-			*dst, err = __marshalWhoAbacRuleRuleAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal AccessProviderWhoAbacRule.WhoAbacRule.Rule: %w", err)
-			}
-		}
-	}
+	retval.RuleJson = v.WhoAbacRule.RuleJson
 	return &retval, nil
 }
 
@@ -7291,6 +6589,7 @@ func (v *AccessProviderWhoListEdgesEdgeNodeIssue) GetTypename() *string { return
 // AccessProviderWhoListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification
 // AccessProviderWhoListEdgesEdgeNodeSearchResultItem
+// AccessProviderWhoListEdgesEdgeNodeStringValue
 // AccessProviderWhoListEdgesEdgeNodeTag
 // AccessProviderWhoListEdgesEdgeNodeTask
 // AccessProviderWhoListEdgesEdgeNodeTaskNotification
@@ -7369,6 +6668,8 @@ func (v *AccessProviderWhoListEdgesEdgeNodeRoleAssignment) implementsGraphQLInte
 func (v *AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhoListEdgesEdgeNodeStringValue) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeTag) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
@@ -7497,6 +6798,9 @@ func __unmarshalAccessProviderWhoListEdgesEdgeNodeItem(b []byte, v *AccessProvid
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(AccessProviderWhoListEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeTag)
@@ -7800,6 +7104,14 @@ func __marshalAccessProviderWhoListEdgesEdgeNodeItem(v *AccessProviderWhoListEdg
 			*AccessProviderWhoListEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhoListEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhoListEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -7921,6 +7233,14 @@ type AccessProviderWhoListEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns AccessProviderWhoListEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
+
+// AccessProviderWhoListEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type AccessProviderWhoListEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // AccessProviderWhoListEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type AccessProviderWhoListEdgesEdgeNodeTag struct {
@@ -8555,6 +7875,11 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetDataSources() []AccessPr
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns AccessWhatAccessProviderItemAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *AccessWhatAccessProviderItemAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -8640,6 +7965,8 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *AccessWhatAccessProviderItemAccessProvider) MarshalJSON() ([]byte, error) {
@@ -8683,6 +8010,7 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -8855,6 +8183,11 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetDataSources() []Access
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns ActivateAccessProviderActivateAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *ActivateAccessProviderActivateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -8942,6 +8275,8 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *ActivateAccessProviderActivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -8986,6 +8321,7 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -11580,14 +10916,6 @@ const (
 	BinaryExpressionAggregatorOperatorOr  BinaryExpressionAggregatorOperator = "Or"
 )
 
-// BinaryExpressionLiteralBool includes the GraphQL fields of BinaryExpressionLiteralBool requested by the fragment BinaryExpressionLiteralBool.
-type BinaryExpressionLiteralBool struct {
-	Value bool `json:"value"`
-}
-
-// GetValue returns BinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *BinaryExpressionLiteralBool) GetValue() bool { return v.Value }
-
 type BinaryExpressionUnaryExpressionOperator string
 
 const (
@@ -11747,6 +11075,11 @@ func (v *CreateAccessProviderCreateAccessProvider) GetDataSources() []AccessProv
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns CreateAccessProviderCreateAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *CreateAccessProviderCreateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -11834,6 +11167,8 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *CreateAccessProviderCreateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -11878,6 +11213,7 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -12052,6 +11388,11 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -12137,6 +11478,8 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -12180,6 +11523,7 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -14416,6 +13760,7 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeIssue) GetType
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignment
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTag
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTask
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTaskNotification
@@ -14494,6 +13839,8 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignment
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
+}
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTag) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
@@ -14622,6 +13969,9 @@ func __unmarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(b 
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTag)
@@ -14925,6 +14275,14 @@ func __marshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(v *D
 			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -15056,6 +14414,16 @@ type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem s
 
 // GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem) GetTypename() *string {
+	return v.Typename
+}
+
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue) GetTypename() *string {
 	return v.Typename
 }
 
@@ -16471,6 +15839,7 @@ func (v *DataSourcePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Type
 // DataSourcePageEdgesEdgeNodeRoleAssignment
 // DataSourcePageEdgesEdgeNodeRoleAssignmentNotification
 // DataSourcePageEdgesEdgeNodeSearchResultItem
+// DataSourcePageEdgesEdgeNodeStringValue
 // DataSourcePageEdgesEdgeNodeTag
 // DataSourcePageEdgesEdgeNodeTask
 // DataSourcePageEdgesEdgeNodeTaskNotification
@@ -16549,6 +15918,8 @@ func (v *DataSourcePageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceDa
 func (v *DataSourcePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
+}
+func (v *DataSourcePageEdgesEdgeNodeStringValue) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeTag) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
@@ -16677,6 +16048,9 @@ func __unmarshalDataSourcePageEdgesEdgeNodeItem(b []byte, v *DataSourcePageEdges
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(DataSourcePageEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(DataSourcePageEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(DataSourcePageEdgesEdgeNodeTag)
@@ -16980,6 +16354,14 @@ func __marshalDataSourcePageEdgesEdgeNodeItem(v *DataSourcePageEdgesEdgeNodeItem
 			*DataSourcePageEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *DataSourcePageEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourcePageEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *DataSourcePageEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -17101,6 +16483,14 @@ type DataSourcePageEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns DataSourcePageEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *DataSourcePageEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
+
+// DataSourcePageEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type DataSourcePageEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourcePageEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourcePageEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // DataSourcePageEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type DataSourcePageEdgesEdgeNodeTag struct {
@@ -17388,6 +16778,11 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDataSources() []Ac
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns DeactivateAccessProviderDeactivateAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *DeactivateAccessProviderDeactivateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -17475,6 +16870,8 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *DeactivateAccessProviderDeactivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -17519,6 +16916,7 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -17973,6 +17371,11 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetDataSources() []AccessProv
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns DeleteAccessProviderDeleteAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *DeleteAccessProviderDeleteAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -18060,6 +17463,8 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *DeleteAccessProviderDeleteAccessProvider) MarshalJSON() ([]byte, error) {
@@ -18104,6 +17509,7 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -19211,6 +18617,11 @@ func (v *GetAccessProviderAccessProvider) GetDataSources() []AccessProviderDataS
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns GetAccessProviderAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *GetAccessProviderAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -19298,6 +18709,8 @@ type __premarshalGetAccessProviderAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *GetAccessProviderAccessProvider) MarshalJSON() ([]byte, error) {
@@ -19342,6 +18755,7 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -23457,6 +22871,7 @@ func (v *IdentityStorePageEdgesEdgeNodeIssue) GetTypename() *string { return v.T
 // IdentityStorePageEdgesEdgeNodeRoleAssignment
 // IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification
 // IdentityStorePageEdgesEdgeNodeSearchResultItem
+// IdentityStorePageEdgesEdgeNodeStringValue
 // IdentityStorePageEdgesEdgeNodeTag
 // IdentityStorePageEdgesEdgeNodeTask
 // IdentityStorePageEdgesEdgeNodeTaskNotification
@@ -23535,6 +22950,8 @@ func (v *IdentityStorePageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfac
 func (v *IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
+}
+func (v *IdentityStorePageEdgesEdgeNodeStringValue) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeTag) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
@@ -23663,6 +23080,9 @@ func __unmarshalIdentityStorePageEdgesEdgeNodeItem(b []byte, v *IdentityStorePag
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(IdentityStorePageEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(IdentityStorePageEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(IdentityStorePageEdgesEdgeNodeTag)
@@ -23966,6 +23386,14 @@ func __marshalIdentityStorePageEdgesEdgeNodeItem(v *IdentityStorePageEdgesEdgeNo
 			*IdentityStorePageEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *IdentityStorePageEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*IdentityStorePageEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *IdentityStorePageEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -24087,6 +23515,14 @@ type IdentityStorePageEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns IdentityStorePageEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *IdentityStorePageEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
+
+// IdentityStorePageEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type IdentityStorePageEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns IdentityStorePageEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *IdentityStorePageEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // IdentityStorePageEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type IdentityStorePageEdgesEdgeNodeTag struct {
@@ -24677,6 +24113,599 @@ func (v *InviteAsRaitoUserResponse) __premarshalJSON() (*__premarshalInviteAsRai
 		if err != nil {
 			return nil, fmt.Errorf(
 				"unable to marshal InviteAsRaitoUserResponse.InviteAsRaitoUser: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeAccessProvider includes the requested fields of the GraphQL type AccessProvider.
+type ListAccessProviderAbacWhatScopeAccessProvider struct {
+	Typename      *string                                                                `json:"__typename"`
+	WhatAbacScope ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults `json:"-"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProvider.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) GetTypename() *string { return v.Typename }
+
+// GetWhatAbacScope returns ListAccessProviderAbacWhatScopeAccessProvider.WhatAbacScope, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) GetWhatAbacScope() ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults {
+	return v.WhatAbacScope
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeAccessProvider
+		WhatAbacScope json.RawMessage `json:"whatAbacScope"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeAccessProvider = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.WhatAbacScope
+		src := firstPass.WhatAbacScope
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal ListAccessProviderAbacWhatScopeAccessProvider.WhatAbacScope: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeAccessProvider struct {
+	Typename *string `json:"__typename"`
+
+	WhatAbacScope json.RawMessage `json:"whatAbacScope"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeAccessProvider, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeAccessProvider
+
+	retval.Typename = v.Typename
+	{
+
+		dst := &retval.WhatAbacScope
+		src := v.WhatAbacScope
+		var err error
+		*dst, err = __marshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal ListAccessProviderAbacWhatScopeAccessProvider.WhatAbacScope: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult includes the requested fields of the GraphQL interface AccessProviderResult.
+//
+// ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult is implemented by the following types:
+// ListAccessProviderAbacWhatScopeAccessProvider
+// ListAccessProviderAbacWhatScopeAccessProviderNotFoundError
+// ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError
+type ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult interface {
+	implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProvider) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
+}
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
+}
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
+}
+
+func __unmarshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(b []byte, v *ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AccessProvider":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing AccessProviderResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(v *ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *ListAccessProviderAbacWhatScopeAccessProvider:
+		typename = "AccessProvider"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalListAccessProviderAbacWhatScopeAccessProvider
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalListAccessProviderAbacWhatScopeAccessProviderNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult: "%T"`, v)
+	}
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ListAccessProviderAbacWhatScopeAccessProviderNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns ListAccessProviderAbacWhatScopeAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeAccessProviderNotFoundError, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult includes the requested fields of the GraphQL type PagedResult.
+type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult struct {
+	Typename                        *string `json:"__typename"`
+	AccessProviderWhatAbacScopeList `json:"-"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) GetTypename() *string {
+	return v.Typename
+}
+
+// GetPageInfo returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult.PageInfo, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) GetPageInfo() *AccessProviderWhatAbacScopeListPageInfo {
+	return v.AccessProviderWhatAbacScopeList.PageInfo
+}
+
+// GetEdges returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult.Edges, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) GetEdges() []AccessProviderWhatAbacScopeListEdgesEdge {
+	return v.AccessProviderWhatAbacScopeList.Edges
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProviderWhatAbacScopeList)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult struct {
+	Typename *string `json:"__typename"`
+
+	PageInfo *AccessProviderWhatAbacScopeListPageInfo `json:"pageInfo"`
+
+	Edges []AccessProviderWhatAbacScopeListEdgesEdge `json:"edges"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult
+
+	retval.Typename = v.Typename
+	retval.PageInfo = v.AccessProviderWhatAbacScopeList.PageInfo
+	retval.Edges = v.AccessProviderWhatAbacScopeList.Edges
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults includes the requested fields of the GraphQL interface PagedResults.
+//
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults is implemented by the following types:
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError
+type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults interface {
+	implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
+}
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
+}
+
+func __unmarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults(b []byte, v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "PagedResult":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing PagedResults.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults(v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult:
+		typename = "PagedResult"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults: "%T"`, v)
+	}
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// ListAccessProviderAbacWhatScopeResponse is returned by ListAccessProviderAbacWhatScope on success.
+type ListAccessProviderAbacWhatScopeResponse struct {
+	AccessProvider ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult `json:"-"`
+}
+
+// GetAccessProvider returns ListAccessProviderAbacWhatScopeResponse.AccessProvider, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeResponse) GetAccessProvider() ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult {
+	return v.AccessProvider
+}
+
+func (v *ListAccessProviderAbacWhatScopeResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListAccessProviderAbacWhatScopeResponse
+		AccessProvider json.RawMessage `json:"accessProvider"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListAccessProviderAbacWhatScopeResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.AccessProvider
+		src := firstPass.AccessProvider
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal ListAccessProviderAbacWhatScopeResponse.AccessProvider: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalListAccessProviderAbacWhatScopeResponse struct {
+	AccessProvider json.RawMessage `json:"accessProvider"`
+}
+
+func (v *ListAccessProviderAbacWhatScopeResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListAccessProviderAbacWhatScopeResponse) __premarshalJSON() (*__premarshalListAccessProviderAbacWhatScopeResponse, error) {
+	var retval __premarshalListAccessProviderAbacWhatScopeResponse
+
+	{
+
+		dst := &retval.AccessProvider
+		src := v.AccessProvider
+		var err error
+		*dst, err = __marshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal ListAccessProviderAbacWhatScopeResponse.AccessProvider: %w", err)
 		}
 	}
 	return &retval, nil
@@ -28804,6 +28833,7 @@ func (v *RoleAssignmentPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // RoleAssignmentPageEdgesEdgeNodeRoleAssignment
 // RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification
 // RoleAssignmentPageEdgesEdgeNodeSearchResultItem
+// RoleAssignmentPageEdgesEdgeNodeStringValue
 // RoleAssignmentPageEdgesEdgeNodeTag
 // RoleAssignmentPageEdgesEdgeNodeTask
 // RoleAssignmentPageEdgesEdgeNodeTaskNotification
@@ -28882,6 +28912,8 @@ func (v *RoleAssignmentPageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfa
 func (v *RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
+}
+func (v *RoleAssignmentPageEdgesEdgeNodeStringValue) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeTag) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
@@ -29010,6 +29042,9 @@ func __unmarshalRoleAssignmentPageEdgesEdgeNodeItem(b []byte, v *RoleAssignmentP
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(RoleAssignmentPageEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeTag)
@@ -29313,6 +29348,14 @@ func __marshalRoleAssignmentPageEdgesEdgeNodeItem(v *RoleAssignmentPageEdgesEdge
 			*RoleAssignmentPageEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *RoleAssignmentPageEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentPageEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *RoleAssignmentPageEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -29533,6 +29576,14 @@ type RoleAssignmentPageEdgesEdgeNodeSearchResultItem struct {
 
 // GetTypename returns RoleAssignmentPageEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentPageEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
+
+// RoleAssignmentPageEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type RoleAssignmentPageEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentPageEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentPageEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
 
 // RoleAssignmentPageEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type RoleAssignmentPageEdgesEdgeNodeTag struct {
@@ -30166,6 +30217,7 @@ func (v *RolePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Typename }
 // RolePageEdgesEdgeNodeRoleAssignment
 // RolePageEdgesEdgeNodeRoleAssignmentNotification
 // RolePageEdgesEdgeNodeSearchResultItem
+// RolePageEdgesEdgeNodeStringValue
 // RolePageEdgesEdgeNodeTag
 // RolePageEdgesEdgeNodeTask
 // RolePageEdgesEdgeNodeTaskNotification
@@ -30225,8 +30277,9 @@ func (v *RolePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInter
 }
 func (v *RolePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
 }
-func (v *RolePageEdgesEdgeNodeTag) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()  {}
-func (v *RolePageEdgesEdgeNodeTask) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
+func (v *RolePageEdgesEdgeNodeStringValue) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
+func (v *RolePageEdgesEdgeNodeTag) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()         {}
+func (v *RolePageEdgesEdgeNodeTask) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()        {}
 func (v *RolePageEdgesEdgeNodeTaskNotification) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
 }
 func (v *RolePageEdgesEdgeNodeUser) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
@@ -30347,6 +30400,9 @@ func __unmarshalRolePageEdgesEdgeNodeItem(b []byte, v *RolePageEdgesEdgeNodeItem
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(RolePageEdgesEdgeNodeSearchResultItem)
+		return json.Unmarshal(b, *v)
+	case "StringValue":
+		*v = new(RolePageEdgesEdgeNodeStringValue)
 		return json.Unmarshal(b, *v)
 	case "Tag":
 		*v = new(RolePageEdgesEdgeNodeTag)
@@ -30650,6 +30706,14 @@ func __marshalRolePageEdgesEdgeNodeItem(v *RolePageEdgesEdgeNodeItem) ([]byte, e
 			*RolePageEdgesEdgeNodeSearchResultItem
 		}{typename, v}
 		return json.Marshal(result)
+	case *RolePageEdgesEdgeNodeStringValue:
+		typename = "StringValue"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RolePageEdgesEdgeNodeStringValue
+		}{typename, v}
+		return json.Marshal(result)
 	case *RolePageEdgesEdgeNodeTag:
 		typename = "Tag"
 
@@ -30833,6 +30897,14 @@ type RolePageEdgesEdgeNodeSearchResultItem struct {
 // GetTypename returns RolePageEdgesEdgeNodeSearchResultItem.Typename, and is useful for accessing the field via an interface.
 func (v *RolePageEdgesEdgeNodeSearchResultItem) GetTypename() *string { return v.Typename }
 
+// RolePageEdgesEdgeNodeStringValue includes the requested fields of the GraphQL type StringValue.
+type RolePageEdgesEdgeNodeStringValue struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RolePageEdgesEdgeNodeStringValue.Typename, and is useful for accessing the field via an interface.
+func (v *RolePageEdgesEdgeNodeStringValue) GetTypename() *string { return v.Typename }
+
 // RolePageEdgesEdgeNodeTag includes the requested fields of the GraphQL type Tag.
 type RolePageEdgesEdgeNodeTag struct {
 	Typename *string `json:"__typename"`
@@ -30945,6 +31017,231 @@ func (v *RolePagePageInfo) __premarshalJSON() (*__premarshalRolePagePageInfo, er
 	retval.HasNextPage = v.PageInfo.HasNextPage
 	retval.StartCursor = v.PageInfo.StartCursor
 	return &retval, nil
+}
+
+// SetGlobalRolesForUserResponse is returned by SetGlobalRolesForUser on success.
+type SetGlobalRolesForUserResponse struct {
+	SetGlobalRolesForUser SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult `json:"-"`
+}
+
+// GetSetGlobalRolesForUser returns SetGlobalRolesForUserResponse.SetGlobalRolesForUser, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserResponse) GetSetGlobalRolesForUser() SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult {
+	return v.SetGlobalRolesForUser
+}
+
+func (v *SetGlobalRolesForUserResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*SetGlobalRolesForUserResponse
+		SetGlobalRolesForUser json.RawMessage `json:"setGlobalRolesForUser"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.SetGlobalRolesForUserResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.SetGlobalRolesForUser
+		src := firstPass.SetGlobalRolesForUser
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal SetGlobalRolesForUserResponse.SetGlobalRolesForUser: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalSetGlobalRolesForUserResponse struct {
+	SetGlobalRolesForUser json.RawMessage `json:"setGlobalRolesForUser"`
+}
+
+func (v *SetGlobalRolesForUserResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *SetGlobalRolesForUserResponse) __premarshalJSON() (*__premarshalSetGlobalRolesForUserResponse, error) {
+	var retval __premarshalSetGlobalRolesForUserResponse
+
+	{
+
+		dst := &retval.SetGlobalRolesForUser
+		src := v.SetGlobalRolesForUser
+		var err error
+		*dst, err = __marshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal SetGlobalRolesForUserResponse.SetGlobalRolesForUser: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// SetGlobalRolesForUserSetGlobalRolesForUser includes the requested fields of the GraphQL type SetGlobalRolesForUser.
+type SetGlobalRolesForUserSetGlobalRolesForUser struct {
+	Typename *string `json:"__typename"`
+	Success  bool    `json:"success"`
+}
+
+// GetTypename returns SetGlobalRolesForUserSetGlobalRolesForUser.Typename, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUser) GetTypename() *string { return v.Typename }
+
+// GetSuccess returns SetGlobalRolesForUserSetGlobalRolesForUser.Success, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUser) GetSuccess() bool { return v.Success }
+
+// SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalSetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) __premarshalJSON() (*__premarshalSetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError, error) {
+	var retval __premarshalSetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult includes the requested fields of the GraphQL interface SetGlobalRolesForUserResult.
+//
+// SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult is implemented by the following types:
+// SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError
+// SetGlobalRolesForUserSetGlobalRolesForUser
+type SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult interface {
+	implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
+}
+func (v *SetGlobalRolesForUserSetGlobalRolesForUser) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
+}
+
+func __unmarshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult(b []byte, v *SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "PermissionDeniedError":
+		*v = new(SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "SetGlobalRolesForUser":
+		*v = new(SetGlobalRolesForUserSetGlobalRolesForUser)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing SetGlobalRolesForUserResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult(v *SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalSetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *SetGlobalRolesForUserSetGlobalRolesForUser:
+		typename = "SetGlobalRolesForUser"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*SetGlobalRolesForUserSetGlobalRolesForUser
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult: "%T"`, v)
+	}
 }
 
 // SetUserPasswordResponse is returned by SetUserPassword on success.
@@ -33516,6 +33813,11 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetDataSources() []AccessProv
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns UpdateAccessProviderUpdateAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *UpdateAccessProviderUpdateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -33603,6 +33905,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -33647,6 +33951,7 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -33821,6 +34126,11 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.DataSources
 }
 
+// GetLocks returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Locks, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
+	return v.AccessProvider.Locks
+}
+
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -33906,6 +34216,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
+
+	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -33949,6 +34261,7 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
+	retval.Locks = v.AccessProvider.Locks
 	return &retval, nil
 }
 
@@ -35005,6 +35318,1514 @@ func (v *UpdateIdentityStoreUpdateIdentityStorePermissionDeniedError) __premarsh
 	return &retval, nil
 }
 
+// UpdateRoleAssigneesOnAccessProviderResponse is returned by UpdateRoleAssigneesOnAccessProvider on success.
+type UpdateRoleAssigneesOnAccessProviderResponse struct {
+	UpdateRoleAssigneesOnAccessProvider UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult `json:"-"`
+}
+
+// GetUpdateRoleAssigneesOnAccessProvider returns UpdateRoleAssigneesOnAccessProviderResponse.UpdateRoleAssigneesOnAccessProvider, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderResponse) GetUpdateRoleAssigneesOnAccessProvider() UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult {
+	return v.UpdateRoleAssigneesOnAccessProvider
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnAccessProviderResponse
+		UpdateRoleAssigneesOnAccessProvider json.RawMessage `json:"updateRoleAssigneesOnAccessProvider"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnAccessProviderResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateRoleAssigneesOnAccessProvider
+		src := firstPass.UpdateRoleAssigneesOnAccessProvider
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateRoleAssigneesOnAccessProviderResponse.UpdateRoleAssigneesOnAccessProvider: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnAccessProviderResponse struct {
+	UpdateRoleAssigneesOnAccessProvider json.RawMessage `json:"updateRoleAssigneesOnAccessProvider"`
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderResponse) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnAccessProviderResponse, error) {
+	var retval __premarshalUpdateRoleAssigneesOnAccessProviderResponse
+
+	{
+
+		dst := &retval.UpdateRoleAssigneesOnAccessProvider
+		src := v.UpdateRoleAssigneesOnAccessProvider
+		var err error
+		*dst, err = __marshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateRoleAssigneesOnAccessProviderResponse.UpdateRoleAssigneesOnAccessProvider: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole includes the requested fields of the GraphQL type Role.
+type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole struct {
+	Typename *string `json:"__typename"`
+	Role     `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole.Id, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) GetId() string {
+	return v.Role.Id
+}
+
+// GetDescription returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole.Description, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) GetDescription() string {
+	return v.Role.Description
+}
+
+// GetName returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole.Name, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) GetName() string {
+	return v.Role.Name
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.Role)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Description string `json:"description"`
+
+	Name string `json:"name"`
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole, error) {
+	var retval __premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole
+
+	retval.Typename = v.Typename
+	retval.Id = v.Role.Id
+	retval.Description = v.Role.Description
+	retval.Name = v.Role.Name
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult includes the requested fields of the GraphQL interface RoleResult.
+//
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole
+type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult interface {
+	implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
+}
+
+func __unmarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult(b []byte, v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "NotFoundError":
+		*v = new(UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing RoleResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult(v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole:
+		typename = "Role"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult: "%T"`, v)
+	}
+}
+
+// UpdateRoleAssigneesOnDataObjectResponse is returned by UpdateRoleAssigneesOnDataObject on success.
+type UpdateRoleAssigneesOnDataObjectResponse struct {
+	UpdateRoleAssigneesOnDataObject UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult `json:"-"`
+}
+
+// GetUpdateRoleAssigneesOnDataObject returns UpdateRoleAssigneesOnDataObjectResponse.UpdateRoleAssigneesOnDataObject, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectResponse) GetUpdateRoleAssigneesOnDataObject() UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult {
+	return v.UpdateRoleAssigneesOnDataObject
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataObjectResponse
+		UpdateRoleAssigneesOnDataObject json.RawMessage `json:"updateRoleAssigneesOnDataObject"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataObjectResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateRoleAssigneesOnDataObject
+		src := firstPass.UpdateRoleAssigneesOnDataObject
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateRoleAssigneesOnDataObjectResponse.UpdateRoleAssigneesOnDataObject: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataObjectResponse struct {
+	UpdateRoleAssigneesOnDataObject json.RawMessage `json:"updateRoleAssigneesOnDataObject"`
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectResponse) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataObjectResponse, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataObjectResponse
+
+	{
+
+		dst := &retval.UpdateRoleAssigneesOnDataObject
+		src := v.UpdateRoleAssigneesOnDataObject
+		var err error
+		*dst, err = __marshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateRoleAssigneesOnDataObjectResponse.UpdateRoleAssigneesOnDataObject: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole includes the requested fields of the GraphQL type Role.
+type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole struct {
+	Typename *string `json:"__typename"`
+	Role     `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole.Id, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) GetId() string {
+	return v.Role.Id
+}
+
+// GetDescription returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole.Description, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) GetDescription() string {
+	return v.Role.Description
+}
+
+// GetName returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole.Name, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) GetName() string {
+	return v.Role.Name
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.Role)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Description string `json:"description"`
+
+	Name string `json:"name"`
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
+
+	retval.Typename = v.Typename
+	retval.Id = v.Role.Id
+	retval.Description = v.Role.Description
+	retval.Name = v.Role.Name
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult includes the requested fields of the GraphQL interface RoleResult.
+//
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
+type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult interface {
+	implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
+}
+
+func __unmarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult(b []byte, v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "NotFoundError":
+		*v = new(UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing RoleResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult(v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole:
+		typename = "Role"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult: "%T"`, v)
+	}
+}
+
+// UpdateRoleAssigneesOnDataSourceResponse is returned by UpdateRoleAssigneesOnDataSource on success.
+type UpdateRoleAssigneesOnDataSourceResponse struct {
+	UpdateRoleAssigneesOnDataSource UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult `json:"-"`
+}
+
+// GetUpdateRoleAssigneesOnDataSource returns UpdateRoleAssigneesOnDataSourceResponse.UpdateRoleAssigneesOnDataSource, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceResponse) GetUpdateRoleAssigneesOnDataSource() UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult {
+	return v.UpdateRoleAssigneesOnDataSource
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataSourceResponse
+		UpdateRoleAssigneesOnDataSource json.RawMessage `json:"updateRoleAssigneesOnDataSource"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataSourceResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateRoleAssigneesOnDataSource
+		src := firstPass.UpdateRoleAssigneesOnDataSource
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateRoleAssigneesOnDataSourceResponse.UpdateRoleAssigneesOnDataSource: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataSourceResponse struct {
+	UpdateRoleAssigneesOnDataSource json.RawMessage `json:"updateRoleAssigneesOnDataSource"`
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceResponse) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataSourceResponse, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataSourceResponse
+
+	{
+
+		dst := &retval.UpdateRoleAssigneesOnDataSource
+		src := v.UpdateRoleAssigneesOnDataSource
+		var err error
+		*dst, err = __marshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateRoleAssigneesOnDataSourceResponse.UpdateRoleAssigneesOnDataSource: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole includes the requested fields of the GraphQL type Role.
+type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole struct {
+	Typename *string `json:"__typename"`
+	Role     `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole.Id, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) GetId() string {
+	return v.Role.Id
+}
+
+// GetDescription returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole.Description, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) GetDescription() string {
+	return v.Role.Description
+}
+
+// GetName returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole.Name, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) GetName() string {
+	return v.Role.Name
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.Role)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Description string `json:"description"`
+
+	Name string `json:"name"`
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole, error) {
+	var retval __premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
+
+	retval.Typename = v.Typename
+	retval.Id = v.Role.Id
+	retval.Description = v.Role.Description
+	retval.Name = v.Role.Name
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult includes the requested fields of the GraphQL interface RoleResult.
+//
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
+type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult interface {
+	implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
+}
+
+func __unmarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult(b []byte, v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "NotFoundError":
+		*v = new(UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing RoleResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult(v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole:
+		typename = "Role"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult: "%T"`, v)
+	}
+}
+
+// UpdateRoleAssigneesOnIdentityStoreResponse is returned by UpdateRoleAssigneesOnIdentityStore on success.
+type UpdateRoleAssigneesOnIdentityStoreResponse struct {
+	UpdateRoleAssigneesOnIdentityStore UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult `json:"-"`
+}
+
+// GetUpdateRoleAssigneesOnIdentityStore returns UpdateRoleAssigneesOnIdentityStoreResponse.UpdateRoleAssigneesOnIdentityStore, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreResponse) GetUpdateRoleAssigneesOnIdentityStore() UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult {
+	return v.UpdateRoleAssigneesOnIdentityStore
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnIdentityStoreResponse
+		UpdateRoleAssigneesOnIdentityStore json.RawMessage `json:"updateRoleAssigneesOnIdentityStore"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnIdentityStoreResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateRoleAssigneesOnIdentityStore
+		src := firstPass.UpdateRoleAssigneesOnIdentityStore
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateRoleAssigneesOnIdentityStoreResponse.UpdateRoleAssigneesOnIdentityStore: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnIdentityStoreResponse struct {
+	UpdateRoleAssigneesOnIdentityStore json.RawMessage `json:"updateRoleAssigneesOnIdentityStore"`
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreResponse) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnIdentityStoreResponse, error) {
+	var retval __premarshalUpdateRoleAssigneesOnIdentityStoreResponse
+
+	{
+
+		dst := &retval.UpdateRoleAssigneesOnIdentityStore
+		src := v.UpdateRoleAssigneesOnIdentityStore
+		var err error
+		*dst, err = __marshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateRoleAssigneesOnIdentityStoreResponse.UpdateRoleAssigneesOnIdentityStore: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError, error) {
+	var retval __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole includes the requested fields of the GraphQL type Role.
+type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole struct {
+	Typename *string `json:"__typename"`
+	Role     `json:"-"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole.Id, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) GetId() string {
+	return v.Role.Id
+}
+
+// GetDescription returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole.Description, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) GetDescription() string {
+	return v.Role.Description
+}
+
+// GetName returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole.Name, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) GetName() string {
+	return v.Role.Name
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.Role)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Description string `json:"description"`
+
+	Name string `json:"name"`
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) __premarshalJSON() (*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole, error) {
+	var retval __premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole
+
+	retval.Typename = v.Typename
+	retval.Id = v.Role.Id
+	retval.Description = v.Role.Description
+	retval.Name = v.Role.Name
+	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult includes the requested fields of the GraphQL interface RoleResult.
+//
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole
+type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult interface {
+	implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
+}
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
+}
+
+func __unmarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult(b []byte, v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "NotFoundError":
+		*v = new(UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "Role":
+		*v = new(UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing RoleResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult(v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole:
+		typename = "Role"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult: "%T"`, v)
+	}
+}
+
 // UpdateUserResponse is returned by UpdateUser on success.
 type UpdateUserResponse struct {
 	UpdateUser UpdateUserUpdateUserUserResult `json:"-"`
@@ -35512,10 +37333,10 @@ const (
 
 // WhatAbacRule includes the GraphQL fields of WhatAbacRule requested by the fragment WhatAbacRule.
 type WhatAbacRule struct {
-	Permissions       []string                                  `json:"permissions"`
-	GlobalPermissions []string                                  `json:"globalPermissions"`
-	DoTypes           []string                                  `json:"doTypes"`
-	Rule              *WhatAbacRuleRuleAbacComparisonExpression `json:"-"`
+	Permissions       []string `json:"permissions"`
+	GlobalPermissions []string `json:"globalPermissions"`
+	DoTypes           []string `json:"doTypes"`
+	RuleJson          *string  `json:"ruleJson"`
 }
 
 // GetPermissions returns WhatAbacRule.Permissions, and is useful for accessing the field via an interface.
@@ -35527,83 +37348,8 @@ func (v *WhatAbacRule) GetGlobalPermissions() []string { return v.GlobalPermissi
 // GetDoTypes returns WhatAbacRule.DoTypes, and is useful for accessing the field via an interface.
 func (v *WhatAbacRule) GetDoTypes() []string { return v.DoTypes }
 
-// GetRule returns WhatAbacRule.Rule, and is useful for accessing the field via an interface.
-func (v *WhatAbacRule) GetRule() *WhatAbacRuleRuleAbacComparisonExpression { return v.Rule }
-
-func (v *WhatAbacRule) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhatAbacRule
-		Rule json.RawMessage `json:"rule"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhatAbacRule = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Rule
-		src := firstPass.Rule
-		if len(src) != 0 && string(src) != "null" {
-			*dst = new(WhatAbacRuleRuleAbacComparisonExpression)
-			err = __unmarshalWhatAbacRuleRuleAbacComparisonExpression(
-				src, *dst)
-			if err != nil {
-				return fmt.Errorf(
-					"unable to unmarshal WhatAbacRule.Rule: %w", err)
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalWhatAbacRule struct {
-	Permissions []string `json:"permissions"`
-
-	GlobalPermissions []string `json:"globalPermissions"`
-
-	DoTypes []string `json:"doTypes"`
-
-	Rule json.RawMessage `json:"rule"`
-}
-
-func (v *WhatAbacRule) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhatAbacRule) __premarshalJSON() (*__premarshalWhatAbacRule, error) {
-	var retval __premarshalWhatAbacRule
-
-	retval.Permissions = v.Permissions
-	retval.GlobalPermissions = v.GlobalPermissions
-	retval.DoTypes = v.DoTypes
-	{
-
-		dst := &retval.Rule
-		src := v.Rule
-		if src != nil {
-			var err error
-			*dst, err = __marshalWhatAbacRuleRuleAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal WhatAbacRule.Rule: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
+// GetRuleJson returns WhatAbacRule.RuleJson, and is useful for accessing the field via an interface.
+func (v *WhatAbacRule) GetRuleJson() *string { return v.RuleJson }
 
 type WhatAbacRuleInput struct {
 	DoTypes           []string                      `json:"doTypes"`
@@ -35628,364 +37374,6 @@ func (v *WhatAbacRuleInput) GetScope() []string { return v.Scope }
 // GetRule returns WhatAbacRuleInput.Rule, and is useful for accessing the field via an interface.
 func (v *WhatAbacRuleInput) GetRule() AbacComparisonExpressionInput { return v.Rule }
 
-// WhatAbacRuleRuleAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// WhatAbacRuleRuleAbacComparisonExpression is implemented by the following types:
-// WhatAbacRuleRuleAbacComparisonExpressionAggregator
-// WhatAbacRuleRuleAbacComparisonExpressionComparison
-// WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression
-// WhatAbacRuleRuleBinaryExpressionLiteralBool
-type WhatAbacRuleRuleAbacComparisonExpression interface {
-	implementsGraphQLInterfaceWhatAbacRuleRuleAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) implementsGraphQLInterfaceWhatAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) implementsGraphQLInterfaceWhatAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceWhatAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) implementsGraphQLInterfaceWhatAbacRuleRuleAbacComparisonExpression() {
-}
-
-func __unmarshalWhatAbacRuleRuleAbacComparisonExpression(b []byte, v *WhatAbacRuleRuleAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(WhatAbacRuleRuleAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(WhatAbacRuleRuleAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(WhatAbacRuleRuleBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for WhatAbacRuleRuleAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalWhatAbacRuleRuleAbacComparisonExpression(v *WhatAbacRuleRuleAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *WhatAbacRuleRuleAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhatAbacRuleRuleAbacComparisonExpressionAggregator
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *WhatAbacRuleRuleAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhatAbacRuleRuleAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression
-		}{typename, v}
-		return json.Marshal(result)
-	case *WhatAbacRuleRuleBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhatAbacRuleRuleBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for WhatAbacRuleRuleAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// WhatAbacRuleRuleAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type WhatAbacRuleRuleAbacComparisonExpressionAggregator struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionAggregator `json:"-"`
-}
-
-// GetTypename returns WhatAbacRuleRuleAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) GetTypename() *string { return v.Typename }
-
-// GetAggregatorOperator returns WhatAbacRuleRuleAbacComparisonExpressionAggregator.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AbacComparisonExpressionAggregator.AggregatorOperator
-}
-
-// GetOperands returns WhatAbacRuleRuleAbacComparisonExpressionAggregator.Operands, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) GetOperands() []AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression {
-	return v.AbacComparisonExpressionAggregator.Operands
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhatAbacRuleRuleAbacComparisonExpressionAggregator
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhatAbacRuleRuleAbacComparisonExpressionAggregator = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionAggregator)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhatAbacRuleRuleAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionAggregator) __premarshalJSON() (*__premarshalWhatAbacRuleRuleAbacComparisonExpressionAggregator, error) {
-	var retval __premarshalWhatAbacRuleRuleAbacComparisonExpressionAggregator
-
-	retval.Typename = v.Typename
-	retval.AggregatorOperator = v.AbacComparisonExpressionAggregator.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.AbacComparisonExpressionAggregator.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal WhatAbacRuleRuleAbacComparisonExpressionAggregator.AbacComparisonExpressionAggregator.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// WhatAbacRuleRuleAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type WhatAbacRuleRuleAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns WhatAbacRuleRuleAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) GetTypename() *string { return v.Typename }
-
-// GetLeftOperand returns WhatAbacRuleRuleAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns WhatAbacRuleRuleAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns WhatAbacRuleRuleAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhatAbacRuleRuleAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhatAbacRuleRuleAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhatAbacRuleRuleAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhatAbacRuleRuleAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalWhatAbacRuleRuleAbacComparisonExpressionComparison, error) {
-	var retval __premarshalWhatAbacRuleRuleAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal WhatAbacRuleRuleAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// WhatAbacRuleRuleBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type WhatAbacRuleRuleBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns WhatAbacRuleRuleBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) GetTypename() *string { return v.Typename }
-
-// GetValue returns WhatAbacRuleRuleBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhatAbacRuleRuleBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhatAbacRuleRuleBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhatAbacRuleRuleBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhatAbacRuleRuleBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalWhatAbacRuleRuleBinaryExpressionLiteralBool, error) {
-	var retval __premarshalWhatAbacRuleRuleBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
-}
-
 type WhatInput struct {
 	Permissions       []*string `json:"permissions"`
 	GlobalPermissions []*string `json:"globalPermissions"`
@@ -36003,9 +37391,9 @@ func (v *WhatInput) GetDataObjects() []*string { return v.DataObjects }
 
 // WhoAbacRule includes the GraphQL fields of WhoAbacRule requested by the fragment WhoAbacRule.
 type WhoAbacRule struct {
-	PromiseDuration *int64                                   `json:"promiseDuration"`
-	Type            AccessWhoItemType                        `json:"type"`
-	Rule            *WhoAbacRuleRuleAbacComparisonExpression `json:"-"`
+	PromiseDuration *int64            `json:"promiseDuration"`
+	Type            AccessWhoItemType `json:"type"`
+	RuleJson        *string           `json:"ruleJson"`
 }
 
 // GetPromiseDuration returns WhoAbacRule.PromiseDuration, and is useful for accessing the field via an interface.
@@ -36014,80 +37402,8 @@ func (v *WhoAbacRule) GetPromiseDuration() *int64 { return v.PromiseDuration }
 // GetType returns WhoAbacRule.Type, and is useful for accessing the field via an interface.
 func (v *WhoAbacRule) GetType() AccessWhoItemType { return v.Type }
 
-// GetRule returns WhoAbacRule.Rule, and is useful for accessing the field via an interface.
-func (v *WhoAbacRule) GetRule() *WhoAbacRuleRuleAbacComparisonExpression { return v.Rule }
-
-func (v *WhoAbacRule) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhoAbacRule
-		Rule json.RawMessage `json:"rule"`
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhoAbacRule = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	{
-		dst := &v.Rule
-		src := firstPass.Rule
-		if len(src) != 0 && string(src) != "null" {
-			*dst = new(WhoAbacRuleRuleAbacComparisonExpression)
-			err = __unmarshalWhoAbacRuleRuleAbacComparisonExpression(
-				src, *dst)
-			if err != nil {
-				return fmt.Errorf(
-					"unable to unmarshal WhoAbacRule.Rule: %w", err)
-			}
-		}
-	}
-	return nil
-}
-
-type __premarshalWhoAbacRule struct {
-	PromiseDuration *int64 `json:"promiseDuration"`
-
-	Type AccessWhoItemType `json:"type"`
-
-	Rule json.RawMessage `json:"rule"`
-}
-
-func (v *WhoAbacRule) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhoAbacRule) __premarshalJSON() (*__premarshalWhoAbacRule, error) {
-	var retval __premarshalWhoAbacRule
-
-	retval.PromiseDuration = v.PromiseDuration
-	retval.Type = v.Type
-	{
-
-		dst := &retval.Rule
-		src := v.Rule
-		if src != nil {
-			var err error
-			*dst, err = __marshalWhoAbacRuleRuleAbacComparisonExpression(
-				src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal WhoAbacRule.Rule: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
+// GetRuleJson returns WhoAbacRule.RuleJson, and is useful for accessing the field via an interface.
+func (v *WhoAbacRule) GetRuleJson() *string { return v.RuleJson }
 
 type WhoAbacRuleInput struct {
 	Rule AbacComparisonExpressionInput `json:"rule"`
@@ -36095,364 +37411,6 @@ type WhoAbacRuleInput struct {
 
 // GetRule returns WhoAbacRuleInput.Rule, and is useful for accessing the field via an interface.
 func (v *WhoAbacRuleInput) GetRule() AbacComparisonExpressionInput { return v.Rule }
-
-// WhoAbacRuleRuleAbacComparisonExpression includes the requested fields of the GraphQL interface AbacComparisonExpression.
-//
-// WhoAbacRuleRuleAbacComparisonExpression is implemented by the following types:
-// WhoAbacRuleRuleAbacComparisonExpressionAggregator
-// WhoAbacRuleRuleAbacComparisonExpressionComparison
-// WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression
-// WhoAbacRuleRuleBinaryExpressionLiteralBool
-type WhoAbacRuleRuleAbacComparisonExpression interface {
-	implementsGraphQLInterfaceWhoAbacRuleRuleAbacComparisonExpression()
-	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
-	GetTypename() *string
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) implementsGraphQLInterfaceWhoAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) implementsGraphQLInterfaceWhoAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression) implementsGraphQLInterfaceWhoAbacRuleRuleAbacComparisonExpression() {
-}
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) implementsGraphQLInterfaceWhoAbacRuleRuleAbacComparisonExpression() {
-}
-
-func __unmarshalWhoAbacRuleRuleAbacComparisonExpression(b []byte, v *WhoAbacRuleRuleAbacComparisonExpression) error {
-	if string(b) == "null" {
-		return nil
-	}
-
-	var tn struct {
-		TypeName string `json:"__typename"`
-	}
-	err := json.Unmarshal(b, &tn)
-	if err != nil {
-		return err
-	}
-
-	switch tn.TypeName {
-	case "AbacComparisonExpressionAggregator":
-		*v = new(WhoAbacRuleRuleAbacComparisonExpressionAggregator)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionComparison":
-		*v = new(WhoAbacRuleRuleAbacComparisonExpressionComparison)
-		return json.Unmarshal(b, *v)
-	case "AbacComparisonExpressionUnaryExpression":
-		*v = new(WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression)
-		return json.Unmarshal(b, *v)
-	case "BinaryExpressionLiteralBool":
-		*v = new(WhoAbacRuleRuleBinaryExpressionLiteralBool)
-		return json.Unmarshal(b, *v)
-	case "":
-		return fmt.Errorf(
-			"response was missing AbacComparisonExpression.__typename")
-	default:
-		return fmt.Errorf(
-			`unexpected concrete type for WhoAbacRuleRuleAbacComparisonExpression: "%v"`, tn.TypeName)
-	}
-}
-
-func __marshalWhoAbacRuleRuleAbacComparisonExpression(v *WhoAbacRuleRuleAbacComparisonExpression) ([]byte, error) {
-
-	var typename string
-	switch v := (*v).(type) {
-	case *WhoAbacRuleRuleAbacComparisonExpressionAggregator:
-		typename = "AbacComparisonExpressionAggregator"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhoAbacRuleRuleAbacComparisonExpressionAggregator
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *WhoAbacRuleRuleAbacComparisonExpressionComparison:
-		typename = "AbacComparisonExpressionComparison"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhoAbacRuleRuleAbacComparisonExpressionComparison
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case *WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression:
-		typename = "AbacComparisonExpressionUnaryExpression"
-
-		result := struct {
-			TypeName string `json:"__typename"`
-			*WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression
-		}{typename, v}
-		return json.Marshal(result)
-	case *WhoAbacRuleRuleBinaryExpressionLiteralBool:
-		typename = "BinaryExpressionLiteralBool"
-
-		premarshaled, err := v.__premarshalJSON()
-		if err != nil {
-			return nil, err
-		}
-		result := struct {
-			TypeName string `json:"__typename"`
-			*__premarshalWhoAbacRuleRuleBinaryExpressionLiteralBool
-		}{typename, premarshaled}
-		return json.Marshal(result)
-	case nil:
-		return []byte("null"), nil
-	default:
-		return nil, fmt.Errorf(
-			`unexpected concrete type for WhoAbacRuleRuleAbacComparisonExpression: "%T"`, v)
-	}
-}
-
-// WhoAbacRuleRuleAbacComparisonExpressionAggregator includes the requested fields of the GraphQL type AbacComparisonExpressionAggregator.
-type WhoAbacRuleRuleAbacComparisonExpressionAggregator struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionAggregator `json:"-"`
-}
-
-// GetTypename returns WhoAbacRuleRuleAbacComparisonExpressionAggregator.Typename, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) GetTypename() *string { return v.Typename }
-
-// GetAggregatorOperator returns WhoAbacRuleRuleAbacComparisonExpressionAggregator.AggregatorOperator, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) GetAggregatorOperator() BinaryExpressionAggregatorOperator {
-	return v.AbacComparisonExpressionAggregator.AggregatorOperator
-}
-
-// GetOperands returns WhoAbacRuleRuleAbacComparisonExpressionAggregator.Operands, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) GetOperands() []AbacComparisonExpressionAggregatorOperandsAbacComparisonExpression {
-	return v.AbacComparisonExpressionAggregator.Operands
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhoAbacRuleRuleAbacComparisonExpressionAggregator
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhoAbacRuleRuleAbacComparisonExpressionAggregator = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionAggregator)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhoAbacRuleRuleAbacComparisonExpressionAggregator struct {
-	Typename *string `json:"__typename"`
-
-	AggregatorOperator BinaryExpressionAggregatorOperator `json:"aggregatorOperator"`
-
-	Operands []json.RawMessage `json:"operands"`
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionAggregator) __premarshalJSON() (*__premarshalWhoAbacRuleRuleAbacComparisonExpressionAggregator, error) {
-	var retval __premarshalWhoAbacRuleRuleAbacComparisonExpressionAggregator
-
-	retval.Typename = v.Typename
-	retval.AggregatorOperator = v.AbacComparisonExpressionAggregator.AggregatorOperator
-	{
-
-		dst := &retval.Operands
-		src := v.AbacComparisonExpressionAggregator.Operands
-		*dst = make(
-			[]json.RawMessage,
-			len(src))
-		for i, src := range src {
-			dst := &(*dst)[i]
-			var err error
-			*dst, err = __marshalAbacComparisonExpressionAggregatorOperandsAbacComparisonExpression(
-				&src)
-			if err != nil {
-				return nil, fmt.Errorf(
-					"unable to marshal WhoAbacRuleRuleAbacComparisonExpressionAggregator.AbacComparisonExpressionAggregator.Operands: %w", err)
-			}
-		}
-	}
-	return &retval, nil
-}
-
-// WhoAbacRuleRuleAbacComparisonExpressionComparison includes the requested fields of the GraphQL type AbacComparisonExpressionComparison.
-type WhoAbacRuleRuleAbacComparisonExpressionComparison struct {
-	Typename                           *string `json:"__typename"`
-	AbacComparisonExpressionComparison `json:"-"`
-}
-
-// GetTypename returns WhoAbacRuleRuleAbacComparisonExpressionComparison.Typename, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) GetTypename() *string { return v.Typename }
-
-// GetLeftOperand returns WhoAbacRuleRuleAbacComparisonExpressionComparison.LeftOperand, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) GetLeftOperand() string {
-	return v.AbacComparisonExpressionComparison.LeftOperand
-}
-
-// GetComparisonOperator returns WhoAbacRuleRuleAbacComparisonExpressionComparison.ComparisonOperator, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) GetComparisonOperator() AbacComparisonExpressionComparisonOperator {
-	return v.AbacComparisonExpressionComparison.ComparisonOperator
-}
-
-// GetRightOperand returns WhoAbacRuleRuleAbacComparisonExpressionComparison.RightOperand, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) GetRightOperand() AbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand {
-	return v.AbacComparisonExpressionComparison.RightOperand
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhoAbacRuleRuleAbacComparisonExpressionComparison
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhoAbacRuleRuleAbacComparisonExpressionComparison = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.AbacComparisonExpressionComparison)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhoAbacRuleRuleAbacComparisonExpressionComparison struct {
-	Typename *string `json:"__typename"`
-
-	LeftOperand string `json:"leftOperand"`
-
-	ComparisonOperator AbacComparisonExpressionComparisonOperator `json:"comparisonOperator"`
-
-	RightOperand json.RawMessage `json:"rightOperand"`
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhoAbacRuleRuleAbacComparisonExpressionComparison) __premarshalJSON() (*__premarshalWhoAbacRuleRuleAbacComparisonExpressionComparison, error) {
-	var retval __premarshalWhoAbacRuleRuleAbacComparisonExpressionComparison
-
-	retval.Typename = v.Typename
-	retval.LeftOperand = v.AbacComparisonExpressionComparison.LeftOperand
-	retval.ComparisonOperator = v.AbacComparisonExpressionComparison.ComparisonOperator
-	{
-
-		dst := &retval.RightOperand
-		src := v.AbacComparisonExpressionComparison.RightOperand
-		var err error
-		*dst, err = __marshalAbacComparisonExpressionComparisonRightOperandAbacComparisonExpressionOperand(
-			&src)
-		if err != nil {
-			return nil, fmt.Errorf(
-				"unable to marshal WhoAbacRuleRuleAbacComparisonExpressionComparison.AbacComparisonExpressionComparison.RightOperand: %w", err)
-		}
-	}
-	return &retval, nil
-}
-
-// WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression includes the requested fields of the GraphQL type AbacComparisonExpressionUnaryExpression.
-type WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression struct {
-	Typename *string `json:"__typename"`
-}
-
-// GetTypename returns WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression.Typename, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleAbacComparisonExpressionUnaryExpression) GetTypename() *string {
-	return v.Typename
-}
-
-// WhoAbacRuleRuleBinaryExpressionLiteralBool includes the requested fields of the GraphQL type BinaryExpressionLiteralBool.
-type WhoAbacRuleRuleBinaryExpressionLiteralBool struct {
-	Typename                    *string `json:"__typename"`
-	BinaryExpressionLiteralBool `json:"-"`
-}
-
-// GetTypename returns WhoAbacRuleRuleBinaryExpressionLiteralBool.Typename, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) GetTypename() *string { return v.Typename }
-
-// GetValue returns WhoAbacRuleRuleBinaryExpressionLiteralBool.Value, and is useful for accessing the field via an interface.
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) GetValue() bool {
-	return v.BinaryExpressionLiteralBool.Value
-}
-
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*WhoAbacRuleRuleBinaryExpressionLiteralBool
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.WhoAbacRuleRuleBinaryExpressionLiteralBool = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.BinaryExpressionLiteralBool)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalWhoAbacRuleRuleBinaryExpressionLiteralBool struct {
-	Typename *string `json:"__typename"`
-
-	Value bool `json:"value"`
-}
-
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *WhoAbacRuleRuleBinaryExpressionLiteralBool) __premarshalJSON() (*__premarshalWhoAbacRuleRuleBinaryExpressionLiteralBool, error) {
-	var retval __premarshalWhoAbacRuleRuleBinaryExpressionLiteralBool
-
-	retval.Typename = v.Typename
-	retval.Value = v.BinaryExpressionLiteralBool.Value
-	return &retval, nil
-}
 
 type WhoAndWhatType string
 
@@ -36846,6 +37804,30 @@ func (v *__InviteAsRaitoUserInput) GetUId() string { return v.UId }
 // GetNoPassword returns __InviteAsRaitoUserInput.NoPassword, and is useful for accessing the field via an interface.
 func (v *__InviteAsRaitoUserInput) GetNoPassword() *bool { return v.NoPassword }
 
+// __ListAccessProviderAbacWhatScopeInput is used internally by genqlient
+type __ListAccessProviderAbacWhatScopeInput struct {
+	Id     string                   `json:"id"`
+	After  *string                  `json:"after"`
+	Limit  *int                     `json:"limit"`
+	Search *string                  `json:"search"`
+	Order  []AccessWhatOrderByInput `json:"order"`
+}
+
+// GetId returns __ListAccessProviderAbacWhatScopeInput.Id, and is useful for accessing the field via an interface.
+func (v *__ListAccessProviderAbacWhatScopeInput) GetId() string { return v.Id }
+
+// GetAfter returns __ListAccessProviderAbacWhatScopeInput.After, and is useful for accessing the field via an interface.
+func (v *__ListAccessProviderAbacWhatScopeInput) GetAfter() *string { return v.After }
+
+// GetLimit returns __ListAccessProviderAbacWhatScopeInput.Limit, and is useful for accessing the field via an interface.
+func (v *__ListAccessProviderAbacWhatScopeInput) GetLimit() *int { return v.Limit }
+
+// GetSearch returns __ListAccessProviderAbacWhatScopeInput.Search, and is useful for accessing the field via an interface.
+func (v *__ListAccessProviderAbacWhatScopeInput) GetSearch() *string { return v.Search }
+
+// GetOrder returns __ListAccessProviderAbacWhatScopeInput.Order, and is useful for accessing the field via an interface.
+func (v *__ListAccessProviderAbacWhatScopeInput) GetOrder() []AccessWhatOrderByInput { return v.Order }
+
 // __ListAccessProvidersInput is used internally by genqlient
 type __ListAccessProvidersInput struct {
 	After  *string                      `json:"after"`
@@ -37110,6 +38092,18 @@ func (v *__RemoveIdentityStoreFromDataSourceInput) GetDsId() string { return v.D
 // GetIsId returns __RemoveIdentityStoreFromDataSourceInput.IsId, and is useful for accessing the field via an interface.
 func (v *__RemoveIdentityStoreFromDataSourceInput) GetIsId() string { return v.IsId }
 
+// __SetGlobalRolesForUserInput is used internally by genqlient
+type __SetGlobalRolesForUserInput struct {
+	User  string   `json:"user"`
+	Roles []string `json:"roles"`
+}
+
+// GetUser returns __SetGlobalRolesForUserInput.User, and is useful for accessing the field via an interface.
+func (v *__SetGlobalRolesForUserInput) GetUser() string { return v.User }
+
+// GetRoles returns __SetGlobalRolesForUserInput.Roles, and is useful for accessing the field via an interface.
+func (v *__SetGlobalRolesForUserInput) GetRoles() []string { return v.Roles }
+
 // __SetUserPasswordInput is used internally by genqlient
 type __SetUserPasswordInput struct {
 	UId      string `json:"uId"`
@@ -37200,8 +38194,9 @@ func (v *__UnassignRoleFromIdentityStoreInput) GetTo() []string { return v.To }
 
 // __UpdateAccessProviderInput is used internally by genqlient
 type __UpdateAccessProviderInput struct {
-	Id string              `json:"id"`
-	Ap AccessProviderInput `json:"ap"`
+	Id            string              `json:"id"`
+	Ap            AccessProviderInput `json:"ap"`
+	OverrideLocks *bool               `json:"overrideLocks"`
 }
 
 // GetId returns __UpdateAccessProviderInput.Id, and is useful for accessing the field via an interface.
@@ -37209,6 +38204,9 @@ func (v *__UpdateAccessProviderInput) GetId() string { return v.Id }
 
 // GetAp returns __UpdateAccessProviderInput.Ap, and is useful for accessing the field via an interface.
 func (v *__UpdateAccessProviderInput) GetAp() AccessProviderInput { return v.Ap }
+
+// GetOverrideLocks returns __UpdateAccessProviderInput.OverrideLocks, and is useful for accessing the field via an interface.
+func (v *__UpdateAccessProviderInput) GetOverrideLocks() *bool { return v.OverrideLocks }
 
 // __UpdateDataSourceInput is used internally by genqlient
 type __UpdateDataSourceInput struct {
@@ -37233,6 +38231,70 @@ func (v *__UpdateIdentityStoreInput) GetId() string { return v.Id }
 
 // GetInput returns __UpdateIdentityStoreInput.Input, and is useful for accessing the field via an interface.
 func (v *__UpdateIdentityStoreInput) GetInput() IdentityStoreInput { return v.Input }
+
+// __UpdateRoleAssigneesOnAccessProviderInput is used internally by genqlient
+type __UpdateRoleAssigneesOnAccessProviderInput struct {
+	ApId      string   `json:"apId"`
+	RoleID    string   `json:"roleID"`
+	Assignees []string `json:"assignees"`
+}
+
+// GetApId returns __UpdateRoleAssigneesOnAccessProviderInput.ApId, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnAccessProviderInput) GetApId() string { return v.ApId }
+
+// GetRoleID returns __UpdateRoleAssigneesOnAccessProviderInput.RoleID, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnAccessProviderInput) GetRoleID() string { return v.RoleID }
+
+// GetAssignees returns __UpdateRoleAssigneesOnAccessProviderInput.Assignees, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnAccessProviderInput) GetAssignees() []string { return v.Assignees }
+
+// __UpdateRoleAssigneesOnDataObjectInput is used internally by genqlient
+type __UpdateRoleAssigneesOnDataObjectInput struct {
+	DoId      string   `json:"doId"`
+	RoleID    string   `json:"roleID"`
+	Assignees []string `json:"assignees"`
+}
+
+// GetDoId returns __UpdateRoleAssigneesOnDataObjectInput.DoId, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataObjectInput) GetDoId() string { return v.DoId }
+
+// GetRoleID returns __UpdateRoleAssigneesOnDataObjectInput.RoleID, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataObjectInput) GetRoleID() string { return v.RoleID }
+
+// GetAssignees returns __UpdateRoleAssigneesOnDataObjectInput.Assignees, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataObjectInput) GetAssignees() []string { return v.Assignees }
+
+// __UpdateRoleAssigneesOnDataSourceInput is used internally by genqlient
+type __UpdateRoleAssigneesOnDataSourceInput struct {
+	DsId      string   `json:"dsId"`
+	RoleID    string   `json:"roleID"`
+	Assignees []string `json:"assignees"`
+}
+
+// GetDsId returns __UpdateRoleAssigneesOnDataSourceInput.DsId, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataSourceInput) GetDsId() string { return v.DsId }
+
+// GetRoleID returns __UpdateRoleAssigneesOnDataSourceInput.RoleID, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataSourceInput) GetRoleID() string { return v.RoleID }
+
+// GetAssignees returns __UpdateRoleAssigneesOnDataSourceInput.Assignees, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnDataSourceInput) GetAssignees() []string { return v.Assignees }
+
+// __UpdateRoleAssigneesOnIdentityStoreInput is used internally by genqlient
+type __UpdateRoleAssigneesOnIdentityStoreInput struct {
+	IsId      string   `json:"isId"`
+	RoleID    string   `json:"roleID"`
+	Assignees []string `json:"assignees"`
+}
+
+// GetIsId returns __UpdateRoleAssigneesOnIdentityStoreInput.IsId, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnIdentityStoreInput) GetIsId() string { return v.IsId }
+
+// GetRoleID returns __UpdateRoleAssigneesOnIdentityStoreInput.RoleID, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnIdentityStoreInput) GetRoleID() string { return v.RoleID }
+
+// GetAssignees returns __UpdateRoleAssigneesOnIdentityStoreInput.Assignees, and is useful for accessing the field via an interface.
+func (v *__UpdateRoleAssigneesOnIdentityStoreInput) GetAssignees() []string { return v.Assignees }
 
 // __UpdateUserInput is used internally by genqlient
 type __UpdateUserInput struct {
@@ -37293,6 +38355,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -37304,22 +38369,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -37334,63 +38389,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -37793,6 +38799,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
@@ -37801,22 +38810,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -37831,63 +38830,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -38304,6 +39254,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -38315,22 +39268,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -38345,63 +39288,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -38478,6 +39372,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -38489,22 +39386,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -38519,63 +39406,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -38778,6 +39616,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
@@ -38789,22 +39630,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -38819,63 +39650,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -38986,27 +39768,20 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -39021,63 +39796,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -39623,6 +40349,88 @@ func InviteAsRaitoUser(
 	return &data, err
 }
 
+// The query or mutation executed by ListAccessProviderAbacWhatScope.
+const ListAccessProviderAbacWhatScope_Operation = `
+query ListAccessProviderAbacWhatScope ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+	accessProvider(id: $id) {
+		__typename
+		... on AccessProvider {
+			whatAbacScope(after: $after, limit: $limit, search: $search, order: $order) {
+				__typename
+				... AccessProviderWhatAbacScopeList
+				... PermissionDeniedError
+			}
+		}
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment AccessProviderWhatAbacScopeList on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... DataObject
+		}
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment PageInfo on PageInfo {
+	hasNextPage
+	startCursor
+}
+fragment DataObject on DataObject {
+	id
+	name
+	fullName
+	type
+	dataType
+	deleted
+}
+`
+
+func ListAccessProviderAbacWhatScope(
+	ctx context.Context,
+	client graphql.Client,
+	id string,
+	after *string,
+	limit *int,
+	search *string,
+	order []AccessWhatOrderByInput,
+) (*ListAccessProviderAbacWhatScopeResponse, error) {
+	req := &graphql.Request{
+		OpName: "ListAccessProviderAbacWhatScope",
+		Query:  ListAccessProviderAbacWhatScope_Operation,
+		Variables: &__ListAccessProviderAbacWhatScopeInput{
+			Id:     id,
+			After:  after,
+			Limit:  limit,
+			Search: search,
+			Order:  order,
+		},
+	}
+	var err error
+
+	var data ListAccessProviderAbacWhatScopeResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 // The query or mutation executed by ListAccessProviders.
 const ListAccessProviders_Operation = `
 query ListAccessProviders ($after: String, $limit: Int, $filter: AccessProviderFilterInput, $order: [AccessProviderOrderByInput!]) {
@@ -39688,27 +40496,20 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -39723,63 +40524,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -40750,6 +41502,50 @@ func RemoveIdentityStoreFromDataSource(
 	return &data, err
 }
 
+// The query or mutation executed by SetGlobalRolesForUser.
+const SetGlobalRolesForUser_Operation = `
+mutation SetGlobalRolesForUser ($user: ID!, $roles: [ID!]!) {
+	setGlobalRolesForUser(user: $user, roles: $roles) {
+		__typename
+		... on SetGlobalRolesForUser {
+			success
+		}
+		... PermissionDeniedError
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+`
+
+func SetGlobalRolesForUser(
+	ctx context.Context,
+	client graphql.Client,
+	user string,
+	roles []string,
+) (*SetGlobalRolesForUserResponse, error) {
+	req := &graphql.Request{
+		OpName: "SetGlobalRolesForUser",
+		Query:  SetGlobalRolesForUser_Operation,
+		Variables: &__SetGlobalRolesForUserInput{
+			User:  user,
+			Roles: roles,
+		},
+	}
+	var err error
+
+	var data SetGlobalRolesForUserResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
 // The query or mutation executed by SetUserPassword.
 const SetUserPassword_Operation = `
 mutation SetUserPassword ($uId: ID!, $password: ID!) {
@@ -41073,8 +41869,8 @@ func UnassignRoleFromIdentityStore(
 
 // The query or mutation executed by UpdateAccessProvider.
 const UpdateAccessProvider_Operation = `
-mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!) {
-	updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
+mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!, $overrideLocks: Boolean) {
+	updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false, overrideLocks: $overrideLocks) {
 		__typename
 		... AccessProvider
 		... on AccessProviderWithOptionalAccessRequests {
@@ -41122,6 +41918,9 @@ fragment AccessProvider on AccessProvider {
 	dataSources {
 		... DataSource
 	}
+	locks {
+		... AccessProviderLocks
+	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
@@ -41130,22 +41929,12 @@ fragment WhatAbacRule on WhatAbacRule {
 	permissions
 	globalPermissions
 	doTypes
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
-	rule {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregator
-	}
+	ruleJson
 }
 fragment DataSource on DataSource {
 	id
@@ -41160,63 +41949,14 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-	value
-}
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-	leftOperand
-	comparisonOperator: operator
-	rightOperand {
-		__typename
-		... AbacComparisonExpressionBinaryLiteral
-		... AbacComparisonExpressionStringListLiteral
-		... AbacComparisonExpressionStringLiteral
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
 	}
 }
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionUnaryExpression
-	}
-}
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-	booleanLiteralValue: value
-}
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-	stringListValue: value
-}
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-	stringLiteralValue: value
-}
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-	aggregatorOperator: operator
-	operands {
-		__typename
-		... AbacComparisonExpressionComparison
-		... BinaryExpressionLiteralBool
-	}
-}
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-		... AbacComparisonExpressionAggregatorLevel2
-		... AbacComparisonExpressionUnaryExpressionLevel2
-	}
-}
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-	unaryOperator: operator
-	operand {
-		__typename
-		... BinaryExpressionLiteralBool
-		... AbacComparisonExpressionComparison
-	}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 `
 
@@ -41225,13 +41965,15 @@ func UpdateAccessProvider(
 	client graphql.Client,
 	id string,
 	ap AccessProviderInput,
+	overrideLocks *bool,
 ) (*UpdateAccessProviderResponse, error) {
 	req := &graphql.Request{
 		OpName: "UpdateAccessProvider",
 		Query:  UpdateAccessProvider_Operation,
 		Variables: &__UpdateAccessProviderInput{
-			Id: id,
-			Ap: ap,
+			Id:            id,
+			Ap:            ap,
+			OverrideLocks: overrideLocks,
 		},
 	}
 	var err error
@@ -41357,6 +42099,218 @@ func UpdateIdentityStore(
 	var err error
 
 	var data UpdateIdentityStoreResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by UpdateRoleAssigneesOnAccessProvider.
+const UpdateRoleAssigneesOnAccessProvider_Operation = `
+mutation UpdateRoleAssigneesOnAccessProvider ($apId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+	updateRoleAssigneesOnAccessProvider(accessProvider: $apId, roleInput: {roleID:$roleID,assignees:$assignees}) {
+		__typename
+		... Role
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment Role on Role {
+	id
+	description
+	name
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+`
+
+func UpdateRoleAssigneesOnAccessProvider(
+	ctx context.Context,
+	client graphql.Client,
+	apId string,
+	roleID string,
+	assignees []string,
+) (*UpdateRoleAssigneesOnAccessProviderResponse, error) {
+	req := &graphql.Request{
+		OpName: "UpdateRoleAssigneesOnAccessProvider",
+		Query:  UpdateRoleAssigneesOnAccessProvider_Operation,
+		Variables: &__UpdateRoleAssigneesOnAccessProviderInput{
+			ApId:      apId,
+			RoleID:    roleID,
+			Assignees: assignees,
+		},
+	}
+	var err error
+
+	var data UpdateRoleAssigneesOnAccessProviderResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by UpdateRoleAssigneesOnDataObject.
+const UpdateRoleAssigneesOnDataObject_Operation = `
+mutation UpdateRoleAssigneesOnDataObject ($doId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+	updateRoleAssigneesOnDataObject(dataObject: $doId, roleInput: {roleID:$roleID,assignees:$assignees}) {
+		__typename
+		... Role
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment Role on Role {
+	id
+	description
+	name
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+`
+
+func UpdateRoleAssigneesOnDataObject(
+	ctx context.Context,
+	client graphql.Client,
+	doId string,
+	roleID string,
+	assignees []string,
+) (*UpdateRoleAssigneesOnDataObjectResponse, error) {
+	req := &graphql.Request{
+		OpName: "UpdateRoleAssigneesOnDataObject",
+		Query:  UpdateRoleAssigneesOnDataObject_Operation,
+		Variables: &__UpdateRoleAssigneesOnDataObjectInput{
+			DoId:      doId,
+			RoleID:    roleID,
+			Assignees: assignees,
+		},
+	}
+	var err error
+
+	var data UpdateRoleAssigneesOnDataObjectResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by UpdateRoleAssigneesOnDataSource.
+const UpdateRoleAssigneesOnDataSource_Operation = `
+mutation UpdateRoleAssigneesOnDataSource ($dsId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+	updateRoleAssigneesOnDataSource(dataSource: $dsId, roleInput: {roleID:$roleID,assignees:$assignees}) {
+		__typename
+		... Role
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment Role on Role {
+	id
+	description
+	name
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+`
+
+func UpdateRoleAssigneesOnDataSource(
+	ctx context.Context,
+	client graphql.Client,
+	dsId string,
+	roleID string,
+	assignees []string,
+) (*UpdateRoleAssigneesOnDataSourceResponse, error) {
+	req := &graphql.Request{
+		OpName: "UpdateRoleAssigneesOnDataSource",
+		Query:  UpdateRoleAssigneesOnDataSource_Operation,
+		Variables: &__UpdateRoleAssigneesOnDataSourceInput{
+			DsId:      dsId,
+			RoleID:    roleID,
+			Assignees: assignees,
+		},
+	}
+	var err error
+
+	var data UpdateRoleAssigneesOnDataSourceResponse
+	resp := &graphql.Response{Data: &data}
+
+	err = client.MakeRequest(
+		ctx,
+		req,
+		resp,
+	)
+
+	return &data, err
+}
+
+// The query or mutation executed by UpdateRoleAssigneesOnIdentityStore.
+const UpdateRoleAssigneesOnIdentityStore_Operation = `
+mutation UpdateRoleAssigneesOnIdentityStore ($isId: ID!, $roleID: ID!, $assignees: [ID!]!) {
+	updateRoleAssigneesOnIdentityStore(identityStore: $isId, roleInput: {roleID:$roleID,assignees:$assignees}) {
+		__typename
+		... Role
+		... PermissionDeniedError
+		... NotFoundError
+	}
+}
+fragment Role on Role {
+	id
+	description
+	name
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+`
+
+func UpdateRoleAssigneesOnIdentityStore(
+	ctx context.Context,
+	client graphql.Client,
+	isId string,
+	roleID string,
+	assignees []string,
+) (*UpdateRoleAssigneesOnIdentityStoreResponse, error) {
+	req := &graphql.Request{
+		OpName: "UpdateRoleAssigneesOnIdentityStore",
+		Query:  UpdateRoleAssigneesOnIdentityStore_Operation,
+		Variables: &__UpdateRoleAssigneesOnIdentityStoreInput{
+			IsId:      isId,
+			RoleID:    roleID,
+			Assignees: assignees,
+		},
+	}
+	var err error
+
+	var data UpdateRoleAssigneesOnIdentityStoreResponse
 	resp := &graphql.Response{Data: &data}
 
 	err = client.MakeRequest(

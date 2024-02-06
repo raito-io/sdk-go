@@ -38,90 +38,34 @@ fragment AccessProvider on AccessProvider {
     dataSources {
         ...DataSource
     }
+    locks {
+        ...AccessProviderLocks
+    }
+}
+
+fragment AccessProviderLocks on AccessProviderLockData {
+    lockKey
+    details {
+        ... AccessProviderLockDetails
+    }
+}
+
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+    reason
 }
 
 fragment WhoAbacRule on WhoAbacRule {
     promiseDuration
     type
-    rule {
-        ... BinaryExpressionLiteralBool
-        ... AbacComparisonExpressionComparison
-        ... AbacComparisonExpressionAggregator
-    }
+    ruleJson
+
 }
 
 fragment WhatAbacRule on WhatAbacRule {
     permissions
     globalPermissions
     doTypes
-    rule {
-        ... BinaryExpressionLiteralBool
-        ... AbacComparisonExpressionComparison
-        ... AbacComparisonExpressionAggregator
-    }
-}
-
-fragment BinaryExpressionLiteralBool on BinaryExpressionLiteralBool {
-    value
-}
-
-fragment AbacComparisonExpressionBinaryLiteral on AbacComparisonExpressionBinaryLiteral {
-    booleanLiteralValue: value
-}
-
-fragment AbacComparisonExpressionStringListLiteral on AbacComparisonExpressionStringListLiteral {
-    stringListValue: value
-}
-
-fragment AbacComparisonExpressionStringLiteral on AbacComparisonExpressionStringLiteral {
-    stringLiteralValue: value
-}
-
-fragment AbacComparisonExpressionAggregator on AbacComparisonExpressionAggregator {
-   aggregatorOperator: operator
-    operands {
-        ... AbacComparisonExpressionAggregatorLevel2
-        ... AbacComparisonExpressionComparison
-        ... BinaryExpressionLiteralBool
-        ... AbacComparisonExpressionUnaryExpression
-    }
-}
-
-fragment AbacComparisonExpressionAggregatorLevel2 on AbacComparisonExpressionAggregator {
-    aggregatorOperator: operator
-    operands {
-        ... AbacComparisonExpressionComparison
-        ... BinaryExpressionLiteralBool
-    }
-}
-
-fragment AbacComparisonExpressionUnaryExpression on AbacComparisonExpressionUnaryExpression {
-    unaryOperator: operator
-    operand {
-        ...BinaryExpressionLiteralBool
-        ...AbacComparisonExpressionComparison
-        ...AbacComparisonExpressionAggregatorLevel2
-        ...AbacComparisonExpressionUnaryExpressionLevel2
-    }
-}
-
-
-fragment AbacComparisonExpressionUnaryExpressionLevel2 on AbacComparisonExpressionUnaryExpression {
-    unaryOperator: operator
-    operand {
-        ...BinaryExpressionLiteralBool
-        ...AbacComparisonExpressionComparison
-    }
-}
-
-fragment AbacComparisonExpressionComparison on AbacComparisonExpressionComparison {
-    leftOperand
-    comparisonOperator: operator
-    rightOperand {
-        ... AbacComparisonExpressionBinaryLiteral
-        ... AbacComparisonExpressionStringListLiteral
-        ... AbacComparisonExpressionStringLiteral
-    }
+    ruleJson
 }
 
 fragment AccessProviderPage on PagedResult {
@@ -211,6 +155,18 @@ fragment AccessProviderWhoList on PagedResult {
     }
 }
 
+fragment AccessProviderWhatAbacScopeList on PagedResult {
+    pageInfo {
+        ...PageInfo
+    }
+    edges {
+        cursor
+        node {
+           ...DataObject
+        }
+    }
+}
+
 mutation CreateAccessProvider($ap: AccessProviderInput!) {
     createAccessProvider(input: $ap, enableAdditionalAccessRequests: false) {
         __typename
@@ -224,8 +180,8 @@ mutation CreateAccessProvider($ap: AccessProviderInput!) {
     }
 }
 
-mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!) {
-    updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
+mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!, $overrideLocks: Boolean) {
+    updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false, overrideLocks: $overrideLocks) {
         __typename
         ...AccessProvider
         ... on AccessProviderWithOptionalAccessRequests {
@@ -312,6 +268,19 @@ query GetAccessProviderWhoList($id: ID!, $after: String, $limit: Int, $search: S
             whoList(after: $after, limit: $limit, search: $search, order: $order) {
                 __typename
                 ...AccessProviderWhoList
+                ... PermissionDeniedError
+            }
+        }
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+query ListAccessProviderAbacWhatScope($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+    accessProvider(id: $id) {
+        ... on AccessProvider {
+            whatAbacScope(after: $after, limit: $limit, search: $search, order: $order) {
+                ... AccessProviderWhatAbacScopeList
                 ... PermissionDeniedError
             }
         }

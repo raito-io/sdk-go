@@ -496,6 +496,98 @@ func (c *RoleClient) UnassignGlobalRole(ctx context.Context, roleId string, from
 	}
 }
 
+func (c *RoleClient) UpdateRoleAssigneesOnIdentityStore(ctx context.Context, isId string, roleId string, assignees ...string) (*types.Role, error) {
+	output, err := schema.UpdateRoleAssigneesOnIdentityStore(ctx, c.client, isId, roleId, assignees)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch r := output.UpdateRoleAssigneesOnIdentityStore.(type) {
+	case *schema.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole:
+		return &r.Role, nil
+	case *schema.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("updateRoleAssigneesOnIdentityStore", r.Message)
+	case *schema.UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError:
+		return nil, types.NewErrNotFound(isId, r.Typename, r.Message)
+	default:
+		return nil, fmt.Errorf("unexpected type '%T'", r)
+	}
+}
+
+func (c *RoleClient) UpdateRoleAssigneesOnDataObject(ctx context.Context, doId string, roleId string, assignees ...string) (*types.Role, error) {
+	output, err := schema.UpdateRoleAssigneesOnDataObject(ctx, c.client, doId, roleId, assignees)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch r := output.UpdateRoleAssigneesOnDataObject.(type) {
+	case *schema.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole:
+		return &r.Role, nil
+	case *schema.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("updateRoleAssigneesOnDataObject", r.Message)
+	case *schema.UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError:
+		return nil, types.NewErrNotFound(doId, r.Typename, r.Message)
+	default:
+		return nil, fmt.Errorf("unexpected type '%T'", r)
+	}
+}
+
+func (c *RoleClient) UpdateRoleAssigneesOnDataSource(ctx context.Context, dataSourceId string, roleId string, assignees ...string) (*types.Role, error) {
+	output, err := schema.UpdateRoleAssigneesOnDataSource(ctx, c.client, dataSourceId, roleId, assignees)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch r := output.UpdateRoleAssigneesOnDataSource.(type) {
+	case *schema.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole:
+		return &r.Role, nil
+	case *schema.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("updateRoleAssigneesOnDataSource", r.Message)
+	case *schema.UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError:
+		return nil, types.NewErrNotFound(dataSourceId, r.Typename, r.Message)
+	default:
+		return nil, fmt.Errorf("unexpected type '%T'", r)
+	}
+}
+
+func (c *RoleClient) UpdateRoleAssigneesOnAccessProvider(ctx context.Context, accessProviderId string, roleId string, assignees ...string) (*types.Role, error) {
+	output, err := schema.UpdateRoleAssigneesOnAccessProvider(ctx, c.client, accessProviderId, roleId, assignees)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch r := output.UpdateRoleAssigneesOnAccessProvider.(type) {
+	case *schema.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole:
+		return &r.Role, nil
+	case *schema.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("updateRoleAssigneesOnAccessProvider", r.Message)
+	case *schema.UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError:
+		return nil, types.NewErrNotFound(accessProviderId, r.Typename, r.Message)
+	default:
+		return nil, fmt.Errorf("unexpected type '%T'", r)
+	}
+}
+
+func (c *RoleClient) SetGlobalRoleForUsers(ctx context.Context, roleId string, users ...string) error {
+	output, err := schema.SetGlobalRolesForUser(ctx, c.client, roleId, users)
+	if err != nil {
+		return types.NewErrClient(err)
+	}
+
+	switch r := output.SetGlobalRolesForUser.(type) {
+	case *schema.SetGlobalRolesForUserSetGlobalRolesForUser:
+		if r.Success {
+			return nil
+		} else {
+			return types.NewErrClient(errors.New("unknown server error"))
+		}
+	case *schema.SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError:
+		return types.NewErrPermissionDenied("setGlobalRolesForUser", r.Message)
+	default:
+		return fmt.Errorf("unexpected type '%T'", r)
+	}
+}
+
 func roleAssignmentsEdgeFn(edge *types.RoleAssignmentPageEdgesEdge) (*string, *schema.RoleAssignment, error) {
 	cursor := edge.Cursor
 

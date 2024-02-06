@@ -9,6 +9,7 @@ import (
 	"go/token"
 	"log/slog"
 	"os"
+	"sort"
 	"strings"
 	"unicode"
 
@@ -91,10 +92,18 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 
 	if len(constAssignments) > 0 {
 		fmt.Fprintf(outputStringBuilder, "\n")
-	}
 
-	for constType, assignments := range constAssignments {
-		fmt.Fprintf(outputStringBuilder, "var All%s = []%s{%s}\n", constType, constType, strings.Join(assignments, ", "))
+		keys := make([]string, 0, len(constAssignments))
+		for k := range constAssignments {
+			keys = append(keys, k)
+		}
+
+		sort.Strings(keys)
+
+		for _, constType := range keys {
+			assignments := constAssignments[constType]
+			fmt.Fprintf(outputStringBuilder, "var All%s = []%s{%s}\n", constType, constType, strings.Join(assignments, ", "))
+		}
 	}
 
 	// Format the output file
