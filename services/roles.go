@@ -497,7 +497,7 @@ func (c *RoleClient) UnassignGlobalRole(ctx context.Context, roleId string, from
 }
 
 // UpdateRoleAssigneesOnIdentityStore updates a role assignment between an IdentityStore and a set of users.
-// Exising role assignments will be overwritten.
+// Existing role assignments will be overwritten.
 // isId is the id of the identity store to assign the role to.
 // roleId is the id of the role to assign.
 // assignees is a list of user ids to assign the role to.
