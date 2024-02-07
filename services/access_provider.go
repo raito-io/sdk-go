@@ -411,18 +411,24 @@ type AccessProviderAbacWhatScopeListOptions struct {
 	search *string
 }
 
+// WithAccessProviderAbacWhatScopeListOrder can be used to specify the order of the returned AccessProviderAbacWhatScopeList.
 func WithAccessProviderAbacWhatScopeListOrder(input ...types.AccessWhatOrderByInput) func(options *AccessProviderAbacWhatScopeListOptions) {
 	return func(options *AccessProviderAbacWhatScopeListOptions) {
 		options.order = append(options.order, input...)
 	}
 }
 
+// WithAccessProviderAbacWhatScopeListSearch can be used to specify the search of the returned Access
 func WithAccessProviderAbacWhatScopeListSearch(search string) func(options *AccessProviderAbacWhatScopeListOptions) {
 	return func(options *AccessProviderAbacWhatScopeListOptions) {
 		options.search = &search
 	}
 }
 
+// GetAccessProviderAbacWhatScope returns all abac what scopes of an AccessProvider
+// id is the id of the AccessProvider
+// WithAccessProviderAbacWhatScopeListSearch can be used to specify the search of the returned types.DataObject
+// WithAccessProviderAbacWhatScopeListOrder can be used to specify the order of the returned types.DataObject
 func (a *AccessProviderClient) GetAccessProviderAbacWhatScope(ctx context.Context, id string, ops ...func(*AccessProviderAbacWhatScopeListOptions)) <-chan types.ListItem[types.DataObject] {
 	options := AccessProviderAbacWhatScopeListOptions{}
 	for _, op := range ops {

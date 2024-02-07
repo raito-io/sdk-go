@@ -496,6 +496,11 @@ func (c *RoleClient) UnassignGlobalRole(ctx context.Context, roleId string, from
 	}
 }
 
+// UpdateRoleAssigneesOnIdentityStore updates a role assignment between an IdentityStore and a set of users.
+// Exising role assignments will be overwritten.
+// isId is the id of the identity store to assign the role to.
+// roleId is the id of the role to assign.
+// assignees is a list of user ids to assign the role to.
 func (c *RoleClient) UpdateRoleAssigneesOnIdentityStore(ctx context.Context, isId string, roleId string, assignees ...string) (*types.Role, error) {
 	output, err := schema.UpdateRoleAssigneesOnIdentityStore(ctx, c.client, isId, roleId, assignees)
 	if err != nil {
@@ -514,6 +519,11 @@ func (c *RoleClient) UpdateRoleAssigneesOnIdentityStore(ctx context.Context, isI
 	}
 }
 
+// UpdateRoleAssigneesOnDataObject updates a role assignment between a data object and a set of users.
+// Existing role assignments will be overwritten.
+// doId is the id of the data object to assign the role to.
+// roleId is the id of the role to assign.
+// assignees is a list of user ids to assign the role to.
 func (c *RoleClient) UpdateRoleAssigneesOnDataObject(ctx context.Context, doId string, roleId string, assignees ...string) (*types.Role, error) {
 	output, err := schema.UpdateRoleAssigneesOnDataObject(ctx, c.client, doId, roleId, assignees)
 	if err != nil {
@@ -532,6 +542,11 @@ func (c *RoleClient) UpdateRoleAssigneesOnDataObject(ctx context.Context, doId s
 	}
 }
 
+// UpdateRoleAssigneesOnDataSource updates a role assignment between a data source and a set of users
+// Existing role assignments will be overwritten.
+// dataSourceId is the id of the data source to assign the role to.
+// roleId is the id of the role to assign.
+// assignees is a list of user ids to assign the role to.
 func (c *RoleClient) UpdateRoleAssigneesOnDataSource(ctx context.Context, dataSourceId string, roleId string, assignees ...string) (*types.Role, error) {
 	output, err := schema.UpdateRoleAssigneesOnDataSource(ctx, c.client, dataSourceId, roleId, assignees)
 	if err != nil {
@@ -550,6 +565,11 @@ func (c *RoleClient) UpdateRoleAssigneesOnDataSource(ctx context.Context, dataSo
 	}
 }
 
+// UpdateRoleAssigneesOnAccessProvider updates a role assignment between an access provider and a set of users.
+// Existing role assignments will be overwritten.
+// accessProviderId is the id of the access provider to assign the role to.
+// roleId is the id of the role to assign.
+// assignees is a list of user ids to assign the role to.
 func (c *RoleClient) UpdateRoleAssigneesOnAccessProvider(ctx context.Context, accessProviderId string, roleId string, assignees ...string) (*types.Role, error) {
 	output, err := schema.UpdateRoleAssigneesOnAccessProvider(ctx, c.client, accessProviderId, roleId, assignees)
 	if err != nil {
@@ -568,8 +588,12 @@ func (c *RoleClient) UpdateRoleAssigneesOnAccessProvider(ctx context.Context, ac
 	}
 }
 
-func (c *RoleClient) SetGlobalRoleForUsers(ctx context.Context, roleId string, users ...string) error {
-	output, err := schema.SetGlobalRolesForUser(ctx, c.client, roleId, users)
+// SetGlobalRoleForUsers sets a global role for a set of users.
+// Existing global role assignments will be overwritten.
+// roleId is the id of the global role to assign.
+// assignees is a list of user ids to assign the global role to.
+func (c *RoleClient) SetGlobalRoleForUsers(ctx context.Context, roleId string, assignees ...string) error {
+	output, err := schema.SetGlobalRolesForUser(ctx, c.client, roleId, assignees)
 	if err != nil {
 		return types.NewErrClient(err)
 	}

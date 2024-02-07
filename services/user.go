@@ -129,12 +129,16 @@ type InviteAsRaitoUserOptions struct {
 	NoPassword bool
 }
 
-func WithInviateAsRaitoUserNoPassword() func(options *InviteAsRaitoUserOptions) {
+// WithInviteAsRaitoUserNoPassword adds the option to not send a password to the invited user.
+func WithInviteAsRaitoUserNoPassword() func(options *InviteAsRaitoUserOptions) {
 	return func(options *InviteAsRaitoUserOptions) {
 		options.NoPassword = true
 	}
 }
 
+// InviteAsRaitoUser invites an existing user as Raito User
+// id is the id of the user to invite.
+// WithInviteAsRaitoUserNoPassword can be used to add the option to not send a password to the invited user.
 func (c *UserClient) InviteAsRaitoUser(ctx context.Context, id string, ops ...func(*InviteAsRaitoUserOptions)) (*types.User, error) {
 	options := InviteAsRaitoUserOptions{}
 	for _, op := range ops {
@@ -160,6 +164,8 @@ func (c *UserClient) InviteAsRaitoUser(ctx context.Context, id string, ops ...fu
 	}
 }
 
+// RemoveAsRaitoUser removes an existing user from Raito Cloud
+// id is the id of the user to remove.
 func (c *UserClient) RemoveAsRaitoUser(ctx context.Context, id string) (*types.User, error) {
 	result, err := schema.RemoveAsRaitoUser(ctx, c.client, id)
 	if err != nil {
@@ -180,6 +186,9 @@ func (c *UserClient) RemoveAsRaitoUser(ctx context.Context, id string) (*types.U
 	}
 }
 
+// SetUserPassword sets the password for an existing user in Raito Cloud
+// id is the id of the user to set the password for.
+// password is the password to set for the user.
 func (c *UserClient) SetUserPassword(ctx context.Context, id string, password string) (*types.User, error) {
 	result, err := schema.SetUserPassword(ctx, c.client, id, password)
 	if err != nil {
