@@ -13,7 +13,7 @@ const (
 type AccessProviderAction int
 
 const (
-	AccessProviderActionPromise AccessProviderAction = iota //Deprecated promises are set on who item
+	AccessProviderActionPromise AccessProviderAction = iota // Deprecated promises are set on who item
 	AccessProviderActionGrant
 	AccessProviderActionDeny
 	AccessProviderActionMask

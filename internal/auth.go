@@ -159,12 +159,11 @@ func handleAuthOutput(output *idp.InitiateAuthOutput, tokens *userTokens) error 
 			return fmt.Errorf("no id token found in authentication result")
 		}
 
-		if output.AuthenticationResult.RefreshToken == nil {
-			return fmt.Errorf("no refresh token found in authentication result")
+		if output.AuthenticationResult.RefreshToken != nil {
+			tokens.refreshToken = *output.AuthenticationResult.RefreshToken
 		}
 
 		tokens.idToken = *output.AuthenticationResult.IdToken
-		tokens.refreshToken = *output.AuthenticationResult.RefreshToken
 		e := time.Now().Add(time.Second * time.Duration(output.AuthenticationResult.ExpiresIn))
 		tokens.expiration = &e
 

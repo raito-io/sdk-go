@@ -44,11 +44,26 @@ func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap type
 	}
 }
 
+type UpdateAccessProviderOptions struct {
+	overrideLocks bool
+}
+
+func WithAccessProviderOverrideLocks() func(options *UpdateAccessProviderOptions) {
+	return func(options *UpdateAccessProviderOptions) {
+		options.overrideLocks = true
+	}
+}
+
 // UpdateAccessProvider updates an existing AccessProvider in Raito Cloud.
 // The updated AccessProvider is returned if the update is successful.
 // Otherwise, an error is returned.
-func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id string, ap schema.AccessProviderInput) (*types.AccessProvider, error) {
-	result, err := schema.UpdateAccessProvider(ctx, a.client, id, ap)
+func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id string, ap schema.AccessProviderInput, ops ...func(options *UpdateAccessProviderOptions)) (*types.AccessProvider, error) {
+	options := UpdateAccessProviderOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	result, err := schema.UpdateAccessProvider(ctx, a.client, id, ap, &options.overrideLocks)
 	if err != nil {
 		return nil, types.NewErrClient(err)
 	}
@@ -80,7 +95,7 @@ func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id stri
 	case *schema.DeleteAccessProviderDeleteAccessProviderPermissionDeniedError:
 		return types.NewErrPermissionDenied("deleteAccessProvider", response.Message)
 	case *schema.DeleteAccessProviderDeleteAccessProviderNotFoundError:
-		return types.NewErrNotFound(id, "accessProvider", response.Message)
+		return types.NewErrNotFound(id, response.Typename, response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteAccessProvider)
 	}
@@ -96,7 +111,7 @@ func (a *AccessProviderClient) ActivateAccessProvider(ctx context.Context, id st
 	case *schema.ActivateAccessProviderActivateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.ActivateAccessProviderActivateAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *schema.ActivateAccessProviderActivateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("activateAccessProvider", response.Message)
 	default:
@@ -114,7 +129,7 @@ func (a *AccessProviderClient) DeactivateAccessProvider(ctx context.Context, id 
 	case *schema.DeactivateAccessProviderDeactivateAccessProvider:
 		return &response.AccessProvider, nil
 	case *schema.DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", response.Message)
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	case *schema.DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("deactivateAccessProvider", response.Message)
 	default:
@@ -133,7 +148,7 @@ func (a *AccessProviderClient) GetAccessProvider(ctx context.Context, id string)
 	case *schema.GetAccessProviderAccessProvider:
 		return &ap.AccessProvider, nil
 	case *schema.GetAccessProviderAccessProviderNotFoundError:
-		return nil, types.NewErrNotFound(id, "accessProvider", ap.Message)
+		return nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 	case *schema.GetAccessProviderAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("getAccessProvider", ap.Message)
 	default:
@@ -172,7 +187,7 @@ func (a *AccessProviderClient) ListAccessProviders(ctx context.Context, ops ...f
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*schema.PageInfo, []schema.AccessProviderPageEdgesEdge, error) {
-		output, err := schema.ListAccessProviders(ctx, a.client, cursor, ptr.Int(25), options.filter, options.order)
+		output, err := schema.ListAccessProviders(ctx, a.client, cursor, ptr.Int(internal.MaxPageSize), options.filter, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -217,14 +232,14 @@ func WithAccessProviderWhoListOrder(input ...schema.AccessProviderWhoOrderByInpu
 // The order of the list can be specified with WithAccessProviderWhoListOrder.
 // A channel is returned that can be used to receive the list of AccessProviderWhoListItem.
 // To close the channel ensure to cancel the context.
-func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id string, ops ...func(*AccessProviderWhoListOptions)) <-chan types.ListItem[types.AccessProviderWhoListItem] { //nolint:dupl
+func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id string, ops ...func(*AccessProviderWhoListOptions)) <-chan types.ListItem[types.AccessProviderWhoListItem] {
 	options := AccessProviderWhoListOptions{}
 	for _, op := range ops {
 		op(&options)
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhoListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhoList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
+		output, err := schema.GetAccessProviderWhoList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -238,7 +253,7 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 				return nil, nil, types.NewErrPermissionDenied("accessProviderWhoList", whoList.Message)
 			}
 		case *schema.GetAccessProviderWhoListAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhoListAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
@@ -264,13 +279,21 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 }
 
 type AccessProviderWhatListOptions struct {
-	order []schema.AccessWhatOrderByInput
+	order  []types.AccessWhatOrderByInput
+	filter *types.AccessWhatFilterInput
 }
 
 // WithAccessProviderWhatListOrder can be used to specify the order of the returned AccessProviderWhatList
-func WithAccessProviderWhatListOrder(input ...schema.AccessWhatOrderByInput) func(options *AccessProviderWhatListOptions) {
+func WithAccessProviderWhatListOrder(input ...types.AccessWhatOrderByInput) func(options *AccessProviderWhatListOptions) {
 	return func(options *AccessProviderWhatListOptions) {
 		options.order = append(options.order, input...)
+	}
+}
+
+// WithAccessProviderWhatListFilter can be used to filter the returned AccessProviderWhatList.
+func WithAccessProviderWhatListFilter(input *types.AccessWhatFilterInput) func(options *AccessProviderWhatListOptions) {
+	return func(options *AccessProviderWhatListOptions) {
+		options.filter = input
 	}
 }
 
@@ -278,14 +301,14 @@ func WithAccessProviderWhatListOrder(input ...schema.AccessWhatOrderByInput) fun
 // The order of the list can be specified with WithAccessProviderWhatListOrder.
 // A channel is returned that can be used to receive the list of AccessProviderWhatDataObjectListItem.
 // To close the channel ensure to cancel the context.
-func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.Context, id string, ops ...func(*AccessProviderWhatListOptions)) <-chan types.ListItem[types.AccessProviderWhatListItem] { //nolint:dupl
+func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.Context, id string, ops ...func(*AccessProviderWhatListOptions)) <-chan types.ListItem[types.AccessProviderWhatListItem] {
 	options := AccessProviderWhatListOptions{}
 	for _, op := range ops {
 		op(&options)
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order)
+		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), options.filter, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -299,7 +322,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatDataObjectList", whatList.Message)
 			}
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhatDataObjectListAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
@@ -352,7 +375,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatAccessProviderListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhatAccessProviders(ctx, a.client, id, cursor, ptr.Int(25), nil, options.order, options.filter)
+		output, err := schema.GetAccessProviderWhatAccessProviders(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order, options.filter)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}
@@ -368,7 +391,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 				return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
 			}
 		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError:
-			return nil, nil, types.NewErrNotFound("AccessProvider", id, ap.Message)
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
 		case *schema.GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
 		default:
@@ -386,6 +409,75 @@ func (a *AccessProviderClient) GetAccessProviderWhatAccessProviderList(ctx conte
 		listItem := (*edge.Node).(*types.AccessProviderWhatAccessProviderListEdgesEdgeNodeAccessWhatAccessProviderItem)
 
 		return cursor, &listItem.AccessWhatAccessProviderItem, nil
+	}
+
+	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)
+}
+
+type AccessProviderAbacWhatScopeListOptions struct {
+	order  []types.AccessWhatOrderByInput
+	search *string
+}
+
+// WithAccessProviderAbacWhatScopeListOrder can be used to specify the order of the returned AccessProviderAbacWhatScopeList.
+func WithAccessProviderAbacWhatScopeListOrder(input ...types.AccessWhatOrderByInput) func(options *AccessProviderAbacWhatScopeListOptions) {
+	return func(options *AccessProviderAbacWhatScopeListOptions) {
+		options.order = append(options.order, input...)
+	}
+}
+
+// WithAccessProviderAbacWhatScopeListSearch can be used to specify the search of the returned Access
+func WithAccessProviderAbacWhatScopeListSearch(search string) func(options *AccessProviderAbacWhatScopeListOptions) {
+	return func(options *AccessProviderAbacWhatScopeListOptions) {
+		options.search = &search
+	}
+}
+
+// GetAccessProviderAbacWhatScope returns all abac what scopes of an AccessProvider
+// id is the id of the AccessProvider
+// WithAccessProviderAbacWhatScopeListSearch can be used to specify the search of the returned types.DataObject
+// WithAccessProviderAbacWhatScopeListOrder can be used to specify the order of the returned types.DataObject
+func (a *AccessProviderClient) GetAccessProviderAbacWhatScope(ctx context.Context, id string, ops ...func(*AccessProviderAbacWhatScopeListOptions)) <-chan types.ListItem[types.DataObject] {
+	options := AccessProviderAbacWhatScopeListOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatAbacScopeListEdgesEdge, error) {
+		output, err := schema.ListAccessProviderAbacWhatScope(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), options.search, options.order)
+		if err != nil {
+			return nil, nil, types.NewErrClient(err)
+		}
+
+		switch ap := output.AccessProvider.(type) {
+		case *schema.ListAccessProviderAbacWhatScopeAccessProvider:
+			switch whatList := ap.WhatAbacScope.(type) {
+			case *schema.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult:
+				return &whatList.PageInfo.PageInfo, whatList.Edges, nil
+			case *schema.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError:
+				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatAbacScopeList", whatList.Message)
+			default:
+				return nil, nil, fmt.Errorf("unexpected type '%T': %w", whatList, types.ErrUnknownType)
+			}
+		case *schema.ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError:
+			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
+		case *schema.ListAccessProviderAbacWhatScopeAccessProviderNotFoundError:
+			return nil, nil, types.NewErrNotFound(id, ap.Typename, ap.Message)
+		default:
+			return nil, nil, fmt.Errorf("unexpected type '%T': %w", ap, types.ErrUnknownType)
+		}
+	}
+
+	edgeFn := func(edge *types.AccessProviderWhatAbacScopeListEdgesEdge) (*string, *types.DataObject, error) {
+		cursor := edge.Cursor
+
+		if edge.Node == nil {
+			return cursor, nil, nil
+		}
+
+		listItem := (*edge.Node).(*types.AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject)
+
+		return cursor, &listItem.DataObject, nil
 	}
 
 	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)

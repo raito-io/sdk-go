@@ -7,9 +7,15 @@ gql:
 fetch-schema:
 	.script/fetch-schema.sh --output internal/schema/schema.graphql
 
+fetch-local-schema:
+	npx --yes get-graphql-schema http://localhost:8080/query > internal/schema/schema.graphql
+
 lint:
 	golangci-lint run ./...
 	go fmt ./...
 
 build:
 	go build ./...
+
+test:
+	$(gotestsum) -- -race ./...

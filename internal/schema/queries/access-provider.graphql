@@ -12,21 +12,50 @@ fragment AccessProvider on AccessProvider {
     policyRule
     override
     external
+
+    whatType
+    whatAbacRule {
+        ... WhatAbacRule
+    }
+
+    whoType
+    whoAbacRule {
+        ... WhoAbacRule
+    }
+
     notInternalizable
-    whoLocked
-    whoLockedReason
-    inheritanceLocked
-    inheritanceLockedReason
-    whatLocked
-    whatLockedReason
-    nameLocked
-    nameLockedReason
-    deleteLocked
-    deleteLockedReason
     complete
     dataSources {
         ...DataSource
     }
+    locks {
+        ...AccessProviderLocks
+    }
+}
+
+fragment AccessProviderLocks on AccessProviderLockData {
+    lockKey
+    details {
+        ... AccessProviderLockDetails
+    }
+}
+
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+    reason
+}
+
+fragment WhoAbacRule on WhoAbacRule {
+    promiseDuration
+    type
+    ruleJson
+
+}
+
+fragment WhatAbacRule on WhatAbacRule {
+    permissions
+    globalPermissions
+    doTypes
+    ruleJson
 }
 
 fragment AccessProviderPage on PagedResult {
@@ -116,6 +145,18 @@ fragment AccessProviderWhoList on PagedResult {
     }
 }
 
+fragment AccessProviderWhatAbacScopeList on PagedResult {
+    pageInfo {
+        ...PageInfo
+    }
+    edges {
+        cursor
+        node {
+           ...DataObject
+        }
+    }
+}
+
 mutation CreateAccessProvider($ap: AccessProviderInput!) {
     createAccessProvider(input: $ap, enableAdditionalAccessRequests: false) {
         __typename
@@ -129,8 +170,8 @@ mutation CreateAccessProvider($ap: AccessProviderInput!) {
     }
 }
 
-mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!) {
-    updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false) {
+mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!, $overrideLocks: Boolean) {
+    updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false, overrideLocks: $overrideLocks) {
         __typename
         ...AccessProvider
         ... on AccessProviderWithOptionalAccessRequests {
@@ -183,10 +224,10 @@ query ListAccessProviders($after: String, $limit: Int, $filter: AccessProviderFi
     }
 }
 
-query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int, $filter: AccessWhatFilterInput, $order: [AccessWhatOrderByInput!]) {
     accessProvider(id: $id) {
         ... on AccessProvider {
-            whatDataObjects(after: $after, limit: $limit, search: $search, order: $order) {
+            whatDataObjects(after: $after, limit: $limit, filter: $filter, order: $order) {
                 __typename
                 ...AccessProviderWhatList
                 ... PermissionDeniedError
@@ -217,6 +258,19 @@ query GetAccessProviderWhoList($id: ID!, $after: String, $limit: Int, $search: S
             whoList(after: $after, limit: $limit, search: $search, order: $order) {
                 __typename
                 ...AccessProviderWhoList
+                ... PermissionDeniedError
+            }
+        }
+        ... PermissionDeniedError
+        ... NotFoundError
+    }
+}
+
+query ListAccessProviderAbacWhatScope($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+    accessProvider(id: $id) {
+        ... on AccessProvider {
+            whatAbacScope(after: $after, limit: $limit, search: $search, order: $order) {
+                ... AccessProviderWhatAbacScopeList
                 ... PermissionDeniedError
             }
         }

@@ -8,12 +8,12 @@ import (
 var ErrUnknownType = errors.New("unknown type")
 
 type ErrNotFound struct {
-	Type      string
+	Type      *string
 	Id        string
 	ServerMsg string
 }
 
-func NewErrNotFound(id string, t string, msg string) *ErrNotFound {
+func NewErrNotFound(id string, t *string, msg string) *ErrNotFound {
 	return &ErrNotFound{
 		Type:      t,
 		Id:        id,
@@ -22,7 +22,13 @@ func NewErrNotFound(id string, t string, msg string) *ErrNotFound {
 }
 
 func (e *ErrNotFound) Error() string {
-	return fmt.Sprintf("not able to find object %q with id %q: %s", e.Type, e.Id, e.ServerMsg)
+	t := "<unknown>"
+
+	if e.Type != nil {
+		t = *e.Type
+	}
+
+	return fmt.Sprintf("not able to find object %q with id %q: %s", t, e.Id, e.ServerMsg)
 }
 
 type ErrPermissionDenied struct {
@@ -55,6 +61,22 @@ func NewErrAlreadyExists(t string, msg string) *ErrAlreadyExists {
 
 func (e *ErrAlreadyExists) Error() string {
 	return fmt.Sprintf("%q already exists: %s", e.Type, e.ServerMsg)
+}
+
+type ErrInvalidEmail struct {
+	Email     string
+	ServerMsg string
+}
+
+func NewErrInvalidEmail(email string, msg string) *ErrInvalidEmail {
+	return &ErrInvalidEmail{
+		Email:     email,
+		ServerMsg: msg,
+	}
+}
+
+func (e *ErrInvalidEmail) Error() string {
+	return fmt.Sprintf("invalid email address %q: %s", e.Email, e.ServerMsg)
 }
 
 type ErrClient struct {
