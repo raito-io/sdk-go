@@ -16,3 +16,6 @@ lint:
 
 build:
 	go build ./...
+
+test:
+	$(gotestsum) -- -race ./...
