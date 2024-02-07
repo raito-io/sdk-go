@@ -24,16 +24,6 @@ fragment AccessProvider on AccessProvider {
     }
 
     notInternalizable
-    whoLocked
-    whoLockedReason
-    inheritanceLocked
-    inheritanceLockedReason
-    whatLocked
-    whatLockedReason
-    nameLocked
-    nameLockedReason
-    deleteLocked
-    deleteLockedReason
     complete
     dataSources {
         ...DataSource

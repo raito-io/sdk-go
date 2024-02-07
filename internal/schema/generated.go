@@ -121,35 +121,25 @@ func (v *AbacComparisonExpressionUnaryExpressionInput) GetOperand() AbacComparis
 
 // AccessProvider includes the GraphQL fields of AccessProvider requested by the fragment AccessProvider.
 type AccessProvider struct {
-	Id                      string                      `json:"id"`
-	IsSample                bool                        `json:"isSample"`
-	CreatedAt               time.Time                   `json:"createdAt"`
-	ModifiedAt              time.Time                   `json:"modifiedAt"`
-	Name                    string                      `json:"name"`
-	NamingHint              *string                     `json:"namingHint"`
-	State                   models.AccessProviderState  `json:"state"`
-	Action                  models.AccessProviderAction `json:"action"`
-	Type                    *string                     `json:"type"`
-	Description             string                      `json:"description"`
-	PolicyRule              *string                     `json:"policyRule"`
-	Override                bool                        `json:"override"`
-	External                bool                        `json:"external"`
-	WhatType                WhoAndWhatType              `json:"whatType"`
-	WhatAbacRule            *AccessProviderWhatAbacRule `json:"whatAbacRule"`
-	WhoType                 WhoAndWhatType              `json:"whoType"`
-	WhoAbacRule             *AccessProviderWhoAbacRule  `json:"whoAbacRule"`
-	NotInternalizable       bool                        `json:"notInternalizable"`
-	WhoLocked               *bool                       `json:"whoLocked"`
-	WhoLockedReason         *string                     `json:"whoLockedReason"`
-	InheritanceLocked       *bool                       `json:"inheritanceLocked"`
-	InheritanceLockedReason *string                     `json:"inheritanceLockedReason"`
-	WhatLocked              *bool                       `json:"whatLocked"`
-	WhatLockedReason        *string                     `json:"whatLockedReason"`
-	NameLocked              *bool                       `json:"nameLocked"`
-	NameLockedReason        *string                     `json:"nameLockedReason"`
-	DeleteLocked            *bool                       `json:"deleteLocked"`
-	DeleteLockedReason      *string                     `json:"deleteLockedReason"`
-	Complete                *bool                       `json:"complete"`
+	Id                string                      `json:"id"`
+	IsSample          bool                        `json:"isSample"`
+	CreatedAt         time.Time                   `json:"createdAt"`
+	ModifiedAt        time.Time                   `json:"modifiedAt"`
+	Name              string                      `json:"name"`
+	NamingHint        *string                     `json:"namingHint"`
+	State             models.AccessProviderState  `json:"state"`
+	Action            models.AccessProviderAction `json:"action"`
+	Type              *string                     `json:"type"`
+	Description       string                      `json:"description"`
+	PolicyRule        *string                     `json:"policyRule"`
+	Override          bool                        `json:"override"`
+	External          bool                        `json:"external"`
+	WhatType          WhoAndWhatType              `json:"whatType"`
+	WhatAbacRule      *AccessProviderWhatAbacRule `json:"whatAbacRule"`
+	WhoType           WhoAndWhatType              `json:"whoType"`
+	WhoAbacRule       *AccessProviderWhoAbacRule  `json:"whoAbacRule"`
+	NotInternalizable bool                        `json:"notInternalizable"`
+	Complete          *bool                       `json:"complete"`
 	// Fetches the data sources that this AP will get deployed to.
 	DataSources []AccessProviderDataSourcesDataSource       `json:"dataSources"`
 	Locks       []AccessProviderLocksAccessProviderLockData `json:"locks"`
@@ -208,36 +198,6 @@ func (v *AccessProvider) GetWhoAbacRule() *AccessProviderWhoAbacRule { return v.
 
 // GetNotInternalizable returns AccessProvider.NotInternalizable, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetNotInternalizable() bool { return v.NotInternalizable }
-
-// GetWhoLocked returns AccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetWhoLocked() *bool { return v.WhoLocked }
-
-// GetWhoLockedReason returns AccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetWhoLockedReason() *string { return v.WhoLockedReason }
-
-// GetInheritanceLocked returns AccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetInheritanceLocked() *bool { return v.InheritanceLocked }
-
-// GetInheritanceLockedReason returns AccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetInheritanceLockedReason() *string { return v.InheritanceLockedReason }
-
-// GetWhatLocked returns AccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetWhatLocked() *bool { return v.WhatLocked }
-
-// GetWhatLockedReason returns AccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetWhatLockedReason() *string { return v.WhatLockedReason }
-
-// GetNameLocked returns AccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetNameLocked() *bool { return v.NameLocked }
-
-// GetNameLockedReason returns AccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetNameLockedReason() *string { return v.NameLockedReason }
-
-// GetDeleteLocked returns AccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetDeleteLocked() *bool { return v.DeleteLocked }
-
-// GetDeleteLockedReason returns AccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetDeleteLockedReason() *string { return v.DeleteLockedReason }
 
 // GetComplete returns AccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetComplete() *bool { return v.Complete }
@@ -886,56 +846,6 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetNotInternalizable() b
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns AccessProviderPageEdgesEdgeNodeAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns AccessProviderPageEdgesEdgeNodeAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns AccessProviderPageEdgesEdgeNodeAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns AccessProviderPageEdgesEdgeNodeAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns AccessProviderPageEdgesEdgeNodeAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns AccessProviderPageEdgesEdgeNodeAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns AccessProviderPageEdgesEdgeNodeAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns AccessProviderPageEdgesEdgeNodeAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns AccessProviderPageEdgesEdgeNodeAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns AccessProviderPageEdgesEdgeNodeAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns AccessProviderPageEdgesEdgeNodeAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -1015,26 +925,6 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -1072,16 +962,6 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -7815,56 +7695,6 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetNotInternalizable() bool
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns AccessWhatAccessProviderItemAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns AccessWhatAccessProviderItemAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns AccessWhatAccessProviderItemAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns AccessWhatAccessProviderItemAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns AccessWhatAccessProviderItemAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns AccessWhatAccessProviderItemAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns AccessWhatAccessProviderItemAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns AccessWhatAccessProviderItemAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns AccessWhatAccessProviderItemAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns AccessWhatAccessProviderItemAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns AccessWhatAccessProviderItemAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *AccessWhatAccessProviderItemAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -7942,26 +7772,6 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -7998,16 +7808,6 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -8134,56 +7934,6 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetNotInternalizable() bo
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns ActivateAccessProviderActivateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns ActivateAccessProviderActivateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns ActivateAccessProviderActivateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns ActivateAccessProviderActivateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns ActivateAccessProviderActivateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns ActivateAccessProviderActivateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns ActivateAccessProviderActivateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns ActivateAccessProviderActivateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns ActivateAccessProviderActivateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns ActivateAccessProviderActivateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns ActivateAccessProviderActivateAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -8263,26 +8013,6 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -8320,16 +8050,6 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -11026,56 +10746,6 @@ func (v *CreateAccessProviderCreateAccessProvider) GetNotInternalizable() bool {
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns CreateAccessProviderCreateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns CreateAccessProviderCreateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns CreateAccessProviderCreateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns CreateAccessProviderCreateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns CreateAccessProviderCreateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns CreateAccessProviderCreateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns CreateAccessProviderCreateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns CreateAccessProviderCreateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns CreateAccessProviderCreateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns CreateAccessProviderCreateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns CreateAccessProviderCreateAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -11155,26 +10825,6 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -11212,16 +10862,6 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -11339,56 +10979,6 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -11466,26 +11056,6 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -11522,16 +11092,6 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -16729,56 +16289,6 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNotInternalizable(
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns DeactivateAccessProviderDeactivateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns DeactivateAccessProviderDeactivateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns DeactivateAccessProviderDeactivateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns DeactivateAccessProviderDeactivateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns DeactivateAccessProviderDeactivateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns DeactivateAccessProviderDeactivateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns DeactivateAccessProviderDeactivateAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -16858,26 +16368,6 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -16915,16 +16405,6 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -17322,56 +16802,6 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetNotInternalizable() bool {
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns DeleteAccessProviderDeleteAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns DeleteAccessProviderDeleteAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns DeleteAccessProviderDeleteAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns DeleteAccessProviderDeleteAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns DeleteAccessProviderDeleteAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns DeleteAccessProviderDeleteAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns DeleteAccessProviderDeleteAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns DeleteAccessProviderDeleteAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns DeleteAccessProviderDeleteAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns DeleteAccessProviderDeleteAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns DeleteAccessProviderDeleteAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -17451,26 +16881,6 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -17508,16 +16918,6 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -18576,50 +17976,6 @@ func (v *GetAccessProviderAccessProvider) GetNotInternalizable() bool {
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns GetAccessProviderAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetWhoLocked() *bool { return v.AccessProvider.WhoLocked }
-
-// GetWhoLockedReason returns GetAccessProviderAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns GetAccessProviderAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns GetAccessProviderAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns GetAccessProviderAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetWhatLocked() *bool { return v.AccessProvider.WhatLocked }
-
-// GetWhatLockedReason returns GetAccessProviderAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns GetAccessProviderAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetNameLocked() *bool { return v.AccessProvider.NameLocked }
-
-// GetNameLockedReason returns GetAccessProviderAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns GetAccessProviderAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns GetAccessProviderAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns GetAccessProviderAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetComplete() *bool { return v.AccessProvider.Complete }
 
@@ -18697,26 +18053,6 @@ type __premarshalGetAccessProviderAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -18754,16 +18090,6 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -33764,56 +33090,6 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetNotInternalizable() bool {
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns UpdateAccessProviderUpdateAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns UpdateAccessProviderUpdateAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns UpdateAccessProviderUpdateAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns UpdateAccessProviderUpdateAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns UpdateAccessProviderUpdateAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns UpdateAccessProviderUpdateAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns UpdateAccessProviderUpdateAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns UpdateAccessProviderUpdateAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns UpdateAccessProviderUpdateAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns UpdateAccessProviderUpdateAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns UpdateAccessProviderUpdateAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -33893,26 +33169,6 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -33950,16 +33206,6 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -34077,56 +33323,6 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.NotInternalizable
 }
 
-// GetWhoLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLocked() *bool {
-	return v.AccessProvider.WhoLocked
-}
-
-// GetWhoLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhoLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhoLockedReason() *string {
-	return v.AccessProvider.WhoLockedReason
-}
-
-// GetInheritanceLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLocked() *bool {
-	return v.AccessProvider.InheritanceLocked
-}
-
-// GetInheritanceLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.InheritanceLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetInheritanceLockedReason() *string {
-	return v.AccessProvider.InheritanceLockedReason
-}
-
-// GetWhatLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLocked() *bool {
-	return v.AccessProvider.WhatLocked
-}
-
-// GetWhatLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.WhatLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetWhatLockedReason() *string {
-	return v.AccessProvider.WhatLockedReason
-}
-
-// GetNameLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLocked() *bool {
-	return v.AccessProvider.NameLocked
-}
-
-// GetNameLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.NameLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetNameLockedReason() *string {
-	return v.AccessProvider.NameLockedReason
-}
-
-// GetDeleteLocked returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLocked, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLocked() *bool {
-	return v.AccessProvider.DeleteLocked
-}
-
-// GetDeleteLockedReason returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DeleteLockedReason, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDeleteLockedReason() *string {
-	return v.AccessProvider.DeleteLockedReason
-}
-
 // GetComplete returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
@@ -34204,26 +33400,6 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 
 	NotInternalizable bool `json:"notInternalizable"`
 
-	WhoLocked *bool `json:"whoLocked"`
-
-	WhoLockedReason *string `json:"whoLockedReason"`
-
-	InheritanceLocked *bool `json:"inheritanceLocked"`
-
-	InheritanceLockedReason *string `json:"inheritanceLockedReason"`
-
-	WhatLocked *bool `json:"whatLocked"`
-
-	WhatLockedReason *string `json:"whatLockedReason"`
-
-	NameLocked *bool `json:"nameLocked"`
-
-	NameLockedReason *string `json:"nameLockedReason"`
-
-	DeleteLocked *bool `json:"deleteLocked"`
-
-	DeleteLockedReason *string `json:"deleteLockedReason"`
-
 	Complete *bool `json:"complete"`
 
 	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
@@ -34260,16 +33436,6 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.WhoType = v.AccessProvider.WhoType
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
-	retval.WhoLocked = v.AccessProvider.WhoLocked
-	retval.WhoLockedReason = v.AccessProvider.WhoLockedReason
-	retval.InheritanceLocked = v.AccessProvider.InheritanceLocked
-	retval.InheritanceLockedReason = v.AccessProvider.InheritanceLockedReason
-	retval.WhatLocked = v.AccessProvider.WhatLocked
-	retval.WhatLockedReason = v.AccessProvider.WhatLockedReason
-	retval.NameLocked = v.AccessProvider.NameLocked
-	retval.NameLockedReason = v.AccessProvider.NameLockedReason
-	retval.DeleteLocked = v.AccessProvider.DeleteLocked
-	retval.DeleteLockedReason = v.AccessProvider.DeleteLockedReason
 	retval.Complete = v.AccessProvider.Complete
 	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
@@ -38354,16 +37520,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -38798,16 +37954,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -39253,16 +38399,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -39371,16 +38507,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -39615,16 +38741,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -39767,16 +38883,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -40495,16 +39601,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
@@ -41917,16 +41013,6 @@ fragment AccessProvider on AccessProvider {
 		... WhoAbacRule
 	}
 	notInternalizable
-	whoLocked
-	whoLockedReason
-	inheritanceLocked
-	inheritanceLockedReason
-	whatLocked
-	whatLockedReason
-	nameLocked
-	nameLockedReason
-	deleteLocked
-	deleteLockedReason
 	complete
 	dataSources {
 		... DataSource
