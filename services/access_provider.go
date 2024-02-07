@@ -232,7 +232,7 @@ func WithAccessProviderWhoListOrder(input ...schema.AccessProviderWhoOrderByInpu
 // The order of the list can be specified with WithAccessProviderWhoListOrder.
 // A channel is returned that can be used to receive the list of AccessProviderWhoListItem.
 // To close the channel ensure to cancel the context.
-func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id string, ops ...func(*AccessProviderWhoListOptions)) <-chan types.ListItem[types.AccessProviderWhoListItem] { //nolint:dupl
+func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id string, ops ...func(*AccessProviderWhoListOptions)) <-chan types.ListItem[types.AccessProviderWhoListItem] {
 	options := AccessProviderWhoListOptions{}
 	for _, op := range ops {
 		op(&options)
@@ -301,7 +301,7 @@ func WithAccessProviderWhatListFilter(input *types.AccessWhatFilterInput) func(o
 // The order of the list can be specified with WithAccessProviderWhatListOrder.
 // A channel is returned that can be used to receive the list of AccessProviderWhatDataObjectListItem.
 // To close the channel ensure to cancel the context.
-func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.Context, id string, ops ...func(*AccessProviderWhatListOptions)) <-chan types.ListItem[types.AccessProviderWhatListItem] { //nolint:dupl
+func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.Context, id string, ops ...func(*AccessProviderWhatListOptions)) <-chan types.ListItem[types.AccessProviderWhatListItem] {
 	options := AccessProviderWhatListOptions{}
 	for _, op := range ops {
 		op(&options)
