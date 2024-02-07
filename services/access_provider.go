@@ -443,7 +443,7 @@ func (a *AccessProviderClient) GetAccessProviderAbacWhatScope(ctx context.Contex
 			case *schema.ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError:
 				return nil, nil, types.NewErrPermissionDenied("accessProviderWhatAbacScopeList", whatList.Message)
 			default:
-				return nil, nil, fmt.Errorf("unexpected type '%T': %w", whatList)
+				return nil, nil, fmt.Errorf("unexpected type '%T': %w", whatList, types.ErrUnknownType)
 			}
 		case *schema.ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("accessProvider", ap.Message)
