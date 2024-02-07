@@ -279,13 +279,21 @@ func (a *AccessProviderClient) GetAccessProviderWhoList(ctx context.Context, id 
 }
 
 type AccessProviderWhatListOptions struct {
-	order []schema.AccessWhatOrderByInput
+	order  []types.AccessWhatOrderByInput
+	filter *types.AccessWhatFilterInput
 }
 
 // WithAccessProviderWhatListOrder can be used to specify the order of the returned AccessProviderWhatList
-func WithAccessProviderWhatListOrder(input ...schema.AccessWhatOrderByInput) func(options *AccessProviderWhatListOptions) {
+func WithAccessProviderWhatListOrder(input ...types.AccessWhatOrderByInput) func(options *AccessProviderWhatListOptions) {
 	return func(options *AccessProviderWhatListOptions) {
 		options.order = append(options.order, input...)
+	}
+}
+
+// WithAccessProviderWhatListFilter can be used to filter the returned AccessProviderWhatList.
+func WithAccessProviderWhatListFilter(input *types.AccessWhatFilterInput) func(options *AccessProviderWhatListOptions) {
+	return func(options *AccessProviderWhatListOptions) {
+		options.filter = input
 	}
 }
 
@@ -300,7 +308,7 @@ func (a *AccessProviderClient) GetAccessProviderWhatDataObjectList(ctx context.C
 	}
 
 	loadPageFn := func(ctx context.Context, cursor *string) (*types.PageInfo, []types.AccessProviderWhatListEdgesEdge, error) {
-		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), nil, options.order)
+		output, err := schema.GetAccessProviderWhatDataObjectList(ctx, a.client, id, cursor, ptr.Int(internal.MaxPageSize), options.filter, options.order)
 		if err != nil {
 			return nil, nil, types.NewErrClient(err)
 		}

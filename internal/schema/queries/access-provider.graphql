@@ -234,10 +234,10 @@ query ListAccessProviders($after: String, $limit: Int, $filter: AccessProviderFi
     }
 }
 
-query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+query GetAccessProviderWhatDataObjectList($id: ID!, $after: String, $limit: Int, $filter: AccessWhatFilterInput, $order: [AccessWhatOrderByInput!]) {
     accessProvider(id: $id) {
         ... on AccessProvider {
-            whatDataObjects(after: $after, limit: $limit, search: $search, order: $order) {
+            whatDataObjects(after: $after, limit: $limit, filter: $filter, order: $order) {
                 __typename
                 ...AccessProviderWhatList
                 ... PermissionDeniedError

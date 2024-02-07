@@ -284,6 +284,7 @@ type AccessProviderWhoListPageInfo = schema.AccessProviderWhoListPageInfo
 type AccessProviderWhoOrderByInput = schema.AccessProviderWhoOrderByInput
 type AccessWhatAccessProviderItem = schema.AccessWhatAccessProviderItem
 type AccessWhatAccessProviderItemAccessProvider = schema.AccessWhatAccessProviderItemAccessProvider
+type AccessWhatFilterInput = schema.AccessWhatFilterInput
 type AccessWhatOrderByInput = schema.AccessWhatOrderByInput
 type AccessWhoItemType = schema.AccessWhoItemType
 

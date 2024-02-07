@@ -8014,6 +8014,17 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	return &retval, nil
 }
 
+type AccessWhatFilterInput struct {
+	Search         *string `json:"search"`
+	IncludeDeleted *bool   `json:"includeDeleted"`
+}
+
+// GetSearch returns AccessWhatFilterInput.Search, and is useful for accessing the field via an interface.
+func (v *AccessWhatFilterInput) GetSearch() *string { return v.Search }
+
+// GetIncludeDeleted returns AccessWhatFilterInput.IncludeDeleted, and is useful for accessing the field via an interface.
+func (v *AccessWhatFilterInput) GetIncludeDeleted() *bool { return v.IncludeDeleted }
+
 type AccessWhatOrderByInput struct {
 	Name *Sort `json:"name"`
 }
@@ -37707,7 +37718,7 @@ type __GetAccessProviderWhatDataObjectListInput struct {
 	Id     string                   `json:"id"`
 	After  *string                  `json:"after"`
 	Limit  *int                     `json:"limit"`
-	Search *string                  `json:"search"`
+	Filter *AccessWhatFilterInput   `json:"filter"`
 	Order  []AccessWhatOrderByInput `json:"order"`
 }
 
@@ -37720,8 +37731,10 @@ func (v *__GetAccessProviderWhatDataObjectListInput) GetAfter() *string { return
 // GetLimit returns __GetAccessProviderWhatDataObjectListInput.Limit, and is useful for accessing the field via an interface.
 func (v *__GetAccessProviderWhatDataObjectListInput) GetLimit() *int { return v.Limit }
 
-// GetSearch returns __GetAccessProviderWhatDataObjectListInput.Search, and is useful for accessing the field via an interface.
-func (v *__GetAccessProviderWhatDataObjectListInput) GetSearch() *string { return v.Search }
+// GetFilter returns __GetAccessProviderWhatDataObjectListInput.Filter, and is useful for accessing the field via an interface.
+func (v *__GetAccessProviderWhatDataObjectListInput) GetFilter() *AccessWhatFilterInput {
+	return v.Filter
+}
 
 // GetOrder returns __GetAccessProviderWhatDataObjectListInput.Order, and is useful for accessing the field via an interface.
 func (v *__GetAccessProviderWhatDataObjectListInput) GetOrder() []AccessWhatOrderByInput {
@@ -39845,11 +39858,11 @@ func GetAccessProviderWhatAccessProviders(
 
 // The query or mutation executed by GetAccessProviderWhatDataObjectList.
 const GetAccessProviderWhatDataObjectList_Operation = `
-query GetAccessProviderWhatDataObjectList ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
+query GetAccessProviderWhatDataObjectList ($id: ID!, $after: String, $limit: Int, $filter: AccessWhatFilterInput, $order: [AccessWhatOrderByInput!]) {
 	accessProvider(id: $id) {
 		__typename
 		... on AccessProvider {
-			whatDataObjects(after: $after, limit: $limit, search: $search, order: $order) {
+			whatDataObjects(after: $after, limit: $limit, filter: $filter, order: $order) {
 				__typename
 				... AccessProviderWhatList
 				... PermissionDeniedError
@@ -39904,7 +39917,7 @@ func GetAccessProviderWhatDataObjectList(
 	id string,
 	after *string,
 	limit *int,
-	search *string,
+	filter *AccessWhatFilterInput,
 	order []AccessWhatOrderByInput,
 ) (*GetAccessProviderWhatDataObjectListResponse, error) {
 	req := &graphql.Request{
@@ -39914,7 +39927,7 @@ func GetAccessProviderWhatDataObjectList(
 			Id:     id,
 			After:  after,
 			Limit:  limit,
-			Search: search,
+			Filter: filter,
 			Order:  order,
 		},
 	}
