@@ -7,12 +7,9 @@ fragment AccessProvider on AccessProvider {
     namingHint
     state
     action
-    type
     description
     policyRule
-    override
     external
-
     whatType
     whatAbacRule {
         ... WhatAbacRule
@@ -25,12 +22,25 @@ fragment AccessProvider on AccessProvider {
 
     notInternalizable
     complete
-    dataSources {
-        ...DataSource
-    }
     locks {
         ...AccessProviderLocks
     }
+
+    syncData {
+       ...SyncData
+    }
+}
+
+fragment SyncData on SyncData {
+    dataSource {
+       ...DataSource
+    }
+    type
+    actualName
+    maskType {
+        ... MaskType
+    }
+    syncStatus
 }
 
 fragment AccessProviderLocks on AccessProviderLockData {
