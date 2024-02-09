@@ -63,3 +63,12 @@ mutation DeleteIdentityStore($id: ID!) {
         }
     }
 }
+
+mutation UpdateIdentityStoreMasterFlag($id: ID!, $master: Boolean!) {
+    updateIdentityStoreMasterFlag(id: $id, master: $master) {
+        ... PermissionDeniedError
+        ... NotFoundError
+        ... AlreadyExistsError
+        ... IdentityStore
+    }
+}

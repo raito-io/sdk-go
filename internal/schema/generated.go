@@ -56,10 +56,10 @@ const (
 )
 
 type AbacComparisonExpressionInput struct {
-	Literal         *bool                                         `json:"literal"`
-	Comparison      *AbacComparisonExpressionComparisonInput      `json:"comparison"`
-	Aggregator      *AbacComparisonExpressionAggregatorInput      `json:"aggregator"`
-	UnaryExpression *AbacComparisonExpressionUnaryExpressionInput `json:"unaryExpression"`
+	Literal         *bool                                         `json:"literal,omitempty"`
+	Comparison      *AbacComparisonExpressionComparisonInput      `json:"comparison,omitempty"`
+	Aggregator      *AbacComparisonExpressionAggregatorInput      `json:"aggregator,omitempty"`
+	UnaryExpression *AbacComparisonExpressionUnaryExpressionInput `json:"unaryExpression,omitempty"`
 }
 
 // GetLiteral returns AbacComparisonExpressionInput.Literal, and is useful for accessing the field via an interface.
@@ -81,8 +81,8 @@ func (v *AbacComparisonExpressionInput) GetUnaryExpression() *AbacComparisonExpr
 }
 
 type AbacComparisonExpressionLiteral struct {
-	Bool       *bool    `json:"bool"`
-	String     *string  `json:"string"`
+	Bool       *bool    `json:"bool,omitempty"`
+	String     *string  `json:"string,omitempty"`
 	StringList []string `json:"stringList"`
 }
 
@@ -96,7 +96,7 @@ func (v *AbacComparisonExpressionLiteral) GetString() *string { return v.String 
 func (v *AbacComparisonExpressionLiteral) GetStringList() []string { return v.StringList }
 
 type AbacComparisonExpressionOperandInput struct {
-	Literal *AbacComparisonExpressionLiteral `json:"literal"`
+	Literal *AbacComparisonExpressionLiteral `json:"literal,omitempty"`
 }
 
 // GetLiteral returns AbacComparisonExpressionOperandInput.Literal, and is useful for accessing the field via an interface.
@@ -121,28 +121,25 @@ func (v *AbacComparisonExpressionUnaryExpressionInput) GetOperand() AbacComparis
 
 // AccessProvider includes the GraphQL fields of AccessProvider requested by the fragment AccessProvider.
 type AccessProvider struct {
-	Id                string                      `json:"id"`
-	IsSample          bool                        `json:"isSample"`
-	CreatedAt         time.Time                   `json:"createdAt"`
-	ModifiedAt        time.Time                   `json:"modifiedAt"`
-	Name              string                      `json:"name"`
-	NamingHint        *string                     `json:"namingHint"`
-	State             models.AccessProviderState  `json:"state"`
-	Action            models.AccessProviderAction `json:"action"`
-	Type              *string                     `json:"type"`
-	Description       string                      `json:"description"`
-	PolicyRule        *string                     `json:"policyRule"`
-	Override          bool                        `json:"override"`
-	External          bool                        `json:"external"`
-	WhatType          WhoAndWhatType              `json:"whatType"`
-	WhatAbacRule      *AccessProviderWhatAbacRule `json:"whatAbacRule"`
-	WhoType           WhoAndWhatType              `json:"whoType"`
-	WhoAbacRule       *AccessProviderWhoAbacRule  `json:"whoAbacRule"`
-	NotInternalizable bool                        `json:"notInternalizable"`
-	Complete          *bool                       `json:"complete"`
-	// Fetches the data sources that this AP will get deployed to.
-	DataSources []AccessProviderDataSourcesDataSource       `json:"dataSources"`
-	Locks       []AccessProviderLocksAccessProviderLockData `json:"locks"`
+	Id                string                                      `json:"id"`
+	IsSample          bool                                        `json:"isSample"`
+	CreatedAt         time.Time                                   `json:"createdAt"`
+	ModifiedAt        time.Time                                   `json:"modifiedAt"`
+	Name              string                                      `json:"name"`
+	NamingHint        *string                                     `json:"namingHint"`
+	State             models.AccessProviderState                  `json:"state"`
+	Action            models.AccessProviderAction                 `json:"action"`
+	Description       string                                      `json:"description"`
+	PolicyRule        *string                                     `json:"policyRule"`
+	External          bool                                        `json:"external"`
+	WhatType          WhoAndWhatType                              `json:"whatType"`
+	WhatAbacRule      *AccessProviderWhatAbacRule                 `json:"whatAbacRule"`
+	WhoType           WhoAndWhatType                              `json:"whoType"`
+	WhoAbacRule       *AccessProviderWhoAbacRule                  `json:"whoAbacRule"`
+	NotInternalizable bool                                        `json:"notInternalizable"`
+	Complete          *bool                                       `json:"complete"`
+	Locks             []AccessProviderLocksAccessProviderLockData `json:"locks"`
+	SyncData          []AccessProviderSyncData                    `json:"syncData"`
 }
 
 // GetId returns AccessProvider.Id, and is useful for accessing the field via an interface.
@@ -169,17 +166,11 @@ func (v *AccessProvider) GetState() models.AccessProviderState { return v.State 
 // GetAction returns AccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetAction() models.AccessProviderAction { return v.Action }
 
-// GetType returns AccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetType() *string { return v.Type }
-
 // GetDescription returns AccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetDescription() string { return v.Description }
 
 // GetPolicyRule returns AccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetPolicyRule() *string { return v.PolicyRule }
-
-// GetOverride returns AccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetOverride() bool { return v.Override }
 
 // GetExternal returns AccessProvider.External, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetExternal() bool { return v.External }
@@ -202,129 +193,38 @@ func (v *AccessProvider) GetNotInternalizable() bool { return v.NotInternalizabl
 // GetComplete returns AccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetComplete() *bool { return v.Complete }
 
-// GetDataSources returns AccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *AccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource { return v.DataSources }
-
 // GetLocks returns AccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData { return v.Locks }
 
-// AccessProviderDataSourcesDataSource includes the requested fields of the GraphQL type DataSource.
-type AccessProviderDataSourcesDataSource struct {
-	DataSource `json:"-"`
+// GetSyncData returns AccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *AccessProvider) GetSyncData() []AccessProviderSyncData { return v.SyncData }
+
+type AccessProviderDataSourceInput struct {
+	DataSource string  `json:"dataSource"`
+	Type       *string `json:"type,omitempty"`
 }
 
-// GetId returns AccessProviderDataSourcesDataSource.Id, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetId() string { return v.DataSource.Id }
+// GetDataSource returns AccessProviderDataSourceInput.DataSource, and is useful for accessing the field via an interface.
+func (v *AccessProviderDataSourceInput) GetDataSource() string { return v.DataSource }
 
-// GetName returns AccessProviderDataSourcesDataSource.Name, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetName() string { return v.DataSource.Name }
-
-// GetType returns AccessProviderDataSourcesDataSource.Type, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetType() string { return v.DataSource.Type }
-
-// GetDescription returns AccessProviderDataSourcesDataSource.Description, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetDescription() string {
-	return v.DataSource.Description
-}
-
-// GetCreatedAt returns AccessProviderDataSourcesDataSource.CreatedAt, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetCreatedAt() time.Time { return v.DataSource.CreatedAt }
-
-// GetModifiedAt returns AccessProviderDataSourcesDataSource.ModifiedAt, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetModifiedAt() time.Time {
-	return v.DataSource.ModifiedAt
-}
-
-// GetSyncMethod returns AccessProviderDataSourcesDataSource.SyncMethod, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetSyncMethod() DataSourceSyncMethod {
-	return v.DataSource.SyncMethod
-}
-
-// GetParent returns AccessProviderDataSourcesDataSource.Parent, and is useful for accessing the field via an interface.
-func (v *AccessProviderDataSourcesDataSource) GetParent() *DataSourceParentDataSource {
-	return v.DataSource.Parent
-}
-
-func (v *AccessProviderDataSourcesDataSource) UnmarshalJSON(b []byte) error {
-
-	if string(b) == "null" {
-		return nil
-	}
-
-	var firstPass struct {
-		*AccessProviderDataSourcesDataSource
-		graphql.NoUnmarshalJSON
-	}
-	firstPass.AccessProviderDataSourcesDataSource = v
-
-	err := json.Unmarshal(b, &firstPass)
-	if err != nil {
-		return err
-	}
-
-	err = json.Unmarshal(
-		b, &v.DataSource)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-type __premarshalAccessProviderDataSourcesDataSource struct {
-	Id string `json:"id"`
-
-	Name string `json:"name"`
-
-	Type string `json:"type"`
-
-	Description string `json:"description"`
-
-	CreatedAt time.Time `json:"createdAt"`
-
-	ModifiedAt time.Time `json:"modifiedAt"`
-
-	SyncMethod DataSourceSyncMethod `json:"syncMethod"`
-
-	Parent *DataSourceParentDataSource `json:"parent"`
-}
-
-func (v *AccessProviderDataSourcesDataSource) MarshalJSON() ([]byte, error) {
-	premarshaled, err := v.__premarshalJSON()
-	if err != nil {
-		return nil, err
-	}
-	return json.Marshal(premarshaled)
-}
-
-func (v *AccessProviderDataSourcesDataSource) __premarshalJSON() (*__premarshalAccessProviderDataSourcesDataSource, error) {
-	var retval __premarshalAccessProviderDataSourcesDataSource
-
-	retval.Id = v.DataSource.Id
-	retval.Name = v.DataSource.Name
-	retval.Type = v.DataSource.Type
-	retval.Description = v.DataSource.Description
-	retval.CreatedAt = v.DataSource.CreatedAt
-	retval.ModifiedAt = v.DataSource.ModifiedAt
-	retval.SyncMethod = v.DataSource.SyncMethod
-	retval.Parent = v.DataSource.Parent
-	return &retval, nil
-}
+// GetType returns AccessProviderDataSourceInput.Type, and is useful for accessing the field via an interface.
+func (v *AccessProviderDataSourceInput) GetType() *string { return v.Type }
 
 type AccessProviderFilterInput struct {
 	Actions               []models.AccessProviderAction `json:"actions"`
 	States                []models.AccessProviderState  `json:"states"`
-	External              *bool                         `json:"external"`
-	Search                *string                       `json:"search"`
-	DataSource            *string                       `json:"dataSource"`
-	CanEditWho            *bool                         `json:"canEditWho"`
-	CanEditInheritance    *bool                         `json:"canEditInheritance"`
-	CanEditWhat           *bool                         `json:"canEditWhat"`
-	IncludeGlobal         *bool                         `json:"includeGlobal"`
-	CanBeLinkedFrom       *string                       `json:"canBeLinkedFrom"`
-	CanBeLinkedTo         *string                       `json:"canBeLinkedTo"`
-	CanBeLinkedFromAction *models.AccessProviderAction  `json:"canBeLinkedFromAction"`
-	CanBeLinkedToAction   *models.AccessProviderAction  `json:"canBeLinkedToAction"`
+	External              *bool                         `json:"external,omitempty"`
+	Search                *string                       `json:"search,omitempty"`
+	DataSource            *string                       `json:"dataSource,omitempty"`
+	CanEditWho            *bool                         `json:"canEditWho,omitempty"`
+	CanEditInheritance    *bool                         `json:"canEditInheritance,omitempty"`
+	CanEditWhat           *bool                         `json:"canEditWhat,omitempty"`
+	CanBeLinkedFrom       *string                       `json:"canBeLinkedFrom,omitempty"`
+	CanBeLinkedTo         *string                       `json:"canBeLinkedTo,omitempty"`
+	CanBeLinkedFromAction *models.AccessProviderAction  `json:"canBeLinkedFromAction,omitempty"`
+	CanBeLinkedToAction   *models.AccessProviderAction  `json:"canBeLinkedToAction,omitempty"`
 	Exclude               []string                      `json:"exclude"`
+	Source                *string                       `json:"source,omitempty"`
 }
 
 // GetActions returns AccessProviderFilterInput.Actions, and is useful for accessing the field via an interface.
@@ -351,9 +251,6 @@ func (v *AccessProviderFilterInput) GetCanEditInheritance() *bool { return v.Can
 // GetCanEditWhat returns AccessProviderFilterInput.CanEditWhat, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetCanEditWhat() *bool { return v.CanEditWhat }
 
-// GetIncludeGlobal returns AccessProviderFilterInput.IncludeGlobal, and is useful for accessing the field via an interface.
-func (v *AccessProviderFilterInput) GetIncludeGlobal() *bool { return v.IncludeGlobal }
-
 // GetCanBeLinkedFrom returns AccessProviderFilterInput.CanBeLinkedFrom, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetCanBeLinkedFrom() *string { return v.CanBeLinkedFrom }
 
@@ -373,27 +270,29 @@ func (v *AccessProviderFilterInput) GetCanBeLinkedToAction() *models.AccessProvi
 // GetExclude returns AccessProviderFilterInput.Exclude, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetExclude() []string { return v.Exclude }
 
+// GetSource returns AccessProviderFilterInput.Source, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetSource() *string { return v.Source }
+
 type AccessProviderInput struct {
-	Name                *string                        `json:"name"`
-	NamingHint          *string                        `json:"namingHint"`
-	Action              *models.AccessProviderAction   `json:"action"`
-	Description         *string                        `json:"description"`
-	WhoType             *WhoAndWhatType                `json:"whoType"`
-	WhoAbacRule         *WhoAbacRuleInput              `json:"whoAbacRule"`
-	Who                 *WhoInput                      `json:"who"`
-	WhoItems            []WhoItemInput                 `json:"whoItems"`
-	WhatType            *WhoAndWhatType                `json:"whatType"`
-	WhatAbacRule        *WhatAbacRuleInput             `json:"whatAbacRule"`
-	PolicyRule          *string                        `json:"policyRule"`
-	FilterCriteria      *DataComparisonExpressionInput `json:"filterCriteria"`
-	DataSource          *string                        `json:"dataSource"`
-	Type                *string                        `json:"type"`
-	What                []WhatInput                    `json:"what"`
-	WhatDataObjects     []AccessProviderWhatInputDO    `json:"whatDataObjects"`
-	WhatAccessProviders []AccessProviderWhatInputAP    `json:"whatAccessProviders"`
-	Locks               []AccessProviderLockDataInput  `json:"locks"`
-	Override            *bool                          `json:"override"`
-	External            *bool                          `json:"external"`
+	Name                *string                         `json:"name,omitempty"`
+	NamingHint          *string                         `json:"namingHint,omitempty"`
+	Action              *models.AccessProviderAction    `json:"action,omitempty"`
+	Description         *string                         `json:"description,omitempty"`
+	Source              *string                         `json:"source,omitempty"`
+	WhoType             *WhoAndWhatType                 `json:"whoType,omitempty"`
+	WhoAbacRule         *WhoAbacRuleInput               `json:"whoAbacRule,omitempty"`
+	WhoItems            []WhoItemInput                  `json:"whoItems"`
+	WhatType            *WhoAndWhatType                 `json:"whatType,omitempty"`
+	WhatAbacRule        *WhatAbacRuleInput              `json:"whatAbacRule,omitempty"`
+	PolicyRule          *string                         `json:"policyRule,omitempty"`
+	FilterCriteria      *DataComparisonExpressionInput  `json:"filterCriteria,omitempty"`
+	DataSource          *string                         `json:"dataSource,omitempty"`
+	Type                *string                         `json:"type,omitempty"`
+	DataSources         []AccessProviderDataSourceInput `json:"dataSources"`
+	WhatDataObjects     []AccessProviderWhatInputDO     `json:"whatDataObjects"`
+	WhatAccessProviders []AccessProviderWhatInputAP     `json:"whatAccessProviders"`
+	Locks               []AccessProviderLockDataInput   `json:"locks"`
+	External            *bool                           `json:"external,omitempty"`
 }
 
 // GetName returns AccessProviderInput.Name, and is useful for accessing the field via an interface.
@@ -408,14 +307,14 @@ func (v *AccessProviderInput) GetAction() *models.AccessProviderAction { return 
 // GetDescription returns AccessProviderInput.Description, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetDescription() *string { return v.Description }
 
+// GetSource returns AccessProviderInput.Source, and is useful for accessing the field via an interface.
+func (v *AccessProviderInput) GetSource() *string { return v.Source }
+
 // GetWhoType returns AccessProviderInput.WhoType, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWhoType() *WhoAndWhatType { return v.WhoType }
 
 // GetWhoAbacRule returns AccessProviderInput.WhoAbacRule, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWhoAbacRule() *WhoAbacRuleInput { return v.WhoAbacRule }
-
-// GetWho returns AccessProviderInput.Who, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetWho() *WhoInput { return v.Who }
 
 // GetWhoItems returns AccessProviderInput.WhoItems, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWhoItems() []WhoItemInput { return v.WhoItems }
@@ -440,8 +339,8 @@ func (v *AccessProviderInput) GetDataSource() *string { return v.DataSource }
 // GetType returns AccessProviderInput.Type, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetType() *string { return v.Type }
 
-// GetWhat returns AccessProviderInput.What, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetWhat() []WhatInput { return v.What }
+// GetDataSources returns AccessProviderInput.DataSources, and is useful for accessing the field via an interface.
+func (v *AccessProviderInput) GetDataSources() []AccessProviderDataSourceInput { return v.DataSources }
 
 // GetWhatDataObjects returns AccessProviderInput.WhatDataObjects, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetWhatDataObjects() []AccessProviderWhatInputDO {
@@ -455,9 +354,6 @@ func (v *AccessProviderInput) GetWhatAccessProviders() []AccessProviderWhatInput
 
 // GetLocks returns AccessProviderInput.Locks, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetLocks() []AccessProviderLockDataInput { return v.Locks }
-
-// GetOverride returns AccessProviderInput.Override, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetOverride() *bool { return v.Override }
 
 // GetExternal returns AccessProviderInput.External, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetExternal() *bool { return v.External }
@@ -475,7 +371,7 @@ const (
 
 type AccessProviderLockDataInput struct {
 	LockKey AccessProviderLock              `json:"lockKey"`
-	Details *AccessProviderLockDetailsInput `json:"details"`
+	Details *AccessProviderLockDetailsInput `json:"details,omitempty"`
 }
 
 // GetLockKey returns AccessProviderLockDataInput.LockKey, and is useful for accessing the field via an interface.
@@ -493,7 +389,7 @@ type AccessProviderLockDetails struct {
 func (v *AccessProviderLockDetails) GetReason() *string { return v.Reason }
 
 type AccessProviderLockDetailsInput struct {
-	Reason *string `json:"reason"`
+	Reason *string `json:"reason,omitempty"`
 }
 
 // GetReason returns AccessProviderLockDetailsInput.Reason, and is useful for accessing the field via an interface.
@@ -630,12 +526,12 @@ func (v *AccessProviderLocksDetailsAccessProviderLockDetails) __premarshalJSON()
 }
 
 type AccessProviderOrderByInput struct {
-	Name       *Sort `json:"name"`
-	CreatedAt  *Sort `json:"createdAt"`
-	ModifiedAt *Sort `json:"modifiedAt"`
-	Action     *Sort `json:"action"`
-	State      *Sort `json:"state"`
-	Sync       *Sort `json:"sync"`
+	Name       *Sort `json:"name,omitempty"`
+	CreatedAt  *Sort `json:"createdAt,omitempty"`
+	ModifiedAt *Sort `json:"modifiedAt,omitempty"`
+	Action     *Sort `json:"action,omitempty"`
+	State      *Sort `json:"state,omitempty"`
+	Sync       *Sort `json:"sync,omitempty"`
 }
 
 // GetName returns AccessProviderOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -796,11 +692,6 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetAction() models.Acces
 	return v.AccessProvider.Action
 }
 
-// GetType returns AccessProviderPageEdgesEdgeNodeAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetType() *string {
-	return v.AccessProvider.Type
-}
-
 // GetDescription returns AccessProviderPageEdgesEdgeNodeAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -809,11 +700,6 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDescription() string 
 // GetPolicyRule returns AccessProviderPageEdgesEdgeNodeAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns AccessProviderPageEdgesEdgeNodeAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns AccessProviderPageEdgesEdgeNodeAccessProvider.External, and is useful for accessing the field via an interface.
@@ -851,14 +737,14 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns AccessProviderPageEdgesEdgeNodeAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns AccessProviderPageEdgesEdgeNodeAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns AccessProviderPageEdgesEdgeNodeAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) UnmarshalJSON(b []byte) error {
@@ -905,13 +791,9 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -927,9 +809,9 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) MarshalJSON() ([]byte, error) {
@@ -952,10 +834,8 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -963,8 +843,8 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -1990,6 +1870,82 @@ func (v *AccessProviderPagePageInfo) __premarshalJSON() (*__premarshalAccessProv
 
 	retval.HasNextPage = v.PageInfo.HasNextPage
 	retval.StartCursor = v.PageInfo.StartCursor
+	return &retval, nil
+}
+
+// AccessProviderSyncData includes the requested fields of the GraphQL type SyncData.
+type AccessProviderSyncData struct {
+	SyncData `json:"-"`
+}
+
+// GetDataSource returns AccessProviderSyncData.DataSource, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetDataSource() SyncDataDataSource { return v.SyncData.DataSource }
+
+// GetType returns AccessProviderSyncData.Type, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetType() *string { return v.SyncData.Type }
+
+// GetActualName returns AccessProviderSyncData.ActualName, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetActualName() *string { return v.SyncData.ActualName }
+
+// GetMaskType returns AccessProviderSyncData.MaskType, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetMaskType() *SyncDataMaskType { return v.SyncData.MaskType }
+
+// GetSyncStatus returns AccessProviderSyncData.SyncStatus, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetSyncStatus() SyncStatus { return v.SyncData.SyncStatus }
+
+func (v *AccessProviderSyncData) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderSyncData
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderSyncData = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.SyncData)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderSyncData struct {
+	DataSource SyncDataDataSource `json:"dataSource"`
+
+	Type *string `json:"type"`
+
+	ActualName *string `json:"actualName"`
+
+	MaskType *SyncDataMaskType `json:"maskType"`
+
+	SyncStatus SyncStatus `json:"syncStatus"`
+}
+
+func (v *AccessProviderSyncData) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderSyncData) __premarshalJSON() (*__premarshalAccessProviderSyncData, error) {
+	var retval __premarshalAccessProviderSyncData
+
+	retval.DataSource = v.SyncData.DataSource
+	retval.Type = v.SyncData.Type
+	retval.ActualName = v.SyncData.ActualName
+	retval.MaskType = v.SyncData.MaskType
+	retval.SyncStatus = v.SyncData.SyncStatus
 	return &retval, nil
 }
 
@@ -4615,7 +4571,7 @@ func (v *AccessProviderWhatDoByNameInput) GetDatasource() string { return v.Data
 
 type AccessProviderWhatInputAP struct {
 	AccessProvider string     `json:"accessProvider"`
-	ExpiresAt      *time.Time `json:"expiresAt"`
+	ExpiresAt      *time.Time `json:"expiresAt,omitempty"`
 }
 
 // GetAccessProvider returns AccessProviderWhatInputAP.AccessProvider, and is useful for accessing the field via an interface.
@@ -4625,9 +4581,9 @@ func (v *AccessProviderWhatInputAP) GetAccessProvider() string { return v.Access
 func (v *AccessProviderWhatInputAP) GetExpiresAt() *time.Time { return v.ExpiresAt }
 
 type AccessProviderWhatInputDO struct {
-	Permissions       []*string                         `json:"permissions"`
-	GlobalPermissions []*string                         `json:"globalPermissions"`
-	DataObjects       []*string                         `json:"dataObjects"`
+	Permissions       []*string                         `json:"permissions,omitempty"`
+	GlobalPermissions []*string                         `json:"globalPermissions,omitempty"`
+	DataObjects       []*string                         `json:"dataObjects,omitempty"`
 	DataObjectByName  []AccessProviderWhatDoByNameInput `json:"dataObjectByName"`
 }
 
@@ -7586,7 +7542,7 @@ func (v *AccessProviderWhoListPageInfo) __premarshalJSON() (*__premarshalAccessP
 }
 
 type AccessProviderWhoOrderByInput struct {
-	Name *Sort `json:"name"`
+	Name *Sort `json:"name,omitempty"`
 }
 
 // GetName returns AccessProviderWhoOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -7647,9 +7603,6 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetAction() models.AccessPr
 	return v.AccessProvider.Action
 }
 
-// GetType returns AccessWhatAccessProviderItemAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetType() *string { return v.AccessProvider.Type }
-
 // GetDescription returns AccessWhatAccessProviderItemAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessWhatAccessProviderItemAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -7658,11 +7611,6 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetDescription() string {
 // GetPolicyRule returns AccessWhatAccessProviderItemAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *AccessWhatAccessProviderItemAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns AccessWhatAccessProviderItemAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns AccessWhatAccessProviderItemAccessProvider.External, and is useful for accessing the field via an interface.
@@ -7700,14 +7648,14 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns AccessWhatAccessProviderItemAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *AccessWhatAccessProviderItemAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns AccessWhatAccessProviderItemAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *AccessWhatAccessProviderItemAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns AccessWhatAccessProviderItemAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *AccessWhatAccessProviderItemAccessProvider) UnmarshalJSON(b []byte) error {
@@ -7752,13 +7700,9 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -7774,9 +7718,9 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *AccessWhatAccessProviderItemAccessProvider) MarshalJSON() ([]byte, error) {
@@ -7798,10 +7742,8 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -7809,14 +7751,14 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
 type AccessWhatFilterInput struct {
-	Search         *string `json:"search"`
-	IncludeDeleted *bool   `json:"includeDeleted"`
+	Search         *string `json:"search,omitempty"`
+	IncludeDeleted *bool   `json:"includeDeleted,omitempty"`
 }
 
 // GetSearch returns AccessWhatFilterInput.Search, and is useful for accessing the field via an interface.
@@ -7826,7 +7768,7 @@ func (v *AccessWhatFilterInput) GetSearch() *string { return v.Search }
 func (v *AccessWhatFilterInput) GetIncludeDeleted() *bool { return v.IncludeDeleted }
 
 type AccessWhatOrderByInput struct {
-	Name *Sort `json:"name"`
+	Name *Sort `json:"name,omitempty"`
 }
 
 // GetName returns AccessWhatOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -7884,11 +7826,6 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetAction() models.Access
 	return v.AccessProvider.Action
 }
 
-// GetType returns ActivateAccessProviderActivateAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetType() *string {
-	return v.AccessProvider.Type
-}
-
 // GetDescription returns ActivateAccessProviderActivateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -7897,11 +7834,6 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetDescription() string {
 // GetPolicyRule returns ActivateAccessProviderActivateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns ActivateAccessProviderActivateAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns ActivateAccessProviderActivateAccessProvider.External, and is useful for accessing the field via an interface.
@@ -7939,14 +7871,14 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns ActivateAccessProviderActivateAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *ActivateAccessProviderActivateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns ActivateAccessProviderActivateAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns ActivateAccessProviderActivateAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *ActivateAccessProviderActivateAccessProvider) UnmarshalJSON(b []byte) error {
@@ -7993,13 +7925,9 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -8015,9 +7943,9 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *ActivateAccessProviderActivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -8040,10 +7968,8 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -8051,8 +7977,8 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -10698,9 +10624,6 @@ func (v *CreateAccessProviderCreateAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
-// GetType returns CreateAccessProviderCreateAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetType() *string { return v.AccessProvider.Type }
-
 // GetDescription returns CreateAccessProviderCreateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -10709,11 +10632,6 @@ func (v *CreateAccessProviderCreateAccessProvider) GetDescription() string {
 // GetPolicyRule returns CreateAccessProviderCreateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns CreateAccessProviderCreateAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns CreateAccessProviderCreateAccessProvider.External, and is useful for accessing the field via an interface.
@@ -10751,14 +10669,14 @@ func (v *CreateAccessProviderCreateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns CreateAccessProviderCreateAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns CreateAccessProviderCreateAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns CreateAccessProviderCreateAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *CreateAccessProviderCreateAccessProvider) UnmarshalJSON(b []byte) error {
@@ -10805,13 +10723,9 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -10827,9 +10741,9 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *CreateAccessProviderCreateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -10852,10 +10766,8 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -10863,8 +10775,8 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -10929,11 +10841,6 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.Action
 }
 
-// GetType returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetType() *string {
-	return v.AccessProvider.Type
-}
-
 // GetDescription returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -10942,11 +10849,6 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 // GetPolicyRule returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.External, and is useful for accessing the field via an interface.
@@ -10984,14 +10886,14 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
@@ -11036,13 +10938,9 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -11058,9 +10956,9 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -11082,10 +10980,8 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -11093,8 +10989,8 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -12738,10 +12634,10 @@ const (
 )
 
 type DataComparisonExpressionInput struct {
-	Literal         *bool                                         `json:"literal"`
-	Comparison      *DataComparisonExpressionComparisonInput      `json:"comparison"`
-	Aggregator      *DataComparisonExpressionAggregatorInput      `json:"aggregator"`
-	UnaryExpression *DataComparisonExpressionUnaryExpressionInput `json:"unaryExpression"`
+	Literal         *bool                                         `json:"literal,omitempty"`
+	Comparison      *DataComparisonExpressionComparisonInput      `json:"comparison,omitempty"`
+	Aggregator      *DataComparisonExpressionAggregatorInput      `json:"aggregator,omitempty"`
+	UnaryExpression *DataComparisonExpressionUnaryExpressionInput `json:"unaryExpression,omitempty"`
 }
 
 // GetLiteral returns DataComparisonExpressionInput.Literal, and is useful for accessing the field via an interface.
@@ -12763,11 +12659,11 @@ func (v *DataComparisonExpressionInput) GetUnaryExpression() *DataComparisonExpr
 }
 
 type DataComparisonExpressionLiteral struct {
-	Bool      *bool      `json:"bool"`
-	Int       *int       `json:"int"`
-	Float     *float64   `json:"float"`
-	Str       *string    `json:"str"`
-	Timestamp *time.Time `json:"timestamp"`
+	Bool      *bool      `json:"bool,omitempty"`
+	Int       *int       `json:"int,omitempty"`
+	Float     *float64   `json:"float,omitempty"`
+	Str       *string    `json:"str,omitempty"`
+	Timestamp *time.Time `json:"timestamp,omitempty"`
 }
 
 // GetBool returns DataComparisonExpressionLiteral.Bool, and is useful for accessing the field via an interface.
@@ -12786,8 +12682,8 @@ func (v *DataComparisonExpressionLiteral) GetStr() *string { return v.Str }
 func (v *DataComparisonExpressionLiteral) GetTimestamp() *time.Time { return v.Timestamp }
 
 type DataComparisonExpressionOperandInput struct {
-	Reference *DataComparisonExpressionReferenceInput `json:"reference"`
-	Literal   *DataComparisonExpressionLiteral        `json:"literal"`
+	Reference *DataComparisonExpressionReferenceInput `json:"reference,omitempty"`
+	Literal   *DataComparisonExpressionLiteral        `json:"literal,omitempty"`
 }
 
 // GetReference returns DataComparisonExpressionOperandInput.Reference, and is useful for accessing the field via an interface.
@@ -14123,10 +14019,10 @@ const (
 
 type DataSourceFilterInput struct {
 	Types                 []string              `json:"types"`
-	Search                *string               `json:"search"`
-	Parent                *string               `json:"parent"`
-	IncompleteDataWarning *bool                 `json:"incompleteDataWarning"`
-	SupportedFeatures     []*DataSourceFeatures `json:"supportedFeatures"`
+	Search                *string               `json:"search,omitempty"`
+	Parent                *string               `json:"parent,omitempty"`
+	IncompleteDataWarning *bool                 `json:"incompleteDataWarning,omitempty"`
+	SupportedFeatures     []*DataSourceFeatures `json:"supportedFeatures,omitempty"`
 }
 
 // GetTypes returns DataSourceFilterInput.Types, and is useful for accessing the field via an interface.
@@ -14563,10 +14459,10 @@ func (v *DataSourceIdentityStoresResponse) __premarshalJSON() (*__premarshalData
 }
 
 type DataSourceInput struct {
-	Name        *string               `json:"name"`
-	Description *string               `json:"description"`
-	Parent      *string               `json:"parent"`
-	SyncMethod  *DataSourceSyncMethod `json:"syncMethod"`
+	Name        *string               `json:"name,omitempty"`
+	Description *string               `json:"description,omitempty"`
+	Parent      *string               `json:"parent,omitempty"`
+	SyncMethod  *DataSourceSyncMethod `json:"syncMethod,omitempty"`
 }
 
 // GetName returns DataSourceInput.Name, and is useful for accessing the field via an interface.
@@ -14950,7 +14846,7 @@ func (v *DataSourceMaskInformationResponse) __premarshalJSON() (*__premarshalDat
 }
 
 type DataSourceOrderByInput struct {
-	Name *Sort `json:"name"`
+	Name *Sort `json:"name,omitempty"`
 }
 
 // GetName returns DataSourceOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -16239,11 +16135,6 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetAction() models.Ac
 	return v.AccessProvider.Action
 }
 
-// GetType returns DeactivateAccessProviderDeactivateAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetType() *string {
-	return v.AccessProvider.Type
-}
-
 // GetDescription returns DeactivateAccessProviderDeactivateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -16252,11 +16143,6 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDescription() stri
 // GetPolicyRule returns DeactivateAccessProviderDeactivateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns DeactivateAccessProviderDeactivateAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns DeactivateAccessProviderDeactivateAccessProvider.External, and is useful for accessing the field via an interface.
@@ -16294,14 +16180,14 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns DeactivateAccessProviderDeactivateAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns DeactivateAccessProviderDeactivateAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns DeactivateAccessProviderDeactivateAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *DeactivateAccessProviderDeactivateAccessProvider) UnmarshalJSON(b []byte) error {
@@ -16348,13 +16234,9 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -16370,9 +16252,9 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *DeactivateAccessProviderDeactivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -16395,10 +16277,8 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -16406,8 +16286,8 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -16754,9 +16634,6 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
-// GetType returns DeleteAccessProviderDeleteAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetType() *string { return v.AccessProvider.Type }
-
 // GetDescription returns DeleteAccessProviderDeleteAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -16765,11 +16642,6 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetDescription() string {
 // GetPolicyRule returns DeleteAccessProviderDeleteAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns DeleteAccessProviderDeleteAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns DeleteAccessProviderDeleteAccessProvider.External, and is useful for accessing the field via an interface.
@@ -16807,14 +16679,14 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns DeleteAccessProviderDeleteAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *DeleteAccessProviderDeleteAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns DeleteAccessProviderDeleteAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns DeleteAccessProviderDeleteAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *DeleteAccessProviderDeleteAccessProvider) UnmarshalJSON(b []byte) error {
@@ -16861,13 +16733,9 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -16883,9 +16751,9 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *DeleteAccessProviderDeleteAccessProvider) MarshalJSON() ([]byte, error) {
@@ -16908,10 +16776,8 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -16919,8 +16785,8 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -17934,9 +17800,6 @@ func (v *GetAccessProviderAccessProvider) GetAction() models.AccessProviderActio
 	return v.AccessProvider.Action
 }
 
-// GetType returns GetAccessProviderAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetType() *string { return v.AccessProvider.Type }
-
 // GetDescription returns GetAccessProviderAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -17944,9 +17807,6 @@ func (v *GetAccessProviderAccessProvider) GetDescription() string {
 
 // GetPolicyRule returns GetAccessProviderAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetPolicyRule() *string { return v.AccessProvider.PolicyRule }
-
-// GetOverride returns GetAccessProviderAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetOverride() bool { return v.AccessProvider.Override }
 
 // GetExternal returns GetAccessProviderAccessProvider.External, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetExternal() bool { return v.AccessProvider.External }
@@ -17979,14 +17839,14 @@ func (v *GetAccessProviderAccessProvider) GetNotInternalizable() bool {
 // GetComplete returns GetAccessProviderAccessProvider.Complete, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetComplete() *bool { return v.AccessProvider.Complete }
 
-// GetDataSources returns GetAccessProviderAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *GetAccessProviderAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns GetAccessProviderAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns GetAccessProviderAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *GetAccessProviderAccessProvider) UnmarshalJSON(b []byte) error {
@@ -18033,13 +17893,9 @@ type __premarshalGetAccessProviderAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -18055,9 +17911,9 @@ type __premarshalGetAccessProviderAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *GetAccessProviderAccessProvider) MarshalJSON() ([]byte, error) {
@@ -18080,10 +17936,8 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -18091,8 +17945,8 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -21706,11 +21560,11 @@ func (v *IdentityStore) GetMaster() bool { return v.Master }
 func (v *IdentityStore) GetNative() bool { return v.Native }
 
 type IdentityStoreFilterInput struct {
-	Search      *string `json:"search"`
-	Master      *bool   `json:"master"`
-	Native      *bool   `json:"native"`
-	CanBeMaster *bool   `json:"canBeMaster"`
-	CanBeLinked *bool   `json:"canBeLinked"`
+	Search      *string `json:"search,omitempty"`
+	Master      *bool   `json:"master,omitempty"`
+	Native      *bool   `json:"native,omitempty"`
+	CanBeMaster *bool   `json:"canBeMaster,omitempty"`
+	CanBeLinked *bool   `json:"canBeLinked,omitempty"`
 }
 
 // GetSearch returns IdentityStoreFilterInput.Search, and is useful for accessing the field via an interface.
@@ -21729,9 +21583,8 @@ func (v *IdentityStoreFilterInput) GetCanBeMaster() *bool { return v.CanBeMaster
 func (v *IdentityStoreFilterInput) GetCanBeLinked() *bool { return v.CanBeLinked }
 
 type IdentityStoreInput struct {
-	Description *string `json:"description"`
-	Name        *string `json:"name"`
-	Master      *bool   `json:"master"`
+	Description *string `json:"description,omitempty"`
+	Name        *string `json:"name,omitempty"`
 }
 
 // GetDescription returns IdentityStoreInput.Description, and is useful for accessing the field via an interface.
@@ -21740,12 +21593,9 @@ func (v *IdentityStoreInput) GetDescription() *string { return v.Description }
 // GetName returns IdentityStoreInput.Name, and is useful for accessing the field via an interface.
 func (v *IdentityStoreInput) GetName() *string { return v.Name }
 
-// GetMaster returns IdentityStoreInput.Master, and is useful for accessing the field via an interface.
-func (v *IdentityStoreInput) GetMaster() *bool { return v.Master }
-
 type IdentityStoreOrderByInput struct {
-	Name        *Sort `json:"name"`
-	Description *Sort `json:"description"`
+	Name        *Sort `json:"name,omitempty"`
+	Description *Sort `json:"description,omitempty"`
 }
 
 // GetName returns IdentityStoreOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -27555,12 +27405,12 @@ func (v *RoleAssignment) __premarshalJSON() (*__premarshalRoleAssignment, error)
 }
 
 type RoleAssignmentFilterInput struct {
-	Resource      *string `json:"resource"`
-	Role          *string `json:"role"`
-	User          *string `json:"user"`
-	Inherited     *bool   `json:"inherited"`
-	InheritedOnly *bool   `json:"inheritedOnly"`
-	OnlyGlobal    *bool   `json:"onlyGlobal"`
+	Resource      *string `json:"resource,omitempty"`
+	Role          *string `json:"role,omitempty"`
+	User          *string `json:"user,omitempty"`
+	Inherited     *bool   `json:"inherited,omitempty"`
+	InheritedOnly *bool   `json:"inheritedOnly,omitempty"`
+	OnlyGlobal    *bool   `json:"onlyGlobal,omitempty"`
 }
 
 // GetResource returns RoleAssignmentFilterInput.Resource, and is useful for accessing the field via an interface.
@@ -27799,9 +27649,9 @@ func (v *RoleAssignmentOnNotFoundError) __premarshalJSON() (*__premarshalRoleAss
 }
 
 type RoleAssignmentOrderInput struct {
-	ResourceName *Sort `json:"resourceName"`
-	UserName     *Sort `json:"userName"`
-	RoleName     *Sort `json:"roleName"`
+	ResourceName *Sort `json:"resourceName,omitempty"`
+	UserName     *Sort `json:"userName,omitempty"`
+	RoleName     *Sort `json:"roleName,omitempty"`
 }
 
 // GetResourceName returns RoleAssignmentOrderInput.ResourceName, and is useful for accessing the field via an interface.
@@ -29198,8 +29048,8 @@ func (v *RoleAssignmentToUser) GetTypename() *string { return v.Typename }
 func (v *RoleAssignmentToUser) GetId() string { return v.Id }
 
 type RoleFilterInput struct {
-	Search   *string `json:"search"`
-	IsGlobal *bool   `json:"isGlobal"`
+	Search   *string `json:"search,omitempty"`
+	IsGlobal *bool   `json:"isGlobal,omitempty"`
 }
 
 // GetSearch returns RoleFilterInput.Search, and is useful for accessing the field via an interface.
@@ -29209,7 +29059,7 @@ func (v *RoleFilterInput) GetSearch() *string { return v.Search }
 func (v *RoleFilterInput) GetIsGlobal() *bool { return v.IsGlobal }
 
 type RoleOrderByInput struct {
-	Name *Sort `json:"name"`
+	Name *Sort `json:"name,omitempty"`
 }
 
 // GetName returns RoleOrderByInput.Name, and is useful for accessing the field via an interface.
@@ -31048,6 +30898,205 @@ type Sort string
 const (
 	SortAsc  Sort = "asc"
 	SortDesc Sort = "desc"
+)
+
+// SyncData includes the GraphQL fields of SyncData requested by the fragment SyncData.
+type SyncData struct {
+	DataSource SyncDataDataSource `json:"dataSource"`
+	Type       *string            `json:"type"`
+	ActualName *string            `json:"actualName"`
+	MaskType   *SyncDataMaskType  `json:"maskType"`
+	SyncStatus SyncStatus         `json:"syncStatus"`
+}
+
+// GetDataSource returns SyncData.DataSource, and is useful for accessing the field via an interface.
+func (v *SyncData) GetDataSource() SyncDataDataSource { return v.DataSource }
+
+// GetType returns SyncData.Type, and is useful for accessing the field via an interface.
+func (v *SyncData) GetType() *string { return v.Type }
+
+// GetActualName returns SyncData.ActualName, and is useful for accessing the field via an interface.
+func (v *SyncData) GetActualName() *string { return v.ActualName }
+
+// GetMaskType returns SyncData.MaskType, and is useful for accessing the field via an interface.
+func (v *SyncData) GetMaskType() *SyncDataMaskType { return v.MaskType }
+
+// GetSyncStatus returns SyncData.SyncStatus, and is useful for accessing the field via an interface.
+func (v *SyncData) GetSyncStatus() SyncStatus { return v.SyncStatus }
+
+// SyncDataDataSource includes the requested fields of the GraphQL type DataSource.
+type SyncDataDataSource struct {
+	DataSource `json:"-"`
+}
+
+// GetId returns SyncDataDataSource.Id, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetId() string { return v.DataSource.Id }
+
+// GetName returns SyncDataDataSource.Name, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetName() string { return v.DataSource.Name }
+
+// GetType returns SyncDataDataSource.Type, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetType() string { return v.DataSource.Type }
+
+// GetDescription returns SyncDataDataSource.Description, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetDescription() string { return v.DataSource.Description }
+
+// GetCreatedAt returns SyncDataDataSource.CreatedAt, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetCreatedAt() time.Time { return v.DataSource.CreatedAt }
+
+// GetModifiedAt returns SyncDataDataSource.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetModifiedAt() time.Time { return v.DataSource.ModifiedAt }
+
+// GetSyncMethod returns SyncDataDataSource.SyncMethod, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetSyncMethod() DataSourceSyncMethod { return v.DataSource.SyncMethod }
+
+// GetParent returns SyncDataDataSource.Parent, and is useful for accessing the field via an interface.
+func (v *SyncDataDataSource) GetParent() *DataSourceParentDataSource { return v.DataSource.Parent }
+
+func (v *SyncDataDataSource) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*SyncDataDataSource
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.SyncDataDataSource = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.DataSource)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalSyncDataDataSource struct {
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	Type string `json:"type"`
+
+	Description string `json:"description"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	SyncMethod DataSourceSyncMethod `json:"syncMethod"`
+
+	Parent *DataSourceParentDataSource `json:"parent"`
+}
+
+func (v *SyncDataDataSource) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *SyncDataDataSource) __premarshalJSON() (*__premarshalSyncDataDataSource, error) {
+	var retval __premarshalSyncDataDataSource
+
+	retval.Id = v.DataSource.Id
+	retval.Name = v.DataSource.Name
+	retval.Type = v.DataSource.Type
+	retval.Description = v.DataSource.Description
+	retval.CreatedAt = v.DataSource.CreatedAt
+	retval.ModifiedAt = v.DataSource.ModifiedAt
+	retval.SyncMethod = v.DataSource.SyncMethod
+	retval.Parent = v.DataSource.Parent
+	return &retval, nil
+}
+
+// SyncDataMaskType includes the requested fields of the GraphQL type MaskType.
+type SyncDataMaskType struct {
+	MaskType `json:"-"`
+}
+
+// GetExternalId returns SyncDataMaskType.ExternalId, and is useful for accessing the field via an interface.
+func (v *SyncDataMaskType) GetExternalId() string { return v.MaskType.ExternalId }
+
+// GetDisplayName returns SyncDataMaskType.DisplayName, and is useful for accessing the field via an interface.
+func (v *SyncDataMaskType) GetDisplayName() string { return v.MaskType.DisplayName }
+
+// GetDescription returns SyncDataMaskType.Description, and is useful for accessing the field via an interface.
+func (v *SyncDataMaskType) GetDescription() string { return v.MaskType.Description }
+
+// GetDataTypes returns SyncDataMaskType.DataTypes, and is useful for accessing the field via an interface.
+func (v *SyncDataMaskType) GetDataTypes() []string { return v.MaskType.DataTypes }
+
+func (v *SyncDataMaskType) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*SyncDataMaskType
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.SyncDataMaskType = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.MaskType)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalSyncDataMaskType struct {
+	ExternalId string `json:"externalId"`
+
+	DisplayName string `json:"displayName"`
+
+	Description string `json:"description"`
+
+	DataTypes []string `json:"dataTypes"`
+}
+
+func (v *SyncDataMaskType) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *SyncDataMaskType) __premarshalJSON() (*__premarshalSyncDataMaskType, error) {
+	var retval __premarshalSyncDataMaskType
+
+	retval.ExternalId = v.MaskType.ExternalId
+	retval.DisplayName = v.MaskType.DisplayName
+	retval.Description = v.MaskType.Description
+	retval.DataTypes = v.MaskType.DataTypes
+	return &retval, nil
+}
+
+type SyncStatus string
+
+const (
+	SyncStatusNotConnected SyncStatus = "NOT_CONNECTED"
+	SyncStatusFailed       SyncStatus = "FAILED"
+	SyncStatusOutOfDate    SyncStatus = "OUT_OF_DATE"
+	SyncStatusOutOfSync    SyncStatus = "OUT_OF_SYNC"
+	SyncStatusInProgress   SyncStatus = "IN_PROGRESS"
+	SyncStatusSynced       SyncStatus = "SYNCED"
 )
 
 // UnassignGlobalRoleResponse is returned by UnassignGlobalRole on success.
@@ -33042,9 +33091,6 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
-// GetType returns UpdateAccessProviderUpdateAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetType() *string { return v.AccessProvider.Type }
-
 // GetDescription returns UpdateAccessProviderUpdateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -33053,11 +33099,6 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetDescription() string {
 // GetPolicyRule returns UpdateAccessProviderUpdateAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns UpdateAccessProviderUpdateAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns UpdateAccessProviderUpdateAccessProvider.External, and is useful for accessing the field via an interface.
@@ -33095,14 +33136,14 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetComplete() *bool {
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns UpdateAccessProviderUpdateAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns UpdateAccessProviderUpdateAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns UpdateAccessProviderUpdateAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *UpdateAccessProviderUpdateAccessProvider) UnmarshalJSON(b []byte) error {
@@ -33149,13 +33190,9 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -33171,9 +33208,9 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -33196,10 +33233,8 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -33207,8 +33242,8 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -33273,11 +33308,6 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.Action
 }
 
-// GetType returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Type, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetType() *string {
-	return v.AccessProvider.Type
-}
-
 // GetDescription returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -33286,11 +33316,6 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 // GetPolicyRule returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.PolicyRule, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetPolicyRule() *string {
 	return v.AccessProvider.PolicyRule
-}
-
-// GetOverride returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Override, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetOverride() bool {
-	return v.AccessProvider.Override
 }
 
 // GetExternal returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.External, and is useful for accessing the field via an interface.
@@ -33328,14 +33353,14 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.Complete
 }
 
-// GetDataSources returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.DataSources, and is useful for accessing the field via an interface.
-func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetDataSources() []AccessProviderDataSourcesDataSource {
-	return v.AccessProvider.DataSources
-}
-
 // GetLocks returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Locks, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData {
 	return v.AccessProvider.Locks
+}
+
+// GetSyncData returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.SyncData, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetSyncData() []AccessProviderSyncData {
+	return v.AccessProvider.SyncData
 }
 
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
@@ -33380,13 +33405,9 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 
 	Action models.AccessProviderAction `json:"action"`
 
-	Type *string `json:"type"`
-
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
-
-	Override bool `json:"override"`
 
 	External bool `json:"external"`
 
@@ -33402,9 +33423,9 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 
 	Complete *bool `json:"complete"`
 
-	DataSources []AccessProviderDataSourcesDataSource `json:"dataSources"`
-
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
+
+	SyncData []AccessProviderSyncData `json:"syncData"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -33426,10 +33447,8 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
-	retval.Type = v.AccessProvider.Type
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
-	retval.Override = v.AccessProvider.Override
 	retval.External = v.AccessProvider.External
 	retval.WhatType = v.AccessProvider.WhatType
 	retval.WhatAbacRule = v.AccessProvider.WhatAbacRule
@@ -33437,8 +33456,8 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.WhoAbacRule = v.AccessProvider.WhoAbacRule
 	retval.NotInternalizable = v.AccessProvider.NotInternalizable
 	retval.Complete = v.AccessProvider.Complete
-	retval.DataSources = v.AccessProvider.DataSources
 	retval.Locks = v.AccessProvider.Locks
+	retval.SyncData = v.AccessProvider.SyncData
 	return &retval, nil
 }
 
@@ -33995,6 +34014,512 @@ func (v *UpdateDataSourceUpdateDataSourcePermissionDeniedError) MarshalJSON() ([
 
 func (v *UpdateDataSourceUpdateDataSourcePermissionDeniedError) __premarshalJSON() (*__premarshalUpdateDataSourceUpdateDataSourcePermissionDeniedError, error) {
 	var retval __premarshalUpdateDataSourceUpdateDataSourcePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateIdentityStoreMasterFlagResponse is returned by UpdateIdentityStoreMasterFlag on success.
+type UpdateIdentityStoreMasterFlagResponse struct {
+	UpdateIdentityStoreMasterFlag UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult `json:"-"`
+}
+
+// GetUpdateIdentityStoreMasterFlag returns UpdateIdentityStoreMasterFlagResponse.UpdateIdentityStoreMasterFlag, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagResponse) GetUpdateIdentityStoreMasterFlag() UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult {
+	return v.UpdateIdentityStoreMasterFlag
+}
+
+func (v *UpdateIdentityStoreMasterFlagResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateIdentityStoreMasterFlagResponse
+		UpdateIdentityStoreMasterFlag json.RawMessage `json:"updateIdentityStoreMasterFlag"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateIdentityStoreMasterFlagResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateIdentityStoreMasterFlag
+		src := firstPass.UpdateIdentityStoreMasterFlag
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateIdentityStoreMasterFlagResponse.UpdateIdentityStoreMasterFlag: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateIdentityStoreMasterFlagResponse struct {
+	UpdateIdentityStoreMasterFlag json.RawMessage `json:"updateIdentityStoreMasterFlag"`
+}
+
+func (v *UpdateIdentityStoreMasterFlagResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateIdentityStoreMasterFlagResponse) __premarshalJSON() (*__premarshalUpdateIdentityStoreMasterFlagResponse, error) {
+	var retval __premarshalUpdateIdentityStoreMasterFlagResponse
+
+	{
+
+		dst := &retval.UpdateIdentityStoreMasterFlag
+		src := v.UpdateIdentityStoreMasterFlag
+		var err error
+		*dst, err = __marshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateIdentityStoreMasterFlagResponse.UpdateIdentityStoreMasterFlag: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError includes the requested fields of the GraphQL type AlreadyExistsError.
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError struct {
+	Typename           *string `json:"__typename"`
+	AlreadyExistsError `json:"-"`
+}
+
+// GetTypename returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) GetMessage() string {
+	return v.AlreadyExistsError.Message
+}
+
+// GetExisting_element_id returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError.Existing_element_id, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) GetExisting_element_id() string {
+	return v.AlreadyExistsError.Existing_element_id
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AlreadyExistsError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+
+	Existing_element_id string `json:"existing_element_id"`
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) __premarshalJSON() (*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError, error) {
+	var retval __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
+
+	retval.Typename = v.Typename
+	retval.Message = v.AlreadyExistsError.Message
+	retval.Existing_element_id = v.AlreadyExistsError.Existing_element_id
+	return &retval, nil
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore includes the requested fields of the GraphQL type IdentityStore.
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore struct {
+	Typename      *string `json:"__typename"`
+	IdentityStore `json:"-"`
+}
+
+// GetTypename returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetTypename() *string {
+	return v.Typename
+}
+
+// GetId returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Id, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetId() string {
+	return v.IdentityStore.Id
+}
+
+// GetName returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Name, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetName() string {
+	return v.IdentityStore.Name
+}
+
+// GetType returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Type, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetType() string {
+	return v.IdentityStore.Type
+}
+
+// GetDescription returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Description, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetDescription() string {
+	return v.IdentityStore.Description
+}
+
+// GetCreatedAt returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.CreatedAt, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetCreatedAt() time.Time {
+	return v.IdentityStore.CreatedAt
+}
+
+// GetModifiedAt returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetModifiedAt() time.Time {
+	return v.IdentityStore.ModifiedAt
+}
+
+// GetMaster returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Master, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetMaster() bool {
+	return v.IdentityStore.Master
+}
+
+// GetNative returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore.Native, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) GetNative() bool {
+	return v.IdentityStore.Native
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.IdentityStore)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	Type string `json:"type"`
+
+	Description string `json:"description"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	Master bool `json:"master"`
+
+	Native bool `json:"native"`
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) __premarshalJSON() (*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore, error) {
+	var retval __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+
+	retval.Typename = v.Typename
+	retval.Id = v.IdentityStore.Id
+	retval.Name = v.IdentityStore.Name
+	retval.Type = v.IdentityStore.Type
+	retval.Description = v.IdentityStore.Description
+	retval.CreatedAt = v.IdentityStore.CreatedAt
+	retval.ModifiedAt = v.IdentityStore.ModifiedAt
+	retval.Master = v.IdentityStore.Master
+	retval.Native = v.IdentityStore.Native
+	return &retval, nil
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult includes the requested fields of the GraphQL interface IdentityStoreResult.
+//
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult is implemented by the following types:
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult interface {
+	implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
+}
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
+}
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
+}
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
+}
+
+func __unmarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult(b []byte, v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "AlreadyExistsError":
+		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError)
+		return json.Unmarshal(b, *v)
+	case "IdentityStore":
+		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing IdentityStoreResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult(v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError:
+		typename = "AlreadyExistsError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore:
+		typename = "IdentityStore"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult: "%T"`, v)
+	}
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) __premarshalJSON() (*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError, error) {
+	var retval __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError) __premarshalJSON() (*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError, error) {
+	var retval __premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
 
 	retval.Typename = v.Typename
 	retval.Message = v.PermissionDeniedError.Message
@@ -36487,9 +37012,9 @@ func (v *User) GetIsRaitoUser() bool { return v.IsRaitoUser }
 func (v *User) GetType() UserType { return v.Type }
 
 type UserInput struct {
-	Name  *string   `json:"name"`
-	Email *string   `json:"email"`
-	Type  *UserType `json:"type"`
+	Name  *string   `json:"name,omitempty"`
+	Email *string   `json:"email,omitempty"`
+	Type  *UserType `json:"type,omitempty"`
 }
 
 // GetName returns UserInput.Name, and is useful for accessing the field via an interface.
@@ -36551,21 +37076,6 @@ func (v *WhatAbacRuleInput) GetScope() []string { return v.Scope }
 // GetRule returns WhatAbacRuleInput.Rule, and is useful for accessing the field via an interface.
 func (v *WhatAbacRuleInput) GetRule() AbacComparisonExpressionInput { return v.Rule }
 
-type WhatInput struct {
-	Permissions       []*string `json:"permissions"`
-	GlobalPermissions []*string `json:"globalPermissions"`
-	DataObjects       []*string `json:"dataObjects"`
-}
-
-// GetPermissions returns WhatInput.Permissions, and is useful for accessing the field via an interface.
-func (v *WhatInput) GetPermissions() []*string { return v.Permissions }
-
-// GetGlobalPermissions returns WhatInput.GlobalPermissions, and is useful for accessing the field via an interface.
-func (v *WhatInput) GetGlobalPermissions() []*string { return v.GlobalPermissions }
-
-// GetDataObjects returns WhatInput.DataObjects, and is useful for accessing the field via an interface.
-func (v *WhatInput) GetDataObjects() []*string { return v.DataObjects }
-
 // WhoAbacRule includes the GraphQL fields of WhoAbacRule requested by the fragment WhoAbacRule.
 type WhoAbacRule struct {
 	PromiseDuration *int64            `json:"promiseDuration"`
@@ -36597,29 +37107,14 @@ const (
 	WhoAndWhatTypeUnknown WhoAndWhatType = "Unknown"
 )
 
-type WhoInput struct {
-	Users           []string `json:"users"`
-	Groups          []string `json:"groups"`
-	AccessProviders []string `json:"accessProviders"`
-}
-
-// GetUsers returns WhoInput.Users, and is useful for accessing the field via an interface.
-func (v *WhoInput) GetUsers() []string { return v.Users }
-
-// GetGroups returns WhoInput.Groups, and is useful for accessing the field via an interface.
-func (v *WhoInput) GetGroups() []string { return v.Groups }
-
-// GetAccessProviders returns WhoInput.AccessProviders, and is useful for accessing the field via an interface.
-func (v *WhoInput) GetAccessProviders() []string { return v.AccessProviders }
-
 type WhoItemInput struct {
-	User            *string            `json:"user"`
-	Group           *string            `json:"group"`
-	AccessProvider  *string            `json:"accessProvider"`
-	ExpiresAt       *time.Time         `json:"expiresAt"`
-	ExpiresAfter    *int64             `json:"expiresAfter"`
-	Type            *AccessWhoItemType `json:"type"`
-	PromiseDuration *int64             `json:"promiseDuration"`
+	User            *string            `json:"user,omitempty"`
+	Group           *string            `json:"group,omitempty"`
+	AccessProvider  *string            `json:"accessProvider,omitempty"`
+	ExpiresAt       *time.Time         `json:"expiresAt,omitempty"`
+	ExpiresAfter    *int64             `json:"expiresAfter,omitempty"`
+	Type            *AccessWhoItemType `json:"type,omitempty"`
+	PromiseDuration *int64             `json:"promiseDuration,omitempty"`
 }
 
 // GetUser returns WhoItemInput.User, and is useful for accessing the field via an interface.
@@ -36850,11 +37345,11 @@ func (v *__GetAccessProviderInput) GetId() string { return v.Id }
 // __GetAccessProviderWhatAccessProvidersInput is used internally by genqlient
 type __GetAccessProviderWhatAccessProvidersInput struct {
 	Id     string                                       `json:"id"`
-	After  *string                                      `json:"after"`
-	Limit  *int                                         `json:"limit"`
-	Search *string                                      `json:"search"`
+	After  *string                                      `json:"after,omitempty"`
+	Limit  *int                                         `json:"limit,omitempty"`
+	Search *string                                      `json:"search,omitempty"`
 	Order  []AccessWhatOrderByInput                     `json:"order"`
-	Filter *AccessProviderWhatAccessProviderFilterInput `json:"filter"`
+	Filter *AccessProviderWhatAccessProviderFilterInput `json:"filter,omitempty"`
 }
 
 // GetId returns __GetAccessProviderWhatAccessProvidersInput.Id, and is useful for accessing the field via an interface.
@@ -36882,9 +37377,9 @@ func (v *__GetAccessProviderWhatAccessProvidersInput) GetFilter() *AccessProvide
 // __GetAccessProviderWhatDataObjectListInput is used internally by genqlient
 type __GetAccessProviderWhatDataObjectListInput struct {
 	Id     string                   `json:"id"`
-	After  *string                  `json:"after"`
-	Limit  *int                     `json:"limit"`
-	Filter *AccessWhatFilterInput   `json:"filter"`
+	After  *string                  `json:"after,omitempty"`
+	Limit  *int                     `json:"limit,omitempty"`
+	Filter *AccessWhatFilterInput   `json:"filter,omitempty"`
 	Order  []AccessWhatOrderByInput `json:"order"`
 }
 
@@ -36910,9 +37405,9 @@ func (v *__GetAccessProviderWhatDataObjectListInput) GetOrder() []AccessWhatOrde
 // __GetAccessProviderWhoListInput is used internally by genqlient
 type __GetAccessProviderWhoListInput struct {
 	Id     string                          `json:"id"`
-	After  *string                         `json:"after"`
-	Limit  *int                            `json:"limit"`
-	Search *string                         `json:"search"`
+	After  *string                         `json:"after,omitempty"`
+	Limit  *int                            `json:"limit,omitempty"`
+	Search *string                         `json:"search,omitempty"`
 	Order  []AccessProviderWhoOrderByInput `json:"order"`
 }
 
@@ -36974,7 +37469,7 @@ func (v *__GetUserInput) GetId() string { return v.Id }
 // __InviteAsRaitoUserInput is used internally by genqlient
 type __InviteAsRaitoUserInput struct {
 	UId        string `json:"uId"`
-	NoPassword *bool  `json:"noPassword"`
+	NoPassword *bool  `json:"noPassword,omitempty"`
 }
 
 // GetUId returns __InviteAsRaitoUserInput.UId, and is useful for accessing the field via an interface.
@@ -36986,9 +37481,9 @@ func (v *__InviteAsRaitoUserInput) GetNoPassword() *bool { return v.NoPassword }
 // __ListAccessProviderAbacWhatScopeInput is used internally by genqlient
 type __ListAccessProviderAbacWhatScopeInput struct {
 	Id     string                   `json:"id"`
-	After  *string                  `json:"after"`
-	Limit  *int                     `json:"limit"`
-	Search *string                  `json:"search"`
+	After  *string                  `json:"after,omitempty"`
+	Limit  *int                     `json:"limit,omitempty"`
+	Search *string                  `json:"search,omitempty"`
 	Order  []AccessWhatOrderByInput `json:"order"`
 }
 
@@ -37009,9 +37504,9 @@ func (v *__ListAccessProviderAbacWhatScopeInput) GetOrder() []AccessWhatOrderByI
 
 // __ListAccessProvidersInput is used internally by genqlient
 type __ListAccessProvidersInput struct {
-	After  *string                      `json:"after"`
-	Limit  *int                         `json:"limit"`
-	Filter *AccessProviderFilterInput   `json:"filter"`
+	After  *string                      `json:"after,omitempty"`
+	Limit  *int                         `json:"limit,omitempty"`
+	Filter *AccessProviderFilterInput   `json:"filter,omitempty"`
 	Order  []AccessProviderOrderByInput `json:"order"`
 }
 
@@ -37029,10 +37524,10 @@ func (v *__ListAccessProvidersInput) GetOrder() []AccessProviderOrderByInput { r
 
 // __ListDataSourcesInput is used internally by genqlient
 type __ListDataSourcesInput struct {
-	After  *string                  `json:"after"`
-	Limit  *int                     `json:"limit"`
-	Filter *DataSourceFilterInput   `json:"filter"`
-	Search *string                  `json:"search"`
+	After  *string                  `json:"after,omitempty"`
+	Limit  *int                     `json:"limit,omitempty"`
+	Filter *DataSourceFilterInput   `json:"filter,omitempty"`
+	Search *string                  `json:"search,omitempty"`
 	Order  []DataSourceOrderByInput `json:"order"`
 }
 
@@ -37053,10 +37548,10 @@ func (v *__ListDataSourcesInput) GetOrder() []DataSourceOrderByInput { return v.
 
 // __ListIdentityStoresInput is used internally by genqlient
 type __ListIdentityStoresInput struct {
-	After  *string                     `json:"after"`
-	Limit  *int                        `json:"limit"`
-	Search *string                     `json:"search"`
-	Filter *IdentityStoreFilterInput   `json:"filter"`
+	After  *string                     `json:"after,omitempty"`
+	Limit  *int                        `json:"limit,omitempty"`
+	Search *string                     `json:"search,omitempty"`
+	Filter *IdentityStoreFilterInput   `json:"filter,omitempty"`
 	Order  []IdentityStoreOrderByInput `json:"order"`
 }
 
@@ -37077,9 +37572,9 @@ func (v *__ListIdentityStoresInput) GetOrder() []IdentityStoreOrderByInput { ret
 
 // __ListRoleAssignmentsInput is used internally by genqlient
 type __ListRoleAssignmentsInput struct {
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37098,9 +37593,9 @@ func (v *__ListRoleAssignmentsInput) GetOrder() []RoleAssignmentOrderInput { ret
 // __ListRoleAssignmentsOnAccessProviderInput is used internally by genqlient
 type __ListRoleAssignmentsOnAccessProviderInput struct {
 	ApId   string                     `json:"apId"`
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37126,9 +37621,9 @@ func (v *__ListRoleAssignmentsOnAccessProviderInput) GetOrder() []RoleAssignment
 // __ListRoleAssignmentsOnDataObjectInput is used internally by genqlient
 type __ListRoleAssignmentsOnDataObjectInput struct {
 	DoId   string                     `json:"doId"`
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37154,9 +37649,9 @@ func (v *__ListRoleAssignmentsOnDataObjectInput) GetOrder() []RoleAssignmentOrde
 // __ListRoleAssignmentsOnDataSourceInput is used internally by genqlient
 type __ListRoleAssignmentsOnDataSourceInput struct {
 	DsId   string                     `json:"dsId"`
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37182,9 +37677,9 @@ func (v *__ListRoleAssignmentsOnDataSourceInput) GetOrder() []RoleAssignmentOrde
 // __ListRoleAssignmentsOnIdentityStoreInput is used internally by genqlient
 type __ListRoleAssignmentsOnIdentityStoreInput struct {
 	IsId   string                     `json:"isId"`
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37210,9 +37705,9 @@ func (v *__ListRoleAssignmentsOnIdentityStoreInput) GetOrder() []RoleAssignmentO
 // __ListRoleAssignmentsOnUserInput is used internally by genqlient
 type __ListRoleAssignmentsOnUserInput struct {
 	UserId string                     `json:"userId"`
-	After  *string                    `json:"after"`
-	Limit  *int                       `json:"limit"`
-	Filter *RoleAssignmentFilterInput `json:"filter"`
+	After  *string                    `json:"after,omitempty"`
+	Limit  *int                       `json:"limit,omitempty"`
+	Filter *RoleAssignmentFilterInput `json:"filter,omitempty"`
 	Order  []RoleAssignmentOrderInput `json:"order"`
 }
 
@@ -37233,9 +37728,9 @@ func (v *__ListRoleAssignmentsOnUserInput) GetOrder() []RoleAssignmentOrderInput
 
 // __ListRolesInput is used internally by genqlient
 type __ListRolesInput struct {
-	After  *string            `json:"after"`
-	Limit  *int               `json:"limit"`
-	Filter *RoleFilterInput   `json:"filter"`
+	After  *string            `json:"after,omitempty"`
+	Limit  *int               `json:"limit,omitempty"`
+	Filter *RoleFilterInput   `json:"filter,omitempty"`
 	Order  []RoleOrderByInput `json:"order"`
 }
 
@@ -37375,7 +37870,7 @@ func (v *__UnassignRoleFromIdentityStoreInput) GetTo() []string { return v.To }
 type __UpdateAccessProviderInput struct {
 	Id            string              `json:"id"`
 	Ap            AccessProviderInput `json:"ap"`
-	OverrideLocks *bool               `json:"overrideLocks"`
+	OverrideLocks *bool               `json:"overrideLocks,omitempty"`
 }
 
 // GetId returns __UpdateAccessProviderInput.Id, and is useful for accessing the field via an interface.
@@ -37410,6 +37905,18 @@ func (v *__UpdateIdentityStoreInput) GetId() string { return v.Id }
 
 // GetInput returns __UpdateIdentityStoreInput.Input, and is useful for accessing the field via an interface.
 func (v *__UpdateIdentityStoreInput) GetInput() IdentityStoreInput { return v.Input }
+
+// __UpdateIdentityStoreMasterFlagInput is used internally by genqlient
+type __UpdateIdentityStoreMasterFlagInput struct {
+	Id     string `json:"id"`
+	Master bool   `json:"master"`
+}
+
+// GetId returns __UpdateIdentityStoreMasterFlagInput.Id, and is useful for accessing the field via an interface.
+func (v *__UpdateIdentityStoreMasterFlagInput) GetId() string { return v.Id }
+
+// GetMaster returns __UpdateIdentityStoreMasterFlagInput.Master, and is useful for accessing the field via an interface.
+func (v *__UpdateIdentityStoreMasterFlagInput) GetMaster() bool { return v.Master }
 
 // __UpdateRoleAssigneesOnAccessProviderInput is used internally by genqlient
 type __UpdateRoleAssigneesOnAccessProviderInput struct {
@@ -37506,10 +38013,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -37521,11 +38026,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment NotFoundError on NotFoundError {
@@ -37545,6 +38050,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -37558,41 +38083,38 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func ActivateAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*ActivateAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ActivateAccessProvider",
 		Query:  ActivateAccessProvider_Operation,
 		Variables: &__ActivateAccessProviderInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ActivateAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ActivateAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AddIdentityStoreToDataSource.
@@ -37627,12 +38149,12 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AddIdentityStoreToDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	dsId string,
 	isId string,
 ) (*AddIdentityStoreToDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AddIdentityStoreToDataSource",
 		Query:  AddIdentityStoreToDataSource_Operation,
 		Variables: &__AddIdentityStoreToDataSourceInput{
@@ -37640,18 +38162,18 @@ func AddIdentityStoreToDataSource(
 			IsId: isId,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AddIdentityStoreToDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AddIdentityStoreToDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AssignGlobalRole.
@@ -37678,12 +38200,12 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AssignGlobalRole(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	to []string,
 ) (*AssignGlobalRoleResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AssignGlobalRole",
 		Query:  AssignGlobalRole_Operation,
 		Variables: &__AssignGlobalRoleInput{
@@ -37691,18 +38213,18 @@ func AssignGlobalRole(
 			To:   to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AssignGlobalRoleResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AssignGlobalRoleResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AssignRoleOnAccessProvider.
@@ -37729,13 +38251,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AssignRoleOnAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*AssignRoleOnAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AssignRoleOnAccessProvider",
 		Query:  AssignRoleOnAccessProvider_Operation,
 		Variables: &__AssignRoleOnAccessProviderInput{
@@ -37744,18 +38266,18 @@ func AssignRoleOnAccessProvider(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AssignRoleOnAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AssignRoleOnAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AssignRoleOnDataObject.
@@ -37782,13 +38304,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AssignRoleOnDataObject(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*AssignRoleOnDataObjectResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AssignRoleOnDataObject",
 		Query:  AssignRoleOnDataObject_Operation,
 		Variables: &__AssignRoleOnDataObjectInput{
@@ -37797,18 +38319,18 @@ func AssignRoleOnDataObject(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AssignRoleOnDataObjectResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AssignRoleOnDataObjectResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AssignRoleOnDataSource.
@@ -37835,13 +38357,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AssignRoleOnDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*AssignRoleOnDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AssignRoleOnDataSource",
 		Query:  AssignRoleOnDataSource_Operation,
 		Variables: &__AssignRoleOnDataSourceInput{
@@ -37850,18 +38372,18 @@ func AssignRoleOnDataSource(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AssignRoleOnDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AssignRoleOnDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by AssignRoleOnIdentityStore.
@@ -37888,13 +38410,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func AssignRoleOnIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*AssignRoleOnIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "AssignRoleOnIdentityStore",
 		Query:  AssignRoleOnIdentityStore_Operation,
 		Variables: &__AssignRoleOnIdentityStoreInput{
@@ -37903,18 +38425,18 @@ func AssignRoleOnIdentityStore(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data AssignRoleOnIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ AssignRoleOnIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by CreateAccessProvider.
@@ -37940,10 +38462,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -37955,11 +38475,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
@@ -37976,6 +38496,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -37989,41 +38529,38 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func CreateAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	ap AccessProviderInput,
 ) (*CreateAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "CreateAccessProvider",
 		Query:  CreateAccessProvider_Operation,
 		Variables: &__CreateAccessProviderInput{
 			Ap: ap,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data CreateAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ CreateAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by CreateDataSource.
@@ -38058,29 +38595,29 @@ fragment DataSource on DataSource {
 `
 
 func CreateDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	input DataSourceInput,
 ) (*CreateDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "CreateDataSource",
 		Query:  CreateDataSource_Operation,
 		Variables: &__CreateDataSourceInput{
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data CreateDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ CreateDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by CreateIdentityStore.
@@ -38117,29 +38654,29 @@ fragment IdentityStore on IdentityStore {
 `
 
 func CreateIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	input IdentityStoreInput,
 ) (*CreateIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "CreateIdentityStore",
 		Query:  CreateIdentityStore_Operation,
 		Variables: &__CreateIdentityStoreInput{
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data CreateIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ CreateIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by CreateUser.
@@ -38173,29 +38710,29 @@ fragment InvalidEmailError on InvalidEmailError {
 `
 
 func CreateUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	input UserInput,
 ) (*CreateUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "CreateUser",
 		Query:  CreateUser_Operation,
 		Variables: &__CreateUserInput{
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data CreateUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ CreateUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DataObjectByExternalId.
@@ -38221,12 +38758,12 @@ fragment DataObject on DataObject {
 `
 
 func DataObjectByExternalId(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	fullname string,
 	dataSourceId string,
 ) (*DataObjectByExternalIdResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DataObjectByExternalId",
 		Query:  DataObjectByExternalId_Operation,
 		Variables: &__DataObjectByExternalIdInput{
@@ -38234,18 +38771,18 @@ func DataObjectByExternalId(
 			DataSourceId: dataSourceId,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DataObjectByExternalIdResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DataObjectByExternalIdResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DataSourceIdentityStores.
@@ -38281,29 +38818,29 @@ fragment NotFoundError on NotFoundError {
 `
 
 func DataSourceIdentityStores(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DataSourceIdentityStoresResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DataSourceIdentityStores",
 		Query:  DataSourceIdentityStores_Operation,
 		Variables: &__DataSourceIdentityStoresInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DataSourceIdentityStoresResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DataSourceIdentityStoresResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DataSourceMaskInformation.
@@ -38341,29 +38878,29 @@ fragment MaskType on MaskType {
 `
 
 func DataSourceMaskInformation(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DataSourceMaskInformationResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DataSourceMaskInformation",
 		Query:  DataSourceMaskInformation_Operation,
 		Variables: &__DataSourceMaskInformationInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DataSourceMaskInformationResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DataSourceMaskInformationResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DeactivateAccessProvider.
@@ -38385,10 +38922,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -38400,11 +38935,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment NotFoundError on NotFoundError {
@@ -38424,6 +38959,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -38437,41 +38992,38 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func DeactivateAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DeactivateAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DeactivateAccessProvider",
 		Query:  DeactivateAccessProvider_Operation,
 		Variables: &__DeactivateAccessProviderInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DeactivateAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DeactivateAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DeleteAccessProvider.
@@ -38493,10 +39045,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -38508,11 +39058,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment NotFoundError on NotFoundError {
@@ -38532,6 +39082,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -38545,41 +39115,38 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func DeleteAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DeleteAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DeleteAccessProvider",
 		Query:  DeleteAccessProvider_Operation,
 		Variables: &__DeleteAccessProviderInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DeleteAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DeleteAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DeleteDataSource.
@@ -38599,29 +39166,29 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func DeleteDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DeleteDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DeleteDataSource",
 		Query:  DeleteDataSource_Operation,
 		Variables: &__DeleteDataSourceInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DeleteDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DeleteDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DeleteIdentityStore.
@@ -38641,29 +39208,29 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func DeleteIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*DeleteIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DeleteIdentityStore",
 		Query:  DeleteIdentityStore_Operation,
 		Variables: &__DeleteIdentityStoreInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DeleteIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DeleteIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by DeleteUser.
@@ -38683,29 +39250,29 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func DeleteUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	uId string,
 ) (*DeleteUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "DeleteUser",
 		Query:  DeleteUser_Operation,
 		Variables: &__DeleteUserInput{
 			UId: uId,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data DeleteUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ DeleteUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetAccessProvider.
@@ -38727,10 +39294,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -38742,11 +39307,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
@@ -38766,6 +39331,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -38779,41 +39364,38 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func GetAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*GetAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetAccessProvider",
 		Query:  GetAccessProvider_Operation,
 		Variables: &__GetAccessProviderInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetAccessProviderWhatAccessProviders.
@@ -38869,10 +39451,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -38884,11 +39464,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment WhatAbacRule on WhatAbacRule {
@@ -38901,6 +39481,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
 	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 fragment DataSource on DataSource {
 	id
@@ -38915,20 +39515,17 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func GetAccessProviderWhatAccessProviders(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	after *string,
 	limit *int,
@@ -38936,7 +39533,7 @@ func GetAccessProviderWhatAccessProviders(
 	order []AccessWhatOrderByInput,
 	filter *AccessProviderWhatAccessProviderFilterInput,
 ) (*GetAccessProviderWhatAccessProvidersResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhatAccessProviders",
 		Query:  GetAccessProviderWhatAccessProviders_Operation,
 		Variables: &__GetAccessProviderWhatAccessProvidersInput{
@@ -38948,18 +39545,18 @@ func GetAccessProviderWhatAccessProviders(
 			Filter: filter,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetAccessProviderWhatAccessProvidersResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetAccessProviderWhatAccessProvidersResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetAccessProviderWhatDataObjectList.
@@ -39018,15 +39615,15 @@ fragment DataObject on DataObject {
 `
 
 func GetAccessProviderWhatDataObjectList(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	after *string,
 	limit *int,
 	filter *AccessWhatFilterInput,
 	order []AccessWhatOrderByInput,
 ) (*GetAccessProviderWhatDataObjectListResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhatDataObjectList",
 		Query:  GetAccessProviderWhatDataObjectList_Operation,
 		Variables: &__GetAccessProviderWhatDataObjectListInput{
@@ -39037,18 +39634,18 @@ func GetAccessProviderWhatDataObjectList(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetAccessProviderWhatDataObjectListResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetAccessProviderWhatDataObjectListResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetAccessProviderWhoList.
@@ -39123,15 +39720,15 @@ fragment User on User {
 `
 
 func GetAccessProviderWhoList(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	after *string,
 	limit *int,
 	search *string,
 	order []AccessProviderWhoOrderByInput,
 ) (*GetAccessProviderWhoListResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhoList",
 		Query:  GetAccessProviderWhoList_Operation,
 		Variables: &__GetAccessProviderWhoListInput{
@@ -39142,18 +39739,18 @@ func GetAccessProviderWhoList(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetAccessProviderWhoListResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetAccessProviderWhoListResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetDataSource.
@@ -39188,29 +39785,29 @@ fragment NotFoundError on NotFoundError {
 `
 
 func GetDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*GetDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetDataSource",
 		Query:  GetDataSource_Operation,
 		Variables: &__GetDataSourceInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetIdentityStore.
@@ -39247,29 +39844,29 @@ fragment AlreadyExistsError on AlreadyExistsError {
 `
 
 func GetIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*GetIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetIdentityStore",
 		Query:  GetIdentityStore_Operation,
 		Variables: &__GetIdentityStoreInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetRole.
@@ -39287,29 +39884,29 @@ fragment Role on Role {
 `
 
 func GetRole(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*GetRoleResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetRole",
 		Query:  GetRole_Operation,
 		Variables: &__GetRoleInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetRoleResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetRoleResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetUser.
@@ -39329,29 +39926,29 @@ fragment User on User {
 `
 
 func GetUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 ) (*GetUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetUser",
 		Query:  GetUser_Operation,
 		Variables: &__GetUserInput{
 			Id: id,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by GetUserByEmail.
@@ -39385,29 +39982,29 @@ fragment InvalidEmailError on InvalidEmailError {
 `
 
 func GetUserByEmail(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	email string,
 ) (*GetUserByEmailResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "GetUserByEmail",
 		Query:  GetUserByEmail_Operation,
 		Variables: &__GetUserByEmailInput{
 			Email: email,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data GetUserByEmailResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ GetUserByEmailResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by InviteAsRaitoUser.
@@ -39441,12 +40038,12 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func InviteAsRaitoUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	uId string,
 	noPassword *bool,
 ) (*InviteAsRaitoUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "InviteAsRaitoUser",
 		Query:  InviteAsRaitoUser_Operation,
 		Variables: &__InviteAsRaitoUserInput{
@@ -39454,18 +40051,18 @@ func InviteAsRaitoUser(
 			NoPassword: noPassword,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data InviteAsRaitoUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ InviteAsRaitoUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListAccessProviderAbacWhatScope.
@@ -39517,15 +40114,15 @@ fragment DataObject on DataObject {
 `
 
 func ListAccessProviderAbacWhatScope(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	after *string,
 	limit *int,
 	search *string,
 	order []AccessWhatOrderByInput,
 ) (*ListAccessProviderAbacWhatScopeResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListAccessProviderAbacWhatScope",
 		Query:  ListAccessProviderAbacWhatScope_Operation,
 		Variables: &__ListAccessProviderAbacWhatScopeInput{
@@ -39536,18 +40133,18 @@ func ListAccessProviderAbacWhatScope(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListAccessProviderAbacWhatScopeResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListAccessProviderAbacWhatScopeResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListAccessProviders.
@@ -39587,10 +40184,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -39602,11 +40197,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment WhatAbacRule on WhatAbacRule {
@@ -39619,6 +40214,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	promiseDuration
 	type
 	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
 }
 fragment DataSource on DataSource {
 	id
@@ -39633,26 +40248,23 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func ListAccessProviders(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	after *string,
 	limit *int,
 	filter *AccessProviderFilterInput,
 	order []AccessProviderOrderByInput,
 ) (*ListAccessProvidersResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListAccessProviders",
 		Query:  ListAccessProviders_Operation,
 		Variables: &__ListAccessProvidersInput{
@@ -39662,18 +40274,18 @@ func ListAccessProviders(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListAccessProvidersResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListAccessProvidersResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListDataSources.
@@ -39720,15 +40332,15 @@ fragment DataSource on DataSource {
 `
 
 func ListDataSources(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	after *string,
 	limit *int,
 	filter *DataSourceFilterInput,
 	search *string,
 	order []DataSourceOrderByInput,
 ) (*ListDataSourcesResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListDataSources",
 		Query:  ListDataSources_Operation,
 		Variables: &__ListDataSourcesInput{
@@ -39739,18 +40351,18 @@ func ListDataSources(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListDataSourcesResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListDataSourcesResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListIdentityStores.
@@ -39794,15 +40406,15 @@ fragment IdentityStore on IdentityStore {
 `
 
 func ListIdentityStores(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	after *string,
 	limit *int,
 	search *string,
 	filter *IdentityStoreFilterInput,
 	order []IdentityStoreOrderByInput,
 ) (*ListIdentityStoresResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListIdentityStores",
 		Query:  ListIdentityStores_Operation,
 		Variables: &__ListIdentityStoresInput{
@@ -39813,18 +40425,18 @@ func ListIdentityStores(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListIdentityStoresResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListIdentityStoresResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignments.
@@ -39889,14 +40501,14 @@ fragment NotFoundError on NotFoundError {
 `
 
 func ListRoleAssignments(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignments",
 		Query:  ListRoleAssignments_Operation,
 		Variables: &__ListRoleAssignmentsInput{
@@ -39906,18 +40518,18 @@ func ListRoleAssignments(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignmentsOnAccessProvider.
@@ -39992,15 +40604,15 @@ fragment Role on Role {
 `
 
 func ListRoleAssignmentsOnAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	apId string,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsOnAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnAccessProvider",
 		Query:  ListRoleAssignmentsOnAccessProvider_Operation,
 		Variables: &__ListRoleAssignmentsOnAccessProviderInput{
@@ -40011,18 +40623,18 @@ func ListRoleAssignmentsOnAccessProvider(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsOnAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsOnAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignmentsOnDataObject.
@@ -40089,15 +40701,15 @@ fragment NotFoundError on NotFoundError {
 `
 
 func ListRoleAssignmentsOnDataObject(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	doId string,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsOnDataObjectResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnDataObject",
 		Query:  ListRoleAssignmentsOnDataObject_Operation,
 		Variables: &__ListRoleAssignmentsOnDataObjectInput{
@@ -40108,18 +40720,18 @@ func ListRoleAssignmentsOnDataObject(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsOnDataObjectResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsOnDataObjectResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignmentsOnDataSource.
@@ -40194,15 +40806,15 @@ fragment Role on Role {
 `
 
 func ListRoleAssignmentsOnDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	dsId string,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsOnDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnDataSource",
 		Query:  ListRoleAssignmentsOnDataSource_Operation,
 		Variables: &__ListRoleAssignmentsOnDataSourceInput{
@@ -40213,18 +40825,18 @@ func ListRoleAssignmentsOnDataSource(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsOnDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsOnDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignmentsOnIdentityStore.
@@ -40304,15 +40916,15 @@ fragment Role on Role {
 `
 
 func ListRoleAssignmentsOnIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	isId string,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsOnIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnIdentityStore",
 		Query:  ListRoleAssignmentsOnIdentityStore_Operation,
 		Variables: &__ListRoleAssignmentsOnIdentityStoreInput{
@@ -40323,18 +40935,18 @@ func ListRoleAssignmentsOnIdentityStore(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsOnIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsOnIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoleAssignmentsOnUser.
@@ -40401,15 +41013,15 @@ fragment NotFoundError on NotFoundError {
 `
 
 func ListRoleAssignmentsOnUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	userId string,
 	after *string,
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
 ) (*ListRoleAssignmentsOnUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnUser",
 		Query:  ListRoleAssignmentsOnUser_Operation,
 		Variables: &__ListRoleAssignmentsOnUserInput{
@@ -40420,18 +41032,18 @@ func ListRoleAssignmentsOnUser(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRoleAssignmentsOnUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRoleAssignmentsOnUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by ListRoles.
@@ -40465,14 +41077,14 @@ fragment Role on Role {
 `
 
 func ListRoles(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	after *string,
 	limit *int,
 	filter *RoleFilterInput,
 	order []RoleOrderByInput,
 ) (*ListRolesResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "ListRoles",
 		Query:  ListRoles_Operation,
 		Variables: &__ListRolesInput{
@@ -40482,18 +41094,18 @@ func ListRoles(
 			Order:  order,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data ListRolesResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ ListRolesResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by RemoveAsRaitoUser.
@@ -40527,29 +41139,29 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func RemoveAsRaitoUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	uId string,
 ) (*RemoveAsRaitoUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "RemoveAsRaitoUser",
 		Query:  RemoveAsRaitoUser_Operation,
 		Variables: &__RemoveAsRaitoUserInput{
 			UId: uId,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data RemoveAsRaitoUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ RemoveAsRaitoUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by RemoveIdentityStoreFromDataSource.
@@ -40584,12 +41196,12 @@ fragment NotFoundError on NotFoundError {
 `
 
 func RemoveIdentityStoreFromDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	dsId string,
 	isId string,
 ) (*RemoveIdentityStoreFromDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "RemoveIdentityStoreFromDataSource",
 		Query:  RemoveIdentityStoreFromDataSource_Operation,
 		Variables: &__RemoveIdentityStoreFromDataSourceInput{
@@ -40597,18 +41209,18 @@ func RemoveIdentityStoreFromDataSource(
 			IsId: isId,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data RemoveIdentityStoreFromDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ RemoveIdentityStoreFromDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by SetGlobalRolesForUser.
@@ -40628,12 +41240,12 @@ fragment PermissionDeniedError on PermissionDeniedError {
 `
 
 func SetGlobalRolesForUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	user string,
 	roles []string,
 ) (*SetGlobalRolesForUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "SetGlobalRolesForUser",
 		Query:  SetGlobalRolesForUser_Operation,
 		Variables: &__SetGlobalRolesForUserInput{
@@ -40641,18 +41253,18 @@ func SetGlobalRolesForUser(
 			Roles: roles,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data SetGlobalRolesForUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ SetGlobalRolesForUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by SetUserPassword.
@@ -40686,12 +41298,12 @@ fragment InvalidEmailError on InvalidEmailError {
 `
 
 func SetUserPassword(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	uId string,
 	password string,
 ) (*SetUserPasswordResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "SetUserPassword",
 		Query:  SetUserPassword_Operation,
 		Variables: &__SetUserPasswordInput{
@@ -40699,18 +41311,18 @@ func SetUserPassword(
 			Password: password,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data SetUserPasswordResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ SetUserPasswordResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UnassignGlobalRole.
@@ -40737,12 +41349,12 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UnassignGlobalRole(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	to []string,
 ) (*UnassignGlobalRoleResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UnassignGlobalRole",
 		Query:  UnassignGlobalRole_Operation,
 		Variables: &__UnassignGlobalRoleInput{
@@ -40750,18 +41362,18 @@ func UnassignGlobalRole(
 			To:   to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UnassignGlobalRoleResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UnassignGlobalRoleResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UnassignRoleFromAccessProvider.
@@ -40788,13 +41400,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UnassignRoleFromAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*UnassignRoleFromAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromAccessProvider",
 		Query:  UnassignRoleFromAccessProvider_Operation,
 		Variables: &__UnassignRoleFromAccessProviderInput{
@@ -40803,18 +41415,18 @@ func UnassignRoleFromAccessProvider(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UnassignRoleFromAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UnassignRoleFromAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UnassignRoleFromDataObject.
@@ -40841,13 +41453,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UnassignRoleFromDataObject(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*UnassignRoleFromDataObjectResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromDataObject",
 		Query:  UnassignRoleFromDataObject_Operation,
 		Variables: &__UnassignRoleFromDataObjectInput{
@@ -40856,18 +41468,18 @@ func UnassignRoleFromDataObject(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UnassignRoleFromDataObjectResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UnassignRoleFromDataObjectResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UnassignRoleFromDataSource.
@@ -40894,13 +41506,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UnassignRoleFromDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*UnassignRoleFromDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromDataSource",
 		Query:  UnassignRoleFromDataSource_Operation,
 		Variables: &__UnassignRoleFromDataSourceInput{
@@ -40909,18 +41521,18 @@ func UnassignRoleFromDataSource(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UnassignRoleFromDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UnassignRoleFromDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UnassignRoleFromIdentityStore.
@@ -40947,13 +41559,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UnassignRoleFromIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	role string,
 	resourceId string,
 	to []string,
 ) (*UnassignRoleFromIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromIdentityStore",
 		Query:  UnassignRoleFromIdentityStore_Operation,
 		Variables: &__UnassignRoleFromIdentityStoreInput{
@@ -40962,18 +41574,18 @@ func UnassignRoleFromIdentityStore(
 			To:         to,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UnassignRoleFromIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UnassignRoleFromIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateAccessProvider.
@@ -40999,10 +41611,8 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
-	type
 	description
 	policyRule
-	override
 	external
 	whatType
 	whatAbacRule {
@@ -41014,11 +41624,11 @@ fragment AccessProvider on AccessProvider {
 	}
 	notInternalizable
 	complete
-	dataSources {
-		... DataSource
-	}
 	locks {
 		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
@@ -41035,6 +41645,26 @@ fragment WhoAbacRule on WhoAbacRule {
 	type
 	ruleJson
 }
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	type
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
 fragment DataSource on DataSource {
 	id
 	name
@@ -41048,25 +41678,22 @@ fragment DataSource on DataSource {
 		id
 	}
 }
-fragment AccessProviderLocks on AccessProviderLockData {
-	lockKey
-	details {
-		... AccessProviderLockDetails
-	}
-}
-fragment AccessProviderLockDetails on AccessProviderLockDetails {
-	reason
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
 func UpdateAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	ap AccessProviderInput,
 	overrideLocks *bool,
 ) (*UpdateAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateAccessProvider",
 		Query:  UpdateAccessProvider_Operation,
 		Variables: &__UpdateAccessProviderInput{
@@ -41075,18 +41702,18 @@ func UpdateAccessProvider(
 			OverrideLocks: overrideLocks,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateDataSource.
@@ -41121,12 +41748,12 @@ fragment DataSource on DataSource {
 `
 
 func UpdateDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	input DataSourceInput,
 ) (*UpdateDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateDataSource",
 		Query:  UpdateDataSource_Operation,
 		Variables: &__UpdateDataSourceInput{
@@ -41134,18 +41761,18 @@ func UpdateDataSource(
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateIdentityStore.
@@ -41182,12 +41809,12 @@ fragment IdentityStore on IdentityStore {
 `
 
 func UpdateIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	id string,
 	input IdentityStoreInput,
 ) (*UpdateIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateIdentityStore",
 		Query:  UpdateIdentityStore_Operation,
 		Variables: &__UpdateIdentityStoreInput{
@@ -41195,18 +41822,79 @@ func UpdateIdentityStore(
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
+}
+
+// The query or mutation executed by UpdateIdentityStoreMasterFlag.
+const UpdateIdentityStoreMasterFlag_Operation = `
+mutation UpdateIdentityStoreMasterFlag ($id: ID!, $master: Boolean!) {
+	updateIdentityStoreMasterFlag(id: $id, master: $master) {
+		__typename
+		... PermissionDeniedError
+		... NotFoundError
+		... AlreadyExistsError
+		... IdentityStore
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment AlreadyExistsError on AlreadyExistsError {
+	message
+	existing_element_id: id
+}
+fragment IdentityStore on IdentityStore {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	master
+	native
+}
+`
+
+func UpdateIdentityStoreMasterFlag(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	id string,
+	master bool,
+) (*UpdateIdentityStoreMasterFlagResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "UpdateIdentityStoreMasterFlag",
+		Query:  UpdateIdentityStoreMasterFlag_Operation,
+		Variables: &__UpdateIdentityStoreMasterFlagInput{
+			Id:     id,
+			Master: master,
+		},
+	}
+	var err_ error
+
+	var data_ UpdateIdentityStoreMasterFlagResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateRoleAssigneesOnAccessProvider.
@@ -41233,13 +41921,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UpdateRoleAssigneesOnAccessProvider(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	apId string,
 	roleID string,
 	assignees []string,
 ) (*UpdateRoleAssigneesOnAccessProviderResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnAccessProvider",
 		Query:  UpdateRoleAssigneesOnAccessProvider_Operation,
 		Variables: &__UpdateRoleAssigneesOnAccessProviderInput{
@@ -41248,18 +41936,18 @@ func UpdateRoleAssigneesOnAccessProvider(
 			Assignees: assignees,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateRoleAssigneesOnAccessProviderResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateRoleAssigneesOnAccessProviderResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateRoleAssigneesOnDataObject.
@@ -41286,13 +41974,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UpdateRoleAssigneesOnDataObject(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	doId string,
 	roleID string,
 	assignees []string,
 ) (*UpdateRoleAssigneesOnDataObjectResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnDataObject",
 		Query:  UpdateRoleAssigneesOnDataObject_Operation,
 		Variables: &__UpdateRoleAssigneesOnDataObjectInput{
@@ -41301,18 +41989,18 @@ func UpdateRoleAssigneesOnDataObject(
 			Assignees: assignees,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateRoleAssigneesOnDataObjectResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateRoleAssigneesOnDataObjectResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateRoleAssigneesOnDataSource.
@@ -41339,13 +42027,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UpdateRoleAssigneesOnDataSource(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	dsId string,
 	roleID string,
 	assignees []string,
 ) (*UpdateRoleAssigneesOnDataSourceResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnDataSource",
 		Query:  UpdateRoleAssigneesOnDataSource_Operation,
 		Variables: &__UpdateRoleAssigneesOnDataSourceInput{
@@ -41354,18 +42042,18 @@ func UpdateRoleAssigneesOnDataSource(
 			Assignees: assignees,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateRoleAssigneesOnDataSourceResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateRoleAssigneesOnDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateRoleAssigneesOnIdentityStore.
@@ -41392,13 +42080,13 @@ fragment NotFoundError on NotFoundError {
 `
 
 func UpdateRoleAssigneesOnIdentityStore(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	isId string,
 	roleID string,
 	assignees []string,
 ) (*UpdateRoleAssigneesOnIdentityStoreResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnIdentityStore",
 		Query:  UpdateRoleAssigneesOnIdentityStore_Operation,
 		Variables: &__UpdateRoleAssigneesOnIdentityStoreInput{
@@ -41407,18 +42095,18 @@ func UpdateRoleAssigneesOnIdentityStore(
 			Assignees: assignees,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateRoleAssigneesOnIdentityStoreResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateRoleAssigneesOnIdentityStoreResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }
 
 // The query or mutation executed by UpdateUser.
@@ -41452,12 +42140,12 @@ fragment InvalidEmailError on InvalidEmailError {
 `
 
 func UpdateUser(
-	ctx context.Context,
-	client graphql.Client,
+	ctx_ context.Context,
+	client_ graphql.Client,
 	uId string,
 	input UserInput,
 ) (*UpdateUserResponse, error) {
-	req := &graphql.Request{
+	req_ := &graphql.Request{
 		OpName: "UpdateUser",
 		Query:  UpdateUser_Operation,
 		Variables: &__UpdateUserInput{
@@ -41465,16 +42153,16 @@ func UpdateUser(
 			Input: input,
 		},
 	}
-	var err error
+	var err_ error
 
-	var data UpdateUserResponse
-	resp := &graphql.Response{Data: &data}
+	var data_ UpdateUserResponse
+	resp_ := &graphql.Response{Data: &data_}
 
-	err = client.MakeRequest(
-		ctx,
-		req,
-		resp,
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
 	)
 
-	return &data, err
+	return &data_, err_
 }

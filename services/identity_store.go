@@ -87,6 +87,29 @@ func (c *IdentityStoreClient) DeleteIdentityStore(ctx context.Context, id string
 	}
 }
 
+// UpdateIdentityStoreMasterFlag updates the master flag of an existing IdentityStore for a given DataSource.
+// Returns the updated IdentityStore if successful.
+// Otherwise, returns an error.
+func (c *IdentityStoreClient) UpdateIdentityStoreMasterFlag(ctx context.Context, id string, master bool) (*types.IdentityStore, error) {
+	result, err := schema.UpdateIdentityStoreMasterFlag(ctx, c.client, id, master)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	switch response := result.UpdateIdentityStoreMasterFlag.(type) {
+	case *types.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore:
+		return &response.IdentityStore, nil
+	case *types.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError:
+		return nil, types.NewErrAlreadyExists("identityStore", response.Message)
+	case *types.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError:
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
+	case *types.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("updateIdentityStore", response.Message)
+	default:
+		return nil, fmt.Errorf("unexpected type '%T'", response)
+	}
+}
+
 // GetIdentityStore returns an existing IdentityStore for a given DataSource.
 // If successful, returns the IdentityStore.
 // Otherwise, returns an error.

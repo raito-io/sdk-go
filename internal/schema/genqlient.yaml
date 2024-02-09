@@ -6,7 +6,7 @@ operations:
 generated: generated.go
 
 # create pointer type for the optional inputs
-optional: pointer
+optional: pointer_omitempty
 
 bindings:
   Time:

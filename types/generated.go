@@ -20,7 +20,7 @@ type AbacComparisonExpressionLiteral = schema.AbacComparisonExpressionLiteral
 type AbacComparisonExpressionOperandInput = schema.AbacComparisonExpressionOperandInput
 type AbacComparisonExpressionUnaryExpressionInput = schema.AbacComparisonExpressionUnaryExpressionInput
 type AccessProvider = schema.AccessProvider
-type AccessProviderDataSourcesDataSource = schema.AccessProviderDataSourcesDataSource
+type AccessProviderDataSourceInput = schema.AccessProviderDataSourceInput
 type AccessProviderFilterInput = schema.AccessProviderFilterInput
 type AccessProviderInput = schema.AccessProviderInput
 type AccessProviderLock = schema.AccessProviderLock
@@ -86,6 +86,7 @@ type AccessProviderPageEdgesEdgeNodeUserAccessReturnItem = schema.AccessProvider
 type AccessProviderPageEdgesEdgeNodeUserSubtask = schema.AccessProviderPageEdgesEdgeNodeUserSubtask
 type AccessProviderPageEdgesEdgeNodeUserTask = schema.AccessProviderPageEdgesEdgeNodeUserTask
 type AccessProviderPagePageInfo = schema.AccessProviderPagePageInfo
+type AccessProviderSyncData = schema.AccessProviderSyncData
 type AccessProviderWhatAbacRule = schema.AccessProviderWhatAbacRule
 type AccessProviderWhatAbacScopeList = schema.AccessProviderWhatAbacScopeList
 type AccessProviderWhatAbacScopeListEdgesEdge = schema.AccessProviderWhatAbacScopeListEdgesEdge
@@ -829,6 +830,20 @@ const (
 	SortDesc Sort = schema.SortDesc
 )
 
+type SyncData = schema.SyncData
+type SyncDataDataSource = schema.SyncDataDataSource
+type SyncDataMaskType = schema.SyncDataMaskType
+type SyncStatus = schema.SyncStatus
+
+const (
+	SyncStatusNotConnected SyncStatus = schema.SyncStatusNotConnected
+	SyncStatusFailed       SyncStatus = schema.SyncStatusFailed
+	SyncStatusOutOfDate    SyncStatus = schema.SyncStatusOutOfDate
+	SyncStatusOutOfSync    SyncStatus = schema.SyncStatusOutOfSync
+	SyncStatusInProgress   SyncStatus = schema.SyncStatusInProgress
+	SyncStatusSynced       SyncStatus = schema.SyncStatusSynced
+)
+
 type UnassignGlobalRoleResponse = schema.UnassignGlobalRoleResponse
 type UnassignGlobalRoleUnassignGlobalRole = schema.UnassignGlobalRoleUnassignGlobalRole
 type UnassignGlobalRoleUnassignGlobalRoleNotFoundError = schema.UnassignGlobalRoleUnassignGlobalRoleNotFoundError
@@ -865,6 +880,12 @@ type UpdateDataSourceUpdateDataSource = schema.UpdateDataSourceUpdateDataSource
 type UpdateDataSourceUpdateDataSourceDataSourceResult = schema.UpdateDataSourceUpdateDataSourceDataSourceResult
 type UpdateDataSourceUpdateDataSourceNotFoundError = schema.UpdateDataSourceUpdateDataSourceNotFoundError
 type UpdateDataSourceUpdateDataSourcePermissionDeniedError = schema.UpdateDataSourceUpdateDataSourcePermissionDeniedError
+type UpdateIdentityStoreMasterFlagResponse = schema.UpdateIdentityStoreMasterFlagResponse
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError = schema.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore = schema.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult = schema.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError = schema.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError = schema.UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
 type UpdateIdentityStoreResponse = schema.UpdateIdentityStoreResponse
 type UpdateIdentityStoreUpdateIdentityStore = schema.UpdateIdentityStoreUpdateIdentityStore
 type UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError = schema.UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError
@@ -908,7 +929,6 @@ const (
 
 type WhatAbacRule = schema.WhatAbacRule
 type WhatAbacRuleInput = schema.WhatAbacRuleInput
-type WhatInput = schema.WhatInput
 type WhoAbacRule = schema.WhoAbacRule
 type WhoAbacRuleInput = schema.WhoAbacRuleInput
 type WhoAndWhatType = schema.WhoAndWhatType
@@ -919,7 +939,6 @@ const (
 	WhoAndWhatTypeUnknown WhoAndWhatType = schema.WhoAndWhatTypeUnknown
 )
 
-type WhoInput = schema.WhoInput
 type WhoItemInput = schema.WhoItemInput
 
 var AllAbacComparisonExpressionComparisonOperator = []AbacComparisonExpressionComparisonOperator{AbacComparisonExpressionComparisonOperatorEquals, AbacComparisonExpressionComparisonOperatorIn, AbacComparisonExpressionComparisonOperatorHastag, AbacComparisonExpressionComparisonOperatorContainstag}
@@ -932,5 +951,6 @@ var AllDataComparisonExpressionEntityType = []DataComparisonExpressionEntityType
 var AllDataSourceFeatures = []DataSourceFeatures{DataSourceFeaturesColumnmasking, DataSourceFeaturesRowfiltering}
 var AllDataSourceSyncMethod = []DataSourceSyncMethod{DataSourceSyncMethodOnPrem, DataSourceSyncMethodCloudManualTrigger}
 var AllSort = []Sort{SortAsc, SortDesc}
+var AllSyncStatus = []SyncStatus{SyncStatusNotConnected, SyncStatusFailed, SyncStatusOutOfDate, SyncStatusOutOfSync, SyncStatusInProgress, SyncStatusSynced}
 var AllUserType = []UserType{UserTypeHuman, UserTypeMachine}
 var AllWhoAndWhatType = []WhoAndWhatType{WhoAndWhatTypeStatic, WhoAndWhatTypeDynamic, WhoAndWhatTypeUnknown}
