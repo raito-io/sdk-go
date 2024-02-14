@@ -37304,11 +37304,15 @@ func (v *__DeactivateAccessProviderInput) GetId() string { return v.Id }
 
 // __DeleteAccessProviderInput is used internally by genqlient
 type __DeleteAccessProviderInput struct {
-	Id string `json:"id"`
+	Id            string `json:"id"`
+	OverrideLocks *bool  `json:"overrideLocks,omitempty"`
 }
 
 // GetId returns __DeleteAccessProviderInput.Id, and is useful for accessing the field via an interface.
 func (v *__DeleteAccessProviderInput) GetId() string { return v.Id }
+
+// GetOverrideLocks returns __DeleteAccessProviderInput.OverrideLocks, and is useful for accessing the field via an interface.
+func (v *__DeleteAccessProviderInput) GetOverrideLocks() *bool { return v.OverrideLocks }
 
 // __DeleteDataSourceInput is used internally by genqlient
 type __DeleteDataSourceInput struct {
@@ -39028,8 +39032,8 @@ func DeactivateAccessProvider(
 
 // The query or mutation executed by DeleteAccessProvider.
 const DeleteAccessProvider_Operation = `
-mutation DeleteAccessProvider ($id: ID!) {
-	deleteAccessProvider(id: $id) {
+mutation DeleteAccessProvider ($id: ID!, $overrideLocks: Boolean) {
+	deleteAccessProvider(id: $id, overrideLocks: $overrideLocks) {
 		__typename
 		... AccessProvider
 		... NotFoundError
@@ -39127,12 +39131,14 @@ func DeleteAccessProvider(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
+	overrideLocks *bool,
 ) (*DeleteAccessProviderResponse, error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteAccessProvider",
 		Query:  DeleteAccessProvider_Operation,
 		Variables: &__DeleteAccessProviderInput{
-			Id: id,
+			Id:            id,
+			OverrideLocks: overrideLocks,
 		},
 	}
 	var err_ error
