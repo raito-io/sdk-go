@@ -83,8 +83,13 @@ func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id stri
 // DeleteAccessProvider deletes an existing AccessProvider in Raito Cloud.
 // If the deletion is successful, nil is returned.
 // Otherwise, an error is returned.
-func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id string) error {
-	result, err := schema.DeleteAccessProvider(ctx, a.client, id)
+func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id string, ops ...func(options *UpdateAccessProviderOptions)) error {
+	options := UpdateAccessProviderOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	result, err := schema.DeleteAccessProvider(ctx, a.client, id, &options.overrideLocks)
 	if err != nil {
 		return types.NewErrClient(err)
 	}

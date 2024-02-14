@@ -193,8 +193,8 @@ mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!, $overrideLock
     }
 }
 
-mutation DeleteAccessProvider($id: ID!) {
-    deleteAccessProvider(id: $id) {
+mutation DeleteAccessProvider($id: ID!, $overrideLocks: Boolean) {
+    deleteAccessProvider(id: $id, overrideLocks: $overrideLocks) {
         __typename
         ...AccessProvider
         ... NotFoundError
