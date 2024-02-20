@@ -37,12 +37,12 @@ fi
 # Fetch the asset URL and download the file
 asset_url=$(curl -L -s \
  -H "Accept: application/vnd.github+json" \
- -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+ -H "Authorization: Bearer ${TOKEN}" \
  -H "X-GitHub-Api-Version: 2022-11-28" \
  https://api.github.com/repos/raito-io/appserver/releases/latest | jq -r '.assets[] | select(.name=="schema.graphql") | .url ')
 
 curl -L -s \
  -H "Accept: application/octet-stream" \
- -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+ -H "Authorization: Bearer ${TOKEN}" \
  -H "X-GitHub-Api-Version: 2022-11-28" \
  ${asset_url} > ${OUTPUT_FILE}
