@@ -26,7 +26,7 @@ It can be used to automate basic operations.
 
 ## Installation
 ```shell
-go get github.com/your-username/raito-cloud-sdk
+go get -u github.com/raito-io/sdk
 ```
 
 ## Examples
