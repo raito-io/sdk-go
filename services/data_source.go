@@ -8,9 +8,9 @@ import (
 	"github.com/Khan/genqlient/graphql"
 	"github.com/aws/smithy-go/ptr"
 
-	"github.com/raito-io/sdk/internal"
-	"github.com/raito-io/sdk/internal/schema"
-	"github.com/raito-io/sdk/types"
+	"github.com/raito-io/sdk-go/internal"
+	"github.com/raito-io/sdk-go/internal/schema"
+	"github.com/raito-io/sdk-go/types"
 )
 
 type DataSourceClient struct {

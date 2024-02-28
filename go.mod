@@ -1,4 +1,4 @@
-module github.com/raito-io/sdk
+module github.com/raito-io/sdk-go
 
 go 1.21
 

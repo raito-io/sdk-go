@@ -6,8 +6,8 @@ import (
 
 	"github.com/Khan/genqlient/graphql"
 
-	"github.com/raito-io/sdk/internal/schema"
-	"github.com/raito-io/sdk/types"
+	"github.com/raito-io/sdk-go/internal/schema"
+	"github.com/raito-io/sdk-go/types"
 )
 
 type DataObjectClient struct {

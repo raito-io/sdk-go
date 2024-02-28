@@ -26,7 +26,7 @@ It can be used to automate basic operations.
 
 ## Installation
 ```shell
-go get github.com/your-username/raito-cloud-sdk
+go get -u github.com/raito-io/sdk-go
 ```
 
 ## Examples
@@ -37,7 +37,7 @@ import (
     "context"
     "fmt"
 
-    raito "github.com/raito-io/sdk"
+    raito "github.com/raito-io/sdk-go"
 )
 
 func main() {

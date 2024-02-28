@@ -9,7 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/raito-io/sdk/types"
+	"github.com/raito-io/sdk-go/types"
 )
 
 func TestPaginationExecutor(t *testing.T) {
