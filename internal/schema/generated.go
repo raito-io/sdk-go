@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/Khan/genqlient/graphql"
-	"github.com/raito-io/sdk/types/models"
+	"github.com/raito-io/sdk-go/types/models"
 )
 
 type AbacComparisonExpressionAggregatorInput struct {
