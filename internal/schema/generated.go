@@ -389,11 +389,22 @@ type AccessProviderLockDetails struct {
 func (v *AccessProviderLockDetails) GetReason() *string { return v.Reason }
 
 type AccessProviderLockDetailsInput struct {
-	Reason *string `json:"reason,omitempty"`
+	Reason   *string                 `json:"reason,omitempty"`
+	LockType *AccessProviderLockType `json:"lockType,omitempty"`
 }
 
 // GetReason returns AccessProviderLockDetailsInput.Reason, and is useful for accessing the field via an interface.
 func (v *AccessProviderLockDetailsInput) GetReason() *string { return v.Reason }
+
+// GetLockType returns AccessProviderLockDetailsInput.LockType, and is useful for accessing the field via an interface.
+func (v *AccessProviderLockDetailsInput) GetLockType() *AccessProviderLockType { return v.LockType }
+
+type AccessProviderLockType string
+
+const (
+	AccessProviderLockTypeImportexport AccessProviderLockType = "ImportExport"
+	AccessProviderLockTypeUseronly     AccessProviderLockType = "UserOnly"
+)
 
 // AccessProviderLocks includes the GraphQL fields of AccessProviderLockData requested by the fragment AccessProviderLocks.
 type AccessProviderLocks struct {
