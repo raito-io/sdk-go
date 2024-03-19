@@ -37,6 +37,13 @@ const (
 type AccessProviderLockDataInput = schema.AccessProviderLockDataInput
 type AccessProviderLockDetails = schema.AccessProviderLockDetails
 type AccessProviderLockDetailsInput = schema.AccessProviderLockDetailsInput
+type AccessProviderLockType = schema.AccessProviderLockType
+
+const (
+	AccessProviderLockTypeImportexport AccessProviderLockType = schema.AccessProviderLockTypeImportexport
+	AccessProviderLockTypeUseronly     AccessProviderLockType = schema.AccessProviderLockTypeUseronly
+)
+
 type AccessProviderLocks = schema.AccessProviderLocks
 type AccessProviderLocksAccessProviderLockData = schema.AccessProviderLocksAccessProviderLockData
 type AccessProviderLocksDetailsAccessProviderLockDetails = schema.AccessProviderLocksDetailsAccessProviderLockDetails
@@ -943,6 +950,7 @@ type WhoItemInput = schema.WhoItemInput
 
 var AllAbacComparisonExpressionComparisonOperator = []AbacComparisonExpressionComparisonOperator{AbacComparisonExpressionComparisonOperatorEquals, AbacComparisonExpressionComparisonOperatorIn, AbacComparisonExpressionComparisonOperatorHastag, AbacComparisonExpressionComparisonOperatorContainstag}
 var AllAccessProviderLock = []AccessProviderLock{AccessProviderLockWholock, AccessProviderLockInheritancelock, AccessProviderLockWhatlock, AccessProviderLockNamelock, AccessProviderLockDeletelock, AccessProviderLockOwnerlock}
+var AllAccessProviderLockType = []AccessProviderLockType{AccessProviderLockTypeImportexport, AccessProviderLockTypeUseronly}
 var AllAccessWhoItemType = []AccessWhoItemType{AccessWhoItemTypeWhogrant, AccessWhoItemTypeWhopromise}
 var AllBinaryExpressionAggregatorOperator = []BinaryExpressionAggregatorOperator{BinaryExpressionAggregatorOperatorAnd, BinaryExpressionAggregatorOperatorOr}
 var AllBinaryExpressionUnaryExpressionOperator = []BinaryExpressionUnaryExpressionOperator{BinaryExpressionUnaryExpressionOperatorNot}
