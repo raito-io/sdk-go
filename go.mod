@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.26.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.8
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.36.2
-	github.com/aws/smithy-go v1.20.1
+	github.com/aws/smithy-go v1.20.2
 	github.com/raito-io/enumer v0.1.4
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/tools v0.19.0
