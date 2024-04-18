@@ -49,10 +49,13 @@ func (v *AbacComparisonExpressionComparisonInput) GetRightOperand() AbacComparis
 type AbacComparisonExpressionComparisonOperator string
 
 const (
-	AbacComparisonExpressionComparisonOperatorEquals      AbacComparisonExpressionComparisonOperator = "Equals"
-	AbacComparisonExpressionComparisonOperatorIn          AbacComparisonExpressionComparisonOperator = "In"
-	AbacComparisonExpressionComparisonOperatorHastag      AbacComparisonExpressionComparisonOperator = "HasTag"
-	AbacComparisonExpressionComparisonOperatorContainstag AbacComparisonExpressionComparisonOperator = "ContainsTag"
+	AbacComparisonExpressionComparisonOperatorPropertyequals     AbacComparisonExpressionComparisonOperator = "PropertyEquals"
+	AbacComparisonExpressionComparisonOperatorPropertyin         AbacComparisonExpressionComparisonOperator = "PropertyIn"
+	AbacComparisonExpressionComparisonOperatorHastag             AbacComparisonExpressionComparisonOperator = "HasTag"
+	AbacComparisonExpressionComparisonOperatorContainstag        AbacComparisonExpressionComparisonOperator = "ContainsTag"
+	AbacComparisonExpressionComparisonOperatorPropertystartswith AbacComparisonExpressionComparisonOperator = "PropertyStartsWith"
+	AbacComparisonExpressionComparisonOperatorPropertyendswith   AbacComparisonExpressionComparisonOperator = "PropertyEndsWith"
+	AbacComparisonExpressionComparisonOperatorPropertycontains   AbacComparisonExpressionComparisonOperator = "PropertyContains"
 )
 
 type AbacComparisonExpressionInput struct {
@@ -37104,11 +37107,19 @@ func (v *WhoAbacRule) GetType() AccessWhoItemType { return v.Type }
 func (v *WhoAbacRule) GetRuleJson() *string { return v.RuleJson }
 
 type WhoAbacRuleInput struct {
-	Rule AbacComparisonExpressionInput `json:"rule"`
+	Rule            AbacComparisonExpressionInput `json:"rule"`
+	Type            AccessWhoItemType             `json:"type"`
+	PromiseDuration *int64                        `json:"promiseDuration,omitempty"`
 }
 
 // GetRule returns WhoAbacRuleInput.Rule, and is useful for accessing the field via an interface.
 func (v *WhoAbacRuleInput) GetRule() AbacComparisonExpressionInput { return v.Rule }
+
+// GetType returns WhoAbacRuleInput.Type, and is useful for accessing the field via an interface.
+func (v *WhoAbacRuleInput) GetType() AccessWhoItemType { return v.Type }
+
+// GetPromiseDuration returns WhoAbacRuleInput.PromiseDuration, and is useful for accessing the field via an interface.
+func (v *WhoAbacRuleInput) GetPromiseDuration() *int64 { return v.PromiseDuration }
 
 type WhoAndWhatType string
 
