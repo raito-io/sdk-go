@@ -56,7 +56,7 @@ func WithDataObjectListFilter(input *types.DataObjectFilterInput) func(options *
 // A filter can be specified with WithDataObjectListFilter
 // A channel is returned that can be used to receive the list of DataObjectListItem
 // To close the channel ensure to cancel the context
-func (c *DataObjectClient) ListDataObjects(ctx context.Context, ops ...func(options *DataObjectListOptions)) <-chan types.ListItem[types.DataObject] {
+func (c *DataObjectClient) ListDataObjects(ctx context.Context, ops ...func(options *DataObjectListOptions)) <-chan types.ListItem[types.DataObject] { //nolint:dupl
 	options := DataObjectListOptions{}
 	for _, op := range ops {
 		op(&options)

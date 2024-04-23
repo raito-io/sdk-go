@@ -58,7 +58,7 @@ func WithRoleListFilter(input *types.RoleFilterInput) func(options *RoleListOpti
 // A filter can be specified with WithRoleListFilter.
 // A channel is returned that can be used to receive the list of types.Role.
 // To close the channel ensure to cancel the context.
-func (c *RoleClient) ListRoles(ctx context.Context, ops ...func(*RoleListOptions)) <-chan types.ListItem[types.Role] {
+func (c *RoleClient) ListRoles(ctx context.Context, ops ...func(*RoleListOptions)) <-chan types.ListItem[types.Role] { //nolint:dupl
 	options := RoleListOptions{}
 	for _, op := range ops {
 		op(&options)
