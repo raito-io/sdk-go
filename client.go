@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"context"
+	"strings"
 
 	gql "github.com/Khan/genqlient/graphql"
 
@@ -39,7 +40,14 @@ func NewClient(ctx context.Context, domain, user, secret string, ops ...func(opt
 		op(&options)
 	}
 
-	client := gql.NewClient(options.UrlOverride+internal.GqlApiPath, &internal.AuthedDoer{
+	url := options.UrlOverride
+	if !strings.HasSuffix(url, "/") {
+		url += "/"
+	}
+
+	url += internal.GqlApiPath
+
+	client := gql.NewClient(url, &internal.AuthedDoer{
 		Domain: domain,
 		User:   user,
 		Secret: secret,

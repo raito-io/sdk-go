@@ -64,7 +64,7 @@ func (d *AuthedDoer) addTokenToHeader(ctx context.Context, h *http.Header) error
 
 	err := d.updateToken(ctx)
 	if err != nil {
-		return err
+		return fmt.Errorf("update token: %w", err)
 	}
 
 	h.Add("Authorization", "token "+d.token.idToken)
@@ -80,17 +80,25 @@ func (d *AuthedDoer) updateToken(ctx context.Context) error {
 	if d.clientAppId == "" {
 		clientAppId, err := fetchClientAppId(d.Url, d.Domain)
 		if err != nil {
-			return err
+			return fmt.Errorf("fetch client app id: %w", err)
 		}
 
 		d.clientAppId = clientAppId
 	}
 
 	if d.token.refreshToken != "" {
-		return d.refreshToken(ctx)
+		err := d.refreshToken(ctx)
+		if err != nil {
+			return fmt.Errorf("refresh token: %w", err)
+		}
 	} else {
-		return d.fetchNewToken(ctx)
+		err := d.fetchNewToken(ctx)
+		if err != nil {
+			return fmt.Errorf("fetch new token: %w", err)
+		}
 	}
+
+	return nil
 }
 
 func (d *AuthedDoer) fetchNewToken(ctx context.Context) error {
@@ -183,7 +191,11 @@ func fetchClientAppId(urlBase, domain string) (string, error) {
 		return "", fmt.Errorf("invalid domain name %q. A domain should start with a letter and can only contain alphanumeric characters and the dash character. It also should not end with a dash character", domain)
 	}
 
-	url := urlBase + "/admin/org/" + domain
+	if !strings.HasSuffix(urlBase, "/") {
+		urlBase = urlBase + "/"
+	}
+
+	url := urlBase + "admin/org/" + domain
 
 	req, err := http.NewRequest("GET", url, http.NoBody)
 	if err != nil {
@@ -200,7 +212,7 @@ func fetchClientAppId(urlBase, domain string) (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return "", fmt.Errorf("unexpected status code %q received when calling URL %q", resp.StatusCode, url)
+		return "", fmt.Errorf("unexpected status code %d received when calling URL %q", resp.StatusCode, url)
 	}
 
 	body, err := io.ReadAll(resp.Body)
