@@ -192,7 +192,7 @@ func fetchClientAppId(urlBase, domain string) (string, error) {
 	}
 
 	if !strings.HasSuffix(urlBase, "/") {
-		urlBase = urlBase + "/"
+		urlBase += "/"
 	}
 
 	url := urlBase + "admin/org/" + domain
