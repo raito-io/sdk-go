@@ -9,7 +9,7 @@ require (
 	github.com/alexflint/go-scalar v1.2.0
 	github.com/aws/aws-sdk-go-v2 v1.27.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.15
-	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.38.2
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.38.3
 	github.com/aws/smithy-go v1.20.2
 	github.com/raito-io/enumer v0.1.4
 	github.com/stretchr/testify v1.9.0
