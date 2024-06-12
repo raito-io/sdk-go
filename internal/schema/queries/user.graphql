@@ -17,6 +17,12 @@ query GetUser($id: ID!) {
     }
 }
 
+query CurrentUser {
+    currentUser {
+        ...User
+    }
+}
+
 query GetUserByEmail($email: String!) {
     userByEmail(email: $email) {
         ... User
