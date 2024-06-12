@@ -22,6 +22,15 @@ func NewUserClient(client graphql.Client) UserClient {
 	}
 }
 
+func (c *UserClient) GetCurrentUser(ctx context.Context) (*types.User, error) {
+	result, err := schema.CurrentUser(ctx, c.client)
+	if err != nil {
+		return nil, types.NewErrClient(err)
+	}
+
+	return &result.CurrentUser.User, nil
+}
+
 // GetUser returns the user with the given ID.
 // Returns a User if the user is found, otherwise returns an error.
 func (c *UserClient) GetUser(ctx context.Context, id string) (*types.User, error) {

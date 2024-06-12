@@ -986,6 +986,16 @@ type AccessProviderPageEdgesEdgeNodeDataObject struct {
 // GetTypename returns AccessProviderPageEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderPageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type AccessProviderPageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -1100,6 +1110,7 @@ func (v *AccessProviderPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // AccessProviderPageEdgesEdgeNodeComment
 // AccessProviderPageEdgesEdgeNodeDataAccessReturnItem
 // AccessProviderPageEdgesEdgeNodeDataObject
+// AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation
 // AccessProviderPageEdgesEdgeNodeDataObjectType
 // AccessProviderPageEdgesEdgeNodeDataSource
 // AccessProviderPageEdgesEdgeNodeDataUsage
@@ -1161,6 +1172,8 @@ func (v *AccessProviderPageEdgesEdgeNodeComment) implementsGraphQLInterfaceAcces
 func (v *AccessProviderPageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
@@ -1273,6 +1286,9 @@ func __unmarshalAccessProviderPageEdgesEdgeNodeItem(b []byte, v *AccessProviderP
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(AccessProviderPageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(AccessProviderPageEdgesEdgeNodeDataObjectType)
@@ -1487,6 +1503,14 @@ func __marshalAccessProviderPageEdgesEdgeNodeItem(v *AccessProviderPageEdgesEdge
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderPageEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderPageEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderPageEdgesEdgeNodeDataObjectType:
@@ -2393,6 +2417,16 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) __premarshalJSO
 	return &retval, nil
 }
 
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -2517,6 +2551,7 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue) GetTypename() *strin
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeComment
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataSource
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeDataUsage
@@ -2578,6 +2613,8 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeComment) implementsGraphQLI
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
@@ -2690,6 +2727,9 @@ func __unmarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(b []byte, v *Ac
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType)
@@ -2905,6 +2945,14 @@ func __marshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(v *AccessProvider
 			TypeName string `json:"__typename"`
 			*__premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectAccessibilityInformation
+		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObjectType:
 		typename = "DataObjectType"
@@ -3643,6 +3691,16 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject) GetTypenam
 	return v.Typename
 }
 
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -3771,6 +3829,7 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue) GetTypename() *
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeComment
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataSource
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeDataUsage
@@ -3832,6 +3891,8 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeComment) implementsGra
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
@@ -3944,6 +4005,9 @@ func __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(b []byte, 
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType)
@@ -4158,6 +4222,14 @@ func __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(v *AccessPro
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeDataObjectType:
@@ -4929,6 +5001,16 @@ type AccessProviderWhatListEdgesEdgeNodeDataObject struct {
 // GetTypename returns AccessProviderWhatListEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatListEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type AccessProviderWhatListEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -5043,6 +5125,7 @@ func (v *AccessProviderWhatListEdgesEdgeNodeIssue) GetTypename() *string { retur
 // AccessProviderWhatListEdgesEdgeNodeComment
 // AccessProviderWhatListEdgesEdgeNodeDataAccessReturnItem
 // AccessProviderWhatListEdgesEdgeNodeDataObject
+// AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation
 // AccessProviderWhatListEdgesEdgeNodeDataObjectType
 // AccessProviderWhatListEdgesEdgeNodeDataSource
 // AccessProviderWhatListEdgesEdgeNodeDataUsage
@@ -5104,6 +5187,8 @@ func (v *AccessProviderWhatListEdgesEdgeNodeComment) implementsGraphQLInterfaceA
 func (v *AccessProviderWhatListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
@@ -5216,6 +5301,9 @@ func __unmarshalAccessProviderWhatListEdgesEdgeNodeItem(b []byte, v *AccessProvi
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeDataObjectType)
@@ -5430,6 +5518,14 @@ func __marshalAccessProviderWhatListEdgesEdgeNodeItem(v *AccessProviderWhatListE
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhatListEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatListEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatListEdgesEdgeNodeDataObjectType:
@@ -6339,6 +6435,16 @@ type AccessProviderWhoListEdgesEdgeNodeDataObject struct {
 // GetTypename returns AccessProviderWhoListEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhoListEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type AccessProviderWhoListEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -6453,6 +6559,7 @@ func (v *AccessProviderWhoListEdgesEdgeNodeIssue) GetTypename() *string { return
 // AccessProviderWhoListEdgesEdgeNodeComment
 // AccessProviderWhoListEdgesEdgeNodeDataAccessReturnItem
 // AccessProviderWhoListEdgesEdgeNodeDataObject
+// AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation
 // AccessProviderWhoListEdgesEdgeNodeDataObjectType
 // AccessProviderWhoListEdgesEdgeNodeDataSource
 // AccessProviderWhoListEdgesEdgeNodeDataUsage
@@ -6514,6 +6621,8 @@ func (v *AccessProviderWhoListEdgesEdgeNodeComment) implementsGraphQLInterfaceAc
 func (v *AccessProviderWhoListEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeDataObject) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
@@ -6626,6 +6735,9 @@ func __unmarshalAccessProviderWhoListEdgesEdgeNodeItem(b []byte, v *AccessProvid
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeDataObjectType)
@@ -6840,6 +6952,14 @@ func __marshalAccessProviderWhoListEdgesEdgeNodeItem(v *AccessProviderWhoListEdg
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhoListEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhoListEdgesEdgeNodeDataObjectType:
@@ -12625,6 +12745,90 @@ func (v *CreateUserResponse) __premarshalJSON() (*__premarshalCreateUserResponse
 	return &retval, nil
 }
 
+// CurrentUserCurrentUser includes the requested fields of the GraphQL type User.
+type CurrentUserCurrentUser struct {
+	User `json:"-"`
+}
+
+// GetId returns CurrentUserCurrentUser.Id, and is useful for accessing the field via an interface.
+func (v *CurrentUserCurrentUser) GetId() string { return v.User.Id }
+
+// GetName returns CurrentUserCurrentUser.Name, and is useful for accessing the field via an interface.
+func (v *CurrentUserCurrentUser) GetName() string { return v.User.Name }
+
+// GetEmail returns CurrentUserCurrentUser.Email, and is useful for accessing the field via an interface.
+func (v *CurrentUserCurrentUser) GetEmail() *string { return v.User.Email }
+
+// GetIsRaitoUser returns CurrentUserCurrentUser.IsRaitoUser, and is useful for accessing the field via an interface.
+func (v *CurrentUserCurrentUser) GetIsRaitoUser() bool { return v.User.IsRaitoUser }
+
+// GetType returns CurrentUserCurrentUser.Type, and is useful for accessing the field via an interface.
+func (v *CurrentUserCurrentUser) GetType() UserType { return v.User.Type }
+
+func (v *CurrentUserCurrentUser) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CurrentUserCurrentUser
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CurrentUserCurrentUser = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.User)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCurrentUserCurrentUser struct {
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	Email *string `json:"email"`
+
+	IsRaitoUser bool `json:"isRaitoUser"`
+
+	Type UserType `json:"type"`
+}
+
+func (v *CurrentUserCurrentUser) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CurrentUserCurrentUser) __premarshalJSON() (*__premarshalCurrentUserCurrentUser, error) {
+	var retval __premarshalCurrentUserCurrentUser
+
+	retval.Id = v.User.Id
+	retval.Name = v.User.Name
+	retval.Email = v.User.Email
+	retval.IsRaitoUser = v.User.IsRaitoUser
+	retval.Type = v.User.Type
+	return &retval, nil
+}
+
+// CurrentUserResponse is returned by CurrentUser on success.
+type CurrentUserResponse struct {
+	CurrentUser *CurrentUserCurrentUser `json:"currentUser"`
+}
+
+// GetCurrentUser returns CurrentUserResponse.CurrentUser, and is useful for accessing the field via an interface.
+func (v *CurrentUserResponse) GetCurrentUser() *CurrentUserCurrentUser { return v.CurrentUser }
+
 type DataComparisonExpressionAggregatorInput struct {
 	Operator BinaryExpressionAggregatorOperator `json:"operator"`
 	Operands []DataComparisonExpressionInput    `json:"operands"`
@@ -13152,6 +13356,16 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) __
 	return &retval, nil
 }
 
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -13280,6 +13494,7 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeIssue) GetType
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeComment
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataAccessReturnItem
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataSource
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataUsage
@@ -13341,6 +13556,8 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeComment) imple
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
+}
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
@@ -13453,6 +13670,9 @@ func __unmarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(b 
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType)
@@ -13668,6 +13888,14 @@ func __marshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(v *D
 			TypeName string `json:"__typename"`
 			*__premarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectAccessibilityInformation
+		}{typename, v}
 		return json.Marshal(result)
 	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObjectType:
 		typename = "DataObjectType"
@@ -14433,6 +14661,16 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) __premarshalJSON() (*__premarsha
 	return &retval, nil
 }
 
+// DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // DataObjectPageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type DataObjectPageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -14545,6 +14783,7 @@ func (v *DataObjectPageEdgesEdgeNodeIssue) GetTypename() *string { return v.Type
 // DataObjectPageEdgesEdgeNodeComment
 // DataObjectPageEdgesEdgeNodeDataAccessReturnItem
 // DataObjectPageEdgesEdgeNodeDataObject
+// DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation
 // DataObjectPageEdgesEdgeNodeDataObjectType
 // DataObjectPageEdgesEdgeNodeDataSource
 // DataObjectPageEdgesEdgeNodeDataUsage
@@ -14606,6 +14845,8 @@ func (v *DataObjectPageEdgesEdgeNodeComment) implementsGraphQLInterfaceDataObjec
 func (v *DataObjectPageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
 func (v *DataObjectPageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
+}
+func (v *DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
 func (v *DataObjectPageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
@@ -14718,6 +14959,9 @@ func __unmarshalDataObjectPageEdgesEdgeNodeItem(b []byte, v *DataObjectPageEdges
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(DataObjectPageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(DataObjectPageEdgesEdgeNodeDataObjectType)
@@ -14933,6 +15177,14 @@ func __marshalDataObjectPageEdgesEdgeNodeItem(v *DataObjectPageEdgesEdgeNodeItem
 			TypeName string `json:"__typename"`
 			*__premarshalDataObjectPageEdgesEdgeNodeDataObject
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectPageEdgesEdgeNodeDataObjectAccessibilityInformation
+		}{typename, v}
 		return json.Marshal(result)
 	case *DataObjectPageEdgesEdgeNodeDataObjectType:
 		typename = "DataObjectType"
@@ -16429,6 +16681,16 @@ type DataSourcePageEdgesEdgeNodeDataObject struct {
 // GetTypename returns DataSourcePageEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *DataSourcePageEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // DataSourcePageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type DataSourcePageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -16644,6 +16906,7 @@ func (v *DataSourcePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Type
 // DataSourcePageEdgesEdgeNodeComment
 // DataSourcePageEdgesEdgeNodeDataAccessReturnItem
 // DataSourcePageEdgesEdgeNodeDataObject
+// DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation
 // DataSourcePageEdgesEdgeNodeDataObjectType
 // DataSourcePageEdgesEdgeNodeDataSource
 // DataSourcePageEdgesEdgeNodeDataUsage
@@ -16705,6 +16968,8 @@ func (v *DataSourcePageEdgesEdgeNodeComment) implementsGraphQLInterfaceDataSourc
 func (v *DataSourcePageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
+}
+func (v *DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
@@ -16817,6 +17082,9 @@ func __unmarshalDataSourcePageEdgesEdgeNodeItem(b []byte, v *DataSourcePageEdges
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(DataSourcePageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(DataSourcePageEdgesEdgeNodeDataObjectType)
@@ -17027,6 +17295,14 @@ func __marshalDataSourcePageEdgesEdgeNodeItem(v *DataSourcePageEdgesEdgeNodeItem
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataSourcePageEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourcePageEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataSourcePageEdgesEdgeNodeDataObjectType:
@@ -23287,6 +23563,16 @@ type IdentityStorePageEdgesEdgeNodeDataObject struct {
 // GetTypename returns IdentityStorePageEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *IdentityStorePageEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // IdentityStorePageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type IdentityStorePageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -23500,6 +23786,7 @@ func (v *IdentityStorePageEdgesEdgeNodeIssue) GetTypename() *string { return v.T
 // IdentityStorePageEdgesEdgeNodeComment
 // IdentityStorePageEdgesEdgeNodeDataAccessReturnItem
 // IdentityStorePageEdgesEdgeNodeDataObject
+// IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation
 // IdentityStorePageEdgesEdgeNodeDataObjectType
 // IdentityStorePageEdgesEdgeNodeDataSource
 // IdentityStorePageEdgesEdgeNodeDataUsage
@@ -23561,6 +23848,8 @@ func (v *IdentityStorePageEdgesEdgeNodeComment) implementsGraphQLInterfaceIdenti
 func (v *IdentityStorePageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
+}
+func (v *IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
@@ -23673,6 +23962,9 @@ func __unmarshalIdentityStorePageEdgesEdgeNodeItem(b []byte, v *IdentityStorePag
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(IdentityStorePageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(IdentityStorePageEdgesEdgeNodeDataObjectType)
@@ -23883,6 +24175,14 @@ func __marshalIdentityStorePageEdgesEdgeNodeItem(v *IdentityStorePageEdgesEdgeNo
 		result := struct {
 			TypeName string `json:"__typename"`
 			*IdentityStorePageEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*IdentityStorePageEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *IdentityStorePageEdgesEdgeNodeDataObjectType:
@@ -29420,6 +29720,16 @@ type RoleAssignmentPageEdgesEdgeNodeDataObject struct {
 // GetTypename returns RoleAssignmentPageEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentPageEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // RoleAssignmentPageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type RoleAssignmentPageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -29534,6 +29844,7 @@ func (v *RoleAssignmentPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // RoleAssignmentPageEdgesEdgeNodeComment
 // RoleAssignmentPageEdgesEdgeNodeDataAccessReturnItem
 // RoleAssignmentPageEdgesEdgeNodeDataObject
+// RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation
 // RoleAssignmentPageEdgesEdgeNodeDataObjectType
 // RoleAssignmentPageEdgesEdgeNodeDataSource
 // RoleAssignmentPageEdgesEdgeNodeDataUsage
@@ -29595,6 +29906,8 @@ func (v *RoleAssignmentPageEdgesEdgeNodeComment) implementsGraphQLInterfaceRoleA
 func (v *RoleAssignmentPageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
+}
+func (v *RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
@@ -29707,6 +30020,9 @@ func __unmarshalRoleAssignmentPageEdgesEdgeNodeItem(b []byte, v *RoleAssignmentP
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeDataObjectType)
@@ -29917,6 +30233,14 @@ func __marshalRoleAssignmentPageEdgesEdgeNodeItem(v *RoleAssignmentPageEdgesEdge
 		result := struct {
 			TypeName string `json:"__typename"`
 			*RoleAssignmentPageEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentPageEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *RoleAssignmentPageEdgesEdgeNodeDataObjectType:
@@ -30810,6 +31134,16 @@ type RolePageEdgesEdgeNodeDataObject struct {
 // GetTypename returns RolePageEdgesEdgeNodeDataObject.Typename, and is useful for accessing the field via an interface.
 func (v *RolePageEdgesEdgeNodeDataObject) GetTypename() *string { return v.Typename }
 
+// RolePageEdgesEdgeNodeDataObjectAccessibilityInformation includes the requested fields of the GraphQL type DataObjectAccessibilityInformation.
+type RolePageEdgesEdgeNodeDataObjectAccessibilityInformation struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RolePageEdgesEdgeNodeDataObjectAccessibilityInformation.Typename, and is useful for accessing the field via an interface.
+func (v *RolePageEdgesEdgeNodeDataObjectAccessibilityInformation) GetTypename() *string {
+	return v.Typename
+}
+
 // RolePageEdgesEdgeNodeDataObjectType includes the requested fields of the GraphQL type DataObjectType.
 type RolePageEdgesEdgeNodeDataObjectType struct {
 	Typename *string `json:"__typename"`
@@ -30918,6 +31252,7 @@ func (v *RolePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Typename }
 // RolePageEdgesEdgeNodeComment
 // RolePageEdgesEdgeNodeDataAccessReturnItem
 // RolePageEdgesEdgeNodeDataObject
+// RolePageEdgesEdgeNodeDataObjectAccessibilityInformation
 // RolePageEdgesEdgeNodeDataObjectType
 // RolePageEdgesEdgeNodeDataSource
 // RolePageEdgesEdgeNodeDataUsage
@@ -30971,7 +31306,9 @@ func (v *RolePageEdgesEdgeNodeAuditDiffLog) implementsGraphQLInterfaceRolePageEd
 func (v *RolePageEdgesEdgeNodeComment) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()        {}
 func (v *RolePageEdgesEdgeNodeDataAccessReturnItem) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
 }
-func (v *RolePageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()     {}
+func (v *RolePageEdgesEdgeNodeDataObject) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
+func (v *RolePageEdgesEdgeNodeDataObjectAccessibilityInformation) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
+}
 func (v *RolePageEdgesEdgeNodeDataObjectType) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
 func (v *RolePageEdgesEdgeNodeDataSource) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()     {}
 func (v *RolePageEdgesEdgeNodeDataUsage) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()      {}
@@ -31065,6 +31402,9 @@ func __unmarshalRolePageEdgesEdgeNodeItem(b []byte, v *RolePageEdgesEdgeNodeItem
 		return json.Unmarshal(b, *v)
 	case "DataObject":
 		*v = new(RolePageEdgesEdgeNodeDataObject)
+		return json.Unmarshal(b, *v)
+	case "DataObjectAccessibilityInformation":
+		*v = new(RolePageEdgesEdgeNodeDataObjectAccessibilityInformation)
 		return json.Unmarshal(b, *v)
 	case "DataObjectType":
 		*v = new(RolePageEdgesEdgeNodeDataObjectType)
@@ -31275,6 +31615,14 @@ func __marshalRolePageEdgesEdgeNodeItem(v *RolePageEdgesEdgeNodeItem) ([]byte, e
 		result := struct {
 			TypeName string `json:"__typename"`
 			*RolePageEdgesEdgeNodeDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *RolePageEdgesEdgeNodeDataObjectAccessibilityInformation:
+		typename = "DataObjectAccessibilityInformation"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RolePageEdgesEdgeNodeDataObjectAccessibilityInformation
 		}{typename, v}
 		return json.Marshal(result)
 	case *RolePageEdgesEdgeNodeDataObjectType:
@@ -40296,6 +40644,44 @@ func CreateUser(
 	var err_ error
 
 	var data_ CreateUserResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
+// The query or mutation executed by CurrentUser.
+const CurrentUser_Operation = `
+query CurrentUser {
+	currentUser {
+		... User
+	}
+}
+fragment User on User {
+	id
+	name
+	email
+	isRaitoUser
+	type
+}
+`
+
+func CurrentUser(
+	ctx_ context.Context,
+	client_ graphql.Client,
+) (*CurrentUserResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "CurrentUser",
+		Query:  CurrentUser_Operation,
+	}
+	var err_ error
+
+	var data_ CurrentUserResponse
 	resp_ := &graphql.Response{Data: &data_}
 
 	err_ = client_.MakeRequest(

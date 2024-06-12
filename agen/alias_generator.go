@@ -143,7 +143,7 @@ func main() {
 	// Generate aliases
 	err := generateAliases(*inputFile, *outputFile)
 	if err != nil {
-		slog.Error("Error:", err)
+		slog.Error("Error:", slog.String("error", err.Error()))
 		os.Exit(1)
 	}
 
