@@ -8,8 +8,8 @@ github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883 h1:bvNMNQO63//z+xNg
 github.com/andreyvit/diff v0.0.0-20170406064948-c7f18ee00883/go.mod h1:rCTlJbsFo29Kk6CurOXKm700vrz8f0KW0JNfpkRJY/8=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0 h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=
 github.com/arbovm/levenshtein v0.0.0-20160628152529-48b4e1c0c4d0/go.mod h1:t2tdKJDJF9BV14lnkjHmOQgcvEKgtqs5a1N3LNdJhGE=
-github.com/aws/aws-sdk-go-v2 v1.28.0 h1:ne6ftNhY0lUvlazMUQF15FF6NH80wKmPRFG7g2q6TCw=
-github.com/aws/aws-sdk-go-v2 v1.28.0/go.mod h1:ffIFB97e2yNsv4aTSGkqtHnppsIJzw7G7BReUZ3jCXM=
+github.com/aws/aws-sdk-go-v2 v1.30.0 h1:6qAwtzlfcTtcL8NHtbDQAqgM5s6NDipQTkPxyH/6kAA=
+github.com/aws/aws-sdk-go-v2 v1.30.0/go.mod h1:ffIFB97e2yNsv4aTSGkqtHnppsIJzw7G7BReUZ3jCXM=
 github.com/aws/aws-sdk-go-v2/config v1.27.19 h1:+DBS8gJP6VsxYkZ6UEV0/VsRM2rYpbQCYsosW9RRmeQ=
 github.com/aws/aws-sdk-go-v2/config v1.27.19/go.mod h1:KzZcioJWzy9oV+oS5CobYXlDtU9+eW7bPG1g7gizTW4=
 github.com/aws/aws-sdk-go-v2/credentials v1.17.19 h1:R18G7nBBGLby51CFEqUBFF2IVl7LUdCtYj6iosUwh/0=
