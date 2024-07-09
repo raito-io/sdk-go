@@ -289,8 +289,6 @@ type AccessProviderInput struct {
 	WhatAbacRule        *WhatAbacRuleInput              `json:"whatAbacRule,omitempty"`
 	PolicyRule          *string                         `json:"policyRule,omitempty"`
 	FilterCriteria      *DataComparisonExpressionInput  `json:"filterCriteria,omitempty"`
-	DataSource          *string                         `json:"dataSource,omitempty"`
-	Type                *string                         `json:"type,omitempty"`
 	DataSources         []AccessProviderDataSourceInput `json:"dataSources"`
 	WhatDataObjects     []AccessProviderWhatInputDO     `json:"whatDataObjects"`
 	WhatAccessProviders []AccessProviderWhatInputAP     `json:"whatAccessProviders"`
@@ -335,12 +333,6 @@ func (v *AccessProviderInput) GetPolicyRule() *string { return v.PolicyRule }
 func (v *AccessProviderInput) GetFilterCriteria() *DataComparisonExpressionInput {
 	return v.FilterCriteria
 }
-
-// GetDataSource returns AccessProviderInput.DataSource, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetDataSource() *string { return v.DataSource }
-
-// GetType returns AccessProviderInput.Type, and is useful for accessing the field via an interface.
-func (v *AccessProviderInput) GetType() *string { return v.Type }
 
 // GetDataSources returns AccessProviderInput.DataSources, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetDataSources() []AccessProviderDataSourceInput { return v.DataSources }
@@ -1919,8 +1911,10 @@ type AccessProviderSyncData struct {
 // GetDataSource returns AccessProviderSyncData.DataSource, and is useful for accessing the field via an interface.
 func (v *AccessProviderSyncData) GetDataSource() SyncDataDataSource { return v.SyncData.DataSource }
 
-// GetType returns AccessProviderSyncData.Type, and is useful for accessing the field via an interface.
-func (v *AccessProviderSyncData) GetType() *string { return v.SyncData.Type }
+// GetAccessProviderType returns AccessProviderSyncData.AccessProviderType, and is useful for accessing the field via an interface.
+func (v *AccessProviderSyncData) GetAccessProviderType() *SyncDataAccessProviderType {
+	return v.SyncData.AccessProviderType
+}
 
 // GetActualName returns AccessProviderSyncData.ActualName, and is useful for accessing the field via an interface.
 func (v *AccessProviderSyncData) GetActualName() *string { return v.SyncData.ActualName }
@@ -1959,7 +1953,7 @@ func (v *AccessProviderSyncData) UnmarshalJSON(b []byte) error {
 type __premarshalAccessProviderSyncData struct {
 	DataSource SyncDataDataSource `json:"dataSource"`
 
-	Type *string `json:"type"`
+	AccessProviderType *SyncDataAccessProviderType `json:"accessProviderType"`
 
 	ActualName *string `json:"actualName"`
 
@@ -1980,7 +1974,7 @@ func (v *AccessProviderSyncData) __premarshalJSON() (*__premarshalAccessProvider
 	var retval __premarshalAccessProviderSyncData
 
 	retval.DataSource = v.SyncData.DataSource
-	retval.Type = v.SyncData.Type
+	retval.AccessProviderType = v.SyncData.AccessProviderType
 	retval.ActualName = v.SyncData.ActualName
 	retval.MaskType = v.SyncData.MaskType
 	retval.SyncStatus = v.SyncData.SyncStatus
@@ -32782,18 +32776,18 @@ const (
 
 // SyncData includes the GraphQL fields of SyncData requested by the fragment SyncData.
 type SyncData struct {
-	DataSource SyncDataDataSource `json:"dataSource"`
-	Type       *string            `json:"type"`
-	ActualName *string            `json:"actualName"`
-	MaskType   *SyncDataMaskType  `json:"maskType"`
-	SyncStatus SyncStatus         `json:"syncStatus"`
+	DataSource         SyncDataDataSource          `json:"dataSource"`
+	AccessProviderType *SyncDataAccessProviderType `json:"accessProviderType"`
+	ActualName         *string                     `json:"actualName"`
+	MaskType           *SyncDataMaskType           `json:"maskType"`
+	SyncStatus         SyncStatus                  `json:"syncStatus"`
 }
 
 // GetDataSource returns SyncData.DataSource, and is useful for accessing the field via an interface.
 func (v *SyncData) GetDataSource() SyncDataDataSource { return v.DataSource }
 
-// GetType returns SyncData.Type, and is useful for accessing the field via an interface.
-func (v *SyncData) GetType() *string { return v.Type }
+// GetAccessProviderType returns SyncData.AccessProviderType, and is useful for accessing the field via an interface.
+func (v *SyncData) GetAccessProviderType() *SyncDataAccessProviderType { return v.AccessProviderType }
 
 // GetActualName returns SyncData.ActualName, and is useful for accessing the field via an interface.
 func (v *SyncData) GetActualName() *string { return v.ActualName }
@@ -32803,6 +32797,14 @@ func (v *SyncData) GetMaskType() *SyncDataMaskType { return v.MaskType }
 
 // GetSyncStatus returns SyncData.SyncStatus, and is useful for accessing the field via an interface.
 func (v *SyncData) GetSyncStatus() SyncStatus { return v.SyncStatus }
+
+// SyncDataAccessProviderType includes the requested fields of the GraphQL type AccessProviderType.
+type SyncDataAccessProviderType struct {
+	Type *string `json:"type"`
+}
+
+// GetType returns SyncDataAccessProviderType.Type, and is useful for accessing the field via an interface.
+func (v *SyncDataAccessProviderType) GetType() *string { return v.Type }
 
 // SyncDataDataSource includes the requested fields of the GraphQL type DataSource.
 type SyncDataDataSource struct {
@@ -39980,7 +39982,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -40426,7 +40430,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -40931,7 +40937,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -41054,7 +41062,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -41305,7 +41315,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -41456,7 +41468,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -42244,7 +42258,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
@@ -43743,7 +43759,9 @@ fragment SyncData on SyncData {
 	dataSource {
 		... DataSource
 	}
-	type
+	accessProviderType {
+		type
+	}
 	actualName
 	maskType {
 		... MaskType
