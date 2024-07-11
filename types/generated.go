@@ -906,6 +906,7 @@ const (
 )
 
 type SyncData = schema.SyncData
+type SyncDataAccessProviderType = schema.SyncDataAccessProviderType
 type SyncDataDataSource = schema.SyncDataDataSource
 type SyncDataMaskType = schema.SyncDataMaskType
 type SyncStatus = schema.SyncStatus
