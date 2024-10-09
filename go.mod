@@ -8,10 +8,10 @@ require (
 	github.com/agnivade/levenshtein v1.1.1
 	github.com/alexflint/go-arg v1.5.1
 	github.com/alexflint/go-scalar v1.2.0
-	github.com/aws/aws-sdk-go-v2 v1.30.1
+	github.com/aws/aws-sdk-go-v2 v1.30.5
 	github.com/aws/aws-sdk-go-v2/config v1.27.24
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.41.2
-	github.com/aws/smithy-go v1.20.3
+	github.com/aws/smithy-go v1.20.4
 	github.com/raito-io/enumer v0.1.4
 	github.com/stretchr/testify v1.9.0
 	golang.org/x/tools v0.25.0
