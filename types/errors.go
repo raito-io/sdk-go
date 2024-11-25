@@ -63,6 +63,20 @@ func (e *ErrAlreadyExists) Error() string {
 	return fmt.Sprintf("%q already exists: %s", e.Type, e.ServerMsg)
 }
 
+type ErrInvalidInput struct {
+	ServerMsg string
+}
+
+func NewErrInvalidInput(msg string) *ErrInvalidInput {
+	return &ErrInvalidInput{
+		ServerMsg: msg,
+	}
+}
+
+func (e *ErrInvalidInput) Error() string {
+	return fmt.Sprintf("invalid input: %s", e.ServerMsg)
+}
+
 type ErrInvalidEmail struct {
 	Email     string
 	ServerMsg string

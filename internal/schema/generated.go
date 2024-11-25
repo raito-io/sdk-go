@@ -132,6 +132,7 @@ type AccessProvider struct {
 	NamingHint        *string                                     `json:"namingHint"`
 	State             models.AccessProviderState                  `json:"state"`
 	Action            models.AccessProviderAction                 `json:"action"`
+	Category          *AccessProviderCategoryGrantCategory        `json:"category"`
 	Description       string                                      `json:"description"`
 	PolicyRule        *string                                     `json:"policyRule"`
 	External          bool                                        `json:"external"`
@@ -169,6 +170,9 @@ func (v *AccessProvider) GetState() models.AccessProviderState { return v.State 
 // GetAction returns AccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetAction() models.AccessProviderAction { return v.Action }
 
+// GetCategory returns AccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *AccessProvider) GetCategory() *AccessProviderCategoryGrantCategory { return v.Category }
+
 // GetDescription returns AccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetDescription() string { return v.Description }
 
@@ -202,6 +206,76 @@ func (v *AccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData 
 // GetSyncData returns AccessProvider.SyncData, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetSyncData() []AccessProviderSyncData { return v.SyncData }
 
+// AccessProviderCategoryGrantCategory includes the requested fields of the GraphQL type GrantCategory.
+type AccessProviderCategoryGrantCategory struct {
+	GrantCategory `json:"-"`
+}
+
+// GetId returns AccessProviderCategoryGrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *AccessProviderCategoryGrantCategory) GetId() string { return v.GrantCategory.Id }
+
+// GetName returns AccessProviderCategoryGrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *AccessProviderCategoryGrantCategory) GetName() string { return v.GrantCategory.Name }
+
+// GetIsSystem returns AccessProviderCategoryGrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *AccessProviderCategoryGrantCategory) GetIsSystem() bool { return v.GrantCategory.IsSystem }
+
+// GetIsDefault returns AccessProviderCategoryGrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *AccessProviderCategoryGrantCategory) GetIsDefault() bool { return v.GrantCategory.IsDefault }
+
+func (v *AccessProviderCategoryGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*AccessProviderCategoryGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.AccessProviderCategoryGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategory)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalAccessProviderCategoryGrantCategory struct {
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	IsSystem bool `json:"isSystem"`
+
+	IsDefault bool `json:"isDefault"`
+}
+
+func (v *AccessProviderCategoryGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *AccessProviderCategoryGrantCategory) __premarshalJSON() (*__premarshalAccessProviderCategoryGrantCategory, error) {
+	var retval __premarshalAccessProviderCategoryGrantCategory
+
+	retval.Id = v.GrantCategory.Id
+	retval.Name = v.GrantCategory.Name
+	retval.IsSystem = v.GrantCategory.IsSystem
+	retval.IsDefault = v.GrantCategory.IsDefault
+	return &retval, nil
+}
+
 type AccessProviderDataSourceInput struct {
 	DataSource string  `json:"dataSource"`
 	Type       *string `json:"type,omitempty"`
@@ -214,20 +288,25 @@ func (v *AccessProviderDataSourceInput) GetDataSource() string { return v.DataSo
 func (v *AccessProviderDataSourceInput) GetType() *string { return v.Type }
 
 type AccessProviderFilterInput struct {
-	Actions               []models.AccessProviderAction `json:"actions"`
-	States                []models.AccessProviderState  `json:"states"`
-	External              *bool                         `json:"external,omitempty"`
-	Search                *string                       `json:"search,omitempty"`
-	DataSource            *string                       `json:"dataSource,omitempty"`
-	CanEditWho            *bool                         `json:"canEditWho,omitempty"`
-	CanEditInheritance    *bool                         `json:"canEditInheritance,omitempty"`
-	CanEditWhat           *bool                         `json:"canEditWhat,omitempty"`
-	CanBeLinkedFrom       *string                       `json:"canBeLinkedFrom,omitempty"`
-	CanBeLinkedTo         *string                       `json:"canBeLinkedTo,omitempty"`
-	CanBeLinkedFromAction *models.AccessProviderAction  `json:"canBeLinkedFromAction,omitempty"`
-	CanBeLinkedToAction   *models.AccessProviderAction  `json:"canBeLinkedToAction,omitempty"`
-	Exclude               []string                      `json:"exclude"`
-	Source                *string                       `json:"source,omitempty"`
+	Actions                 []models.AccessProviderAction `json:"actions"`
+	States                  []models.AccessProviderState  `json:"states"`
+	Categories              []string                      `json:"categories"`
+	External                *bool                         `json:"external,omitempty"`
+	Search                  *string                       `json:"search,omitempty"`
+	DataSource              *string                       `json:"dataSource,omitempty"`
+	CanEditWho              *bool                         `json:"canEditWho,omitempty"`
+	CanEditInheritance      *bool                         `json:"canEditInheritance,omitempty"`
+	CanEditWhat             *bool                         `json:"canEditWhat,omitempty"`
+	CanBeLinkedFrom         *string                       `json:"canBeLinkedFrom,omitempty"`
+	CanBeLinkedTo           *string                       `json:"canBeLinkedTo,omitempty"`
+	CanBeLinkedFromAction   *models.AccessProviderAction  `json:"canBeLinkedFromAction,omitempty"`
+	CanBeLinkedToAction     *models.AccessProviderAction  `json:"canBeLinkedToAction,omitempty"`
+	CanBeLinkedFromCategory *string                       `json:"canBeLinkedFromCategory,omitempty"`
+	CanBeLinkedToCategory   *string                       `json:"canBeLinkedToCategory,omitempty"`
+	Exclude                 []string                      `json:"exclude"`
+	Source                  *string                       `json:"source,omitempty"`
+	Owners                  []string                      `json:"owners"`
+	HasTags                 []TagFilter                   `json:"hasTags"`
 }
 
 // GetActions returns AccessProviderFilterInput.Actions, and is useful for accessing the field via an interface.
@@ -235,6 +314,9 @@ func (v *AccessProviderFilterInput) GetActions() []models.AccessProviderAction {
 
 // GetStates returns AccessProviderFilterInput.States, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetStates() []models.AccessProviderState { return v.States }
+
+// GetCategories returns AccessProviderFilterInput.Categories, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetCategories() []string { return v.Categories }
 
 // GetExternal returns AccessProviderFilterInput.External, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetExternal() *bool { return v.External }
@@ -270,17 +352,34 @@ func (v *AccessProviderFilterInput) GetCanBeLinkedToAction() *models.AccessProvi
 	return v.CanBeLinkedToAction
 }
 
+// GetCanBeLinkedFromCategory returns AccessProviderFilterInput.CanBeLinkedFromCategory, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetCanBeLinkedFromCategory() *string {
+	return v.CanBeLinkedFromCategory
+}
+
+// GetCanBeLinkedToCategory returns AccessProviderFilterInput.CanBeLinkedToCategory, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetCanBeLinkedToCategory() *string {
+	return v.CanBeLinkedToCategory
+}
+
 // GetExclude returns AccessProviderFilterInput.Exclude, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetExclude() []string { return v.Exclude }
 
 // GetSource returns AccessProviderFilterInput.Source, and is useful for accessing the field via an interface.
 func (v *AccessProviderFilterInput) GetSource() *string { return v.Source }
 
+// GetOwners returns AccessProviderFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetOwners() []string { return v.Owners }
+
+// GetHasTags returns AccessProviderFilterInput.HasTags, and is useful for accessing the field via an interface.
+func (v *AccessProviderFilterInput) GetHasTags() []TagFilter { return v.HasTags }
+
 type AccessProviderInput struct {
 	Name                *string                         `json:"name,omitempty"`
 	NamingHint          *string                         `json:"namingHint,omitempty"`
 	Action              *models.AccessProviderAction    `json:"action,omitempty"`
 	Description         *string                         `json:"description,omitempty"`
+	Category            *string                         `json:"category,omitempty"`
 	Source              *string                         `json:"source,omitempty"`
 	WhoType             *WhoAndWhatType                 `json:"whoType,omitempty"`
 	WhoAbacRule         *WhoAbacRuleInput               `json:"whoAbacRule,omitempty"`
@@ -307,6 +406,9 @@ func (v *AccessProviderInput) GetAction() *models.AccessProviderAction { return 
 
 // GetDescription returns AccessProviderInput.Description, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetDescription() *string { return v.Description }
+
+// GetCategory returns AccessProviderInput.Category, and is useful for accessing the field via an interface.
+func (v *AccessProviderInput) GetCategory() *string { return v.Category }
 
 // GetSource returns AccessProviderInput.Source, and is useful for accessing the field via an interface.
 func (v *AccessProviderInput) GetSource() *string { return v.Source }
@@ -698,6 +800,11 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetAction() models.Acces
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns AccessProviderPageEdgesEdgeNodeAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns AccessProviderPageEdgesEdgeNodeAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -797,6 +904,8 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -840,6 +949,7 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -1117,9 +1227,12 @@ func (v *AccessProviderPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // AccessProviderPageEdgesEdgeNodeJob
 // AccessProviderPageEdgesEdgeNodeJobLogMsg
 // AccessProviderPageEdgesEdgeNodePromiseDetails
+// AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject
+// AccessProviderPageEdgesEdgeNodeQueryHistoryStatement
 // AccessProviderPageEdgesEdgeNodeRole
 // AccessProviderPageEdgesEdgeNodeRoleAssignment
 // AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderPageEdgesEdgeNodeRoleDelegationNotification
 // AccessProviderPageEdgesEdgeNodeSearchResultItem
 // AccessProviderPageEdgesEdgeNodeStringValue
 // AccessProviderPageEdgesEdgeNodeTag
@@ -1195,11 +1308,17 @@ func (v *AccessProviderPageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceAcc
 }
 func (v *AccessProviderPageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
+func (v *AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderPageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
+}
 func (v *AccessProviderPageEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderPageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderPageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderPageEdgesEdgeNodeItem() {
 }
@@ -1324,6 +1443,12 @@ func __unmarshalAccessProviderPageEdgesEdgeNodeItem(b []byte, v *AccessProviderP
 	case "PromiseDetails":
 		*v = new(AccessProviderPageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(AccessProviderPageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(AccessProviderPageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -1332,6 +1457,9 @@ func __unmarshalAccessProviderPageEdgesEdgeNodeItem(b []byte, v *AccessProviderP
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(AccessProviderPageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderPageEdgesEdgeNodeSearchResultItem)
@@ -1617,6 +1745,22 @@ func __marshalAccessProviderPageEdgesEdgeNodeItem(v *AccessProviderPageEdgesEdge
 			*AccessProviderPageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderPageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderPageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderPageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -1639,6 +1783,14 @@ func __marshalAccessProviderPageEdgesEdgeNodeItem(v *AccessProviderPageEdgesEdge
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderPageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderPageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderPageEdgesEdgeNodeSearchResultItem:
@@ -1745,6 +1897,26 @@ type AccessProviderPageEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns AccessProviderPageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderPageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type AccessProviderPageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderPageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderPageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type AccessProviderPageEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -1768,6 +1940,16 @@ type AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderPageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderPageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type AccessProviderPageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderPageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -2560,9 +2742,12 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeIssue) GetTypename() *strin
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeJob
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg
 // AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeRole
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeStringValue
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeTag
@@ -2638,11 +2823,17 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeJobLogMsg) implementsGraphQ
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatAbacScopeListEdgesEdgeNodeItem() {
 }
@@ -2767,6 +2958,12 @@ func __unmarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(b []byte, v *Ac
 	case "PromiseDetails":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -2775,6 +2972,9 @@ func __unmarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(b []byte, v *Ac
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem)
@@ -3060,6 +3260,22 @@ func __marshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(v *AccessProvider
 			*AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -3082,6 +3298,14 @@ func __marshalAccessProviderWhatAbacScopeListEdgesEdgeNodeItem(v *AccessProvider
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatAbacScopeListEdgesEdgeNodeSearchResultItem:
@@ -3192,6 +3416,26 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodePromiseDetails) GetTypename
 	return v.Typename
 }
 
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatAbacScopeListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type AccessProviderWhatAbacScopeListEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -3217,6 +3461,16 @@ type AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification stru
 
 // GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -3367,13 +3621,25 @@ func (v *AccessProviderWhatAbacScopeListPageInfo) __premarshalJSON() (*__premars
 }
 
 type AccessProviderWhatAccessProviderFilterInput struct {
-	Actions []models.AccessProviderAction `json:"actions"`
+	Actions    []models.AccessProviderAction `json:"actions"`
+	Categories []string                      `json:"categories"`
+	Owners     []string                      `json:"owners"`
+	HasTags    []TagFilter                   `json:"hasTags"`
 }
 
 // GetActions returns AccessProviderWhatAccessProviderFilterInput.Actions, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatAccessProviderFilterInput) GetActions() []models.AccessProviderAction {
 	return v.Actions
 }
+
+// GetCategories returns AccessProviderWhatAccessProviderFilterInput.Categories, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderFilterInput) GetCategories() []string { return v.Categories }
+
+// GetOwners returns AccessProviderWhatAccessProviderFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderFilterInput) GetOwners() []string { return v.Owners }
+
+// GetHasTags returns AccessProviderWhatAccessProviderFilterInput.HasTags, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderFilterInput) GetHasTags() []TagFilter { return v.HasTags }
 
 // AccessProviderWhatAccessProviderList includes the GraphQL fields of PagedResult requested by the fragment AccessProviderWhatAccessProviderList.
 type AccessProviderWhatAccessProviderList struct {
@@ -3838,9 +4104,12 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeIssue) GetTypename() *
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeJob
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg
 // AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRole
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeStringValue
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeTag
@@ -3916,11 +4185,17 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeJobLogMsg) implementsG
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatAccessProviderListEdgesEdgeNodeItem() {
 }
@@ -4045,6 +4320,12 @@ func __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(b []byte, 
 	case "PromiseDetails":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -4053,6 +4334,9 @@ func __unmarshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(b []byte, 
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem)
@@ -4338,6 +4622,22 @@ func __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(v *AccessPro
 			*AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -4360,6 +4660,14 @@ func __marshalAccessProviderWhatAccessProviderListEdgesEdgeNodeItem(v *AccessPro
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatAccessProviderListEdgesEdgeNodeSearchResultItem:
@@ -4472,6 +4780,26 @@ func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodePromiseDetails) GetTyp
 	return v.Typename
 }
 
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatAccessProviderListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type AccessProviderWhatAccessProviderListEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -4499,6 +4827,16 @@ type AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification
 
 // GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAccessProviderListEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -5134,9 +5472,12 @@ func (v *AccessProviderWhatListEdgesEdgeNodeIssue) GetTypename() *string { retur
 // AccessProviderWhatListEdgesEdgeNodeJob
 // AccessProviderWhatListEdgesEdgeNodeJobLogMsg
 // AccessProviderWhatListEdgesEdgeNodePromiseDetails
+// AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject
+// AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement
 // AccessProviderWhatListEdgesEdgeNodeRole
 // AccessProviderWhatListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification
 // AccessProviderWhatListEdgesEdgeNodeSearchResultItem
 // AccessProviderWhatListEdgesEdgeNodeStringValue
 // AccessProviderWhatListEdgesEdgeNodeTag
@@ -5212,11 +5553,17 @@ func (v *AccessProviderWhatListEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfac
 }
 func (v *AccessProviderWhatListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
+func (v *AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
+}
 func (v *AccessProviderWhatListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhatListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhatListEdgesEdgeNodeItem() {
 }
@@ -5341,6 +5688,12 @@ func __unmarshalAccessProviderWhatListEdgesEdgeNodeItem(b []byte, v *AccessProvi
 	case "PromiseDetails":
 		*v = new(AccessProviderWhatListEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -5349,6 +5702,9 @@ func __unmarshalAccessProviderWhatListEdgesEdgeNodeItem(b []byte, v *AccessProvi
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhatListEdgesEdgeNodeSearchResultItem)
@@ -5634,6 +5990,22 @@ func __marshalAccessProviderWhatListEdgesEdgeNodeItem(v *AccessProviderWhatListE
 			*AccessProviderWhatListEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhatListEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -5656,6 +6028,14 @@ func __marshalAccessProviderWhatListEdgesEdgeNodeItem(v *AccessProviderWhatListE
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhatListEdgesEdgeNodeSearchResultItem:
@@ -5762,6 +6142,26 @@ type AccessProviderWhatListEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns AccessProviderWhatListEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatListEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhatListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type AccessProviderWhatListEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -5785,6 +6185,16 @@ type AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhatListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -6568,9 +6978,12 @@ func (v *AccessProviderWhoListEdgesEdgeNodeIssue) GetTypename() *string { return
 // AccessProviderWhoListEdgesEdgeNodeJob
 // AccessProviderWhoListEdgesEdgeNodeJobLogMsg
 // AccessProviderWhoListEdgesEdgeNodePromiseDetails
+// AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject
+// AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement
 // AccessProviderWhoListEdgesEdgeNodeRole
 // AccessProviderWhoListEdgesEdgeNodeRoleAssignment
 // AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification
+// AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification
 // AccessProviderWhoListEdgesEdgeNodeSearchResultItem
 // AccessProviderWhoListEdgesEdgeNodeStringValue
 // AccessProviderWhoListEdgesEdgeNodeTag
@@ -6646,11 +7059,17 @@ func (v *AccessProviderWhoListEdgesEdgeNodeJobLogMsg) implementsGraphQLInterface
 }
 func (v *AccessProviderWhoListEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
+func (v *AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
+}
 func (v *AccessProviderWhoListEdgesEdgeNodeRole) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
+}
+func (v *AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
 func (v *AccessProviderWhoListEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceAccessProviderWhoListEdgesEdgeNodeItem() {
 }
@@ -6775,6 +7194,12 @@ func __unmarshalAccessProviderWhoListEdgesEdgeNodeItem(b []byte, v *AccessProvid
 	case "PromiseDetails":
 		*v = new(AccessProviderWhoListEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -6783,6 +7208,9 @@ func __unmarshalAccessProviderWhoListEdgesEdgeNodeItem(b []byte, v *AccessProvid
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(AccessProviderWhoListEdgesEdgeNodeSearchResultItem)
@@ -7068,6 +7496,22 @@ func __marshalAccessProviderWhoListEdgesEdgeNodeItem(v *AccessProviderWhoListEdg
 			*AccessProviderWhoListEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *AccessProviderWhoListEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -7090,6 +7534,14 @@ func __marshalAccessProviderWhoListEdgesEdgeNodeItem(v *AccessProviderWhoListEdg
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhoListEdgesEdgeNodeSearchResultItem:
@@ -7196,6 +7648,26 @@ type AccessProviderWhoListEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns AccessProviderWhoListEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // AccessProviderWhoListEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type AccessProviderWhoListEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -7219,6 +7691,16 @@ type AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -7418,6 +7900,7 @@ func (v *AccessProviderWhoListItemItemAccessProvider) GetName() string { return 
 // AccessProviderWhoListItemItemAccessWhoItemItem is implemented by the following types:
 // AccessProviderWhoListItemItemAccessProvider
 // AccessProviderWhoListItemItemGroup
+// AccessProviderWhoListItemItemInvalidInputError
 // AccessProviderWhoListItemItemNotFoundError
 // AccessProviderWhoListItemItemUser
 type AccessProviderWhoListItemItemAccessWhoItemItem interface {
@@ -7429,6 +7912,8 @@ type AccessProviderWhoListItemItemAccessWhoItemItem interface {
 func (v *AccessProviderWhoListItemItemAccessProvider) implementsGraphQLInterfaceAccessProviderWhoListItemItemAccessWhoItemItem() {
 }
 func (v *AccessProviderWhoListItemItemGroup) implementsGraphQLInterfaceAccessProviderWhoListItemItemAccessWhoItemItem() {
+}
+func (v *AccessProviderWhoListItemItemInvalidInputError) implementsGraphQLInterfaceAccessProviderWhoListItemItemAccessWhoItemItem() {
 }
 func (v *AccessProviderWhoListItemItemNotFoundError) implementsGraphQLInterfaceAccessProviderWhoListItemItemAccessWhoItemItem() {
 }
@@ -7454,6 +7939,9 @@ func __unmarshalAccessProviderWhoListItemItemAccessWhoItemItem(b []byte, v *Acce
 		return json.Unmarshal(b, *v)
 	case "Group":
 		*v = new(AccessProviderWhoListItemItemGroup)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(AccessProviderWhoListItemItemInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AccessProviderWhoListItemItemNotFoundError)
@@ -7488,6 +7976,14 @@ func __marshalAccessProviderWhoListItemItemAccessWhoItemItem(v *AccessProviderWh
 		result := struct {
 			TypeName string `json:"__typename"`
 			*AccessProviderWhoListItemItemGroup
+		}{typename, v}
+		return json.Marshal(result)
+	case *AccessProviderWhoListItemItemInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AccessProviderWhoListItemItemInvalidInputError
 		}{typename, v}
 		return json.Marshal(result)
 	case *AccessProviderWhoListItemItemNotFoundError:
@@ -7551,6 +8047,14 @@ func (v *AccessProviderWhoListItemItemGroupIdentityStore) GetId() string { retur
 
 // GetName returns AccessProviderWhoListItemItemGroupIdentityStore.Name, and is useful for accessing the field via an interface.
 func (v *AccessProviderWhoListItemItemGroupIdentityStore) GetName() string { return v.Name }
+
+// AccessProviderWhoListItemItemInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AccessProviderWhoListItemItemInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AccessProviderWhoListItemItemInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhoListItemItemInvalidInputError) GetTypename() *string { return v.Typename }
 
 // AccessProviderWhoListItemItemNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type AccessProviderWhoListItemItemNotFoundError struct {
@@ -7763,6 +8267,11 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetAction() models.AccessPr
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns AccessWhatAccessProviderItemAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns AccessWhatAccessProviderItemAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *AccessWhatAccessProviderItemAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -7860,6 +8369,8 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -7902,6 +8413,7 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -7917,8 +8429,10 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 }
 
 type AccessWhatFilterInput struct {
-	Search         *string `json:"search,omitempty"`
-	IncludeDeleted *bool   `json:"includeDeleted,omitempty"`
+	Search         *string     `json:"search,omitempty"`
+	IncludeDeleted *bool       `json:"includeDeleted,omitempty"`
+	Owners         []string    `json:"owners"`
+	HasTags        []TagFilter `json:"hasTags"`
 }
 
 // GetSearch returns AccessWhatFilterInput.Search, and is useful for accessing the field via an interface.
@@ -7926,6 +8440,12 @@ func (v *AccessWhatFilterInput) GetSearch() *string { return v.Search }
 
 // GetIncludeDeleted returns AccessWhatFilterInput.IncludeDeleted, and is useful for accessing the field via an interface.
 func (v *AccessWhatFilterInput) GetIncludeDeleted() *bool { return v.IncludeDeleted }
+
+// GetOwners returns AccessWhatFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *AccessWhatFilterInput) GetOwners() []string { return v.Owners }
+
+// GetHasTags returns AccessWhatFilterInput.HasTags, and is useful for accessing the field via an interface.
+func (v *AccessWhatFilterInput) GetHasTags() []TagFilter { return v.HasTags }
 
 type AccessWhatOrderByInput struct {
 	Name *Sort `json:"name,omitempty"`
@@ -7984,6 +8504,11 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetState() models.AccessP
 // GetAction returns ActivateAccessProviderActivateAccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProvider) GetAction() models.AccessProviderAction {
 	return v.AccessProvider.Action
+}
+
+// GetCategory returns ActivateAccessProviderActivateAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
 }
 
 // GetDescription returns ActivateAccessProviderActivateAccessProvider.Description, and is useful for accessing the field via an interface.
@@ -8085,6 +8610,8 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -8128,6 +8655,7 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -8146,6 +8674,7 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 //
 // ActivateAccessProviderActivateAccessProviderAccessProviderResult is implemented by the following types:
 // ActivateAccessProviderActivateAccessProvider
+// ActivateAccessProviderActivateAccessProviderInvalidInputError
 // ActivateAccessProviderActivateAccessProviderNotFoundError
 // ActivateAccessProviderActivateAccessProviderPermissionDeniedError
 type ActivateAccessProviderActivateAccessProviderAccessProviderResult interface {
@@ -8155,6 +8684,8 @@ type ActivateAccessProviderActivateAccessProviderAccessProviderResult interface 
 }
 
 func (v *ActivateAccessProviderActivateAccessProvider) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
+}
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
 }
 func (v *ActivateAccessProviderActivateAccessProviderNotFoundError) implementsGraphQLInterfaceActivateAccessProviderActivateAccessProviderAccessProviderResult() {
 }
@@ -8177,6 +8708,9 @@ func __unmarshalActivateAccessProviderActivateAccessProviderAccessProviderResult
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(ActivateAccessProviderActivateAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(ActivateAccessProviderActivateAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(ActivateAccessProviderActivateAccessProviderNotFoundError)
@@ -8209,6 +8743,14 @@ func __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(v
 			*__premarshalActivateAccessProviderActivateAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *ActivateAccessProviderActivateAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ActivateAccessProviderActivateAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ActivateAccessProviderActivateAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -8239,6 +8781,16 @@ func __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(v
 		return nil, fmt.Errorf(
 			`unexpected concrete type for ActivateAccessProviderActivateAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// ActivateAccessProviderActivateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ActivateAccessProviderActivateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ActivateAccessProviderActivateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // ActivateAccessProviderActivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -8563,6 +9115,7 @@ func (v *AddIdentityStoreToDataSourceAddIdentityStoreToDataSource) __premarshalJ
 //
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult is implemented by the following types:
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSource
+// AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSourcePermissionDeniedError
 type AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult interface {
@@ -8572,6 +9125,8 @@ type AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult in
 }
 
 func (v *AddIdentityStoreToDataSourceAddIdentityStoreToDataSource) implementsGraphQLInterfaceAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult() {
+}
+func (v *AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError) implementsGraphQLInterfaceAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult() {
 }
 func (v *AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError) implementsGraphQLInterfaceAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult() {
 }
@@ -8594,6 +9149,9 @@ func __unmarshalAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSour
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(AddIdentityStoreToDataSourceAddIdentityStoreToDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError)
@@ -8626,6 +9184,14 @@ func __marshalAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSource
 			*__premarshalAddIdentityStoreToDataSourceAddIdentityStoreToDataSource
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -8656,6 +9222,16 @@ func __marshalAddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSource
 		return nil, fmt.Errorf(
 			`unexpected concrete type for AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceDataSourceResult: "%T"`, v)
 	}
+}
+
+// AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // AddIdentityStoreToDataSourceAddIdentityStoreToDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -8940,6 +9516,14 @@ func (v *AssignGlobalRoleAssignGlobalRole) __premarshalJSON() (*__premarshalAssi
 	return &retval, nil
 }
 
+// AssignGlobalRoleAssignGlobalRoleInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AssignGlobalRoleAssignGlobalRoleInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AssignGlobalRoleAssignGlobalRoleInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AssignGlobalRoleAssignGlobalRoleInvalidInputError) GetTypename() *string { return v.Typename }
+
 // AssignGlobalRoleAssignGlobalRoleNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type AssignGlobalRoleAssignGlobalRoleNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -9067,6 +9651,7 @@ func (v *AssignGlobalRoleAssignGlobalRolePermissionDeniedError) __premarshalJSON
 // AssignGlobalRoleAssignGlobalRoleRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // AssignGlobalRoleAssignGlobalRoleRoleResult is implemented by the following types:
+// AssignGlobalRoleAssignGlobalRoleInvalidInputError
 // AssignGlobalRoleAssignGlobalRoleNotFoundError
 // AssignGlobalRoleAssignGlobalRolePermissionDeniedError
 // AssignGlobalRoleAssignGlobalRole
@@ -9076,6 +9661,8 @@ type AssignGlobalRoleAssignGlobalRoleRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *AssignGlobalRoleAssignGlobalRoleInvalidInputError) implementsGraphQLInterfaceAssignGlobalRoleAssignGlobalRoleRoleResult() {
+}
 func (v *AssignGlobalRoleAssignGlobalRoleNotFoundError) implementsGraphQLInterfaceAssignGlobalRoleAssignGlobalRoleRoleResult() {
 }
 func (v *AssignGlobalRoleAssignGlobalRolePermissionDeniedError) implementsGraphQLInterfaceAssignGlobalRoleAssignGlobalRoleRoleResult() {
@@ -9097,6 +9684,9 @@ func __unmarshalAssignGlobalRoleAssignGlobalRoleRoleResult(b []byte, v *AssignGl
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(AssignGlobalRoleAssignGlobalRoleInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AssignGlobalRoleAssignGlobalRoleNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -9119,6 +9709,14 @@ func __marshalAssignGlobalRoleAssignGlobalRoleRoleResult(v *AssignGlobalRoleAssi
 
 	var typename string
 	switch v := (*v).(type) {
+	case *AssignGlobalRoleAssignGlobalRoleInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AssignGlobalRoleAssignGlobalRoleInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AssignGlobalRoleAssignGlobalRoleNotFoundError:
 		typename = "NotFoundError"
 
@@ -9234,6 +9832,16 @@ func (v *AssignGlobalRoleResponse) __premarshalJSON() (*__premarshalAssignGlobal
 		}
 	}
 	return &retval, nil
+}
+
+// AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -9442,6 +10050,7 @@ func (v *AssignRoleOnAccessProviderAssignRoleOnAccessProviderRole) __premarshalJ
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult is implemented by the following types:
+// AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderNotFoundError
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderPermissionDeniedError
 // AssignRoleOnAccessProviderAssignRoleOnAccessProviderRole
@@ -9451,6 +10060,8 @@ type AssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError) implementsGraphQLInterfaceAssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult() {
+}
 func (v *AssignRoleOnAccessProviderAssignRoleOnAccessProviderNotFoundError) implementsGraphQLInterfaceAssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult() {
 }
 func (v *AssignRoleOnAccessProviderAssignRoleOnAccessProviderPermissionDeniedError) implementsGraphQLInterfaceAssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult() {
@@ -9472,6 +10083,9 @@ func __unmarshalAssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult(b
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AssignRoleOnAccessProviderAssignRoleOnAccessProviderNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -9494,6 +10108,14 @@ func __marshalAssignRoleOnAccessProviderAssignRoleOnAccessProviderRoleResult(v *
 
 	var typename string
 	switch v := (*v).(type) {
+	case *AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AssignRoleOnAccessProviderAssignRoleOnAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AssignRoleOnAccessProviderAssignRoleOnAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -9609,6 +10231,16 @@ func (v *AssignRoleOnAccessProviderResponse) __premarshalJSON() (*__premarshalAs
 		}
 	}
 	return &retval, nil
+}
+
+// AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // AssignRoleOnDataObjectAssignRoleOnDataObjectNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -9813,6 +10445,7 @@ func (v *AssignRoleOnDataObjectAssignRoleOnDataObjectRole) __premarshalJSON() (*
 // AssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // AssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult is implemented by the following types:
+// AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError
 // AssignRoleOnDataObjectAssignRoleOnDataObjectNotFoundError
 // AssignRoleOnDataObjectAssignRoleOnDataObjectPermissionDeniedError
 // AssignRoleOnDataObjectAssignRoleOnDataObjectRole
@@ -9822,6 +10455,8 @@ type AssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError) implementsGraphQLInterfaceAssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult() {
+}
 func (v *AssignRoleOnDataObjectAssignRoleOnDataObjectNotFoundError) implementsGraphQLInterfaceAssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult() {
 }
 func (v *AssignRoleOnDataObjectAssignRoleOnDataObjectPermissionDeniedError) implementsGraphQLInterfaceAssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult() {
@@ -9843,6 +10478,9 @@ func __unmarshalAssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult(b []byte,
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AssignRoleOnDataObjectAssignRoleOnDataObjectNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -9865,6 +10503,14 @@ func __marshalAssignRoleOnDataObjectAssignRoleOnDataObjectRoleResult(v *AssignRo
 
 	var typename string
 	switch v := (*v).(type) {
+	case *AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AssignRoleOnDataObjectAssignRoleOnDataObjectInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AssignRoleOnDataObjectAssignRoleOnDataObjectNotFoundError:
 		typename = "NotFoundError"
 
@@ -9980,6 +10626,16 @@ func (v *AssignRoleOnDataObjectResponse) __premarshalJSON() (*__premarshalAssign
 		}
 	}
 	return &retval, nil
+}
+
+// AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // AssignRoleOnDataSourceAssignRoleOnDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -10184,6 +10840,7 @@ func (v *AssignRoleOnDataSourceAssignRoleOnDataSourceRole) __premarshalJSON() (*
 // AssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // AssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult is implemented by the following types:
+// AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError
 // AssignRoleOnDataSourceAssignRoleOnDataSourceNotFoundError
 // AssignRoleOnDataSourceAssignRoleOnDataSourcePermissionDeniedError
 // AssignRoleOnDataSourceAssignRoleOnDataSourceRole
@@ -10193,6 +10850,8 @@ type AssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError) implementsGraphQLInterfaceAssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult() {
+}
 func (v *AssignRoleOnDataSourceAssignRoleOnDataSourceNotFoundError) implementsGraphQLInterfaceAssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult() {
 }
 func (v *AssignRoleOnDataSourceAssignRoleOnDataSourcePermissionDeniedError) implementsGraphQLInterfaceAssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult() {
@@ -10214,6 +10873,9 @@ func __unmarshalAssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult(b []byte,
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AssignRoleOnDataSourceAssignRoleOnDataSourceNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -10236,6 +10898,14 @@ func __marshalAssignRoleOnDataSourceAssignRoleOnDataSourceRoleResult(v *AssignRo
 
 	var typename string
 	switch v := (*v).(type) {
+	case *AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AssignRoleOnDataSourceAssignRoleOnDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AssignRoleOnDataSourceAssignRoleOnDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -10351,6 +11021,16 @@ func (v *AssignRoleOnDataSourceResponse) __premarshalJSON() (*__premarshalAssign
 		}
 	}
 	return &retval, nil
+}
+
+// AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -10557,6 +11237,7 @@ func (v *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRole) __premarshalJSO
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult is implemented by the following types:
+// AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreNotFoundError
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStorePermissionDeniedError
 // AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRole
@@ -10566,6 +11247,8 @@ type AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError) implementsGraphQLInterfaceAssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult() {
+}
 func (v *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreNotFoundError) implementsGraphQLInterfaceAssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult() {
 }
 func (v *AssignRoleOnIdentityStoreAssignRoleOnIdentityStorePermissionDeniedError) implementsGraphQLInterfaceAssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult() {
@@ -10587,6 +11270,9 @@ func __unmarshalAssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult(b [
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -10609,6 +11295,14 @@ func __marshalAssignRoleOnIdentityStoreAssignRoleOnIdentityStoreRoleResult(v *As
 
 	var typename string
 	switch v := (*v).(type) {
+	case *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *AssignRoleOnIdentityStoreAssignRoleOnIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -10784,6 +11478,11 @@ func (v *CreateAccessProviderCreateAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns CreateAccessProviderCreateAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns CreateAccessProviderCreateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -10883,6 +11582,8 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -10926,6 +11627,7 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -10999,6 +11701,11 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 // GetAction returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetAction() models.AccessProviderAction {
 	return v.AccessProvider.Action
+}
+
+// GetCategory returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
 }
 
 // GetDescription returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
@@ -11098,6 +11805,8 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -11140,6 +11849,7 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -11159,6 +11869,8 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 // CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult is implemented by the following types:
 // CreateAccessProviderCreateAccessProvider
 // CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests
+// CreateAccessProviderCreateAccessProviderInvalidInputError
+// CreateAccessProviderCreateAccessProviderNotFoundError
 // CreateAccessProviderCreateAccessProviderPermissionDeniedError
 type CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult interface {
 	implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult()
@@ -11169,6 +11881,10 @@ type CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessReq
 func (v *CreateAccessProviderCreateAccessProvider) implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests) implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
+}
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
+}
+func (v *CreateAccessProviderCreateAccessProviderNotFoundError) implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
 func (v *CreateAccessProviderCreateAccessProviderPermissionDeniedError) implementsGraphQLInterfaceCreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
@@ -11192,6 +11908,12 @@ func __unmarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOption
 		return json.Unmarshal(b, *v)
 	case "AccessProviderWithOptionalAccessRequests":
 		*v = new(CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(CreateAccessProviderCreateAccessProviderInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(CreateAccessProviderCreateAccessProviderNotFoundError)
 		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(CreateAccessProviderCreateAccessProviderPermissionDeniedError)
@@ -11229,6 +11951,22 @@ func __marshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptional
 			*CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequests
 		}{typename, v}
 		return json.Marshal(result)
+	case *CreateAccessProviderCreateAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*CreateAccessProviderCreateAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *CreateAccessProviderCreateAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*CreateAccessProviderCreateAccessProviderNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *CreateAccessProviderCreateAccessProviderPermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -11247,6 +11985,26 @@ func __marshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptional
 		return nil, fmt.Errorf(
 			`unexpected concrete type for CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsResult: "%T"`, v)
 	}
+}
+
+// CreateAccessProviderCreateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type CreateAccessProviderCreateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns CreateAccessProviderCreateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// CreateAccessProviderCreateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type CreateAccessProviderCreateAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns CreateAccessProviderCreateAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
 }
 
 // CreateAccessProviderCreateAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
@@ -11494,6 +12252,7 @@ func (v *CreateDataSourceCreateDataSource) __premarshalJSON() (*__premarshalCrea
 //
 // CreateDataSourceCreateDataSourceDataSourceResult is implemented by the following types:
 // CreateDataSourceCreateDataSource
+// CreateDataSourceCreateDataSourceInvalidInputError
 // CreateDataSourceCreateDataSourceNotFoundError
 // CreateDataSourceCreateDataSourcePermissionDeniedError
 type CreateDataSourceCreateDataSourceDataSourceResult interface {
@@ -11503,6 +12262,8 @@ type CreateDataSourceCreateDataSourceDataSourceResult interface {
 }
 
 func (v *CreateDataSourceCreateDataSource) implementsGraphQLInterfaceCreateDataSourceCreateDataSourceDataSourceResult() {
+}
+func (v *CreateDataSourceCreateDataSourceInvalidInputError) implementsGraphQLInterfaceCreateDataSourceCreateDataSourceDataSourceResult() {
 }
 func (v *CreateDataSourceCreateDataSourceNotFoundError) implementsGraphQLInterfaceCreateDataSourceCreateDataSourceDataSourceResult() {
 }
@@ -11525,6 +12286,9 @@ func __unmarshalCreateDataSourceCreateDataSourceDataSourceResult(b []byte, v *Cr
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(CreateDataSourceCreateDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(CreateDataSourceCreateDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(CreateDataSourceCreateDataSourceNotFoundError)
@@ -11557,6 +12321,14 @@ func __marshalCreateDataSourceCreateDataSourceDataSourceResult(v *CreateDataSour
 			*__premarshalCreateDataSourceCreateDataSource
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *CreateDataSourceCreateDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*CreateDataSourceCreateDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *CreateDataSourceCreateDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -11588,6 +12360,14 @@ func __marshalCreateDataSourceCreateDataSourceDataSourceResult(v *CreateDataSour
 			`unexpected concrete type for CreateDataSourceCreateDataSourceDataSourceResult: "%T"`, v)
 	}
 }
+
+// CreateDataSourceCreateDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type CreateDataSourceCreateDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns CreateDataSourceCreateDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateDataSourceCreateDataSourceInvalidInputError) GetTypename() *string { return v.Typename }
 
 // CreateDataSourceCreateDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type CreateDataSourceCreateDataSourceNotFoundError struct {
@@ -11786,6 +12566,544 @@ func (v *CreateDataSourceResponse) __premarshalJSON() (*__premarshalCreateDataSo
 	return &retval, nil
 }
 
+// CreateGrantCategoryCreateGrantCategory includes the requested fields of the GraphQL type GrantCategory.
+type CreateGrantCategoryCreateGrantCategory struct {
+	Typename             *string `json:"__typename"`
+	GrantCategoryDetails `json:"-"`
+}
+
+// GetTypename returns CreateGrantCategoryCreateGrantCategory.Typename, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetTypename() *string { return v.Typename }
+
+// GetId returns CreateGrantCategoryCreateGrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetId() string { return v.GrantCategoryDetails.Id }
+
+// GetCreatedAt returns CreateGrantCategoryCreateGrantCategory.CreatedAt, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetCreatedAt() time.Time {
+	return v.GrantCategoryDetails.CreatedAt
+}
+
+// GetModifiedAt returns CreateGrantCategoryCreateGrantCategory.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetModifiedAt() time.Time {
+	return v.GrantCategoryDetails.ModifiedAt
+}
+
+// GetIsSystem returns CreateGrantCategoryCreateGrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetIsSystem() bool {
+	return v.GrantCategoryDetails.IsSystem
+}
+
+// GetName returns CreateGrantCategoryCreateGrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetName() string { return v.GrantCategoryDetails.Name }
+
+// GetDescription returns CreateGrantCategoryCreateGrantCategory.Description, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetDescription() string {
+	return v.GrantCategoryDetails.Description
+}
+
+// GetIcon returns CreateGrantCategoryCreateGrantCategory.Icon, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetIcon() string { return v.GrantCategoryDetails.Icon }
+
+// GetIsDefault returns CreateGrantCategoryCreateGrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetIsDefault() bool {
+	return v.GrantCategoryDetails.IsDefault
+}
+
+// GetCanCreate returns CreateGrantCategoryCreateGrantCategory.CanCreate, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetCanCreate() bool {
+	return v.GrantCategoryDetails.CanCreate
+}
+
+// GetAllowDuplicateNames returns CreateGrantCategoryCreateGrantCategory.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetAllowDuplicateNames() bool {
+	return v.GrantCategoryDetails.AllowDuplicateNames
+}
+
+// GetMultiDataSource returns CreateGrantCategoryCreateGrantCategory.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetMultiDataSource() bool {
+	return v.GrantCategoryDetails.MultiDataSource
+}
+
+// GetDefaultTypePerDataSource returns CreateGrantCategoryCreateGrantCategory.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetDefaultTypePerDataSource() []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource {
+	return v.GrantCategoryDetails.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns CreateGrantCategoryCreateGrantCategory.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetAllowedWhoItems() GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems {
+	return v.GrantCategoryDetails.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns CreateGrantCategoryCreateGrantCategory.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategory) GetAllowedWhatItems() GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems {
+	return v.GrantCategoryDetails.AllowedWhatItems
+}
+
+func (v *CreateGrantCategoryCreateGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateGrantCategoryCreateGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateGrantCategoryCreateGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryDetails)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateGrantCategoryCreateGrantCategory struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	IsSystem bool `json:"isSystem"`
+
+	Name string `json:"name"`
+
+	Description string `json:"description"`
+
+	Icon string `json:"icon"`
+
+	IsDefault bool `json:"isDefault"`
+
+	CanCreate bool `json:"canCreate"`
+
+	AllowDuplicateNames bool `json:"allowDuplicateNames"`
+
+	MultiDataSource bool `json:"multiDataSource"`
+
+	DefaultTypePerDataSource []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource `json:"defaultTypePerDataSource"`
+
+	AllowedWhoItems GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems `json:"allowedWhoItems"`
+
+	AllowedWhatItems GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems `json:"allowedWhatItems"`
+}
+
+func (v *CreateGrantCategoryCreateGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateGrantCategoryCreateGrantCategory) __premarshalJSON() (*__premarshalCreateGrantCategoryCreateGrantCategory, error) {
+	var retval __premarshalCreateGrantCategoryCreateGrantCategory
+
+	retval.Typename = v.Typename
+	retval.Id = v.GrantCategoryDetails.Id
+	retval.CreatedAt = v.GrantCategoryDetails.CreatedAt
+	retval.ModifiedAt = v.GrantCategoryDetails.ModifiedAt
+	retval.IsSystem = v.GrantCategoryDetails.IsSystem
+	retval.Name = v.GrantCategoryDetails.Name
+	retval.Description = v.GrantCategoryDetails.Description
+	retval.Icon = v.GrantCategoryDetails.Icon
+	retval.IsDefault = v.GrantCategoryDetails.IsDefault
+	retval.CanCreate = v.GrantCategoryDetails.CanCreate
+	retval.AllowDuplicateNames = v.GrantCategoryDetails.AllowDuplicateNames
+	retval.MultiDataSource = v.GrantCategoryDetails.MultiDataSource
+	retval.DefaultTypePerDataSource = v.GrantCategoryDetails.DefaultTypePerDataSource
+	retval.AllowedWhoItems = v.GrantCategoryDetails.AllowedWhoItems
+	retval.AllowedWhatItems = v.GrantCategoryDetails.AllowedWhatItems
+	return &retval, nil
+}
+
+// CreateGrantCategoryCreateGrantCategoryGrantCategoryResult includes the requested fields of the GraphQL interface GrantCategoryResult.
+//
+// CreateGrantCategoryCreateGrantCategoryGrantCategoryResult is implemented by the following types:
+// CreateGrantCategoryCreateGrantCategory
+// CreateGrantCategoryCreateGrantCategoryInvalidInputError
+// CreateGrantCategoryCreateGrantCategoryNotFoundError
+// CreateGrantCategoryCreateGrantCategoryPermissionDeniedError
+type CreateGrantCategoryCreateGrantCategoryGrantCategoryResult interface {
+	implementsGraphQLInterfaceCreateGrantCategoryCreateGrantCategoryGrantCategoryResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *CreateGrantCategoryCreateGrantCategory) implementsGraphQLInterfaceCreateGrantCategoryCreateGrantCategoryGrantCategoryResult() {
+}
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) implementsGraphQLInterfaceCreateGrantCategoryCreateGrantCategoryGrantCategoryResult() {
+}
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) implementsGraphQLInterfaceCreateGrantCategoryCreateGrantCategoryGrantCategoryResult() {
+}
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) implementsGraphQLInterfaceCreateGrantCategoryCreateGrantCategoryGrantCategoryResult() {
+}
+
+func __unmarshalCreateGrantCategoryCreateGrantCategoryGrantCategoryResult(b []byte, v *CreateGrantCategoryCreateGrantCategoryGrantCategoryResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "GrantCategory":
+		*v = new(CreateGrantCategoryCreateGrantCategory)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(CreateGrantCategoryCreateGrantCategoryInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(CreateGrantCategoryCreateGrantCategoryNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(CreateGrantCategoryCreateGrantCategoryPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing GrantCategoryResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for CreateGrantCategoryCreateGrantCategoryGrantCategoryResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalCreateGrantCategoryCreateGrantCategoryGrantCategoryResult(v *CreateGrantCategoryCreateGrantCategoryGrantCategoryResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *CreateGrantCategoryCreateGrantCategory:
+		typename = "GrantCategory"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalCreateGrantCategoryCreateGrantCategory
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *CreateGrantCategoryCreateGrantCategoryInvalidInputError:
+		typename = "InvalidInputError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalCreateGrantCategoryCreateGrantCategoryInvalidInputError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *CreateGrantCategoryCreateGrantCategoryNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalCreateGrantCategoryCreateGrantCategoryNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalCreateGrantCategoryCreateGrantCategoryPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for CreateGrantCategoryCreateGrantCategoryGrantCategoryResult: "%T"`, v)
+	}
+}
+
+// CreateGrantCategoryCreateGrantCategoryInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type CreateGrantCategoryCreateGrantCategoryInvalidInputError struct {
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
+}
+
+// GetTypename returns CreateGrantCategoryCreateGrantCategoryInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns CreateGrantCategoryCreateGrantCategoryInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateGrantCategoryCreateGrantCategoryInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateGrantCategoryCreateGrantCategoryInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateGrantCategoryCreateGrantCategoryInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryInvalidInputError) __premarshalJSON() (*__premarshalCreateGrantCategoryCreateGrantCategoryInvalidInputError, error) {
+	var retval __premarshalCreateGrantCategoryCreateGrantCategoryInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
+}
+
+// CreateGrantCategoryCreateGrantCategoryNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type CreateGrantCategoryCreateGrantCategoryNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns CreateGrantCategoryCreateGrantCategoryNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns CreateGrantCategoryCreateGrantCategoryNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateGrantCategoryCreateGrantCategoryNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateGrantCategoryCreateGrantCategoryNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateGrantCategoryCreateGrantCategoryNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryNotFoundError) __premarshalJSON() (*__premarshalCreateGrantCategoryCreateGrantCategoryNotFoundError, error) {
+	var retval __premarshalCreateGrantCategoryCreateGrantCategoryNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// CreateGrantCategoryCreateGrantCategoryPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type CreateGrantCategoryCreateGrantCategoryPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns CreateGrantCategoryCreateGrantCategoryPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns CreateGrantCategoryCreateGrantCategoryPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateGrantCategoryCreateGrantCategoryPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateGrantCategoryCreateGrantCategoryPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateGrantCategoryCreateGrantCategoryPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateGrantCategoryCreateGrantCategoryPermissionDeniedError) __premarshalJSON() (*__premarshalCreateGrantCategoryCreateGrantCategoryPermissionDeniedError, error) {
+	var retval __premarshalCreateGrantCategoryCreateGrantCategoryPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// CreateGrantCategoryResponse is returned by CreateGrantCategory on success.
+type CreateGrantCategoryResponse struct {
+	CreateGrantCategory CreateGrantCategoryCreateGrantCategoryGrantCategoryResult `json:"-"`
+}
+
+// GetCreateGrantCategory returns CreateGrantCategoryResponse.CreateGrantCategory, and is useful for accessing the field via an interface.
+func (v *CreateGrantCategoryResponse) GetCreateGrantCategory() CreateGrantCategoryCreateGrantCategoryGrantCategoryResult {
+	return v.CreateGrantCategory
+}
+
+func (v *CreateGrantCategoryResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateGrantCategoryResponse
+		CreateGrantCategory json.RawMessage `json:"createGrantCategory"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateGrantCategoryResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.CreateGrantCategory
+		src := firstPass.CreateGrantCategory
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalCreateGrantCategoryCreateGrantCategoryGrantCategoryResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal CreateGrantCategoryResponse.CreateGrantCategory: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalCreateGrantCategoryResponse struct {
+	CreateGrantCategory json.RawMessage `json:"createGrantCategory"`
+}
+
+func (v *CreateGrantCategoryResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateGrantCategoryResponse) __premarshalJSON() (*__premarshalCreateGrantCategoryResponse, error) {
+	var retval __premarshalCreateGrantCategoryResponse
+
+	{
+
+		dst := &retval.CreateGrantCategory
+		src := v.CreateGrantCategory
+		var err error
+		*dst, err = __marshalCreateGrantCategoryCreateGrantCategoryGrantCategoryResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal CreateGrantCategoryResponse.CreateGrantCategory: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
 // CreateIdentityStoreCreateIdentityStore includes the requested fields of the GraphQL type IdentityStore.
 type CreateIdentityStoreCreateIdentityStore struct {
 	Typename      *string `json:"__typename"`
@@ -11969,6 +13287,7 @@ func (v *CreateIdentityStoreCreateIdentityStoreAlreadyExistsError) __premarshalJ
 // CreateIdentityStoreCreateIdentityStoreIdentityStoreResult is implemented by the following types:
 // CreateIdentityStoreCreateIdentityStoreAlreadyExistsError
 // CreateIdentityStoreCreateIdentityStore
+// CreateIdentityStoreCreateIdentityStoreInvalidInputError
 // CreateIdentityStoreCreateIdentityStoreNotFoundError
 // CreateIdentityStoreCreateIdentityStorePermissionDeniedError
 type CreateIdentityStoreCreateIdentityStoreIdentityStoreResult interface {
@@ -11980,6 +13299,8 @@ type CreateIdentityStoreCreateIdentityStoreIdentityStoreResult interface {
 func (v *CreateIdentityStoreCreateIdentityStoreAlreadyExistsError) implementsGraphQLInterfaceCreateIdentityStoreCreateIdentityStoreIdentityStoreResult() {
 }
 func (v *CreateIdentityStoreCreateIdentityStore) implementsGraphQLInterfaceCreateIdentityStoreCreateIdentityStoreIdentityStoreResult() {
+}
+func (v *CreateIdentityStoreCreateIdentityStoreInvalidInputError) implementsGraphQLInterfaceCreateIdentityStoreCreateIdentityStoreIdentityStoreResult() {
 }
 func (v *CreateIdentityStoreCreateIdentityStoreNotFoundError) implementsGraphQLInterfaceCreateIdentityStoreCreateIdentityStoreIdentityStoreResult() {
 }
@@ -12005,6 +13326,9 @@ func __unmarshalCreateIdentityStoreCreateIdentityStoreIdentityStoreResult(b []by
 		return json.Unmarshal(b, *v)
 	case "IdentityStore":
 		*v = new(CreateIdentityStoreCreateIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(CreateIdentityStoreCreateIdentityStoreInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(CreateIdentityStoreCreateIdentityStoreNotFoundError)
@@ -12049,6 +13373,14 @@ func __marshalCreateIdentityStoreCreateIdentityStoreIdentityStoreResult(v *Creat
 			*__premarshalCreateIdentityStoreCreateIdentityStore
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *CreateIdentityStoreCreateIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*CreateIdentityStoreCreateIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *CreateIdentityStoreCreateIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -12079,6 +13411,16 @@ func __marshalCreateIdentityStoreCreateIdentityStoreIdentityStoreResult(v *Creat
 		return nil, fmt.Errorf(
 			`unexpected concrete type for CreateIdentityStoreCreateIdentityStoreIdentityStoreResult: "%T"`, v)
 	}
+}
+
+// CreateIdentityStoreCreateIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type CreateIdentityStoreCreateIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns CreateIdentityStoreCreateIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateIdentityStoreCreateIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // CreateIdentityStoreCreateIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -12432,6 +13774,14 @@ func (v *CreateUserCreateUserInvalidEmailError) __premarshalJSON() (*__premarsha
 	return &retval, nil
 }
 
+// CreateUserCreateUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type CreateUserCreateUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns CreateUserCreateUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *CreateUserCreateUserInvalidInputError) GetTypename() *string { return v.Typename }
+
 // CreateUserCreateUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type CreateUserCreateUserNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -12556,6 +13906,7 @@ func (v *CreateUserCreateUserPermissionDeniedError) __premarshalJSON() (*__prema
 //
 // CreateUserCreateUserUserResult is implemented by the following types:
 // CreateUserCreateUserInvalidEmailError
+// CreateUserCreateUserInvalidInputError
 // CreateUserCreateUserNotFoundError
 // CreateUserCreateUserPermissionDeniedError
 // CreateUserCreateUser
@@ -12566,6 +13917,8 @@ type CreateUserCreateUserUserResult interface {
 }
 
 func (v *CreateUserCreateUserInvalidEmailError) implementsGraphQLInterfaceCreateUserCreateUserUserResult() {
+}
+func (v *CreateUserCreateUserInvalidInputError) implementsGraphQLInterfaceCreateUserCreateUserUserResult() {
 }
 func (v *CreateUserCreateUserNotFoundError) implementsGraphQLInterfaceCreateUserCreateUserUserResult() {
 }
@@ -12589,6 +13942,9 @@ func __unmarshalCreateUserCreateUserUserResult(b []byte, v *CreateUserCreateUser
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(CreateUserCreateUserInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(CreateUserCreateUserInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(CreateUserCreateUserNotFoundError)
@@ -12623,6 +13979,14 @@ func __marshalCreateUserCreateUserUserResult(v *CreateUserCreateUserUserResult) 
 			TypeName string `json:"__typename"`
 			*__premarshalCreateUserCreateUserInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *CreateUserCreateUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*CreateUserCreateUserInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *CreateUserCreateUserNotFoundError:
 		typename = "NotFoundError"
@@ -13503,9 +14867,12 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeIssue) GetType
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeJob
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeJobLogMsg
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodePromiseDetails
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignment
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeStringValue
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeTag
@@ -13581,11 +14948,17 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeJobLogMsg) imp
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
+}
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
+}
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
+}
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem() {
 }
@@ -13710,6 +15083,12 @@ func __unmarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(b 
 	case "PromiseDetails":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -13718,6 +15097,9 @@ func __unmarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(b 
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem)
@@ -14003,6 +15385,22 @@ func __marshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(v *D
 			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -14025,6 +15423,14 @@ func __marshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeItem(v *D
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeSearchResultItem:
@@ -14137,6 +15543,26 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodePromiseDetails
 	return v.Typename
 }
 
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -14164,6 +15590,16 @@ type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNoti
 
 // GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -14276,17 +15712,19 @@ type DataObjectDataSource struct {
 func (v *DataObjectDataSource) GetId() string { return v.Id }
 
 type DataObjectFilterInput struct {
-	DataSources       []string `json:"dataSources"`
-	Parents           []string `json:"parents"`
-	Types             []string `json:"types"`
-	FullNames         []string `json:"fullNames"`
-	Search            *string  `json:"search,omitempty"`
-	IncludeDataSource *bool    `json:"includeDataSource,omitempty"`
-	AsOwner           *bool    `json:"asOwner,omitempty"`
-	CanUse            *bool    `json:"canUse,omitempty"`
-	IncludeDeleted    *bool    `json:"includeDeleted,omitempty"`
-	DataTypes         []string `json:"dataTypes"`
-	Exclude           []string `json:"exclude"`
+	DataSources       []string    `json:"dataSources"`
+	Parents           []string    `json:"parents"`
+	Types             []string    `json:"types"`
+	FullNames         []string    `json:"fullNames"`
+	Search            *string     `json:"search,omitempty"`
+	IncludeDataSource *bool       `json:"includeDataSource,omitempty"`
+	AsOwner           *bool       `json:"asOwner,omitempty"`
+	CanUse            *bool       `json:"canUse,omitempty"`
+	Owners            []string    `json:"owners"`
+	IncludeDeleted    *bool       `json:"includeDeleted,omitempty"`
+	DataTypes         []string    `json:"dataTypes"`
+	Exclude           []string    `json:"exclude"`
+	HasTags           []TagFilter `json:"hasTags"`
 }
 
 // GetDataSources returns DataObjectFilterInput.DataSources, and is useful for accessing the field via an interface.
@@ -14313,6 +15751,9 @@ func (v *DataObjectFilterInput) GetAsOwner() *bool { return v.AsOwner }
 // GetCanUse returns DataObjectFilterInput.CanUse, and is useful for accessing the field via an interface.
 func (v *DataObjectFilterInput) GetCanUse() *bool { return v.CanUse }
 
+// GetOwners returns DataObjectFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *DataObjectFilterInput) GetOwners() []string { return v.Owners }
+
 // GetIncludeDeleted returns DataObjectFilterInput.IncludeDeleted, and is useful for accessing the field via an interface.
 func (v *DataObjectFilterInput) GetIncludeDeleted() *bool { return v.IncludeDeleted }
 
@@ -14321,6 +15762,9 @@ func (v *DataObjectFilterInput) GetDataTypes() []string { return v.DataTypes }
 
 // GetExclude returns DataObjectFilterInput.Exclude, and is useful for accessing the field via an interface.
 func (v *DataObjectFilterInput) GetExclude() []string { return v.Exclude }
+
+// GetHasTags returns DataObjectFilterInput.HasTags, and is useful for accessing the field via an interface.
+func (v *DataObjectFilterInput) GetHasTags() []TagFilter { return v.HasTags }
 
 type DataObjectOrderByInput struct {
 	Name     *Sort `json:"name,omitempty"`
@@ -14792,9 +16236,12 @@ func (v *DataObjectPageEdgesEdgeNodeIssue) GetTypename() *string { return v.Type
 // DataObjectPageEdgesEdgeNodeJob
 // DataObjectPageEdgesEdgeNodeJobLogMsg
 // DataObjectPageEdgesEdgeNodePromiseDetails
+// DataObjectPageEdgesEdgeNodeQueryHistoryDataObject
+// DataObjectPageEdgesEdgeNodeQueryHistoryStatement
 // DataObjectPageEdgesEdgeNodeRole
 // DataObjectPageEdgesEdgeNodeRoleAssignment
 // DataObjectPageEdgesEdgeNodeRoleAssignmentNotification
+// DataObjectPageEdgesEdgeNodeRoleDelegationNotification
 // DataObjectPageEdgesEdgeNodeSearchResultItem
 // DataObjectPageEdgesEdgeNodeStringValue
 // DataObjectPageEdgesEdgeNodeTag
@@ -14870,11 +16317,17 @@ func (v *DataObjectPageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceDataObj
 }
 func (v *DataObjectPageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
+func (v *DataObjectPageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
+}
+func (v *DataObjectPageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
+}
 func (v *DataObjectPageEdgesEdgeNodeRole) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
 func (v *DataObjectPageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
 func (v *DataObjectPageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
+}
+func (v *DataObjectPageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
 func (v *DataObjectPageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceDataObjectPageEdgesEdgeNodeItem() {
 }
@@ -14999,6 +16452,12 @@ func __unmarshalDataObjectPageEdgesEdgeNodeItem(b []byte, v *DataObjectPageEdges
 	case "PromiseDetails":
 		*v = new(DataObjectPageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(DataObjectPageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(DataObjectPageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(DataObjectPageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -15007,6 +16466,9 @@ func __unmarshalDataObjectPageEdgesEdgeNodeItem(b []byte, v *DataObjectPageEdges
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(DataObjectPageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(DataObjectPageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(DataObjectPageEdgesEdgeNodeSearchResultItem)
@@ -15292,6 +16754,22 @@ func __marshalDataObjectPageEdgesEdgeNodeItem(v *DataObjectPageEdgesEdgeNodeItem
 			*DataObjectPageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *DataObjectPageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectPageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectPageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectPageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *DataObjectPageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -15314,6 +16792,14 @@ func __marshalDataObjectPageEdgesEdgeNodeItem(v *DataObjectPageEdgesEdgeNodeItem
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataObjectPageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectPageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectPageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataObjectPageEdgesEdgeNodeSearchResultItem:
@@ -15420,6 +16906,22 @@ type DataObjectPageEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns DataObjectPageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *DataObjectPageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// DataObjectPageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type DataObjectPageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectPageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string { return v.Typename }
+
+// DataObjectPageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type DataObjectPageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectPageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string { return v.Typename }
+
 // DataObjectPageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type DataObjectPageEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -15443,6 +16945,16 @@ type DataObjectPageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns DataObjectPageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *DataObjectPageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// DataObjectPageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type DataObjectPageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectPageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -15623,6 +17135,7 @@ type DataSourceFilterInput struct {
 	Types                 []string              `json:"types"`
 	Search                *string               `json:"search,omitempty"`
 	Parent                *string               `json:"parent,omitempty"`
+	Owners                []string              `json:"owners"`
 	IncompleteDataWarning *bool                 `json:"incompleteDataWarning,omitempty"`
 	SupportedFeatures     []*DataSourceFeatures `json:"supportedFeatures,omitempty"`
 }
@@ -15635,6 +17148,9 @@ func (v *DataSourceFilterInput) GetSearch() *string { return v.Search }
 
 // GetParent returns DataSourceFilterInput.Parent, and is useful for accessing the field via an interface.
 func (v *DataSourceFilterInput) GetParent() *string { return v.Parent }
+
+// GetOwners returns DataSourceFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *DataSourceFilterInput) GetOwners() []string { return v.Owners }
 
 // GetIncompleteDataWarning returns DataSourceFilterInput.IncompleteDataWarning, and is useful for accessing the field via an interface.
 func (v *DataSourceFilterInput) GetIncompleteDataWarning() *bool { return v.IncompleteDataWarning }
@@ -15662,6 +17178,7 @@ func (v *DataSourceIdentityStoresDataSource) GetIdentityStores() []*DataSourceId
 //
 // DataSourceIdentityStoresDataSourceDataSourceResult is implemented by the following types:
 // DataSourceIdentityStoresDataSource
+// DataSourceIdentityStoresDataSourceInvalidInputError
 // DataSourceIdentityStoresDataSourceNotFoundError
 // DataSourceIdentityStoresDataSourcePermissionDeniedError
 type DataSourceIdentityStoresDataSourceDataSourceResult interface {
@@ -15671,6 +17188,8 @@ type DataSourceIdentityStoresDataSourceDataSourceResult interface {
 }
 
 func (v *DataSourceIdentityStoresDataSource) implementsGraphQLInterfaceDataSourceIdentityStoresDataSourceDataSourceResult() {
+}
+func (v *DataSourceIdentityStoresDataSourceInvalidInputError) implementsGraphQLInterfaceDataSourceIdentityStoresDataSourceDataSourceResult() {
 }
 func (v *DataSourceIdentityStoresDataSourceNotFoundError) implementsGraphQLInterfaceDataSourceIdentityStoresDataSourceDataSourceResult() {
 }
@@ -15693,6 +17212,9 @@ func __unmarshalDataSourceIdentityStoresDataSourceDataSourceResult(b []byte, v *
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(DataSourceIdentityStoresDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DataSourceIdentityStoresDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(DataSourceIdentityStoresDataSourceNotFoundError)
@@ -15719,6 +17241,14 @@ func __marshalDataSourceIdentityStoresDataSourceDataSourceResult(v *DataSourceId
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataSourceIdentityStoresDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourceIdentityStoresDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourceIdentityStoresDataSourceInvalidInputError
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataSourceIdentityStoresDataSourceNotFoundError:
@@ -15861,6 +17391,16 @@ func (v *DataSourceIdentityStoresDataSourceIdentityStoresIdentityStore) __premar
 	retval.Master = v.IdentityStore.Master
 	retval.Native = v.IdentityStore.Native
 	return &retval, nil
+}
+
+// DataSourceIdentityStoresDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DataSourceIdentityStoresDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourceIdentityStoresDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourceIdentityStoresDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // DataSourceIdentityStoresDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -16097,6 +17637,7 @@ func (v *DataSourceMaskInformationDataSource) GetMaskingMetadata() *DataSourceMa
 //
 // DataSourceMaskInformationDataSourceDataSourceResult is implemented by the following types:
 // DataSourceMaskInformationDataSource
+// DataSourceMaskInformationDataSourceInvalidInputError
 // DataSourceMaskInformationDataSourceNotFoundError
 // DataSourceMaskInformationDataSourcePermissionDeniedError
 type DataSourceMaskInformationDataSourceDataSourceResult interface {
@@ -16106,6 +17647,8 @@ type DataSourceMaskInformationDataSourceDataSourceResult interface {
 }
 
 func (v *DataSourceMaskInformationDataSource) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
+}
+func (v *DataSourceMaskInformationDataSourceInvalidInputError) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
 }
 func (v *DataSourceMaskInformationDataSourceNotFoundError) implementsGraphQLInterfaceDataSourceMaskInformationDataSourceDataSourceResult() {
 }
@@ -16128,6 +17671,9 @@ func __unmarshalDataSourceMaskInformationDataSourceDataSourceResult(b []byte, v 
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(DataSourceMaskInformationDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DataSourceMaskInformationDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(DataSourceMaskInformationDataSourceNotFoundError)
@@ -16154,6 +17700,14 @@ func __marshalDataSourceMaskInformationDataSourceDataSourceResult(v *DataSourceM
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataSourceMaskInformationDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourceMaskInformationDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourceMaskInformationDataSourceInvalidInputError
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataSourceMaskInformationDataSourceNotFoundError:
@@ -16186,6 +17740,16 @@ func __marshalDataSourceMaskInformationDataSourceDataSourceResult(v *DataSourceM
 		return nil, fmt.Errorf(
 			`unexpected concrete type for DataSourceMaskInformationDataSourceDataSourceResult: "%T"`, v)
 	}
+}
+
+// DataSourceMaskInformationDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DataSourceMaskInformationDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourceMaskInformationDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourceMaskInformationDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // DataSourceMaskInformationDataSourceMaskingMetadata includes the requested fields of the GraphQL type MaskingMetadata.
@@ -16915,9 +18479,12 @@ func (v *DataSourcePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Type
 // DataSourcePageEdgesEdgeNodeJob
 // DataSourcePageEdgesEdgeNodeJobLogMsg
 // DataSourcePageEdgesEdgeNodePromiseDetails
+// DataSourcePageEdgesEdgeNodeQueryHistoryDataObject
+// DataSourcePageEdgesEdgeNodeQueryHistoryStatement
 // DataSourcePageEdgesEdgeNodeRole
 // DataSourcePageEdgesEdgeNodeRoleAssignment
 // DataSourcePageEdgesEdgeNodeRoleAssignmentNotification
+// DataSourcePageEdgesEdgeNodeRoleDelegationNotification
 // DataSourcePageEdgesEdgeNodeSearchResultItem
 // DataSourcePageEdgesEdgeNodeStringValue
 // DataSourcePageEdgesEdgeNodeTag
@@ -16993,11 +18560,17 @@ func (v *DataSourcePageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceDataSou
 }
 func (v *DataSourcePageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
+func (v *DataSourcePageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
+}
+func (v *DataSourcePageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
+}
 func (v *DataSourcePageEdgesEdgeNodeRole) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
+}
+func (v *DataSourcePageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
 func (v *DataSourcePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceDataSourcePageEdgesEdgeNodeItem() {
 }
@@ -17122,6 +18695,12 @@ func __unmarshalDataSourcePageEdgesEdgeNodeItem(b []byte, v *DataSourcePageEdges
 	case "PromiseDetails":
 		*v = new(DataSourcePageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(DataSourcePageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(DataSourcePageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(DataSourcePageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -17130,6 +18709,9 @@ func __unmarshalDataSourcePageEdgesEdgeNodeItem(b []byte, v *DataSourcePageEdges
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(DataSourcePageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(DataSourcePageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(DataSourcePageEdgesEdgeNodeSearchResultItem)
@@ -17415,6 +18997,22 @@ func __marshalDataSourcePageEdgesEdgeNodeItem(v *DataSourcePageEdgesEdgeNodeItem
 			*DataSourcePageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *DataSourcePageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourcePageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourcePageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourcePageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *DataSourcePageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -17437,6 +19035,14 @@ func __marshalDataSourcePageEdgesEdgeNodeItem(v *DataSourcePageEdgesEdgeNodeItem
 		result := struct {
 			TypeName string `json:"__typename"`
 			*DataSourcePageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataSourcePageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataSourcePageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *DataSourcePageEdgesEdgeNodeSearchResultItem:
@@ -17543,6 +19149,22 @@ type DataSourcePageEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns DataSourcePageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *DataSourcePageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// DataSourcePageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type DataSourcePageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourcePageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourcePageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string { return v.Typename }
+
+// DataSourcePageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type DataSourcePageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourcePageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourcePageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string { return v.Typename }
+
 // DataSourcePageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type DataSourcePageEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -17566,6 +19188,16 @@ type DataSourcePageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns DataSourcePageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *DataSourcePageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// DataSourcePageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type DataSourcePageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataSourcePageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *DataSourcePageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -17761,6 +19393,11 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetAction() models.Ac
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns DeactivateAccessProviderDeactivateAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns DeactivateAccessProviderDeactivateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -17860,6 +19497,8 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -17903,6 +19542,7 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -17921,6 +19561,7 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 //
 // DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult is implemented by the following types:
 // DeactivateAccessProviderDeactivateAccessProvider
+// DeactivateAccessProviderDeactivateAccessProviderInvalidInputError
 // DeactivateAccessProviderDeactivateAccessProviderNotFoundError
 // DeactivateAccessProviderDeactivateAccessProviderPermissionDeniedError
 type DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult interface {
@@ -17930,6 +19571,8 @@ type DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult interf
 }
 
 func (v *DeactivateAccessProviderDeactivateAccessProvider) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
+}
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
 }
 func (v *DeactivateAccessProviderDeactivateAccessProviderNotFoundError) implementsGraphQLInterfaceDeactivateAccessProviderDeactivateAccessProviderAccessProviderResult() {
 }
@@ -17952,6 +19595,9 @@ func __unmarshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderRe
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(DeactivateAccessProviderDeactivateAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DeactivateAccessProviderDeactivateAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(DeactivateAccessProviderDeactivateAccessProviderNotFoundError)
@@ -17984,6 +19630,14 @@ func __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResu
 			*__premarshalDeactivateAccessProviderDeactivateAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeactivateAccessProviderDeactivateAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -18014,6 +19668,16 @@ func __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResu
 		return nil, fmt.Errorf(
 			`unexpected concrete type for DeactivateAccessProviderDeactivateAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// DeactivateAccessProviderDeactivateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeactivateAccessProviderDeactivateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeactivateAccessProviderDeactivateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // DeactivateAccessProviderDeactivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -18260,6 +19924,11 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns DeleteAccessProviderDeleteAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns DeleteAccessProviderDeleteAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -18359,6 +20028,8 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -18402,6 +20073,7 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -18420,6 +20092,7 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 //
 // DeleteAccessProviderDeleteAccessProviderAccessProviderResult is implemented by the following types:
 // DeleteAccessProviderDeleteAccessProvider
+// DeleteAccessProviderDeleteAccessProviderInvalidInputError
 // DeleteAccessProviderDeleteAccessProviderNotFoundError
 // DeleteAccessProviderDeleteAccessProviderPermissionDeniedError
 type DeleteAccessProviderDeleteAccessProviderAccessProviderResult interface {
@@ -18429,6 +20102,8 @@ type DeleteAccessProviderDeleteAccessProviderAccessProviderResult interface {
 }
 
 func (v *DeleteAccessProviderDeleteAccessProvider) implementsGraphQLInterfaceDeleteAccessProviderDeleteAccessProviderAccessProviderResult() {
+}
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) implementsGraphQLInterfaceDeleteAccessProviderDeleteAccessProviderAccessProviderResult() {
 }
 func (v *DeleteAccessProviderDeleteAccessProviderNotFoundError) implementsGraphQLInterfaceDeleteAccessProviderDeleteAccessProviderAccessProviderResult() {
 }
@@ -18451,6 +20126,9 @@ func __unmarshalDeleteAccessProviderDeleteAccessProviderAccessProviderResult(b [
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(DeleteAccessProviderDeleteAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DeleteAccessProviderDeleteAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(DeleteAccessProviderDeleteAccessProviderNotFoundError)
@@ -18483,6 +20161,14 @@ func __marshalDeleteAccessProviderDeleteAccessProviderAccessProviderResult(v *De
 			*__premarshalDeleteAccessProviderDeleteAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *DeleteAccessProviderDeleteAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteAccessProviderDeleteAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *DeleteAccessProviderDeleteAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -18513,6 +20199,16 @@ func __marshalDeleteAccessProviderDeleteAccessProviderAccessProviderResult(v *De
 		return nil, fmt.Errorf(
 			`unexpected concrete type for DeleteAccessProviderDeleteAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// DeleteAccessProviderDeleteAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeleteAccessProviderDeleteAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteAccessProviderDeleteAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // DeleteAccessProviderDeleteAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -18730,6 +20426,8 @@ func (v *DeleteDataSourceDeleteDataSource) GetSuccess() bool { return v.Success 
 //
 // DeleteDataSourceDeleteDataSourceDeleteDataSourceResult is implemented by the following types:
 // DeleteDataSourceDeleteDataSource
+// DeleteDataSourceDeleteDataSourceInvalidInputError
+// DeleteDataSourceDeleteDataSourceNotFoundError
 // DeleteDataSourceDeleteDataSourcePermissionDeniedError
 type DeleteDataSourceDeleteDataSourceDeleteDataSourceResult interface {
 	implementsGraphQLInterfaceDeleteDataSourceDeleteDataSourceDeleteDataSourceResult()
@@ -18738,6 +20436,10 @@ type DeleteDataSourceDeleteDataSourceDeleteDataSourceResult interface {
 }
 
 func (v *DeleteDataSourceDeleteDataSource) implementsGraphQLInterfaceDeleteDataSourceDeleteDataSourceDeleteDataSourceResult() {
+}
+func (v *DeleteDataSourceDeleteDataSourceInvalidInputError) implementsGraphQLInterfaceDeleteDataSourceDeleteDataSourceDeleteDataSourceResult() {
+}
+func (v *DeleteDataSourceDeleteDataSourceNotFoundError) implementsGraphQLInterfaceDeleteDataSourceDeleteDataSourceDeleteDataSourceResult() {
 }
 func (v *DeleteDataSourceDeleteDataSourcePermissionDeniedError) implementsGraphQLInterfaceDeleteDataSourceDeleteDataSourceDeleteDataSourceResult() {
 }
@@ -18758,6 +20460,12 @@ func __unmarshalDeleteDataSourceDeleteDataSourceDeleteDataSourceResult(b []byte,
 	switch tn.TypeName {
 	case "DeleteDataSource":
 		*v = new(DeleteDataSourceDeleteDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DeleteDataSourceDeleteDataSourceInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DeleteDataSourceDeleteDataSourceNotFoundError)
 		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(DeleteDataSourceDeleteDataSourcePermissionDeniedError)
@@ -18783,6 +20491,22 @@ func __marshalDeleteDataSourceDeleteDataSourceDeleteDataSourceResult(v *DeleteDa
 			*DeleteDataSourceDeleteDataSource
 		}{typename, v}
 		return json.Marshal(result)
+	case *DeleteDataSourceDeleteDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteDataSourceDeleteDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DeleteDataSourceDeleteDataSourceNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteDataSourceDeleteDataSourceNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *DeleteDataSourceDeleteDataSourcePermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -18802,6 +20526,22 @@ func __marshalDeleteDataSourceDeleteDataSourceDeleteDataSourceResult(v *DeleteDa
 			`unexpected concrete type for DeleteDataSourceDeleteDataSourceDeleteDataSourceResult: "%T"`, v)
 	}
 }
+
+// DeleteDataSourceDeleteDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeleteDataSourceDeleteDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteDataSourceDeleteDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteDataSourceDeleteDataSourceInvalidInputError) GetTypename() *string { return v.Typename }
+
+// DeleteDataSourceDeleteDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DeleteDataSourceDeleteDataSourceNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteDataSourceDeleteDataSourceNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteDataSourceDeleteDataSourceNotFoundError) GetTypename() *string { return v.Typename }
 
 // DeleteDataSourceDeleteDataSourcePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
 type DeleteDataSourceDeleteDataSourcePermissionDeniedError struct {
@@ -18939,6 +20679,454 @@ func (v *DeleteDataSourceResponse) __premarshalJSON() (*__premarshalDeleteDataSo
 	return &retval, nil
 }
 
+// DeleteGrantCategoryDeleteGrantCategory includes the requested fields of the GraphQL type DeleteGrantCategory.
+type DeleteGrantCategoryDeleteGrantCategory struct {
+	Typename                  *string `json:"__typename"`
+	DeleteGrantCategoryResult `json:"-"`
+}
+
+// GetTypename returns DeleteGrantCategoryDeleteGrantCategory.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategory) GetTypename() *string { return v.Typename }
+
+// GetSuccess returns DeleteGrantCategoryDeleteGrantCategory.Success, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategory) GetSuccess() bool {
+	return v.DeleteGrantCategoryResult.Success
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteGrantCategoryDeleteGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteGrantCategoryDeleteGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.DeleteGrantCategoryResult)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeleteGrantCategoryDeleteGrantCategory struct {
+	Typename *string `json:"__typename"`
+
+	Success bool `json:"success"`
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategory) __premarshalJSON() (*__premarshalDeleteGrantCategoryDeleteGrantCategory, error) {
+	var retval __premarshalDeleteGrantCategoryDeleteGrantCategory
+
+	retval.Typename = v.Typename
+	retval.Success = v.DeleteGrantCategoryResult.Success
+	return &retval, nil
+}
+
+// DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult includes the requested fields of the GraphQL interface DeleteGrantCategoryResult.
+//
+// DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult is implemented by the following types:
+// DeleteGrantCategoryDeleteGrantCategory
+// DeleteGrantCategoryDeleteGrantCategoryInvalidInputError
+// DeleteGrantCategoryDeleteGrantCategoryNotFoundError
+// DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError
+type DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult interface {
+	implementsGraphQLInterfaceDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategory) implementsGraphQLInterfaceDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult() {
+}
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) implementsGraphQLInterfaceDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult() {
+}
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) implementsGraphQLInterfaceDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult() {
+}
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) implementsGraphQLInterfaceDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult() {
+}
+
+func __unmarshalDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult(b []byte, v *DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "DeleteGrantCategory":
+		*v = new(DeleteGrantCategoryDeleteGrantCategory)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DeleteGrantCategoryDeleteGrantCategoryInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DeleteGrantCategoryDeleteGrantCategoryNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing DeleteGrantCategoryResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult(v *DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *DeleteGrantCategoryDeleteGrantCategory:
+		typename = "DeleteGrantCategory"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeleteGrantCategoryDeleteGrantCategory
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError:
+		typename = "InvalidInputError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeleteGrantCategoryDeleteGrantCategoryInvalidInputError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DeleteGrantCategoryDeleteGrantCategoryNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeleteGrantCategoryDeleteGrantCategoryNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult: "%T"`, v)
+	}
+}
+
+// DeleteGrantCategoryDeleteGrantCategoryInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeleteGrantCategoryDeleteGrantCategoryInvalidInputError struct {
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
+}
+
+// GetTypename returns DeleteGrantCategoryDeleteGrantCategoryInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DeleteGrantCategoryDeleteGrantCategoryInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteGrantCategoryDeleteGrantCategoryInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteGrantCategoryDeleteGrantCategoryInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeleteGrantCategoryDeleteGrantCategoryInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryInvalidInputError) __premarshalJSON() (*__premarshalDeleteGrantCategoryDeleteGrantCategoryInvalidInputError, error) {
+	var retval __premarshalDeleteGrantCategoryDeleteGrantCategoryInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
+}
+
+// DeleteGrantCategoryDeleteGrantCategoryNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DeleteGrantCategoryDeleteGrantCategoryNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns DeleteGrantCategoryDeleteGrantCategoryNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DeleteGrantCategoryDeleteGrantCategoryNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteGrantCategoryDeleteGrantCategoryNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteGrantCategoryDeleteGrantCategoryNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeleteGrantCategoryDeleteGrantCategoryNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryNotFoundError) __premarshalJSON() (*__premarshalDeleteGrantCategoryDeleteGrantCategoryNotFoundError, error) {
+	var retval __premarshalDeleteGrantCategoryDeleteGrantCategoryNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError) __premarshalJSON() (*__premarshalDeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError, error) {
+	var retval __premarshalDeleteGrantCategoryDeleteGrantCategoryPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// DeleteGrantCategoryResponse is returned by DeleteGrantCategory on success.
+type DeleteGrantCategoryResponse struct {
+	DeleteGrantCategory DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult `json:"-"`
+}
+
+// GetDeleteGrantCategory returns DeleteGrantCategoryResponse.DeleteGrantCategory, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryResponse) GetDeleteGrantCategory() DeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult {
+	return v.DeleteGrantCategory
+}
+
+func (v *DeleteGrantCategoryResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteGrantCategoryResponse
+		DeleteGrantCategory json.RawMessage `json:"deleteGrantCategory"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteGrantCategoryResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.DeleteGrantCategory
+		src := firstPass.DeleteGrantCategory
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal DeleteGrantCategoryResponse.DeleteGrantCategory: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalDeleteGrantCategoryResponse struct {
+	DeleteGrantCategory json.RawMessage `json:"deleteGrantCategory"`
+}
+
+func (v *DeleteGrantCategoryResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteGrantCategoryResponse) __premarshalJSON() (*__premarshalDeleteGrantCategoryResponse, error) {
+	var retval __premarshalDeleteGrantCategoryResponse
+
+	{
+
+		dst := &retval.DeleteGrantCategory
+		src := v.DeleteGrantCategory
+		var err error
+		*dst, err = __marshalDeleteGrantCategoryDeleteGrantCategoryDeleteGrantCategoryResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DeleteGrantCategoryResponse.DeleteGrantCategory: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// DeleteGrantCategoryResult includes the GraphQL fields of DeleteGrantCategory requested by the fragment DeleteGrantCategoryResult.
+type DeleteGrantCategoryResult struct {
+	Success bool `json:"success"`
+}
+
+// GetSuccess returns DeleteGrantCategoryResult.Success, and is useful for accessing the field via an interface.
+func (v *DeleteGrantCategoryResult) GetSuccess() bool { return v.Success }
+
 // DeleteIdentityStoreDeleteIdentityStore includes the requested fields of the GraphQL type DeleteIdentityStore.
 type DeleteIdentityStoreDeleteIdentityStore struct {
 	Typename *string `json:"__typename"`
@@ -18955,6 +21143,8 @@ func (v *DeleteIdentityStoreDeleteIdentityStore) GetSuccess() bool { return v.Su
 //
 // DeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult is implemented by the following types:
 // DeleteIdentityStoreDeleteIdentityStore
+// DeleteIdentityStoreDeleteIdentityStoreInvalidInputError
+// DeleteIdentityStoreDeleteIdentityStoreNotFoundError
 // DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError
 type DeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult interface {
 	implementsGraphQLInterfaceDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult()
@@ -18963,6 +21153,10 @@ type DeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult interface {
 }
 
 func (v *DeleteIdentityStoreDeleteIdentityStore) implementsGraphQLInterfaceDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult() {
+}
+func (v *DeleteIdentityStoreDeleteIdentityStoreInvalidInputError) implementsGraphQLInterfaceDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult() {
+}
+func (v *DeleteIdentityStoreDeleteIdentityStoreNotFoundError) implementsGraphQLInterfaceDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult() {
 }
 func (v *DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError) implementsGraphQLInterfaceDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult() {
 }
@@ -18983,6 +21177,12 @@ func __unmarshalDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult(
 	switch tn.TypeName {
 	case "DeleteIdentityStore":
 		*v = new(DeleteIdentityStoreDeleteIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(DeleteIdentityStoreDeleteIdentityStoreInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DeleteIdentityStoreDeleteIdentityStoreNotFoundError)
 		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError)
@@ -19008,6 +21208,22 @@ func __marshalDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult(v 
 			*DeleteIdentityStoreDeleteIdentityStore
 		}{typename, v}
 		return json.Marshal(result)
+	case *DeleteIdentityStoreDeleteIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteIdentityStoreDeleteIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DeleteIdentityStoreDeleteIdentityStoreNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteIdentityStoreDeleteIdentityStoreNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -19026,6 +21242,26 @@ func __marshalDeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult(v 
 		return nil, fmt.Errorf(
 			`unexpected concrete type for DeleteIdentityStoreDeleteIdentityStoreDeleteIdentityStoreResult: "%T"`, v)
 	}
+}
+
+// DeleteIdentityStoreDeleteIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeleteIdentityStoreDeleteIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteIdentityStoreDeleteIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteIdentityStoreDeleteIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// DeleteIdentityStoreDeleteIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DeleteIdentityStoreDeleteIdentityStoreNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteIdentityStoreDeleteIdentityStoreNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteIdentityStoreDeleteIdentityStoreNotFoundError) GetTypename() *string {
+	return v.Typename
 }
 
 // DeleteIdentityStoreDeleteIdentityStorePermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
@@ -19164,6 +21400,22 @@ func (v *DeleteIdentityStoreResponse) __premarshalJSON() (*__premarshalDeleteIde
 	return &retval, nil
 }
 
+// DeleteUserDeleteUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DeleteUserDeleteUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteUserDeleteUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteUserDeleteUserInvalidInputError) GetTypename() *string { return v.Typename }
+
+// DeleteUserDeleteUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DeleteUserDeleteUserNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DeleteUserDeleteUserNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DeleteUserDeleteUserNotFoundError) GetTypename() *string { return v.Typename }
+
 // DeleteUserDeleteUserPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
 type DeleteUserDeleteUserPermissionDeniedError struct {
 	Typename              *string `json:"__typename"`
@@ -19240,6 +21492,8 @@ func (v *DeleteUserDeleteUserUserDelete) GetSuccess() bool { return v.Success }
 // DeleteUserDeleteUserUserDeleteResult includes the requested fields of the GraphQL interface UserDeleteResult.
 //
 // DeleteUserDeleteUserUserDeleteResult is implemented by the following types:
+// DeleteUserDeleteUserInvalidInputError
+// DeleteUserDeleteUserNotFoundError
 // DeleteUserDeleteUserPermissionDeniedError
 // DeleteUserDeleteUserUserDelete
 type DeleteUserDeleteUserUserDeleteResult interface {
@@ -19248,6 +21502,10 @@ type DeleteUserDeleteUserUserDeleteResult interface {
 	GetTypename() *string
 }
 
+func (v *DeleteUserDeleteUserInvalidInputError) implementsGraphQLInterfaceDeleteUserDeleteUserUserDeleteResult() {
+}
+func (v *DeleteUserDeleteUserNotFoundError) implementsGraphQLInterfaceDeleteUserDeleteUserUserDeleteResult() {
+}
 func (v *DeleteUserDeleteUserPermissionDeniedError) implementsGraphQLInterfaceDeleteUserDeleteUserUserDeleteResult() {
 }
 func (v *DeleteUserDeleteUserUserDelete) implementsGraphQLInterfaceDeleteUserDeleteUserUserDeleteResult() {
@@ -19267,6 +21525,12 @@ func __unmarshalDeleteUserDeleteUserUserDeleteResult(b []byte, v *DeleteUserDele
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(DeleteUserDeleteUserInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DeleteUserDeleteUserNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(DeleteUserDeleteUserPermissionDeniedError)
 		return json.Unmarshal(b, *v)
@@ -19286,6 +21550,22 @@ func __marshalDeleteUserDeleteUserUserDeleteResult(v *DeleteUserDeleteUserUserDe
 
 	var typename string
 	switch v := (*v).(type) {
+	case *DeleteUserDeleteUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteUserDeleteUserInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DeleteUserDeleteUserNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DeleteUserDeleteUserNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *DeleteUserDeleteUserPermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -19426,6 +21706,11 @@ func (v *GetAccessProviderAccessProvider) GetAction() models.AccessProviderActio
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns GetAccessProviderAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns GetAccessProviderAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -19519,6 +21804,8 @@ type __premarshalGetAccessProviderAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -19562,6 +21849,7 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -19580,6 +21868,7 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 //
 // GetAccessProviderAccessProviderAccessProviderResult is implemented by the following types:
 // GetAccessProviderAccessProvider
+// GetAccessProviderAccessProviderInvalidInputError
 // GetAccessProviderAccessProviderNotFoundError
 // GetAccessProviderAccessProviderPermissionDeniedError
 type GetAccessProviderAccessProviderAccessProviderResult interface {
@@ -19589,6 +21878,8 @@ type GetAccessProviderAccessProviderAccessProviderResult interface {
 }
 
 func (v *GetAccessProviderAccessProvider) implementsGraphQLInterfaceGetAccessProviderAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderAccessProviderInvalidInputError) implementsGraphQLInterfaceGetAccessProviderAccessProviderAccessProviderResult() {
 }
 func (v *GetAccessProviderAccessProviderNotFoundError) implementsGraphQLInterfaceGetAccessProviderAccessProviderAccessProviderResult() {
 }
@@ -19611,6 +21902,9 @@ func __unmarshalGetAccessProviderAccessProviderAccessProviderResult(b []byte, v 
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(GetAccessProviderAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetAccessProviderAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetAccessProviderAccessProviderNotFoundError)
@@ -19643,6 +21937,14 @@ func __marshalGetAccessProviderAccessProviderAccessProviderResult(v *GetAccessPr
 			*__premarshalGetAccessProviderAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetAccessProviderAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -19674,6 +21976,14 @@ func __marshalGetAccessProviderAccessProviderAccessProviderResult(v *GetAccessPr
 			`unexpected concrete type for GetAccessProviderAccessProviderAccessProviderResult: "%T"`, v)
 	}
 }
+
+// GetAccessProviderAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProviderInvalidInputError) GetTypename() *string { return v.Typename }
 
 // GetAccessProviderAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetAccessProviderAccessProviderNotFoundError struct {
@@ -19956,6 +22266,7 @@ func (v *GetAccessProviderWhatAccessProvidersAccessProvider) __premarshalJSON() 
 //
 // GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult is implemented by the following types:
 // GetAccessProviderWhatAccessProvidersAccessProvider
+// GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError
 // GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError
 // GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
 type GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult interface {
@@ -19965,6 +22276,8 @@ type GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult inte
 }
 
 func (v *GetAccessProviderWhatAccessProvidersAccessProvider) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
 }
 func (v *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult() {
 }
@@ -19987,6 +22300,9 @@ func __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProvider
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(GetAccessProviderWhatAccessProvidersAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError)
@@ -20019,6 +22335,14 @@ func __marshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderRe
 			*__premarshalGetAccessProviderWhatAccessProvidersAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -20049,6 +22373,16 @@ func __marshalGetAccessProviderWhatAccessProvidersAccessProviderAccessProviderRe
 		return nil, fmt.Errorf(
 			`unexpected concrete type for GetAccessProviderWhatAccessProvidersAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // GetAccessProviderWhatAccessProvidersAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -20177,6 +22511,26 @@ func (v *GetAccessProviderWhatAccessProvidersAccessProviderPermissionDeniedError
 	return &retval, nil
 }
 
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
 // GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult includes the requested fields of the GraphQL type PagedResult.
 type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult struct {
 	Typename                             *string `json:"__typename"`
@@ -20251,6 +22605,8 @@ func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPa
 // GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults is implemented by the following types:
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError
+// GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError
 // GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult
 // GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError
 type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults interface {
@@ -20259,6 +22615,10 @@ type GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedR
 	GetTypename() *string
 }
 
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
+}
+func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
+}
 func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
 }
 func (v *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPermissionDeniedError) implementsGraphQLInterfaceGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResults() {
@@ -20278,6 +22638,12 @@ func __unmarshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProv
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult)
 		return json.Unmarshal(b, *v)
@@ -20297,6 +22663,22 @@ func __marshalGetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvid
 
 	var typename string
 	switch v := (*v).(type) {
+	case *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhatAccessProvidersAccessProviderWhatAccessProvidersPagedResult:
 		typename = "PagedResult"
 
@@ -20549,6 +22931,7 @@ func (v *GetAccessProviderWhatDataObjectListAccessProvider) __premarshalJSON() (
 //
 // GetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult is implemented by the following types:
 // GetAccessProviderWhatDataObjectListAccessProvider
+// GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError
 // GetAccessProviderWhatDataObjectListAccessProviderNotFoundError
 // GetAccessProviderWhatDataObjectListAccessProviderPermissionDeniedError
 type GetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult interface {
@@ -20558,6 +22941,8 @@ type GetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult inter
 }
 
 func (v *GetAccessProviderWhatDataObjectListAccessProvider) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult() {
 }
 func (v *GetAccessProviderWhatDataObjectListAccessProviderNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult() {
 }
@@ -20580,6 +22965,9 @@ func __unmarshalGetAccessProviderWhatDataObjectListAccessProviderAccessProviderR
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(GetAccessProviderWhatDataObjectListAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetAccessProviderWhatDataObjectListAccessProviderNotFoundError)
@@ -20612,6 +23000,14 @@ func __marshalGetAccessProviderWhatDataObjectListAccessProviderAccessProviderRes
 			*__premarshalGetAccessProviderWhatDataObjectListAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhatDataObjectListAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -20642,6 +23038,16 @@ func __marshalGetAccessProviderWhatDataObjectListAccessProviderAccessProviderRes
 		return nil, fmt.Errorf(
 			`unexpected concrete type for GetAccessProviderWhatDataObjectListAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatDataObjectListAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // GetAccessProviderWhatDataObjectListAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -20770,6 +23176,26 @@ func (v *GetAccessProviderWhatDataObjectListAccessProviderPermissionDeniedError)
 	return &retval, nil
 }
 
+// GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
 // GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult includes the requested fields of the GraphQL type PagedResult.
 type GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult struct {
 	Typename               *string `json:"__typename"`
@@ -20844,6 +23270,8 @@ func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedRe
 // GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults is implemented by the following types:
+// GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError
+// GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError
 // GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult
 // GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPermissionDeniedError
 type GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults interface {
@@ -20852,6 +23280,10 @@ type GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult
 	GetTypename() *string
 }
 
+func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults() {
+}
+func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults() {
+}
 func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults() {
 }
 func (v *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPermissionDeniedError) implementsGraphQLInterfaceGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResults() {
@@ -20871,6 +23303,12 @@ func __unmarshalGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjects
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult)
 		return json.Unmarshal(b, *v)
@@ -20890,6 +23328,22 @@ func __marshalGetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPa
 
 	var typename string
 	switch v := (*v).(type) {
+	case *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhatDataObjectListAccessProviderWhatDataObjectsPagedResult:
 		typename = "PagedResult"
 
@@ -21142,6 +23596,7 @@ func (v *GetAccessProviderWhoListAccessProvider) __premarshalJSON() (*__premarsh
 //
 // GetAccessProviderWhoListAccessProviderAccessProviderResult is implemented by the following types:
 // GetAccessProviderWhoListAccessProvider
+// GetAccessProviderWhoListAccessProviderInvalidInputError
 // GetAccessProviderWhoListAccessProviderNotFoundError
 // GetAccessProviderWhoListAccessProviderPermissionDeniedError
 type GetAccessProviderWhoListAccessProviderAccessProviderResult interface {
@@ -21151,6 +23606,8 @@ type GetAccessProviderWhoListAccessProviderAccessProviderResult interface {
 }
 
 func (v *GetAccessProviderWhoListAccessProvider) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderAccessProviderResult() {
+}
+func (v *GetAccessProviderWhoListAccessProviderInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderAccessProviderResult() {
 }
 func (v *GetAccessProviderWhoListAccessProviderNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderAccessProviderResult() {
 }
@@ -21173,6 +23630,9 @@ func __unmarshalGetAccessProviderWhoListAccessProviderAccessProviderResult(b []b
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(GetAccessProviderWhoListAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhoListAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetAccessProviderWhoListAccessProviderNotFoundError)
@@ -21205,6 +23665,14 @@ func __marshalGetAccessProviderWhoListAccessProviderAccessProviderResult(v *GetA
 			*__premarshalGetAccessProviderWhoListAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetAccessProviderWhoListAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhoListAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhoListAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -21235,6 +23703,16 @@ func __marshalGetAccessProviderWhoListAccessProviderAccessProviderResult(v *GetA
 		return nil, fmt.Errorf(
 			`unexpected concrete type for GetAccessProviderWhoListAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// GetAccessProviderWhoListAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhoListAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhoListAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhoListAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // GetAccessProviderWhoListAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -21363,6 +23841,26 @@ func (v *GetAccessProviderWhoListAccessProviderPermissionDeniedError) __premarsh
 	return &retval, nil
 }
 
+// GetAccessProviderWhoListAccessProviderWhoListInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetAccessProviderWhoListAccessProviderWhoListInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhoListAccessProviderWhoListInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhoListAccessProviderWhoListInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetAccessProviderWhoListAccessProviderWhoListNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetAccessProviderWhoListAccessProviderWhoListNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetAccessProviderWhoListAccessProviderWhoListNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderWhoListAccessProviderWhoListNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
 // GetAccessProviderWhoListAccessProviderWhoListPagedResult includes the requested fields of the GraphQL type PagedResult.
 type GetAccessProviderWhoListAccessProviderWhoListPagedResult struct {
 	Typename              *string `json:"__typename"`
@@ -21437,6 +23935,8 @@ func (v *GetAccessProviderWhoListAccessProviderWhoListPagedResult) __premarshalJ
 // GetAccessProviderWhoListAccessProviderWhoListPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // GetAccessProviderWhoListAccessProviderWhoListPagedResults is implemented by the following types:
+// GetAccessProviderWhoListAccessProviderWhoListInvalidInputError
+// GetAccessProviderWhoListAccessProviderWhoListNotFoundError
 // GetAccessProviderWhoListAccessProviderWhoListPagedResult
 // GetAccessProviderWhoListAccessProviderWhoListPermissionDeniedError
 type GetAccessProviderWhoListAccessProviderWhoListPagedResults interface {
@@ -21445,6 +23945,10 @@ type GetAccessProviderWhoListAccessProviderWhoListPagedResults interface {
 	GetTypename() *string
 }
 
+func (v *GetAccessProviderWhoListAccessProviderWhoListInvalidInputError) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderWhoListPagedResults() {
+}
+func (v *GetAccessProviderWhoListAccessProviderWhoListNotFoundError) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderWhoListPagedResults() {
+}
 func (v *GetAccessProviderWhoListAccessProviderWhoListPagedResult) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderWhoListPagedResults() {
 }
 func (v *GetAccessProviderWhoListAccessProviderWhoListPermissionDeniedError) implementsGraphQLInterfaceGetAccessProviderWhoListAccessProviderWhoListPagedResults() {
@@ -21464,6 +23968,12 @@ func __unmarshalGetAccessProviderWhoListAccessProviderWhoListPagedResults(b []by
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(GetAccessProviderWhoListAccessProviderWhoListInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetAccessProviderWhoListAccessProviderWhoListNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(GetAccessProviderWhoListAccessProviderWhoListPagedResult)
 		return json.Unmarshal(b, *v)
@@ -21483,6 +23993,22 @@ func __marshalGetAccessProviderWhoListAccessProviderWhoListPagedResults(v *GetAc
 
 	var typename string
 	switch v := (*v).(type) {
+	case *GetAccessProviderWhoListAccessProviderWhoListInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhoListAccessProviderWhoListInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *GetAccessProviderWhoListAccessProviderWhoListNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetAccessProviderWhoListAccessProviderWhoListNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetAccessProviderWhoListAccessProviderWhoListPagedResult:
 		typename = "PagedResult"
 
@@ -21862,6 +24388,7 @@ func (v *GetDataSourceDataSource) __premarshalJSON() (*__premarshalGetDataSource
 //
 // GetDataSourceDataSourceDataSourceResult is implemented by the following types:
 // GetDataSourceDataSource
+// GetDataSourceDataSourceInvalidInputError
 // GetDataSourceDataSourceNotFoundError
 // GetDataSourceDataSourcePermissionDeniedError
 type GetDataSourceDataSourceDataSourceResult interface {
@@ -21871,6 +24398,8 @@ type GetDataSourceDataSourceDataSourceResult interface {
 }
 
 func (v *GetDataSourceDataSource) implementsGraphQLInterfaceGetDataSourceDataSourceDataSourceResult() {
+}
+func (v *GetDataSourceDataSourceInvalidInputError) implementsGraphQLInterfaceGetDataSourceDataSourceDataSourceResult() {
 }
 func (v *GetDataSourceDataSourceNotFoundError) implementsGraphQLInterfaceGetDataSourceDataSourceDataSourceResult() {
 }
@@ -21893,6 +24422,9 @@ func __unmarshalGetDataSourceDataSourceDataSourceResult(b []byte, v *GetDataSour
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(GetDataSourceDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetDataSourceDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetDataSourceDataSourceNotFoundError)
@@ -21925,6 +24457,14 @@ func __marshalGetDataSourceDataSourceDataSourceResult(v *GetDataSourceDataSource
 			*__premarshalGetDataSourceDataSource
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetDataSourceDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetDataSourceDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetDataSourceDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -21956,6 +24496,14 @@ func __marshalGetDataSourceDataSourceDataSourceResult(v *GetDataSourceDataSource
 			`unexpected concrete type for GetDataSourceDataSourceDataSourceResult: "%T"`, v)
 	}
 }
+
+// GetDataSourceDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetDataSourceDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetDataSourceDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetDataSourceDataSourceInvalidInputError) GetTypename() *string { return v.Typename }
 
 // GetDataSourceDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetDataSourceDataSourceNotFoundError struct {
@@ -22150,6 +24698,532 @@ func (v *GetDataSourceResponse) __premarshalJSON() (*__premarshalGetDataSourceRe
 	return &retval, nil
 }
 
+// GetGrantCategoryGrantCategory includes the requested fields of the GraphQL type GrantCategory.
+type GetGrantCategoryGrantCategory struct {
+	Typename             *string `json:"__typename"`
+	GrantCategoryDetails `json:"-"`
+}
+
+// GetTypename returns GetGrantCategoryGrantCategory.Typename, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetTypename() *string { return v.Typename }
+
+// GetId returns GetGrantCategoryGrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetId() string { return v.GrantCategoryDetails.Id }
+
+// GetCreatedAt returns GetGrantCategoryGrantCategory.CreatedAt, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetCreatedAt() time.Time {
+	return v.GrantCategoryDetails.CreatedAt
+}
+
+// GetModifiedAt returns GetGrantCategoryGrantCategory.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetModifiedAt() time.Time {
+	return v.GrantCategoryDetails.ModifiedAt
+}
+
+// GetIsSystem returns GetGrantCategoryGrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetIsSystem() bool { return v.GrantCategoryDetails.IsSystem }
+
+// GetName returns GetGrantCategoryGrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetName() string { return v.GrantCategoryDetails.Name }
+
+// GetDescription returns GetGrantCategoryGrantCategory.Description, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetDescription() string {
+	return v.GrantCategoryDetails.Description
+}
+
+// GetIcon returns GetGrantCategoryGrantCategory.Icon, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetIcon() string { return v.GrantCategoryDetails.Icon }
+
+// GetIsDefault returns GetGrantCategoryGrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetIsDefault() bool { return v.GrantCategoryDetails.IsDefault }
+
+// GetCanCreate returns GetGrantCategoryGrantCategory.CanCreate, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetCanCreate() bool { return v.GrantCategoryDetails.CanCreate }
+
+// GetAllowDuplicateNames returns GetGrantCategoryGrantCategory.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetAllowDuplicateNames() bool {
+	return v.GrantCategoryDetails.AllowDuplicateNames
+}
+
+// GetMultiDataSource returns GetGrantCategoryGrantCategory.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetMultiDataSource() bool {
+	return v.GrantCategoryDetails.MultiDataSource
+}
+
+// GetDefaultTypePerDataSource returns GetGrantCategoryGrantCategory.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetDefaultTypePerDataSource() []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource {
+	return v.GrantCategoryDetails.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns GetGrantCategoryGrantCategory.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetAllowedWhoItems() GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems {
+	return v.GrantCategoryDetails.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns GetGrantCategoryGrantCategory.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategory) GetAllowedWhatItems() GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems {
+	return v.GrantCategoryDetails.AllowedWhatItems
+}
+
+func (v *GetGrantCategoryGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetGrantCategoryGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetGrantCategoryGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryDetails)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetGrantCategoryGrantCategory struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	IsSystem bool `json:"isSystem"`
+
+	Name string `json:"name"`
+
+	Description string `json:"description"`
+
+	Icon string `json:"icon"`
+
+	IsDefault bool `json:"isDefault"`
+
+	CanCreate bool `json:"canCreate"`
+
+	AllowDuplicateNames bool `json:"allowDuplicateNames"`
+
+	MultiDataSource bool `json:"multiDataSource"`
+
+	DefaultTypePerDataSource []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource `json:"defaultTypePerDataSource"`
+
+	AllowedWhoItems GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems `json:"allowedWhoItems"`
+
+	AllowedWhatItems GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems `json:"allowedWhatItems"`
+}
+
+func (v *GetGrantCategoryGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetGrantCategoryGrantCategory) __premarshalJSON() (*__premarshalGetGrantCategoryGrantCategory, error) {
+	var retval __premarshalGetGrantCategoryGrantCategory
+
+	retval.Typename = v.Typename
+	retval.Id = v.GrantCategoryDetails.Id
+	retval.CreatedAt = v.GrantCategoryDetails.CreatedAt
+	retval.ModifiedAt = v.GrantCategoryDetails.ModifiedAt
+	retval.IsSystem = v.GrantCategoryDetails.IsSystem
+	retval.Name = v.GrantCategoryDetails.Name
+	retval.Description = v.GrantCategoryDetails.Description
+	retval.Icon = v.GrantCategoryDetails.Icon
+	retval.IsDefault = v.GrantCategoryDetails.IsDefault
+	retval.CanCreate = v.GrantCategoryDetails.CanCreate
+	retval.AllowDuplicateNames = v.GrantCategoryDetails.AllowDuplicateNames
+	retval.MultiDataSource = v.GrantCategoryDetails.MultiDataSource
+	retval.DefaultTypePerDataSource = v.GrantCategoryDetails.DefaultTypePerDataSource
+	retval.AllowedWhoItems = v.GrantCategoryDetails.AllowedWhoItems
+	retval.AllowedWhatItems = v.GrantCategoryDetails.AllowedWhatItems
+	return &retval, nil
+}
+
+// GetGrantCategoryGrantCategoryGrantCategoryResult includes the requested fields of the GraphQL interface GrantCategoryResult.
+//
+// GetGrantCategoryGrantCategoryGrantCategoryResult is implemented by the following types:
+// GetGrantCategoryGrantCategory
+// GetGrantCategoryGrantCategoryInvalidInputError
+// GetGrantCategoryGrantCategoryNotFoundError
+// GetGrantCategoryGrantCategoryPermissionDeniedError
+type GetGrantCategoryGrantCategoryGrantCategoryResult interface {
+	implementsGraphQLInterfaceGetGrantCategoryGrantCategoryGrantCategoryResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *GetGrantCategoryGrantCategory) implementsGraphQLInterfaceGetGrantCategoryGrantCategoryGrantCategoryResult() {
+}
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) implementsGraphQLInterfaceGetGrantCategoryGrantCategoryGrantCategoryResult() {
+}
+func (v *GetGrantCategoryGrantCategoryNotFoundError) implementsGraphQLInterfaceGetGrantCategoryGrantCategoryGrantCategoryResult() {
+}
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) implementsGraphQLInterfaceGetGrantCategoryGrantCategoryGrantCategoryResult() {
+}
+
+func __unmarshalGetGrantCategoryGrantCategoryGrantCategoryResult(b []byte, v *GetGrantCategoryGrantCategoryGrantCategoryResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "GrantCategory":
+		*v = new(GetGrantCategoryGrantCategory)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetGrantCategoryGrantCategoryInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(GetGrantCategoryGrantCategoryNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(GetGrantCategoryGrantCategoryPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing GrantCategoryResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for GetGrantCategoryGrantCategoryGrantCategoryResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalGetGrantCategoryGrantCategoryGrantCategoryResult(v *GetGrantCategoryGrantCategoryGrantCategoryResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *GetGrantCategoryGrantCategory:
+		typename = "GrantCategory"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetGrantCategoryGrantCategory
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetGrantCategoryGrantCategoryInvalidInputError:
+		typename = "InvalidInputError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetGrantCategoryGrantCategoryInvalidInputError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetGrantCategoryGrantCategoryNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetGrantCategoryGrantCategoryNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetGrantCategoryGrantCategoryPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalGetGrantCategoryGrantCategoryPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for GetGrantCategoryGrantCategoryGrantCategoryResult: "%T"`, v)
+	}
+}
+
+// GetGrantCategoryGrantCategoryInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetGrantCategoryGrantCategoryInvalidInputError struct {
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
+}
+
+// GetTypename returns GetGrantCategoryGrantCategoryInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetGrantCategoryGrantCategoryInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetGrantCategoryGrantCategoryInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetGrantCategoryGrantCategoryInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetGrantCategoryGrantCategoryInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetGrantCategoryGrantCategoryInvalidInputError) __premarshalJSON() (*__premarshalGetGrantCategoryGrantCategoryInvalidInputError, error) {
+	var retval __premarshalGetGrantCategoryGrantCategoryInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
+}
+
+// GetGrantCategoryGrantCategoryNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type GetGrantCategoryGrantCategoryNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns GetGrantCategoryGrantCategoryNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryNotFoundError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetGrantCategoryGrantCategoryNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *GetGrantCategoryGrantCategoryNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetGrantCategoryGrantCategoryNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetGrantCategoryGrantCategoryNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetGrantCategoryGrantCategoryNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetGrantCategoryGrantCategoryNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetGrantCategoryGrantCategoryNotFoundError) __premarshalJSON() (*__premarshalGetGrantCategoryGrantCategoryNotFoundError, error) {
+	var retval __premarshalGetGrantCategoryGrantCategoryNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// GetGrantCategoryGrantCategoryPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type GetGrantCategoryGrantCategoryPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns GetGrantCategoryGrantCategoryPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetGrantCategoryGrantCategoryPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetGrantCategoryGrantCategoryPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetGrantCategoryGrantCategoryPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetGrantCategoryGrantCategoryPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetGrantCategoryGrantCategoryPermissionDeniedError) __premarshalJSON() (*__premarshalGetGrantCategoryGrantCategoryPermissionDeniedError, error) {
+	var retval __premarshalGetGrantCategoryGrantCategoryPermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// GetGrantCategoryResponse is returned by GetGrantCategory on success.
+type GetGrantCategoryResponse struct {
+	GrantCategory GetGrantCategoryGrantCategoryGrantCategoryResult `json:"-"`
+}
+
+// GetGrantCategory returns GetGrantCategoryResponse.GrantCategory, and is useful for accessing the field via an interface.
+func (v *GetGrantCategoryResponse) GetGrantCategory() GetGrantCategoryGrantCategoryGrantCategoryResult {
+	return v.GrantCategory
+}
+
+func (v *GetGrantCategoryResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetGrantCategoryResponse
+		GrantCategory json.RawMessage `json:"grantCategory"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetGrantCategoryResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.GrantCategory
+		src := firstPass.GrantCategory
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalGetGrantCategoryGrantCategoryGrantCategoryResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal GetGrantCategoryResponse.GrantCategory: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalGetGrantCategoryResponse struct {
+	GrantCategory json.RawMessage `json:"grantCategory"`
+}
+
+func (v *GetGrantCategoryResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetGrantCategoryResponse) __premarshalJSON() (*__premarshalGetGrantCategoryResponse, error) {
+	var retval __premarshalGetGrantCategoryResponse
+
+	{
+
+		dst := &retval.GrantCategory
+		src := v.GrantCategory
+		var err error
+		*dst, err = __marshalGetGrantCategoryGrantCategoryGrantCategoryResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal GetGrantCategoryResponse.GrantCategory: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
 // GetIdentityStoreIdentityStore includes the requested fields of the GraphQL type IdentityStore.
 type GetIdentityStoreIdentityStore struct {
 	Typename      *string `json:"__typename"`
@@ -22325,6 +25399,7 @@ func (v *GetIdentityStoreIdentityStoreAlreadyExistsError) __premarshalJSON() (*_
 // GetIdentityStoreIdentityStoreIdentityStoreResult is implemented by the following types:
 // GetIdentityStoreIdentityStoreAlreadyExistsError
 // GetIdentityStoreIdentityStore
+// GetIdentityStoreIdentityStoreInvalidInputError
 // GetIdentityStoreIdentityStoreNotFoundError
 // GetIdentityStoreIdentityStorePermissionDeniedError
 type GetIdentityStoreIdentityStoreIdentityStoreResult interface {
@@ -22336,6 +25411,8 @@ type GetIdentityStoreIdentityStoreIdentityStoreResult interface {
 func (v *GetIdentityStoreIdentityStoreAlreadyExistsError) implementsGraphQLInterfaceGetIdentityStoreIdentityStoreIdentityStoreResult() {
 }
 func (v *GetIdentityStoreIdentityStore) implementsGraphQLInterfaceGetIdentityStoreIdentityStoreIdentityStoreResult() {
+}
+func (v *GetIdentityStoreIdentityStoreInvalidInputError) implementsGraphQLInterfaceGetIdentityStoreIdentityStoreIdentityStoreResult() {
 }
 func (v *GetIdentityStoreIdentityStoreNotFoundError) implementsGraphQLInterfaceGetIdentityStoreIdentityStoreIdentityStoreResult() {
 }
@@ -22361,6 +25438,9 @@ func __unmarshalGetIdentityStoreIdentityStoreIdentityStoreResult(b []byte, v *Ge
 		return json.Unmarshal(b, *v)
 	case "IdentityStore":
 		*v = new(GetIdentityStoreIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetIdentityStoreIdentityStoreInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetIdentityStoreIdentityStoreNotFoundError)
@@ -22405,6 +25485,14 @@ func __marshalGetIdentityStoreIdentityStoreIdentityStoreResult(v *GetIdentitySto
 			*__premarshalGetIdentityStoreIdentityStore
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *GetIdentityStoreIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetIdentityStoreIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *GetIdentityStoreIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -22436,6 +25524,14 @@ func __marshalGetIdentityStoreIdentityStoreIdentityStoreResult(v *GetIdentitySto
 			`unexpected concrete type for GetIdentityStoreIdentityStoreIdentityStoreResult: "%T"`, v)
 	}
 }
+
+// GetIdentityStoreIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetIdentityStoreIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetIdentityStoreIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetIdentityStoreIdentityStoreInvalidInputError) GetTypename() *string { return v.Typename }
 
 // GetIdentityStoreIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetIdentityStoreIdentityStoreNotFoundError struct {
@@ -22849,6 +25945,14 @@ func (v *GetUserByEmailUserByEmailInvalidEmailError) __premarshalJSON() (*__prem
 	return &retval, nil
 }
 
+// GetUserByEmailUserByEmailInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type GetUserByEmailUserByEmailInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns GetUserByEmailUserByEmailInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *GetUserByEmailUserByEmailInvalidInputError) GetTypename() *string { return v.Typename }
+
 // GetUserByEmailUserByEmailNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetUserByEmailUserByEmailNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -23056,6 +26160,7 @@ func (v *GetUserByEmailUserByEmailUser) __premarshalJSON() (*__premarshalGetUser
 //
 // GetUserByEmailUserByEmailUserResult is implemented by the following types:
 // GetUserByEmailUserByEmailInvalidEmailError
+// GetUserByEmailUserByEmailInvalidInputError
 // GetUserByEmailUserByEmailNotFoundError
 // GetUserByEmailUserByEmailPermissionDeniedError
 // GetUserByEmailUserByEmailUser
@@ -23066,6 +26171,8 @@ type GetUserByEmailUserByEmailUserResult interface {
 }
 
 func (v *GetUserByEmailUserByEmailInvalidEmailError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
+}
+func (v *GetUserByEmailUserByEmailInvalidInputError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
 }
 func (v *GetUserByEmailUserByEmailNotFoundError) implementsGraphQLInterfaceGetUserByEmailUserByEmailUserResult() {
 }
@@ -23090,6 +26197,9 @@ func __unmarshalGetUserByEmailUserByEmailUserResult(b []byte, v *GetUserByEmailU
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(GetUserByEmailUserByEmailInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(GetUserByEmailUserByEmailInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(GetUserByEmailUserByEmailNotFoundError)
@@ -23124,6 +26234,14 @@ func __marshalGetUserByEmailUserByEmailUserResult(v *GetUserByEmailUserByEmailUs
 			TypeName string `json:"__typename"`
 			*__premarshalGetUserByEmailUserByEmailInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *GetUserByEmailUserByEmailInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*GetUserByEmailUserByEmailInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *GetUserByEmailUserByEmailNotFoundError:
 		typename = "NotFoundError"
@@ -23253,6 +26371,424 @@ func (v *GetUserUser) __premarshalJSON() (*__premarshalGetUserUser, error) {
 	return &retval, nil
 }
 
+// GrantCategory includes the GraphQL fields of GrantCategory requested by the fragment GrantCategory.
+type GrantCategory struct {
+	Id        string `json:"id"`
+	Name      string `json:"name"`
+	IsSystem  bool   `json:"isSystem"`
+	IsDefault bool   `json:"isDefault"`
+}
+
+// GetId returns GrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *GrantCategory) GetId() string { return v.Id }
+
+// GetName returns GrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *GrantCategory) GetName() string { return v.Name }
+
+// GetIsSystem returns GrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *GrantCategory) GetIsSystem() bool { return v.IsSystem }
+
+// GetIsDefault returns GrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *GrantCategory) GetIsDefault() bool { return v.IsDefault }
+
+// GrantCategoryAllowedWhatItems includes the GraphQL fields of GrantCategoryAllowedWhatItems requested by the fragment GrantCategoryAllowedWhatItems.
+type GrantCategoryAllowedWhatItems struct {
+	DataObject bool `json:"dataObject"`
+}
+
+// GetDataObject returns GrantCategoryAllowedWhatItems.DataObject, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhatItems) GetDataObject() bool { return v.DataObject }
+
+type GrantCategoryAllowedWhatItemsInput struct {
+	DataObject bool `json:"dataObject"`
+}
+
+// GetDataObject returns GrantCategoryAllowedWhatItemsInput.DataObject, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhatItemsInput) GetDataObject() bool { return v.DataObject }
+
+// GrantCategoryAllowedWhoItems includes the GraphQL fields of GrantCategoryAllowedWhoItems requested by the fragment GrantCategoryAllowedWhoItems.
+type GrantCategoryAllowedWhoItems struct {
+	User        bool     `json:"user"`
+	Group       bool     `json:"group"`
+	Inheritance bool     `json:"inheritance"`
+	Self        bool     `json:"self"`
+	Categories  []string `json:"categories"`
+}
+
+// GetUser returns GrantCategoryAllowedWhoItems.User, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItems) GetUser() bool { return v.User }
+
+// GetGroup returns GrantCategoryAllowedWhoItems.Group, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItems) GetGroup() bool { return v.Group }
+
+// GetInheritance returns GrantCategoryAllowedWhoItems.Inheritance, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItems) GetInheritance() bool { return v.Inheritance }
+
+// GetSelf returns GrantCategoryAllowedWhoItems.Self, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItems) GetSelf() bool { return v.Self }
+
+// GetCategories returns GrantCategoryAllowedWhoItems.Categories, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItems) GetCategories() []string { return v.Categories }
+
+type GrantCategoryAllowedWhoItemsInput struct {
+	User        bool     `json:"user"`
+	Group       bool     `json:"group"`
+	Inheritance bool     `json:"inheritance"`
+	Self        bool     `json:"self"`
+	Categories  []string `json:"categories"`
+}
+
+// GetUser returns GrantCategoryAllowedWhoItemsInput.User, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItemsInput) GetUser() bool { return v.User }
+
+// GetGroup returns GrantCategoryAllowedWhoItemsInput.Group, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItemsInput) GetGroup() bool { return v.Group }
+
+// GetInheritance returns GrantCategoryAllowedWhoItemsInput.Inheritance, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItemsInput) GetInheritance() bool { return v.Inheritance }
+
+// GetSelf returns GrantCategoryAllowedWhoItemsInput.Self, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItemsInput) GetSelf() bool { return v.Self }
+
+// GetCategories returns GrantCategoryAllowedWhoItemsInput.Categories, and is useful for accessing the field via an interface.
+func (v *GrantCategoryAllowedWhoItemsInput) GetCategories() []string { return v.Categories }
+
+// GrantCategoryDetails includes the GraphQL fields of GrantCategory requested by the fragment GrantCategoryDetails.
+type GrantCategoryDetails struct {
+	Id                       string                                                                       `json:"id"`
+	CreatedAt                time.Time                                                                    `json:"createdAt"`
+	ModifiedAt               time.Time                                                                    `json:"modifiedAt"`
+	IsSystem                 bool                                                                         `json:"isSystem"`
+	Name                     string                                                                       `json:"name"`
+	Description              string                                                                       `json:"description"`
+	Icon                     string                                                                       `json:"icon"`
+	IsDefault                bool                                                                         `json:"isDefault"`
+	CanCreate                bool                                                                         `json:"canCreate"`
+	AllowDuplicateNames      bool                                                                         `json:"allowDuplicateNames"`
+	MultiDataSource          bool                                                                         `json:"multiDataSource"`
+	DefaultTypePerDataSource []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource `json:"defaultTypePerDataSource"`
+	AllowedWhoItems          GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems              `json:"allowedWhoItems"`
+	AllowedWhatItems         GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems            `json:"allowedWhatItems"`
+}
+
+// GetId returns GrantCategoryDetails.Id, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetId() string { return v.Id }
+
+// GetCreatedAt returns GrantCategoryDetails.CreatedAt, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetCreatedAt() time.Time { return v.CreatedAt }
+
+// GetModifiedAt returns GrantCategoryDetails.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetModifiedAt() time.Time { return v.ModifiedAt }
+
+// GetIsSystem returns GrantCategoryDetails.IsSystem, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetIsSystem() bool { return v.IsSystem }
+
+// GetName returns GrantCategoryDetails.Name, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetName() string { return v.Name }
+
+// GetDescription returns GrantCategoryDetails.Description, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetDescription() string { return v.Description }
+
+// GetIcon returns GrantCategoryDetails.Icon, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetIcon() string { return v.Icon }
+
+// GetIsDefault returns GrantCategoryDetails.IsDefault, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetIsDefault() bool { return v.IsDefault }
+
+// GetCanCreate returns GrantCategoryDetails.CanCreate, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetCanCreate() bool { return v.CanCreate }
+
+// GetAllowDuplicateNames returns GrantCategoryDetails.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetAllowDuplicateNames() bool { return v.AllowDuplicateNames }
+
+// GetMultiDataSource returns GrantCategoryDetails.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetMultiDataSource() bool { return v.MultiDataSource }
+
+// GetDefaultTypePerDataSource returns GrantCategoryDetails.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetDefaultTypePerDataSource() []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource {
+	return v.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns GrantCategoryDetails.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetAllowedWhoItems() GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems {
+	return v.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns GrantCategoryDetails.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetails) GetAllowedWhatItems() GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems {
+	return v.AllowedWhatItems
+}
+
+// GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems includes the requested fields of the GraphQL type GrantCategoryAllowedWhatItems.
+type GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems struct {
+	GrantCategoryAllowedWhatItems `json:"-"`
+}
+
+// GetDataObject returns GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems.DataObject, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems) GetDataObject() bool {
+	return v.GrantCategoryAllowedWhatItems.DataObject
+}
+
+func (v *GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryAllowedWhatItems)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems struct {
+	DataObject bool `json:"dataObject"`
+}
+
+func (v *GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems) __premarshalJSON() (*__premarshalGrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems, error) {
+	var retval __premarshalGrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems
+
+	retval.DataObject = v.GrantCategoryAllowedWhatItems.DataObject
+	return &retval, nil
+}
+
+// GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems includes the requested fields of the GraphQL type GrantCategoryAllowedWhoItems.
+type GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems struct {
+	GrantCategoryAllowedWhoItems `json:"-"`
+}
+
+// GetUser returns GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems.User, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) GetUser() bool {
+	return v.GrantCategoryAllowedWhoItems.User
+}
+
+// GetGroup returns GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems.Group, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) GetGroup() bool {
+	return v.GrantCategoryAllowedWhoItems.Group
+}
+
+// GetInheritance returns GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems.Inheritance, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) GetInheritance() bool {
+	return v.GrantCategoryAllowedWhoItems.Inheritance
+}
+
+// GetSelf returns GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems.Self, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) GetSelf() bool {
+	return v.GrantCategoryAllowedWhoItems.Self
+}
+
+// GetCategories returns GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems.Categories, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) GetCategories() []string {
+	return v.GrantCategoryAllowedWhoItems.Categories
+}
+
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryAllowedWhoItems)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems struct {
+	User bool `json:"user"`
+
+	Group bool `json:"group"`
+
+	Inheritance bool `json:"inheritance"`
+
+	Self bool `json:"self"`
+
+	Categories []string `json:"categories"`
+}
+
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems) __premarshalJSON() (*__premarshalGrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems, error) {
+	var retval __premarshalGrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems
+
+	retval.User = v.GrantCategoryAllowedWhoItems.User
+	retval.Group = v.GrantCategoryAllowedWhoItems.Group
+	retval.Inheritance = v.GrantCategoryAllowedWhoItems.Inheritance
+	retval.Self = v.GrantCategoryAllowedWhoItems.Self
+	retval.Categories = v.GrantCategoryAllowedWhoItems.Categories
+	return &retval, nil
+}
+
+// GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource includes the requested fields of the GraphQL type GrantCategoryTypeForDataSource.
+type GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource struct {
+	GrantCategoryTypeForDataSource `json:"-"`
+}
+
+// GetDataSource returns GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource.DataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource) GetDataSource() string {
+	return v.GrantCategoryTypeForDataSource.DataSource
+}
+
+// GetType returns GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource.Type, and is useful for accessing the field via an interface.
+func (v *GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource) GetType() string {
+	return v.GrantCategoryTypeForDataSource.Type
+}
+
+func (v *GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryTypeForDataSource)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource struct {
+	DataSource string `json:"DataSource"`
+
+	Type string `json:"Type"`
+}
+
+func (v *GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource) __premarshalJSON() (*__premarshalGrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource, error) {
+	var retval __premarshalGrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource
+
+	retval.DataSource = v.GrantCategoryTypeForDataSource.DataSource
+	retval.Type = v.GrantCategoryTypeForDataSource.Type
+	return &retval, nil
+}
+
+type GrantCategoryInput struct {
+	Name                     *string                               `json:"name,omitempty"`
+	Description              *string                               `json:"description,omitempty"`
+	Icon                     *string                               `json:"icon,omitempty"`
+	CanCreate                *bool                                 `json:"canCreate,omitempty"`
+	AllowDuplicateNames      *bool                                 `json:"allowDuplicateNames,omitempty"`
+	MultiDataSource          *bool                                 `json:"multiDataSource,omitempty"`
+	DefaultTypePerDataSource []GrantCategoryTypeForDataSourceInput `json:"defaultTypePerDataSource"`
+	AllowedWhoItems          *GrantCategoryAllowedWhoItemsInput    `json:"allowedWhoItems,omitempty"`
+	AllowedWhatItems         *GrantCategoryAllowedWhatItemsInput   `json:"allowedWhatItems,omitempty"`
+}
+
+// GetName returns GrantCategoryInput.Name, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetName() *string { return v.Name }
+
+// GetDescription returns GrantCategoryInput.Description, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetDescription() *string { return v.Description }
+
+// GetIcon returns GrantCategoryInput.Icon, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetIcon() *string { return v.Icon }
+
+// GetCanCreate returns GrantCategoryInput.CanCreate, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetCanCreate() *bool { return v.CanCreate }
+
+// GetAllowDuplicateNames returns GrantCategoryInput.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetAllowDuplicateNames() *bool { return v.AllowDuplicateNames }
+
+// GetMultiDataSource returns GrantCategoryInput.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetMultiDataSource() *bool { return v.MultiDataSource }
+
+// GetDefaultTypePerDataSource returns GrantCategoryInput.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetDefaultTypePerDataSource() []GrantCategoryTypeForDataSourceInput {
+	return v.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns GrantCategoryInput.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetAllowedWhoItems() *GrantCategoryAllowedWhoItemsInput {
+	return v.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns GrantCategoryInput.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetAllowedWhatItems() *GrantCategoryAllowedWhatItemsInput {
+	return v.AllowedWhatItems
+}
+
+// GrantCategoryTypeForDataSource includes the GraphQL fields of GrantCategoryTypeForDataSource requested by the fragment GrantCategoryTypeForDataSource.
+type GrantCategoryTypeForDataSource struct {
+	DataSource string `json:"DataSource"`
+	Type       string `json:"Type"`
+}
+
+// GetDataSource returns GrantCategoryTypeForDataSource.DataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryTypeForDataSource) GetDataSource() string { return v.DataSource }
+
+// GetType returns GrantCategoryTypeForDataSource.Type, and is useful for accessing the field via an interface.
+func (v *GrantCategoryTypeForDataSource) GetType() string { return v.Type }
+
+type GrantCategoryTypeForDataSourceInput struct {
+	DataSource string `json:"DataSource"`
+	Type       string `json:"Type"`
+}
+
+// GetDataSource returns GrantCategoryTypeForDataSourceInput.DataSource, and is useful for accessing the field via an interface.
+func (v *GrantCategoryTypeForDataSourceInput) GetDataSource() string { return v.DataSource }
+
+// GetType returns GrantCategoryTypeForDataSourceInput.Type, and is useful for accessing the field via an interface.
+func (v *GrantCategoryTypeForDataSourceInput) GetType() string { return v.Type }
+
 // IdentityStore includes the GraphQL fields of IdentityStore requested by the fragment IdentityStore.
 type IdentityStore struct {
 	Id          string    `json:"id"`
@@ -23290,11 +26826,12 @@ func (v *IdentityStore) GetMaster() bool { return v.Master }
 func (v *IdentityStore) GetNative() bool { return v.Native }
 
 type IdentityStoreFilterInput struct {
-	Search      *string `json:"search,omitempty"`
-	Master      *bool   `json:"master,omitempty"`
-	Native      *bool   `json:"native,omitempty"`
-	CanBeMaster *bool   `json:"canBeMaster,omitempty"`
-	CanBeLinked *bool   `json:"canBeLinked,omitempty"`
+	Search      *string  `json:"search,omitempty"`
+	Master      *bool    `json:"master,omitempty"`
+	Native      *bool    `json:"native,omitempty"`
+	CanBeMaster *bool    `json:"canBeMaster,omitempty"`
+	CanBeLinked *bool    `json:"canBeLinked,omitempty"`
+	Owners      []string `json:"owners"`
 }
 
 // GetSearch returns IdentityStoreFilterInput.Search, and is useful for accessing the field via an interface.
@@ -23311,6 +26848,9 @@ func (v *IdentityStoreFilterInput) GetCanBeMaster() *bool { return v.CanBeMaster
 
 // GetCanBeLinked returns IdentityStoreFilterInput.CanBeLinked, and is useful for accessing the field via an interface.
 func (v *IdentityStoreFilterInput) GetCanBeLinked() *bool { return v.CanBeLinked }
+
+// GetOwners returns IdentityStoreFilterInput.Owners, and is useful for accessing the field via an interface.
+func (v *IdentityStoreFilterInput) GetOwners() []string { return v.Owners }
 
 type IdentityStoreInput struct {
 	Description *string `json:"description,omitempty"`
@@ -23795,9 +27335,12 @@ func (v *IdentityStorePageEdgesEdgeNodeIssue) GetTypename() *string { return v.T
 // IdentityStorePageEdgesEdgeNodeJob
 // IdentityStorePageEdgesEdgeNodeJobLogMsg
 // IdentityStorePageEdgesEdgeNodePromiseDetails
+// IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject
+// IdentityStorePageEdgesEdgeNodeQueryHistoryStatement
 // IdentityStorePageEdgesEdgeNodeRole
 // IdentityStorePageEdgesEdgeNodeRoleAssignment
 // IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification
+// IdentityStorePageEdgesEdgeNodeRoleDelegationNotification
 // IdentityStorePageEdgesEdgeNodeSearchResultItem
 // IdentityStorePageEdgesEdgeNodeStringValue
 // IdentityStorePageEdgesEdgeNodeTag
@@ -23873,11 +27416,17 @@ func (v *IdentityStorePageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceIden
 }
 func (v *IdentityStorePageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
+func (v *IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
+}
+func (v *IdentityStorePageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
+}
 func (v *IdentityStorePageEdgesEdgeNodeRole) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
+}
+func (v *IdentityStorePageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
 func (v *IdentityStorePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceIdentityStorePageEdgesEdgeNodeItem() {
 }
@@ -24002,6 +27551,12 @@ func __unmarshalIdentityStorePageEdgesEdgeNodeItem(b []byte, v *IdentityStorePag
 	case "PromiseDetails":
 		*v = new(IdentityStorePageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(IdentityStorePageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(IdentityStorePageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -24010,6 +27565,9 @@ func __unmarshalIdentityStorePageEdgesEdgeNodeItem(b []byte, v *IdentityStorePag
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(IdentityStorePageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(IdentityStorePageEdgesEdgeNodeSearchResultItem)
@@ -24295,6 +27853,22 @@ func __marshalIdentityStorePageEdgesEdgeNodeItem(v *IdentityStorePageEdgesEdgeNo
 			*IdentityStorePageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *IdentityStorePageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*IdentityStorePageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *IdentityStorePageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -24317,6 +27891,14 @@ func __marshalIdentityStorePageEdgesEdgeNodeItem(v *IdentityStorePageEdgesEdgeNo
 		result := struct {
 			TypeName string `json:"__typename"`
 			*IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *IdentityStorePageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*IdentityStorePageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *IdentityStorePageEdgesEdgeNodeSearchResultItem:
@@ -24423,6 +28005,26 @@ type IdentityStorePageEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns IdentityStorePageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *IdentityStorePageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *IdentityStorePageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// IdentityStorePageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type IdentityStorePageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns IdentityStorePageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *IdentityStorePageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
+
 // IdentityStorePageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type IdentityStorePageEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -24446,6 +28048,16 @@ type IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *IdentityStorePageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// IdentityStorePageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type IdentityStorePageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns IdentityStorePageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *IdentityStorePageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -24590,6 +28202,14 @@ func (v *InvalidEmailError) GetErrEmail() string { return v.ErrEmail }
 
 // GetMessage returns InvalidEmailError.Message, and is useful for accessing the field via an interface.
 func (v *InvalidEmailError) GetMessage() string { return v.Message }
+
+// InvalidInputError includes the GraphQL fields of InvalidInputError requested by the fragment InvalidInputError.
+type InvalidInputError struct {
+	Message string `json:"message"`
+}
+
+// GetMessage returns InvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *InvalidInputError) GetMessage() string { return v.Message }
 
 // InviteAsRaitoUserInviteAsRaitoUser includes the requested fields of the GraphQL type User.
 type InviteAsRaitoUserInviteAsRaitoUser struct {
@@ -24745,6 +28365,16 @@ func (v *InviteAsRaitoUserInviteAsRaitoUserInvalidEmailError) __premarshalJSON()
 	return &retval, nil
 }
 
+// InviteAsRaitoUserInviteAsRaitoUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type InviteAsRaitoUserInviteAsRaitoUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns InviteAsRaitoUserInviteAsRaitoUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *InviteAsRaitoUserInviteAsRaitoUserInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
 // InviteAsRaitoUserInviteAsRaitoUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type InviteAsRaitoUserInviteAsRaitoUserNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -24873,6 +28503,7 @@ func (v *InviteAsRaitoUserInviteAsRaitoUserPermissionDeniedError) __premarshalJS
 //
 // InviteAsRaitoUserInviteAsRaitoUserUserResult is implemented by the following types:
 // InviteAsRaitoUserInviteAsRaitoUserInvalidEmailError
+// InviteAsRaitoUserInviteAsRaitoUserInvalidInputError
 // InviteAsRaitoUserInviteAsRaitoUserNotFoundError
 // InviteAsRaitoUserInviteAsRaitoUserPermissionDeniedError
 // InviteAsRaitoUserInviteAsRaitoUser
@@ -24883,6 +28514,8 @@ type InviteAsRaitoUserInviteAsRaitoUserUserResult interface {
 }
 
 func (v *InviteAsRaitoUserInviteAsRaitoUserInvalidEmailError) implementsGraphQLInterfaceInviteAsRaitoUserInviteAsRaitoUserUserResult() {
+}
+func (v *InviteAsRaitoUserInviteAsRaitoUserInvalidInputError) implementsGraphQLInterfaceInviteAsRaitoUserInviteAsRaitoUserUserResult() {
 }
 func (v *InviteAsRaitoUserInviteAsRaitoUserNotFoundError) implementsGraphQLInterfaceInviteAsRaitoUserInviteAsRaitoUserUserResult() {
 }
@@ -24907,6 +28540,9 @@ func __unmarshalInviteAsRaitoUserInviteAsRaitoUserUserResult(b []byte, v *Invite
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(InviteAsRaitoUserInviteAsRaitoUserInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(InviteAsRaitoUserInviteAsRaitoUserInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(InviteAsRaitoUserInviteAsRaitoUserNotFoundError)
@@ -24941,6 +28577,14 @@ func __marshalInviteAsRaitoUserInviteAsRaitoUserUserResult(v *InviteAsRaitoUserI
 			TypeName string `json:"__typename"`
 			*__premarshalInviteAsRaitoUserInviteAsRaitoUserInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *InviteAsRaitoUserInviteAsRaitoUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*InviteAsRaitoUserInviteAsRaitoUserInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *InviteAsRaitoUserInviteAsRaitoUserNotFoundError:
 		typename = "NotFoundError"
@@ -25143,6 +28787,7 @@ func (v *ListAccessProviderAbacWhatScopeAccessProvider) __premarshalJSON() (*__p
 //
 // ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult is implemented by the following types:
 // ListAccessProviderAbacWhatScopeAccessProvider
+// ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError
 // ListAccessProviderAbacWhatScopeAccessProviderNotFoundError
 // ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError
 type ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult interface {
@@ -25152,6 +28797,8 @@ type ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult interface
 }
 
 func (v *ListAccessProviderAbacWhatScopeAccessProvider) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
+}
+func (v *ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
 }
 func (v *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult() {
 }
@@ -25174,6 +28821,9 @@ func __unmarshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResul
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(ListAccessProviderAbacWhatScopeAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(ListAccessProviderAbacWhatScopeAccessProviderNotFoundError)
@@ -25206,6 +28856,14 @@ func __marshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(
 			*__premarshalListAccessProviderAbacWhatScopeAccessProvider
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListAccessProviderAbacWhatScopeAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -25236,6 +28894,16 @@ func __marshalListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult(
 		return nil, fmt.Errorf(
 			`unexpected concrete type for ListAccessProviderAbacWhatScopeAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // ListAccessProviderAbacWhatScopeAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -25364,6 +29032,26 @@ func (v *ListAccessProviderAbacWhatScopeAccessProviderPermissionDeniedError) __p
 	return &retval, nil
 }
 
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
 // ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult includes the requested fields of the GraphQL type PagedResult.
 type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult struct {
 	Typename                        *string `json:"__typename"`
@@ -25438,6 +29126,8 @@ func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) 
 // ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults is implemented by the following types:
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError
+// ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError
 // ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult
 // ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError
 type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults interface {
@@ -25446,6 +29136,10 @@ type ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults inte
 	GetTypename() *string
 }
 
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
+}
+func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
+}
 func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
 }
 func (v *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePermissionDeniedError) implementsGraphQLInterfaceListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResults() {
@@ -25465,6 +29159,12 @@ func __unmarshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedR
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult)
 		return json.Unmarshal(b, *v)
@@ -25484,6 +29184,22 @@ func __marshalListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedRes
 
 	var typename string
 	switch v := (*v).(type) {
+	case *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopeNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListAccessProviderAbacWhatScopeAccessProviderWhatAbacScopePagedResult:
 		typename = "PagedResult"
 
@@ -25652,6 +29368,24 @@ func (v *ListAccessProviderAbacWhatScopeResponse) __premarshalJSON() (*__premars
 	return &retval, nil
 }
 
+// ListAccessProvidersAccessProvidersInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListAccessProvidersAccessProvidersInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListAccessProvidersAccessProvidersInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProvidersAccessProvidersInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// ListAccessProvidersAccessProvidersNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ListAccessProvidersAccessProvidersNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListAccessProvidersAccessProvidersNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ListAccessProvidersAccessProvidersNotFoundError) GetTypename() *string { return v.Typename }
+
 // ListAccessProvidersAccessProvidersPagedResult includes the requested fields of the GraphQL type PagedResult.
 type ListAccessProvidersAccessProvidersPagedResult struct {
 	Typename           *string `json:"__typename"`
@@ -25724,6 +29458,8 @@ func (v *ListAccessProvidersAccessProvidersPagedResult) __premarshalJSON() (*__p
 // ListAccessProvidersAccessProvidersPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // ListAccessProvidersAccessProvidersPagedResults is implemented by the following types:
+// ListAccessProvidersAccessProvidersInvalidInputError
+// ListAccessProvidersAccessProvidersNotFoundError
 // ListAccessProvidersAccessProvidersPagedResult
 // ListAccessProvidersAccessProvidersPermissionDeniedError
 type ListAccessProvidersAccessProvidersPagedResults interface {
@@ -25732,6 +29468,10 @@ type ListAccessProvidersAccessProvidersPagedResults interface {
 	GetTypename() *string
 }
 
+func (v *ListAccessProvidersAccessProvidersInvalidInputError) implementsGraphQLInterfaceListAccessProvidersAccessProvidersPagedResults() {
+}
+func (v *ListAccessProvidersAccessProvidersNotFoundError) implementsGraphQLInterfaceListAccessProvidersAccessProvidersPagedResults() {
+}
 func (v *ListAccessProvidersAccessProvidersPagedResult) implementsGraphQLInterfaceListAccessProvidersAccessProvidersPagedResults() {
 }
 func (v *ListAccessProvidersAccessProvidersPermissionDeniedError) implementsGraphQLInterfaceListAccessProvidersAccessProvidersPagedResults() {
@@ -25751,6 +29491,12 @@ func __unmarshalListAccessProvidersAccessProvidersPagedResults(b []byte, v *List
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(ListAccessProvidersAccessProvidersInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ListAccessProvidersAccessProvidersNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(ListAccessProvidersAccessProvidersPagedResult)
 		return json.Unmarshal(b, *v)
@@ -25770,6 +29516,22 @@ func __marshalListAccessProvidersAccessProvidersPagedResults(v *ListAccessProvid
 
 	var typename string
 	switch v := (*v).(type) {
+	case *ListAccessProvidersAccessProvidersInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListAccessProvidersAccessProvidersInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListAccessProvidersAccessProvidersNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListAccessProvidersAccessProvidersNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListAccessProvidersAccessProvidersPagedResult:
 		typename = "PagedResult"
 
@@ -26010,6 +29772,22 @@ func (v *ListDataObjectsResponse) GetDataObjects() ListDataObjectsDataObjectsPag
 	return v.DataObjects
 }
 
+// ListDataSourcesDataSourcesInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListDataSourcesDataSourcesInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListDataSourcesDataSourcesInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListDataSourcesDataSourcesInvalidInputError) GetTypename() *string { return v.Typename }
+
+// ListDataSourcesDataSourcesNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ListDataSourcesDataSourcesNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListDataSourcesDataSourcesNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ListDataSourcesDataSourcesNotFoundError) GetTypename() *string { return v.Typename }
+
 // ListDataSourcesDataSourcesPagedResult includes the requested fields of the GraphQL type PagedResult.
 type ListDataSourcesDataSourcesPagedResult struct {
 	Typename       *string `json:"__typename"`
@@ -26082,6 +29860,8 @@ func (v *ListDataSourcesDataSourcesPagedResult) __premarshalJSON() (*__premarsha
 // ListDataSourcesDataSourcesPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // ListDataSourcesDataSourcesPagedResults is implemented by the following types:
+// ListDataSourcesDataSourcesInvalidInputError
+// ListDataSourcesDataSourcesNotFoundError
 // ListDataSourcesDataSourcesPagedResult
 // ListDataSourcesDataSourcesPermissionDeniedError
 type ListDataSourcesDataSourcesPagedResults interface {
@@ -26090,6 +29870,10 @@ type ListDataSourcesDataSourcesPagedResults interface {
 	GetTypename() *string
 }
 
+func (v *ListDataSourcesDataSourcesInvalidInputError) implementsGraphQLInterfaceListDataSourcesDataSourcesPagedResults() {
+}
+func (v *ListDataSourcesDataSourcesNotFoundError) implementsGraphQLInterfaceListDataSourcesDataSourcesPagedResults() {
+}
 func (v *ListDataSourcesDataSourcesPagedResult) implementsGraphQLInterfaceListDataSourcesDataSourcesPagedResults() {
 }
 func (v *ListDataSourcesDataSourcesPermissionDeniedError) implementsGraphQLInterfaceListDataSourcesDataSourcesPagedResults() {
@@ -26109,6 +29893,12 @@ func __unmarshalListDataSourcesDataSourcesPagedResults(b []byte, v *ListDataSour
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(ListDataSourcesDataSourcesInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ListDataSourcesDataSourcesNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(ListDataSourcesDataSourcesPagedResult)
 		return json.Unmarshal(b, *v)
@@ -26128,6 +29918,22 @@ func __marshalListDataSourcesDataSourcesPagedResults(v *ListDataSourcesDataSourc
 
 	var typename string
 	switch v := (*v).(type) {
+	case *ListDataSourcesDataSourcesInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListDataSourcesDataSourcesInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListDataSourcesDataSourcesNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListDataSourcesDataSourcesNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListDataSourcesDataSourcesPagedResult:
 		typename = "PagedResult"
 
@@ -26294,6 +30100,190 @@ func (v *ListDataSourcesResponse) __premarshalJSON() (*__premarshalListDataSourc
 	return &retval, nil
 }
 
+// ListGrantCategoriesGrantCategoriesGrantCategory includes the requested fields of the GraphQL type GrantCategory.
+type ListGrantCategoriesGrantCategoriesGrantCategory struct {
+	GrantCategoryDetails `json:"-"`
+}
+
+// GetId returns ListGrantCategoriesGrantCategoriesGrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetId() string {
+	return v.GrantCategoryDetails.Id
+}
+
+// GetCreatedAt returns ListGrantCategoriesGrantCategoriesGrantCategory.CreatedAt, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetCreatedAt() time.Time {
+	return v.GrantCategoryDetails.CreatedAt
+}
+
+// GetModifiedAt returns ListGrantCategoriesGrantCategoriesGrantCategory.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetModifiedAt() time.Time {
+	return v.GrantCategoryDetails.ModifiedAt
+}
+
+// GetIsSystem returns ListGrantCategoriesGrantCategoriesGrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetIsSystem() bool {
+	return v.GrantCategoryDetails.IsSystem
+}
+
+// GetName returns ListGrantCategoriesGrantCategoriesGrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetName() string {
+	return v.GrantCategoryDetails.Name
+}
+
+// GetDescription returns ListGrantCategoriesGrantCategoriesGrantCategory.Description, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetDescription() string {
+	return v.GrantCategoryDetails.Description
+}
+
+// GetIcon returns ListGrantCategoriesGrantCategoriesGrantCategory.Icon, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetIcon() string {
+	return v.GrantCategoryDetails.Icon
+}
+
+// GetIsDefault returns ListGrantCategoriesGrantCategoriesGrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetIsDefault() bool {
+	return v.GrantCategoryDetails.IsDefault
+}
+
+// GetCanCreate returns ListGrantCategoriesGrantCategoriesGrantCategory.CanCreate, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetCanCreate() bool {
+	return v.GrantCategoryDetails.CanCreate
+}
+
+// GetAllowDuplicateNames returns ListGrantCategoriesGrantCategoriesGrantCategory.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetAllowDuplicateNames() bool {
+	return v.GrantCategoryDetails.AllowDuplicateNames
+}
+
+// GetMultiDataSource returns ListGrantCategoriesGrantCategoriesGrantCategory.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetMultiDataSource() bool {
+	return v.GrantCategoryDetails.MultiDataSource
+}
+
+// GetDefaultTypePerDataSource returns ListGrantCategoriesGrantCategoriesGrantCategory.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetDefaultTypePerDataSource() []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource {
+	return v.GrantCategoryDetails.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns ListGrantCategoriesGrantCategoriesGrantCategory.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetAllowedWhoItems() GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems {
+	return v.GrantCategoryDetails.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns ListGrantCategoriesGrantCategoriesGrantCategory.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) GetAllowedWhatItems() GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems {
+	return v.GrantCategoryDetails.AllowedWhatItems
+}
+
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ListGrantCategoriesGrantCategoriesGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ListGrantCategoriesGrantCategoriesGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryDetails)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalListGrantCategoriesGrantCategoriesGrantCategory struct {
+	Id string `json:"id"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	IsSystem bool `json:"isSystem"`
+
+	Name string `json:"name"`
+
+	Description string `json:"description"`
+
+	Icon string `json:"icon"`
+
+	IsDefault bool `json:"isDefault"`
+
+	CanCreate bool `json:"canCreate"`
+
+	AllowDuplicateNames bool `json:"allowDuplicateNames"`
+
+	MultiDataSource bool `json:"multiDataSource"`
+
+	DefaultTypePerDataSource []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource `json:"defaultTypePerDataSource"`
+
+	AllowedWhoItems GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems `json:"allowedWhoItems"`
+
+	AllowedWhatItems GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems `json:"allowedWhatItems"`
+}
+
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ListGrantCategoriesGrantCategoriesGrantCategory) __premarshalJSON() (*__premarshalListGrantCategoriesGrantCategoriesGrantCategory, error) {
+	var retval __premarshalListGrantCategoriesGrantCategoriesGrantCategory
+
+	retval.Id = v.GrantCategoryDetails.Id
+	retval.CreatedAt = v.GrantCategoryDetails.CreatedAt
+	retval.ModifiedAt = v.GrantCategoryDetails.ModifiedAt
+	retval.IsSystem = v.GrantCategoryDetails.IsSystem
+	retval.Name = v.GrantCategoryDetails.Name
+	retval.Description = v.GrantCategoryDetails.Description
+	retval.Icon = v.GrantCategoryDetails.Icon
+	retval.IsDefault = v.GrantCategoryDetails.IsDefault
+	retval.CanCreate = v.GrantCategoryDetails.CanCreate
+	retval.AllowDuplicateNames = v.GrantCategoryDetails.AllowDuplicateNames
+	retval.MultiDataSource = v.GrantCategoryDetails.MultiDataSource
+	retval.DefaultTypePerDataSource = v.GrantCategoryDetails.DefaultTypePerDataSource
+	retval.AllowedWhoItems = v.GrantCategoryDetails.AllowedWhoItems
+	retval.AllowedWhatItems = v.GrantCategoryDetails.AllowedWhatItems
+	return &retval, nil
+}
+
+// ListGrantCategoriesResponse is returned by ListGrantCategories on success.
+type ListGrantCategoriesResponse struct {
+	GrantCategories []ListGrantCategoriesGrantCategoriesGrantCategory `json:"grantCategories"`
+}
+
+// GetGrantCategories returns ListGrantCategoriesResponse.GrantCategories, and is useful for accessing the field via an interface.
+func (v *ListGrantCategoriesResponse) GetGrantCategories() []ListGrantCategoriesGrantCategoriesGrantCategory {
+	return v.GrantCategories
+}
+
+// ListIdentityStoresIdentityStoresInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListIdentityStoresIdentityStoresInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListIdentityStoresIdentityStoresInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListIdentityStoresIdentityStoresInvalidInputError) GetTypename() *string { return v.Typename }
+
+// ListIdentityStoresIdentityStoresNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type ListIdentityStoresIdentityStoresNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListIdentityStoresIdentityStoresNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *ListIdentityStoresIdentityStoresNotFoundError) GetTypename() *string { return v.Typename }
+
 // ListIdentityStoresIdentityStoresPagedResult includes the requested fields of the GraphQL type PagedResult.
 type ListIdentityStoresIdentityStoresPagedResult struct {
 	Typename          *string `json:"__typename"`
@@ -26366,6 +30356,8 @@ func (v *ListIdentityStoresIdentityStoresPagedResult) __premarshalJSON() (*__pre
 // ListIdentityStoresIdentityStoresPagedResults includes the requested fields of the GraphQL interface PagedResults.
 //
 // ListIdentityStoresIdentityStoresPagedResults is implemented by the following types:
+// ListIdentityStoresIdentityStoresInvalidInputError
+// ListIdentityStoresIdentityStoresNotFoundError
 // ListIdentityStoresIdentityStoresPagedResult
 // ListIdentityStoresIdentityStoresPermissionDeniedError
 type ListIdentityStoresIdentityStoresPagedResults interface {
@@ -26374,6 +30366,10 @@ type ListIdentityStoresIdentityStoresPagedResults interface {
 	GetTypename() *string
 }
 
+func (v *ListIdentityStoresIdentityStoresInvalidInputError) implementsGraphQLInterfaceListIdentityStoresIdentityStoresPagedResults() {
+}
+func (v *ListIdentityStoresIdentityStoresNotFoundError) implementsGraphQLInterfaceListIdentityStoresIdentityStoresPagedResults() {
+}
 func (v *ListIdentityStoresIdentityStoresPagedResult) implementsGraphQLInterfaceListIdentityStoresIdentityStoresPagedResults() {
 }
 func (v *ListIdentityStoresIdentityStoresPermissionDeniedError) implementsGraphQLInterfaceListIdentityStoresIdentityStoresPagedResults() {
@@ -26393,6 +30389,12 @@ func __unmarshalListIdentityStoresIdentityStoresPagedResults(b []byte, v *ListId
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(ListIdentityStoresIdentityStoresInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(ListIdentityStoresIdentityStoresNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PagedResult":
 		*v = new(ListIdentityStoresIdentityStoresPagedResult)
 		return json.Unmarshal(b, *v)
@@ -26412,6 +30414,22 @@ func __marshalListIdentityStoresIdentityStoresPagedResults(v *ListIdentityStores
 
 	var typename string
 	switch v := (*v).(type) {
+	case *ListIdentityStoresIdentityStoresInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListIdentityStoresIdentityStoresInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListIdentityStoresIdentityStoresNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListIdentityStoresIdentityStoresNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListIdentityStoresIdentityStoresPagedResult:
 		typename = "PagedResult"
 
@@ -26598,6 +30616,7 @@ func (v *ListRoleAssignmentsOnAccessProviderAccessProvider) GetRoleAssignments()
 //
 // ListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult is implemented by the following types:
 // ListRoleAssignmentsOnAccessProviderAccessProvider
+// ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError
 // ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError
 // ListRoleAssignmentsOnAccessProviderAccessProviderPermissionDeniedError
 type ListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult interface {
@@ -26607,6 +30626,8 @@ type ListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult inter
 }
 
 func (v *ListRoleAssignmentsOnAccessProviderAccessProvider) implementsGraphQLInterfaceListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult() {
+}
+func (v *ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError) implementsGraphQLInterfaceListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult() {
 }
 func (v *ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError) implementsGraphQLInterfaceListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult() {
 }
@@ -26629,6 +30650,9 @@ func __unmarshalListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderR
 	switch tn.TypeName {
 	case "AccessProvider":
 		*v = new(ListRoleAssignmentsOnAccessProviderAccessProvider)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError)
@@ -26655,6 +30679,14 @@ func __marshalListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderRes
 		result := struct {
 			TypeName string `json:"__typename"`
 			*ListRoleAssignmentsOnAccessProviderAccessProvider
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError
 		}{typename, v}
 		return json.Marshal(result)
 	case *ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError:
@@ -26687,6 +30719,16 @@ func __marshalListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderRes
 		return nil, fmt.Errorf(
 			`unexpected concrete type for ListRoleAssignmentsOnAccessProviderAccessProviderAccessProviderResult: "%T"`, v)
 	}
+}
+
+// ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListRoleAssignmentsOnAccessProviderAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -27050,6 +31092,7 @@ func (v *ListRoleAssignmentsOnDataSourceDataSource) GetRoleAssignments() ListRol
 //
 // ListRoleAssignmentsOnDataSourceDataSourceDataSourceResult is implemented by the following types:
 // ListRoleAssignmentsOnDataSourceDataSource
+// ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError
 // ListRoleAssignmentsOnDataSourceDataSourceNotFoundError
 // ListRoleAssignmentsOnDataSourceDataSourcePermissionDeniedError
 type ListRoleAssignmentsOnDataSourceDataSourceDataSourceResult interface {
@@ -27059,6 +31102,8 @@ type ListRoleAssignmentsOnDataSourceDataSourceDataSourceResult interface {
 }
 
 func (v *ListRoleAssignmentsOnDataSourceDataSource) implementsGraphQLInterfaceListRoleAssignmentsOnDataSourceDataSourceDataSourceResult() {
+}
+func (v *ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError) implementsGraphQLInterfaceListRoleAssignmentsOnDataSourceDataSourceDataSourceResult() {
 }
 func (v *ListRoleAssignmentsOnDataSourceDataSourceNotFoundError) implementsGraphQLInterfaceListRoleAssignmentsOnDataSourceDataSourceDataSourceResult() {
 }
@@ -27081,6 +31126,9 @@ func __unmarshalListRoleAssignmentsOnDataSourceDataSourceDataSourceResult(b []by
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(ListRoleAssignmentsOnDataSourceDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(ListRoleAssignmentsOnDataSourceDataSourceNotFoundError)
@@ -27107,6 +31155,14 @@ func __marshalListRoleAssignmentsOnDataSourceDataSourceDataSourceResult(v *ListR
 		result := struct {
 			TypeName string `json:"__typename"`
 			*ListRoleAssignmentsOnDataSourceDataSource
+		}{typename, v}
+		return json.Marshal(result)
+	case *ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError
 		}{typename, v}
 		return json.Marshal(result)
 	case *ListRoleAssignmentsOnDataSourceDataSourceNotFoundError:
@@ -27139,6 +31195,16 @@ func __marshalListRoleAssignmentsOnDataSourceDataSourceDataSourceResult(v *ListR
 		return nil, fmt.Errorf(
 			`unexpected concrete type for ListRoleAssignmentsOnDataSourceDataSourceDataSourceResult: "%T"`, v)
 	}
+}
+
+// ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListRoleAssignmentsOnDataSourceDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // ListRoleAssignmentsOnDataSourceDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -27492,6 +31558,7 @@ func (v *ListRoleAssignmentsOnIdentityStoreIdentityStoreAlreadyExistsError) __pr
 // ListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult is implemented by the following types:
 // ListRoleAssignmentsOnIdentityStoreIdentityStoreAlreadyExistsError
 // ListRoleAssignmentsOnIdentityStoreIdentityStore
+// ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError
 // ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError
 // ListRoleAssignmentsOnIdentityStoreIdentityStorePermissionDeniedError
 type ListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult interface {
@@ -27503,6 +31570,8 @@ type ListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult interfac
 func (v *ListRoleAssignmentsOnIdentityStoreIdentityStoreAlreadyExistsError) implementsGraphQLInterfaceListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult() {
 }
 func (v *ListRoleAssignmentsOnIdentityStoreIdentityStore) implementsGraphQLInterfaceListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult() {
+}
+func (v *ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError) implementsGraphQLInterfaceListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult() {
 }
 func (v *ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError) implementsGraphQLInterfaceListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult() {
 }
@@ -27528,6 +31597,9 @@ func __unmarshalListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResu
 		return json.Unmarshal(b, *v)
 	case "IdentityStore":
 		*v = new(ListRoleAssignmentsOnIdentityStoreIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError)
@@ -27568,6 +31640,14 @@ func __marshalListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult
 			*ListRoleAssignmentsOnIdentityStoreIdentityStore
 		}{typename, v}
 		return json.Marshal(result)
+	case *ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -27598,6 +31678,16 @@ func __marshalListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult
 		return nil, fmt.Errorf(
 			`unexpected concrete type for ListRoleAssignmentsOnIdentityStoreIdentityStoreIdentityStoreResult: "%T"`, v)
 	}
+}
+
+// ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *ListRoleAssignmentsOnIdentityStoreIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -28363,6 +32453,16 @@ func (v *RemoveAsRaitoUserRemoveAsRaitoUserInvalidEmailError) __premarshalJSON()
 	return &retval, nil
 }
 
+// RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
 // RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -28491,6 +32591,7 @@ func (v *RemoveAsRaitoUserRemoveAsRaitoUserPermissionDeniedError) __premarshalJS
 //
 // RemoveAsRaitoUserRemoveAsRaitoUserUserResult is implemented by the following types:
 // RemoveAsRaitoUserRemoveAsRaitoUserInvalidEmailError
+// RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError
 // RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError
 // RemoveAsRaitoUserRemoveAsRaitoUserPermissionDeniedError
 // RemoveAsRaitoUserRemoveAsRaitoUser
@@ -28501,6 +32602,8 @@ type RemoveAsRaitoUserRemoveAsRaitoUserUserResult interface {
 }
 
 func (v *RemoveAsRaitoUserRemoveAsRaitoUserInvalidEmailError) implementsGraphQLInterfaceRemoveAsRaitoUserRemoveAsRaitoUserUserResult() {
+}
+func (v *RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError) implementsGraphQLInterfaceRemoveAsRaitoUserRemoveAsRaitoUserUserResult() {
 }
 func (v *RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError) implementsGraphQLInterfaceRemoveAsRaitoUserRemoveAsRaitoUserUserResult() {
 }
@@ -28525,6 +32628,9 @@ func __unmarshalRemoveAsRaitoUserRemoveAsRaitoUserUserResult(b []byte, v *Remove
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(RemoveAsRaitoUserRemoveAsRaitoUserInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError)
@@ -28559,6 +32665,14 @@ func __marshalRemoveAsRaitoUserRemoveAsRaitoUserUserResult(v *RemoveAsRaitoUserR
 			TypeName string `json:"__typename"`
 			*__premarshalRemoveAsRaitoUserRemoveAsRaitoUserInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RemoveAsRaitoUserRemoveAsRaitoUserInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *RemoveAsRaitoUserRemoveAsRaitoUserNotFoundError:
 		typename = "NotFoundError"
@@ -28800,6 +32914,7 @@ func (v *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource) __p
 //
 // RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult is implemented by the following types:
 // RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource
+// RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError
 // RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError
 // RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourcePermissionDeniedError
 type RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult interface {
@@ -28809,6 +32924,8 @@ type RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourc
 }
 
 func (v *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource) implementsGraphQLInterfaceRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult() {
+}
+func (v *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError) implementsGraphQLInterfaceRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult() {
 }
 func (v *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError) implementsGraphQLInterfaceRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult() {
 }
@@ -28831,6 +32948,9 @@ func __unmarshalRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSour
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError)
@@ -28863,6 +32983,14 @@ func __marshalRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource
 			*__premarshalRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -28893,6 +33021,16 @@ func __marshalRemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSource
 		return nil, fmt.Errorf(
 			`unexpected concrete type for RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceDataSourceResult: "%T"`, v)
 	}
+}
+
+// RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // RemoveIdentityStoreFromDataSourceRemoveIdentityStoreFromDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -29231,12 +33369,14 @@ func (v *RoleAssignment) __premarshalJSON() (*__premarshalRoleAssignment, error)
 }
 
 type RoleAssignmentFilterInput struct {
-	Resource      *string `json:"resource,omitempty"`
-	Role          *string `json:"role,omitempty"`
-	User          *string `json:"user,omitempty"`
-	Inherited     *bool   `json:"inherited,omitempty"`
-	InheritedOnly *bool   `json:"inheritedOnly,omitempty"`
-	OnlyGlobal    *bool   `json:"onlyGlobal,omitempty"`
+	Resource           *string `json:"resource,omitempty"`
+	Role               *string `json:"role,omitempty"`
+	User               *string `json:"user,omitempty"`
+	Inherited          *bool   `json:"inherited,omitempty"`
+	InheritedOnly      *bool   `json:"inheritedOnly,omitempty"`
+	OnlyGlobal         *bool   `json:"onlyGlobal,omitempty"`
+	ExcludeDelegations *bool   `json:"excludeDelegations,omitempty"`
+	ExcludeDelegated   *bool   `json:"excludeDelegated,omitempty"`
 }
 
 // GetResource returns RoleAssignmentFilterInput.Resource, and is useful for accessing the field via an interface.
@@ -29257,6 +33397,12 @@ func (v *RoleAssignmentFilterInput) GetInheritedOnly() *bool { return v.Inherite
 // GetOnlyGlobal returns RoleAssignmentFilterInput.OnlyGlobal, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentFilterInput) GetOnlyGlobal() *bool { return v.OnlyGlobal }
 
+// GetExcludeDelegations returns RoleAssignmentFilterInput.ExcludeDelegations, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentFilterInput) GetExcludeDelegations() *bool { return v.ExcludeDelegations }
+
+// GetExcludeDelegated returns RoleAssignmentFilterInput.ExcludeDelegated, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentFilterInput) GetExcludeDelegated() *bool { return v.ExcludeDelegated }
+
 // RoleAssignmentOn includes the requested fields of the GraphQL interface RoleAssignmentOn.
 //
 // RoleAssignmentOn is implemented by the following types:
@@ -29264,18 +33410,22 @@ func (v *RoleAssignmentFilterInput) GetOnlyGlobal() *bool { return v.OnlyGlobal 
 // RoleAssignmentOnDataObject
 // RoleAssignmentOnDataSource
 // RoleAssignmentOnIdentityStore
+// RoleAssignmentOnInvalidInputError
 // RoleAssignmentOnNotFoundError
+// RoleAssignmentOnPermissionDeniedError
 type RoleAssignmentOn interface {
 	implementsGraphQLInterfaceRoleAssignmentOn()
 	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
 	GetTypename() *string
 }
 
-func (v *RoleAssignmentOnAccessProvider) implementsGraphQLInterfaceRoleAssignmentOn() {}
-func (v *RoleAssignmentOnDataObject) implementsGraphQLInterfaceRoleAssignmentOn()     {}
-func (v *RoleAssignmentOnDataSource) implementsGraphQLInterfaceRoleAssignmentOn()     {}
-func (v *RoleAssignmentOnIdentityStore) implementsGraphQLInterfaceRoleAssignmentOn()  {}
-func (v *RoleAssignmentOnNotFoundError) implementsGraphQLInterfaceRoleAssignmentOn()  {}
+func (v *RoleAssignmentOnAccessProvider) implementsGraphQLInterfaceRoleAssignmentOn()        {}
+func (v *RoleAssignmentOnDataObject) implementsGraphQLInterfaceRoleAssignmentOn()            {}
+func (v *RoleAssignmentOnDataSource) implementsGraphQLInterfaceRoleAssignmentOn()            {}
+func (v *RoleAssignmentOnIdentityStore) implementsGraphQLInterfaceRoleAssignmentOn()         {}
+func (v *RoleAssignmentOnInvalidInputError) implementsGraphQLInterfaceRoleAssignmentOn()     {}
+func (v *RoleAssignmentOnNotFoundError) implementsGraphQLInterfaceRoleAssignmentOn()         {}
+func (v *RoleAssignmentOnPermissionDeniedError) implementsGraphQLInterfaceRoleAssignmentOn() {}
 
 func __unmarshalRoleAssignmentOn(b []byte, v *RoleAssignmentOn) error {
 	if string(b) == "null" {
@@ -29303,8 +33453,14 @@ func __unmarshalRoleAssignmentOn(b []byte, v *RoleAssignmentOn) error {
 	case "IdentityStore":
 		*v = new(RoleAssignmentOnIdentityStore)
 		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(RoleAssignmentOnInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(RoleAssignmentOnNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(RoleAssignmentOnPermissionDeniedError)
 		return json.Unmarshal(b, *v)
 	case "":
 		return fmt.Errorf(
@@ -29351,6 +33507,14 @@ func __marshalRoleAssignmentOn(v *RoleAssignmentOn) ([]byte, error) {
 			*RoleAssignmentOnIdentityStore
 		}{typename, v}
 		return json.Marshal(result)
+	case *RoleAssignmentOnInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentOnInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *RoleAssignmentOnNotFoundError:
 		typename = "NotFoundError"
 
@@ -29362,6 +33526,14 @@ func __marshalRoleAssignmentOn(v *RoleAssignmentOn) ([]byte, error) {
 			TypeName string `json:"__typename"`
 			*__premarshalRoleAssignmentOnNotFoundError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *RoleAssignmentOnPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentOnPermissionDeniedError
+		}{typename, v}
 		return json.Marshal(result)
 	case nil:
 		return []byte("null"), nil
@@ -29414,6 +33586,14 @@ type RoleAssignmentOnIdentityStore struct {
 
 // GetTypename returns RoleAssignmentOnIdentityStore.Typename, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentOnIdentityStore) GetTypename() *string { return v.Typename }
+
+// RoleAssignmentOnInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type RoleAssignmentOnInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentOnInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentOnInvalidInputError) GetTypename() *string { return v.Typename }
 
 // RoleAssignmentOnNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type RoleAssignmentOnNotFoundError struct {
@@ -29473,6 +33653,14 @@ func (v *RoleAssignmentOnNotFoundError) __premarshalJSON() (*__premarshalRoleAss
 	retval.Message = v.NotFoundError.Message
 	return &retval, nil
 }
+
+// RoleAssignmentOnPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type RoleAssignmentOnPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentOnPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentOnPermissionDeniedError) GetTypename() *string { return v.Typename }
 
 type RoleAssignmentOrderInput struct {
 	ResourceName *Sort `json:"resourceName,omitempty"`
@@ -29853,9 +34041,12 @@ func (v *RoleAssignmentPageEdgesEdgeNodeIssue) GetTypename() *string { return v.
 // RoleAssignmentPageEdgesEdgeNodeJob
 // RoleAssignmentPageEdgesEdgeNodeJobLogMsg
 // RoleAssignmentPageEdgesEdgeNodePromiseDetails
+// RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject
+// RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement
 // RoleAssignmentPageEdgesEdgeNodeRole
 // RoleAssignmentPageEdgesEdgeNodeRoleAssignment
 // RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification
+// RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification
 // RoleAssignmentPageEdgesEdgeNodeSearchResultItem
 // RoleAssignmentPageEdgesEdgeNodeStringValue
 // RoleAssignmentPageEdgesEdgeNodeTag
@@ -29931,11 +34122,17 @@ func (v *RoleAssignmentPageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceRol
 }
 func (v *RoleAssignmentPageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
+func (v *RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
+}
+func (v *RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
+}
 func (v *RoleAssignmentPageEdgesEdgeNodeRole) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
+}
+func (v *RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
 func (v *RoleAssignmentPageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceRoleAssignmentPageEdgesEdgeNodeItem() {
 }
@@ -30060,6 +34257,12 @@ func __unmarshalRoleAssignmentPageEdgesEdgeNodeItem(b []byte, v *RoleAssignmentP
 	case "PromiseDetails":
 		*v = new(RoleAssignmentPageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -30068,6 +34271,9 @@ func __unmarshalRoleAssignmentPageEdgesEdgeNodeItem(b []byte, v *RoleAssignmentP
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(RoleAssignmentPageEdgesEdgeNodeSearchResultItem)
@@ -30349,6 +34555,22 @@ func __marshalRoleAssignmentPageEdgesEdgeNodeItem(v *RoleAssignmentPageEdgesEdge
 			*RoleAssignmentPageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *RoleAssignmentPageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -30375,6 +34597,14 @@ func __marshalRoleAssignmentPageEdgesEdgeNodeItem(v *RoleAssignmentPageEdgesEdge
 		result := struct {
 			TypeName string `json:"__typename"`
 			*RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *RoleAssignmentPageEdgesEdgeNodeSearchResultItem:
@@ -30480,6 +34710,26 @@ type RoleAssignmentPageEdgesEdgeNodePromiseDetails struct {
 
 // GetTypename returns RoleAssignmentPageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentPageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
+
+// RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentPageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string {
+	return v.Typename
+}
+
+// RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentPageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string {
+	return v.Typename
+}
 
 // RoleAssignmentPageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type RoleAssignmentPageEdgesEdgeNodeRole struct {
@@ -30603,6 +34853,16 @@ type RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *RoleAssignmentPageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string {
+	return v.Typename
+}
+
+// RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *RoleAssignmentPageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string {
 	return v.Typename
 }
 
@@ -31261,9 +35521,12 @@ func (v *RolePageEdgesEdgeNodeIssue) GetTypename() *string { return v.Typename }
 // RolePageEdgesEdgeNodeJob
 // RolePageEdgesEdgeNodeJobLogMsg
 // RolePageEdgesEdgeNodePromiseDetails
+// RolePageEdgesEdgeNodeQueryHistoryDataObject
+// RolePageEdgesEdgeNodeQueryHistoryStatement
 // RolePageEdgesEdgeNodeRole
 // RolePageEdgesEdgeNodeRoleAssignment
 // RolePageEdgesEdgeNodeRoleAssignmentNotification
+// RolePageEdgesEdgeNodeRoleDelegationNotification
 // RolePageEdgesEdgeNodeSearchResultItem
 // RolePageEdgesEdgeNodeStringValue
 // RolePageEdgesEdgeNodeTag
@@ -31321,9 +35584,15 @@ func (v *RolePageEdgesEdgeNodeIssue) implementsGraphQLInterfaceRolePageEdgesEdge
 func (v *RolePageEdgesEdgeNodeJob) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()            {}
 func (v *RolePageEdgesEdgeNodeJobLogMsg) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()      {}
 func (v *RolePageEdgesEdgeNodePromiseDetails) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
+func (v *RolePageEdgesEdgeNodeQueryHistoryDataObject) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
+}
+func (v *RolePageEdgesEdgeNodeQueryHistoryStatement) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
+}
 func (v *RolePageEdgesEdgeNodeRole) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem()           {}
 func (v *RolePageEdgesEdgeNodeRoleAssignment) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {}
 func (v *RolePageEdgesEdgeNodeRoleAssignmentNotification) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
+}
+func (v *RolePageEdgesEdgeNodeRoleDelegationNotification) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
 }
 func (v *RolePageEdgesEdgeNodeSearchResultItem) implementsGraphQLInterfaceRolePageEdgesEdgeNodeItem() {
 }
@@ -31442,6 +35711,12 @@ func __unmarshalRolePageEdgesEdgeNodeItem(b []byte, v *RolePageEdgesEdgeNodeItem
 	case "PromiseDetails":
 		*v = new(RolePageEdgesEdgeNodePromiseDetails)
 		return json.Unmarshal(b, *v)
+	case "QueryHistoryDataObject":
+		*v = new(RolePageEdgesEdgeNodeQueryHistoryDataObject)
+		return json.Unmarshal(b, *v)
+	case "QueryHistoryStatement":
+		*v = new(RolePageEdgesEdgeNodeQueryHistoryStatement)
+		return json.Unmarshal(b, *v)
 	case "Role":
 		*v = new(RolePageEdgesEdgeNodeRole)
 		return json.Unmarshal(b, *v)
@@ -31450,6 +35725,9 @@ func __unmarshalRolePageEdgesEdgeNodeItem(b []byte, v *RolePageEdgesEdgeNodeItem
 		return json.Unmarshal(b, *v)
 	case "RoleAssignmentNotification":
 		*v = new(RolePageEdgesEdgeNodeRoleAssignmentNotification)
+		return json.Unmarshal(b, *v)
+	case "RoleDelegationNotification":
+		*v = new(RolePageEdgesEdgeNodeRoleDelegationNotification)
 		return json.Unmarshal(b, *v)
 	case "SearchResultItem":
 		*v = new(RolePageEdgesEdgeNodeSearchResultItem)
@@ -31731,6 +36009,22 @@ func __marshalRolePageEdgesEdgeNodeItem(v *RolePageEdgesEdgeNodeItem) ([]byte, e
 			*RolePageEdgesEdgeNodePromiseDetails
 		}{typename, v}
 		return json.Marshal(result)
+	case *RolePageEdgesEdgeNodeQueryHistoryDataObject:
+		typename = "QueryHistoryDataObject"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RolePageEdgesEdgeNodeQueryHistoryDataObject
+		}{typename, v}
+		return json.Marshal(result)
+	case *RolePageEdgesEdgeNodeQueryHistoryStatement:
+		typename = "QueryHistoryStatement"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RolePageEdgesEdgeNodeQueryHistoryStatement
+		}{typename, v}
+		return json.Marshal(result)
 	case *RolePageEdgesEdgeNodeRole:
 		typename = "Role"
 
@@ -31757,6 +36051,14 @@ func __marshalRolePageEdgesEdgeNodeItem(v *RolePageEdgesEdgeNodeItem) ([]byte, e
 		result := struct {
 			TypeName string `json:"__typename"`
 			*RolePageEdgesEdgeNodeRoleAssignmentNotification
+		}{typename, v}
+		return json.Marshal(result)
+	case *RolePageEdgesEdgeNodeRoleDelegationNotification:
+		typename = "RoleDelegationNotification"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*RolePageEdgesEdgeNodeRoleDelegationNotification
 		}{typename, v}
 		return json.Marshal(result)
 	case *RolePageEdgesEdgeNodeSearchResultItem:
@@ -31863,6 +36165,22 @@ type RolePageEdgesEdgeNodePromiseDetails struct {
 // GetTypename returns RolePageEdgesEdgeNodePromiseDetails.Typename, and is useful for accessing the field via an interface.
 func (v *RolePageEdgesEdgeNodePromiseDetails) GetTypename() *string { return v.Typename }
 
+// RolePageEdgesEdgeNodeQueryHistoryDataObject includes the requested fields of the GraphQL type QueryHistoryDataObject.
+type RolePageEdgesEdgeNodeQueryHistoryDataObject struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RolePageEdgesEdgeNodeQueryHistoryDataObject.Typename, and is useful for accessing the field via an interface.
+func (v *RolePageEdgesEdgeNodeQueryHistoryDataObject) GetTypename() *string { return v.Typename }
+
+// RolePageEdgesEdgeNodeQueryHistoryStatement includes the requested fields of the GraphQL type QueryHistoryStatement.
+type RolePageEdgesEdgeNodeQueryHistoryStatement struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RolePageEdgesEdgeNodeQueryHistoryStatement.Typename, and is useful for accessing the field via an interface.
+func (v *RolePageEdgesEdgeNodeQueryHistoryStatement) GetTypename() *string { return v.Typename }
+
 // RolePageEdgesEdgeNodeRole includes the requested fields of the GraphQL type Role.
 type RolePageEdgesEdgeNodeRole struct {
 	Typename *string `json:"__typename"`
@@ -31949,6 +36267,14 @@ type RolePageEdgesEdgeNodeRoleAssignmentNotification struct {
 
 // GetTypename returns RolePageEdgesEdgeNodeRoleAssignmentNotification.Typename, and is useful for accessing the field via an interface.
 func (v *RolePageEdgesEdgeNodeRoleAssignmentNotification) GetTypename() *string { return v.Typename }
+
+// RolePageEdgesEdgeNodeRoleDelegationNotification includes the requested fields of the GraphQL type RoleDelegationNotification.
+type RolePageEdgesEdgeNodeRoleDelegationNotification struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns RolePageEdgesEdgeNodeRoleDelegationNotification.Typename, and is useful for accessing the field via an interface.
+func (v *RolePageEdgesEdgeNodeRoleDelegationNotification) GetTypename() *string { return v.Typename }
 
 // RolePageEdgesEdgeNodeSearchResultItem includes the requested fields of the GraphQL type SearchResultItem.
 type RolePageEdgesEdgeNodeSearchResultItem struct {
@@ -32165,6 +36491,26 @@ func (v *SetGlobalRolesForUserSetGlobalRolesForUser) GetTypename() *string { ret
 // GetSuccess returns SetGlobalRolesForUserSetGlobalRolesForUser.Success, and is useful for accessing the field via an interface.
 func (v *SetGlobalRolesForUserSetGlobalRolesForUser) GetSuccess() bool { return v.Success }
 
+// SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
 // SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
 type SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError struct {
 	Typename              *string `json:"__typename"`
@@ -32231,6 +36577,8 @@ func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) __prem
 // SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult includes the requested fields of the GraphQL interface SetGlobalRolesForUserResult.
 //
 // SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult is implemented by the following types:
+// SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError
+// SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError
 // SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError
 // SetGlobalRolesForUserSetGlobalRolesForUser
 type SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult interface {
@@ -32239,6 +36587,10 @@ type SetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult inter
 	GetTypename() *string
 }
 
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
+}
+func (v *SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
+}
 func (v *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
 }
 func (v *SetGlobalRolesForUserSetGlobalRolesForUser) implementsGraphQLInterfaceSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserResult() {
@@ -32258,6 +36610,12 @@ func __unmarshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserR
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError)
+		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError)
 		return json.Unmarshal(b, *v)
@@ -32277,6 +36635,22 @@ func __marshalSetGlobalRolesForUserSetGlobalRolesForUserSetGlobalRolesForUserRes
 
 	var typename string
 	switch v := (*v).(type) {
+	case *SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*SetGlobalRolesForUserSetGlobalRolesForUserInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*SetGlobalRolesForUserSetGlobalRolesForUserNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *SetGlobalRolesForUserSetGlobalRolesForUserPermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -32446,6 +36820,14 @@ func (v *SetUserPasswordSetPasswordInvalidEmailError) __premarshalJSON() (*__pre
 	retval.Message = v.InvalidEmailError.Message
 	return &retval, nil
 }
+
+// SetUserPasswordSetPasswordInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type SetUserPasswordSetPasswordInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns SetUserPasswordSetPasswordInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *SetUserPasswordSetPasswordInvalidInputError) GetTypename() *string { return v.Typename }
 
 // SetUserPasswordSetPasswordNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type SetUserPasswordSetPasswordNotFoundError struct {
@@ -32654,6 +37036,7 @@ func (v *SetUserPasswordSetPasswordUser) __premarshalJSON() (*__premarshalSetUse
 //
 // SetUserPasswordSetPasswordUserResult is implemented by the following types:
 // SetUserPasswordSetPasswordInvalidEmailError
+// SetUserPasswordSetPasswordInvalidInputError
 // SetUserPasswordSetPasswordNotFoundError
 // SetUserPasswordSetPasswordPermissionDeniedError
 // SetUserPasswordSetPasswordUser
@@ -32664,6 +37047,8 @@ type SetUserPasswordSetPasswordUserResult interface {
 }
 
 func (v *SetUserPasswordSetPasswordInvalidEmailError) implementsGraphQLInterfaceSetUserPasswordSetPasswordUserResult() {
+}
+func (v *SetUserPasswordSetPasswordInvalidInputError) implementsGraphQLInterfaceSetUserPasswordSetPasswordUserResult() {
 }
 func (v *SetUserPasswordSetPasswordNotFoundError) implementsGraphQLInterfaceSetUserPasswordSetPasswordUserResult() {
 }
@@ -32688,6 +37073,9 @@ func __unmarshalSetUserPasswordSetPasswordUserResult(b []byte, v *SetUserPasswor
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(SetUserPasswordSetPasswordInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(SetUserPasswordSetPasswordInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(SetUserPasswordSetPasswordNotFoundError)
@@ -32722,6 +37110,14 @@ func __marshalSetUserPasswordSetPasswordUserResult(v *SetUserPasswordSetPassword
 			TypeName string `json:"__typename"`
 			*__premarshalSetUserPasswordSetPasswordInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *SetUserPasswordSetPasswordInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*SetUserPasswordSetPasswordInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *SetUserPasswordSetPasswordNotFoundError:
 		typename = "NotFoundError"
@@ -32981,6 +37377,17 @@ const (
 	SyncStatusSynced       SyncStatus = "SYNCED"
 )
 
+type TagFilter struct {
+	Key         *string `json:"key,omitempty"`
+	StringValue *string `json:"stringValue,omitempty"`
+}
+
+// GetKey returns TagFilter.Key, and is useful for accessing the field via an interface.
+func (v *TagFilter) GetKey() *string { return v.Key }
+
+// GetStringValue returns TagFilter.StringValue, and is useful for accessing the field via an interface.
+func (v *TagFilter) GetStringValue() *string { return v.StringValue }
+
 // UnassignGlobalRoleResponse is returned by UnassignGlobalRole on success.
 type UnassignGlobalRoleResponse struct {
 	UnassignGlobalRole UnassignGlobalRoleUnassignGlobalRoleRoleResult `json:"-"`
@@ -33125,6 +37532,16 @@ func (v *UnassignGlobalRoleUnassignGlobalRole) __premarshalJSON() (*__premarshal
 	return &retval, nil
 }
 
+// UnassignGlobalRoleUnassignGlobalRoleInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UnassignGlobalRoleUnassignGlobalRoleInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UnassignGlobalRoleUnassignGlobalRoleInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UnassignGlobalRoleUnassignGlobalRoleInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
 // UnassignGlobalRoleUnassignGlobalRoleNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type UnassignGlobalRoleUnassignGlobalRoleNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -33252,6 +37669,7 @@ func (v *UnassignGlobalRoleUnassignGlobalRolePermissionDeniedError) __premarshal
 // UnassignGlobalRoleUnassignGlobalRoleRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UnassignGlobalRoleUnassignGlobalRoleRoleResult is implemented by the following types:
+// UnassignGlobalRoleUnassignGlobalRoleInvalidInputError
 // UnassignGlobalRoleUnassignGlobalRoleNotFoundError
 // UnassignGlobalRoleUnassignGlobalRolePermissionDeniedError
 // UnassignGlobalRoleUnassignGlobalRole
@@ -33261,6 +37679,8 @@ type UnassignGlobalRoleUnassignGlobalRoleRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *UnassignGlobalRoleUnassignGlobalRoleInvalidInputError) implementsGraphQLInterfaceUnassignGlobalRoleUnassignGlobalRoleRoleResult() {
+}
 func (v *UnassignGlobalRoleUnassignGlobalRoleNotFoundError) implementsGraphQLInterfaceUnassignGlobalRoleUnassignGlobalRoleRoleResult() {
 }
 func (v *UnassignGlobalRoleUnassignGlobalRolePermissionDeniedError) implementsGraphQLInterfaceUnassignGlobalRoleUnassignGlobalRoleRoleResult() {
@@ -33282,6 +37702,9 @@ func __unmarshalUnassignGlobalRoleUnassignGlobalRoleRoleResult(b []byte, v *Unas
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UnassignGlobalRoleUnassignGlobalRoleInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UnassignGlobalRoleUnassignGlobalRoleNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -33304,6 +37727,14 @@ func __marshalUnassignGlobalRoleUnassignGlobalRoleRoleResult(v *UnassignGlobalRo
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UnassignGlobalRoleUnassignGlobalRoleInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UnassignGlobalRoleUnassignGlobalRoleInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UnassignGlobalRoleUnassignGlobalRoleNotFoundError:
 		typename = "NotFoundError"
 
@@ -33422,6 +37853,16 @@ func (v *UnassignRoleFromAccessProviderResponse) __premarshalJSON() (*__premarsh
 		}
 	}
 	return &retval, nil
+}
+
+// UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -33632,6 +38073,7 @@ func (v *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRole) __pre
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult is implemented by the following types:
+// UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderNotFoundError
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderPermissionDeniedError
 // UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRole
@@ -33641,6 +38083,8 @@ type UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult inte
 	GetTypename() *string
 }
 
+func (v *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError) implementsGraphQLInterfaceUnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult() {
+}
 func (v *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderNotFoundError) implementsGraphQLInterfaceUnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult() {
 }
 func (v *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderPermissionDeniedError) implementsGraphQLInterfaceUnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleResult() {
@@ -33662,6 +38106,9 @@ func __unmarshalUnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRole
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -33684,6 +38131,14 @@ func __marshalUnassignRoleFromAccessProviderUnassignRoleFromAccessProviderRoleRe
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UnassignRoleFromAccessProviderUnassignRoleFromAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -33799,6 +38254,16 @@ func (v *UnassignRoleFromDataObjectResponse) __premarshalJSON() (*__premarshalUn
 		}
 	}
 	return &retval, nil
+}
+
+// UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -34007,6 +38472,7 @@ func (v *UnassignRoleFromDataObjectUnassignRoleFromDataObjectRole) __premarshalJ
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult is implemented by the following types:
+// UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectNotFoundError
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectPermissionDeniedError
 // UnassignRoleFromDataObjectUnassignRoleFromDataObjectRole
@@ -34016,6 +38482,8 @@ type UnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError) implementsGraphQLInterfaceUnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult() {
+}
 func (v *UnassignRoleFromDataObjectUnassignRoleFromDataObjectNotFoundError) implementsGraphQLInterfaceUnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult() {
 }
 func (v *UnassignRoleFromDataObjectUnassignRoleFromDataObjectPermissionDeniedError) implementsGraphQLInterfaceUnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult() {
@@ -34037,6 +38505,9 @@ func __unmarshalUnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult(b
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UnassignRoleFromDataObjectUnassignRoleFromDataObjectNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -34059,6 +38530,14 @@ func __marshalUnassignRoleFromDataObjectUnassignRoleFromDataObjectRoleResult(v *
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UnassignRoleFromDataObjectUnassignRoleFromDataObjectInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UnassignRoleFromDataObjectUnassignRoleFromDataObjectNotFoundError:
 		typename = "NotFoundError"
 
@@ -34174,6 +38653,16 @@ func (v *UnassignRoleFromDataSourceResponse) __premarshalJSON() (*__premarshalUn
 		}
 	}
 	return &retval, nil
+}
+
+// UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -34382,6 +38871,7 @@ func (v *UnassignRoleFromDataSourceUnassignRoleFromDataSourceRole) __premarshalJ
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult is implemented by the following types:
+// UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourceNotFoundError
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourcePermissionDeniedError
 // UnassignRoleFromDataSourceUnassignRoleFromDataSourceRole
@@ -34391,6 +38881,8 @@ type UnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult interface {
 	GetTypename() *string
 }
 
+func (v *UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError) implementsGraphQLInterfaceUnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult() {
+}
 func (v *UnassignRoleFromDataSourceUnassignRoleFromDataSourceNotFoundError) implementsGraphQLInterfaceUnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult() {
 }
 func (v *UnassignRoleFromDataSourceUnassignRoleFromDataSourcePermissionDeniedError) implementsGraphQLInterfaceUnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult() {
@@ -34412,6 +38904,9 @@ func __unmarshalUnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult(b
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UnassignRoleFromDataSourceUnassignRoleFromDataSourceNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -34434,6 +38929,14 @@ func __marshalUnassignRoleFromDataSourceUnassignRoleFromDataSourceRoleResult(v *
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UnassignRoleFromDataSourceUnassignRoleFromDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UnassignRoleFromDataSourceUnassignRoleFromDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -34549,6 +39052,16 @@ func (v *UnassignRoleFromIdentityStoreResponse) __premarshalJSON() (*__premarsha
 		}
 	}
 	return &retval, nil
+}
+
+// UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -34759,6 +39272,7 @@ func (v *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRole) __prema
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult is implemented by the following types:
+// UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreNotFoundError
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStorePermissionDeniedError
 // UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRole
@@ -34768,6 +39282,8 @@ type UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult interf
 	GetTypename() *string
 }
 
+func (v *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError) implementsGraphQLInterfaceUnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult() {
+}
 func (v *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreNotFoundError) implementsGraphQLInterfaceUnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult() {
 }
 func (v *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStorePermissionDeniedError) implementsGraphQLInterfaceUnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResult() {
@@ -34789,6 +39305,9 @@ func __unmarshalUnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleRe
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -34811,6 +39330,14 @@ func __marshalUnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreRoleResu
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UnassignRoleFromIdentityStoreUnassignRoleFromIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -34973,6 +39500,11 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetAction() models.AccessProv
 	return v.AccessProvider.Action
 }
 
+// GetCategory returns UpdateAccessProviderUpdateAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
+}
+
 // GetDescription returns UpdateAccessProviderUpdateAccessProvider.Description, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProvider) GetDescription() string {
 	return v.AccessProvider.Description
@@ -35072,6 +39604,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -35115,6 +39649,7 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -35188,6 +39723,11 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 // GetAction returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Action, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetAction() models.AccessProviderAction {
 	return v.AccessProvider.Action
+}
+
+// GetCategory returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Category, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCategory() *AccessProviderCategoryGrantCategory {
+	return v.AccessProvider.Category
 }
 
 // GetDescription returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.Description, and is useful for accessing the field via an interface.
@@ -35287,6 +39827,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 
 	Action models.AccessProviderAction `json:"action"`
 
+	Category *AccessProviderCategoryGrantCategory `json:"category"`
+
 	Description string `json:"description"`
 
 	PolicyRule *string `json:"policyRule"`
@@ -35329,6 +39871,7 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.NamingHint = v.AccessProvider.NamingHint
 	retval.State = v.AccessProvider.State
 	retval.Action = v.AccessProvider.Action
+	retval.Category = v.AccessProvider.Category
 	retval.Description = v.AccessProvider.Description
 	retval.PolicyRule = v.AccessProvider.PolicyRule
 	retval.External = v.AccessProvider.External
@@ -35348,6 +39891,8 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 // UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult is implemented by the following types:
 // UpdateAccessProviderUpdateAccessProvider
 // UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests
+// UpdateAccessProviderUpdateAccessProviderInvalidInputError
+// UpdateAccessProviderUpdateAccessProviderNotFoundError
 // UpdateAccessProviderUpdateAccessProviderPermissionDeniedError
 type UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult interface {
 	implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult()
@@ -35358,6 +39903,10 @@ type UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessReq
 func (v *UpdateAccessProviderUpdateAccessProvider) implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests) implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
+}
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
+}
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
 func (v *UpdateAccessProviderUpdateAccessProviderPermissionDeniedError) implementsGraphQLInterfaceUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult() {
 }
@@ -35381,6 +39930,12 @@ func __unmarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOption
 		return json.Unmarshal(b, *v)
 	case "AccessProviderWithOptionalAccessRequests":
 		*v = new(UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateAccessProviderUpdateAccessProviderInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(UpdateAccessProviderUpdateAccessProviderNotFoundError)
 		return json.Unmarshal(b, *v)
 	case "PermissionDeniedError":
 		*v = new(UpdateAccessProviderUpdateAccessProviderPermissionDeniedError)
@@ -35418,6 +39973,22 @@ func __marshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptional
 			*UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequests
 		}{typename, v}
 		return json.Marshal(result)
+	case *UpdateAccessProviderUpdateAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateAccessProviderUpdateAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *UpdateAccessProviderUpdateAccessProviderNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateAccessProviderUpdateAccessProviderNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateAccessProviderUpdateAccessProviderPermissionDeniedError:
 		typename = "PermissionDeniedError"
 
@@ -35436,6 +40007,26 @@ func __marshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptional
 		return nil, fmt.Errorf(
 			`unexpected concrete type for UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsResult: "%T"`, v)
 	}
+}
+
+// UpdateAccessProviderUpdateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateAccessProviderUpdateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateAccessProviderUpdateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// UpdateAccessProviderUpdateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateAccessProviderUpdateAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateAccessProviderUpdateAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateAccessProviderUpdateAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
@@ -35683,6 +40274,7 @@ func (v *UpdateDataSourceUpdateDataSource) __premarshalJSON() (*__premarshalUpda
 //
 // UpdateDataSourceUpdateDataSourceDataSourceResult is implemented by the following types:
 // UpdateDataSourceUpdateDataSource
+// UpdateDataSourceUpdateDataSourceInvalidInputError
 // UpdateDataSourceUpdateDataSourceNotFoundError
 // UpdateDataSourceUpdateDataSourcePermissionDeniedError
 type UpdateDataSourceUpdateDataSourceDataSourceResult interface {
@@ -35692,6 +40284,8 @@ type UpdateDataSourceUpdateDataSourceDataSourceResult interface {
 }
 
 func (v *UpdateDataSourceUpdateDataSource) implementsGraphQLInterfaceUpdateDataSourceUpdateDataSourceDataSourceResult() {
+}
+func (v *UpdateDataSourceUpdateDataSourceInvalidInputError) implementsGraphQLInterfaceUpdateDataSourceUpdateDataSourceDataSourceResult() {
 }
 func (v *UpdateDataSourceUpdateDataSourceNotFoundError) implementsGraphQLInterfaceUpdateDataSourceUpdateDataSourceDataSourceResult() {
 }
@@ -35714,6 +40308,9 @@ func __unmarshalUpdateDataSourceUpdateDataSourceDataSourceResult(b []byte, v *Up
 	switch tn.TypeName {
 	case "DataSource":
 		*v = new(UpdateDataSourceUpdateDataSource)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateDataSourceUpdateDataSourceInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateDataSourceUpdateDataSourceNotFoundError)
@@ -35746,6 +40343,14 @@ func __marshalUpdateDataSourceUpdateDataSourceDataSourceResult(v *UpdateDataSour
 			*__premarshalUpdateDataSourceUpdateDataSource
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *UpdateDataSourceUpdateDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateDataSourceUpdateDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateDataSourceUpdateDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -35777,6 +40382,14 @@ func __marshalUpdateDataSourceUpdateDataSourceDataSourceResult(v *UpdateDataSour
 			`unexpected concrete type for UpdateDataSourceUpdateDataSourceDataSourceResult: "%T"`, v)
 	}
 }
+
+// UpdateDataSourceUpdateDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateDataSourceUpdateDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateDataSourceUpdateDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateDataSourceUpdateDataSourceInvalidInputError) GetTypename() *string { return v.Typename }
 
 // UpdateDataSourceUpdateDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type UpdateDataSourceUpdateDataSourceNotFoundError struct {
@@ -35896,6 +40509,544 @@ func (v *UpdateDataSourceUpdateDataSourcePermissionDeniedError) MarshalJSON() ([
 
 func (v *UpdateDataSourceUpdateDataSourcePermissionDeniedError) __premarshalJSON() (*__premarshalUpdateDataSourceUpdateDataSourcePermissionDeniedError, error) {
 	var retval __premarshalUpdateDataSourceUpdateDataSourcePermissionDeniedError
+
+	retval.Typename = v.Typename
+	retval.Message = v.PermissionDeniedError.Message
+	return &retval, nil
+}
+
+// UpdateGrantCategoryResponse is returned by UpdateGrantCategory on success.
+type UpdateGrantCategoryResponse struct {
+	UpdateGrantCategory UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult `json:"-"`
+}
+
+// GetUpdateGrantCategory returns UpdateGrantCategoryResponse.UpdateGrantCategory, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryResponse) GetUpdateGrantCategory() UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult {
+	return v.UpdateGrantCategory
+}
+
+func (v *UpdateGrantCategoryResponse) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateGrantCategoryResponse
+		UpdateGrantCategory json.RawMessage `json:"updateGrantCategory"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateGrantCategoryResponse = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.UpdateGrantCategory
+		src := firstPass.UpdateGrantCategory
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal UpdateGrantCategoryResponse.UpdateGrantCategory: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalUpdateGrantCategoryResponse struct {
+	UpdateGrantCategory json.RawMessage `json:"updateGrantCategory"`
+}
+
+func (v *UpdateGrantCategoryResponse) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateGrantCategoryResponse) __premarshalJSON() (*__premarshalUpdateGrantCategoryResponse, error) {
+	var retval __premarshalUpdateGrantCategoryResponse
+
+	{
+
+		dst := &retval.UpdateGrantCategory
+		src := v.UpdateGrantCategory
+		var err error
+		*dst, err = __marshalUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal UpdateGrantCategoryResponse.UpdateGrantCategory: %w", err)
+		}
+	}
+	return &retval, nil
+}
+
+// UpdateGrantCategoryUpdateGrantCategory includes the requested fields of the GraphQL type GrantCategory.
+type UpdateGrantCategoryUpdateGrantCategory struct {
+	Typename             *string `json:"__typename"`
+	GrantCategoryDetails `json:"-"`
+}
+
+// GetTypename returns UpdateGrantCategoryUpdateGrantCategory.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetTypename() *string { return v.Typename }
+
+// GetId returns UpdateGrantCategoryUpdateGrantCategory.Id, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetId() string { return v.GrantCategoryDetails.Id }
+
+// GetCreatedAt returns UpdateGrantCategoryUpdateGrantCategory.CreatedAt, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetCreatedAt() time.Time {
+	return v.GrantCategoryDetails.CreatedAt
+}
+
+// GetModifiedAt returns UpdateGrantCategoryUpdateGrantCategory.ModifiedAt, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetModifiedAt() time.Time {
+	return v.GrantCategoryDetails.ModifiedAt
+}
+
+// GetIsSystem returns UpdateGrantCategoryUpdateGrantCategory.IsSystem, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetIsSystem() bool {
+	return v.GrantCategoryDetails.IsSystem
+}
+
+// GetName returns UpdateGrantCategoryUpdateGrantCategory.Name, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetName() string { return v.GrantCategoryDetails.Name }
+
+// GetDescription returns UpdateGrantCategoryUpdateGrantCategory.Description, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetDescription() string {
+	return v.GrantCategoryDetails.Description
+}
+
+// GetIcon returns UpdateGrantCategoryUpdateGrantCategory.Icon, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetIcon() string { return v.GrantCategoryDetails.Icon }
+
+// GetIsDefault returns UpdateGrantCategoryUpdateGrantCategory.IsDefault, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetIsDefault() bool {
+	return v.GrantCategoryDetails.IsDefault
+}
+
+// GetCanCreate returns UpdateGrantCategoryUpdateGrantCategory.CanCreate, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetCanCreate() bool {
+	return v.GrantCategoryDetails.CanCreate
+}
+
+// GetAllowDuplicateNames returns UpdateGrantCategoryUpdateGrantCategory.AllowDuplicateNames, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetAllowDuplicateNames() bool {
+	return v.GrantCategoryDetails.AllowDuplicateNames
+}
+
+// GetMultiDataSource returns UpdateGrantCategoryUpdateGrantCategory.MultiDataSource, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetMultiDataSource() bool {
+	return v.GrantCategoryDetails.MultiDataSource
+}
+
+// GetDefaultTypePerDataSource returns UpdateGrantCategoryUpdateGrantCategory.DefaultTypePerDataSource, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetDefaultTypePerDataSource() []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource {
+	return v.GrantCategoryDetails.DefaultTypePerDataSource
+}
+
+// GetAllowedWhoItems returns UpdateGrantCategoryUpdateGrantCategory.AllowedWhoItems, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetAllowedWhoItems() GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems {
+	return v.GrantCategoryDetails.AllowedWhoItems
+}
+
+// GetAllowedWhatItems returns UpdateGrantCategoryUpdateGrantCategory.AllowedWhatItems, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategory) GetAllowedWhatItems() GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems {
+	return v.GrantCategoryDetails.AllowedWhatItems
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategory) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateGrantCategoryUpdateGrantCategory
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateGrantCategoryUpdateGrantCategory = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.GrantCategoryDetails)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateGrantCategoryUpdateGrantCategory struct {
+	Typename *string `json:"__typename"`
+
+	Id string `json:"id"`
+
+	CreatedAt time.Time `json:"createdAt"`
+
+	ModifiedAt time.Time `json:"modifiedAt"`
+
+	IsSystem bool `json:"isSystem"`
+
+	Name string `json:"name"`
+
+	Description string `json:"description"`
+
+	Icon string `json:"icon"`
+
+	IsDefault bool `json:"isDefault"`
+
+	CanCreate bool `json:"canCreate"`
+
+	AllowDuplicateNames bool `json:"allowDuplicateNames"`
+
+	MultiDataSource bool `json:"multiDataSource"`
+
+	DefaultTypePerDataSource []GrantCategoryDetailsDefaultTypePerDataSourceGrantCategoryTypeForDataSource `json:"defaultTypePerDataSource"`
+
+	AllowedWhoItems GrantCategoryDetailsAllowedWhoItemsGrantCategoryAllowedWhoItems `json:"allowedWhoItems"`
+
+	AllowedWhatItems GrantCategoryDetailsAllowedWhatItemsGrantCategoryAllowedWhatItems `json:"allowedWhatItems"`
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategory) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategory) __premarshalJSON() (*__premarshalUpdateGrantCategoryUpdateGrantCategory, error) {
+	var retval __premarshalUpdateGrantCategoryUpdateGrantCategory
+
+	retval.Typename = v.Typename
+	retval.Id = v.GrantCategoryDetails.Id
+	retval.CreatedAt = v.GrantCategoryDetails.CreatedAt
+	retval.ModifiedAt = v.GrantCategoryDetails.ModifiedAt
+	retval.IsSystem = v.GrantCategoryDetails.IsSystem
+	retval.Name = v.GrantCategoryDetails.Name
+	retval.Description = v.GrantCategoryDetails.Description
+	retval.Icon = v.GrantCategoryDetails.Icon
+	retval.IsDefault = v.GrantCategoryDetails.IsDefault
+	retval.CanCreate = v.GrantCategoryDetails.CanCreate
+	retval.AllowDuplicateNames = v.GrantCategoryDetails.AllowDuplicateNames
+	retval.MultiDataSource = v.GrantCategoryDetails.MultiDataSource
+	retval.DefaultTypePerDataSource = v.GrantCategoryDetails.DefaultTypePerDataSource
+	retval.AllowedWhoItems = v.GrantCategoryDetails.AllowedWhoItems
+	retval.AllowedWhatItems = v.GrantCategoryDetails.AllowedWhatItems
+	return &retval, nil
+}
+
+// UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult includes the requested fields of the GraphQL interface GrantCategoryResult.
+//
+// UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult is implemented by the following types:
+// UpdateGrantCategoryUpdateGrantCategory
+// UpdateGrantCategoryUpdateGrantCategoryInvalidInputError
+// UpdateGrantCategoryUpdateGrantCategoryNotFoundError
+// UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError
+type UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult interface {
+	implementsGraphQLInterfaceUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategory) implementsGraphQLInterfaceUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult() {
+}
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) implementsGraphQLInterfaceUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult() {
+}
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) implementsGraphQLInterfaceUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult() {
+}
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) implementsGraphQLInterfaceUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult() {
+}
+
+func __unmarshalUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult(b []byte, v *UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "GrantCategory":
+		*v = new(UpdateGrantCategoryUpdateGrantCategory)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateGrantCategoryUpdateGrantCategoryInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(UpdateGrantCategoryUpdateGrantCategoryNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing GrantCategoryResult.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalUpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult(v *UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *UpdateGrantCategoryUpdateGrantCategory:
+		typename = "GrantCategory"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateGrantCategoryUpdateGrantCategory
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError:
+		typename = "InvalidInputError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateGrantCategoryUpdateGrantCategoryInvalidInputError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateGrantCategoryUpdateGrantCategoryNotFoundError:
+		typename = "NotFoundError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateGrantCategoryUpdateGrantCategoryNotFoundError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalUpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for UpdateGrantCategoryUpdateGrantCategoryGrantCategoryResult: "%T"`, v)
+	}
+}
+
+// UpdateGrantCategoryUpdateGrantCategoryInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateGrantCategoryUpdateGrantCategoryInvalidInputError struct {
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
+}
+
+// GetTypename returns UpdateGrantCategoryUpdateGrantCategoryInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateGrantCategoryUpdateGrantCategoryInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateGrantCategoryUpdateGrantCategoryInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateGrantCategoryUpdateGrantCategoryInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateGrantCategoryUpdateGrantCategoryInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryInvalidInputError) __premarshalJSON() (*__premarshalUpdateGrantCategoryUpdateGrantCategoryInvalidInputError, error) {
+	var retval __premarshalUpdateGrantCategoryUpdateGrantCategoryInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
+}
+
+// UpdateGrantCategoryUpdateGrantCategoryNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type UpdateGrantCategoryUpdateGrantCategoryNotFoundError struct {
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
+}
+
+// GetTypename returns UpdateGrantCategoryUpdateGrantCategoryNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateGrantCategoryUpdateGrantCategoryNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateGrantCategoryUpdateGrantCategoryNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateGrantCategoryUpdateGrantCategoryNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateGrantCategoryUpdateGrantCategoryNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryNotFoundError) __premarshalJSON() (*__premarshalUpdateGrantCategoryUpdateGrantCategoryNotFoundError, error) {
+	var retval __premarshalUpdateGrantCategoryUpdateGrantCategoryNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
+}
+
+// UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError struct {
+	Typename              *string `json:"__typename"`
+	PermissionDeniedError `json:"-"`
+}
+
+// GetTypename returns UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) GetTypename() *string {
+	return v.Typename
+}
+
+// GetMessage returns UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) GetMessage() string {
+	return v.PermissionDeniedError.Message
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.PermissionDeniedError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError) __premarshalJSON() (*__premarshalUpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError, error) {
+	var retval __premarshalUpdateGrantCategoryUpdateGrantCategoryPermissionDeniedError
 
 	retval.Typename = v.Typename
 	retval.Message = v.PermissionDeniedError.Message
@@ -36170,6 +41321,7 @@ func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult is implemented by the following types:
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagPermissionDeniedError
 type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult interface {
@@ -36181,6 +41333,8 @@ type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResu
 func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagAlreadyExistsError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
 }
 func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
+}
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
 }
 func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError) implementsGraphQLInterfaceUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult() {
 }
@@ -36206,6 +41360,9 @@ func __unmarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdenti
 		return json.Unmarshal(b, *v)
 	case "IdentityStore":
 		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError)
@@ -36250,6 +41407,14 @@ func __marshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentity
 			*__premarshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStore
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError:
 		typename = "NotFoundError"
 
@@ -36280,6 +41445,16 @@ func __marshalUpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentity
 		return nil, fmt.Errorf(
 			`unexpected concrete type for UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagIdentityStoreResult: "%T"`, v)
 	}
+}
+
+// UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateIdentityStoreMasterFlagUpdateIdentityStoreMasterFlagNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -36664,6 +41839,7 @@ func (v *UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError) __premarshalJ
 // UpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult is implemented by the following types:
 // UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError
 // UpdateIdentityStoreUpdateIdentityStore
+// UpdateIdentityStoreUpdateIdentityStoreInvalidInputError
 // UpdateIdentityStoreUpdateIdentityStoreNotFoundError
 // UpdateIdentityStoreUpdateIdentityStorePermissionDeniedError
 type UpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult interface {
@@ -36675,6 +41851,8 @@ type UpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult interface {
 func (v *UpdateIdentityStoreUpdateIdentityStoreAlreadyExistsError) implementsGraphQLInterfaceUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult() {
 }
 func (v *UpdateIdentityStoreUpdateIdentityStore) implementsGraphQLInterfaceUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult() {
+}
+func (v *UpdateIdentityStoreUpdateIdentityStoreInvalidInputError) implementsGraphQLInterfaceUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult() {
 }
 func (v *UpdateIdentityStoreUpdateIdentityStoreNotFoundError) implementsGraphQLInterfaceUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult() {
 }
@@ -36700,6 +41878,9 @@ func __unmarshalUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult(b []by
 		return json.Unmarshal(b, *v)
 	case "IdentityStore":
 		*v = new(UpdateIdentityStoreUpdateIdentityStore)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateIdentityStoreUpdateIdentityStoreInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateIdentityStoreUpdateIdentityStoreNotFoundError)
@@ -36744,6 +41925,14 @@ func __marshalUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult(v *Updat
 			*__premarshalUpdateIdentityStoreUpdateIdentityStore
 		}{typename, premarshaled}
 		return json.Marshal(result)
+	case *UpdateIdentityStoreUpdateIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateIdentityStoreUpdateIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateIdentityStoreUpdateIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -36774,6 +41963,16 @@ func __marshalUpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult(v *Updat
 		return nil, fmt.Errorf(
 			`unexpected concrete type for UpdateIdentityStoreUpdateIdentityStoreIdentityStoreResult: "%T"`, v)
 	}
+}
+
+// UpdateIdentityStoreUpdateIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateIdentityStoreUpdateIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateIdentityStoreUpdateIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateIdentityStoreUpdateIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateIdentityStoreUpdateIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -36973,6 +42172,16 @@ func (v *UpdateRoleAssigneesOnAccessProviderResponse) __premarshalJSON() (*__pre
 		}
 	}
 	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -37183,6 +42392,7 @@ func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderR
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError
 // UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRole
@@ -37192,6 +42402,8 @@ type UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleR
 	GetTypename() *string
 }
 
+func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
+}
 func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
 }
 func (v *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderPermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderRoleResult() {
@@ -37213,6 +42425,9 @@ func __unmarshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessPr
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -37235,6 +42450,14 @@ func __marshalUpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProv
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateRoleAssigneesOnAccessProviderUpdateRoleAssigneesOnAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
@@ -37350,6 +42573,16 @@ func (v *UpdateRoleAssigneesOnDataObjectResponse) __premarshalJSON() (*__premars
 		}
 	}
 	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -37560,6 +42793,7 @@ func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole) __p
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError
 // UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
@@ -37569,6 +42803,8 @@ type UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult in
 	GetTypename() *string
 }
 
+func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
+}
 func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
 }
 func (v *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectPermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRoleResult() {
@@ -37590,6 +42826,9 @@ func __unmarshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRo
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -37612,6 +42851,14 @@ func __marshalUpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectRole
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateRoleAssigneesOnDataObjectUpdateRoleAssigneesOnDataObjectNotFoundError:
 		typename = "NotFoundError"
 
@@ -37727,6 +42974,16 @@ func (v *UpdateRoleAssigneesOnDataSourceResponse) __premarshalJSON() (*__premars
 		}
 	}
 	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -37937,6 +43194,7 @@ func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole) __p
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError
 // UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
@@ -37946,6 +43204,8 @@ type UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult in
 	GetTypename() *string
 }
 
+func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
+}
 func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
 }
 func (v *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourcePermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRoleResult() {
@@ -37967,6 +43227,9 @@ func __unmarshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRo
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -37989,6 +43252,14 @@ func __marshalUpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceRole
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateRoleAssigneesOnDataSourceUpdateRoleAssigneesOnDataSourceNotFoundError:
 		typename = "NotFoundError"
 
@@ -38104,6 +43375,16 @@ func (v *UpdateRoleAssigneesOnIdentityStoreResponse) __premarshalJSON() (*__prem
 		}
 	}
 	return &retval, nil
+}
+
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError) GetTypename() *string {
+	return v.Typename
 }
 
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -38314,6 +43595,7 @@ func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRol
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult includes the requested fields of the GraphQL interface RoleResult.
 //
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult is implemented by the following types:
+// UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError
 // UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRole
@@ -38323,6 +43605,8 @@ type UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleRes
 	GetTypename() *string
 }
 
+func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
+}
 func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
 }
 func (v *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStorePermissionDeniedError) implementsGraphQLInterfaceUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreRoleResult() {
@@ -38344,6 +43628,9 @@ func __unmarshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityS
 	}
 
 	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError)
+		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError)
 		return json.Unmarshal(b, *v)
@@ -38366,6 +43653,14 @@ func __marshalUpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentitySto
 
 	var typename string
 	switch v := (*v).(type) {
+	case *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
 	case *UpdateRoleAssigneesOnIdentityStoreUpdateRoleAssigneesOnIdentityStoreNotFoundError:
 		typename = "NotFoundError"
 
@@ -38633,6 +43928,14 @@ func (v *UpdateUserUpdateUserInvalidEmailError) __premarshalJSON() (*__premarsha
 	return &retval, nil
 }
 
+// UpdateUserUpdateUserInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type UpdateUserUpdateUserInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns UpdateUserUpdateUserInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *UpdateUserUpdateUserInvalidInputError) GetTypename() *string { return v.Typename }
+
 // UpdateUserUpdateUserNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type UpdateUserUpdateUserNotFoundError struct {
 	Typename      *string `json:"__typename"`
@@ -38757,6 +44060,7 @@ func (v *UpdateUserUpdateUserPermissionDeniedError) __premarshalJSON() (*__prema
 //
 // UpdateUserUpdateUserUserResult is implemented by the following types:
 // UpdateUserUpdateUserInvalidEmailError
+// UpdateUserUpdateUserInvalidInputError
 // UpdateUserUpdateUserNotFoundError
 // UpdateUserUpdateUserPermissionDeniedError
 // UpdateUserUpdateUser
@@ -38767,6 +44071,8 @@ type UpdateUserUpdateUserUserResult interface {
 }
 
 func (v *UpdateUserUpdateUserInvalidEmailError) implementsGraphQLInterfaceUpdateUserUpdateUserUserResult() {
+}
+func (v *UpdateUserUpdateUserInvalidInputError) implementsGraphQLInterfaceUpdateUserUpdateUserUserResult() {
 }
 func (v *UpdateUserUpdateUserNotFoundError) implementsGraphQLInterfaceUpdateUserUpdateUserUserResult() {
 }
@@ -38790,6 +44096,9 @@ func __unmarshalUpdateUserUpdateUserUserResult(b []byte, v *UpdateUserUpdateUser
 	switch tn.TypeName {
 	case "InvalidEmailError":
 		*v = new(UpdateUserUpdateUserInvalidEmailError)
+		return json.Unmarshal(b, *v)
+	case "InvalidInputError":
+		*v = new(UpdateUserUpdateUserInvalidInputError)
 		return json.Unmarshal(b, *v)
 	case "NotFoundError":
 		*v = new(UpdateUserUpdateUserNotFoundError)
@@ -38824,6 +44133,14 @@ func __marshalUpdateUserUpdateUserUserResult(v *UpdateUserUpdateUserUserResult) 
 			TypeName string `json:"__typename"`
 			*__premarshalUpdateUserUpdateUserInvalidEmailError
 		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *UpdateUserUpdateUserInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*UpdateUserUpdateUserInvalidInputError
+		}{typename, v}
 		return json.Marshal(result)
 	case *UpdateUserUpdateUserNotFoundError:
 		typename = "NotFoundError"
@@ -38894,9 +44211,13 @@ func (v *User) GetIsRaitoUser() bool { return v.IsRaitoUser }
 func (v *User) GetType() UserType { return v.Type }
 
 type UserInput struct {
-	Name  *string   `json:"name,omitempty"`
-	Email *string   `json:"email,omitempty"`
-	Type  *UserType `json:"type,omitempty"`
+	Name            *string    `json:"name,omitempty"`
+	Email           *string    `json:"email,omitempty"`
+	Type            *UserType  `json:"type,omitempty"`
+	SlackUserId     *string    `json:"slackUserId,omitempty"`
+	DelegateTo      *string    `json:"delegateTo,omitempty"`
+	DelegationStart *time.Time `json:"delegationStart,omitempty"`
+	DelegationEnd   *time.Time `json:"delegationEnd,omitempty"`
 }
 
 // GetName returns UserInput.Name, and is useful for accessing the field via an interface.
@@ -38907,6 +44228,18 @@ func (v *UserInput) GetEmail() *string { return v.Email }
 
 // GetType returns UserInput.Type, and is useful for accessing the field via an interface.
 func (v *UserInput) GetType() *UserType { return v.Type }
+
+// GetSlackUserId returns UserInput.SlackUserId, and is useful for accessing the field via an interface.
+func (v *UserInput) GetSlackUserId() *string { return v.SlackUserId }
+
+// GetDelegateTo returns UserInput.DelegateTo, and is useful for accessing the field via an interface.
+func (v *UserInput) GetDelegateTo() *string { return v.DelegateTo }
+
+// GetDelegationStart returns UserInput.DelegationStart, and is useful for accessing the field via an interface.
+func (v *UserInput) GetDelegationStart() *time.Time { return v.DelegationStart }
+
+// GetDelegationEnd returns UserInput.DelegationEnd, and is useful for accessing the field via an interface.
+func (v *UserInput) GetDelegationEnd() *time.Time { return v.DelegationEnd }
 
 type UserType string
 
@@ -39140,6 +44473,14 @@ type __CreateDataSourceInput struct {
 // GetInput returns __CreateDataSourceInput.Input, and is useful for accessing the field via an interface.
 func (v *__CreateDataSourceInput) GetInput() DataSourceInput { return v.Input }
 
+// __CreateGrantCategoryInput is used internally by genqlient
+type __CreateGrantCategoryInput struct {
+	Input GrantCategoryInput `json:"input"`
+}
+
+// GetInput returns __CreateGrantCategoryInput.Input, and is useful for accessing the field via an interface.
+func (v *__CreateGrantCategoryInput) GetInput() GrantCategoryInput { return v.Input }
+
 // __CreateIdentityStoreInput is used internally by genqlient
 type __CreateIdentityStoreInput struct {
 	Input IdentityStoreInput `json:"input"`
@@ -39211,6 +44552,14 @@ type __DeleteDataSourceInput struct {
 
 // GetId returns __DeleteDataSourceInput.Id, and is useful for accessing the field via an interface.
 func (v *__DeleteDataSourceInput) GetId() string { return v.Id }
+
+// __DeleteGrantCategoryInput is used internally by genqlient
+type __DeleteGrantCategoryInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __DeleteGrantCategoryInput.Id, and is useful for accessing the field via an interface.
+func (v *__DeleteGrantCategoryInput) GetId() string { return v.Id }
 
 // __DeleteIdentityStoreInput is used internally by genqlient
 type __DeleteIdentityStoreInput struct {
@@ -39335,6 +44684,14 @@ type __GetDataSourceInput struct {
 
 // GetId returns __GetDataSourceInput.Id, and is useful for accessing the field via an interface.
 func (v *__GetDataSourceInput) GetId() string { return v.Id }
+
+// __GetGrantCategoryInput is used internally by genqlient
+type __GetGrantCategoryInput struct {
+	Id string `json:"id"`
+}
+
+// GetId returns __GetGrantCategoryInput.Id, and is useful for accessing the field via an interface.
+func (v *__GetGrantCategoryInput) GetId() string { return v.Id }
 
 // __GetIdentityStoreInput is used internally by genqlient
 type __GetIdentityStoreInput struct {
@@ -39816,6 +45173,18 @@ func (v *__UpdateDataSourceInput) GetId() string { return v.Id }
 // GetInput returns __UpdateDataSourceInput.Input, and is useful for accessing the field via an interface.
 func (v *__UpdateDataSourceInput) GetInput() DataSourceInput { return v.Input }
 
+// __UpdateGrantCategoryInput is used internally by genqlient
+type __UpdateGrantCategoryInput struct {
+	Id    string             `json:"id"`
+	Input GrantCategoryInput `json:"input"`
+}
+
+// GetId returns __UpdateGrantCategoryInput.Id, and is useful for accessing the field via an interface.
+func (v *__UpdateGrantCategoryInput) GetId() string { return v.Id }
+
+// GetInput returns __UpdateGrantCategoryInput.Input, and is useful for accessing the field via an interface.
+func (v *__UpdateGrantCategoryInput) GetInput() GrantCategoryInput { return v.Input }
+
 // __UpdateIdentityStoreInput is used internally by genqlient
 type __UpdateIdentityStoreInput struct {
 	Id    string             `json:"id"`
@@ -39935,6 +45304,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -39960,6 +45332,12 @@ fragment NotFoundError on NotFoundError {
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -40386,6 +45764,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -40408,6 +45789,12 @@ fragment AccessProvider on AccessProvider {
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -40535,6 +45922,90 @@ func CreateDataSource(
 	var err_ error
 
 	var data_ CreateDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
+// The query or mutation executed by CreateGrantCategory.
+const CreateGrantCategory_Operation = `
+mutation CreateGrantCategory ($input: GrantCategoryInput!) {
+	createGrantCategory(input: $input) {
+		__typename
+		... GrantCategoryDetails
+		... PermissionDeniedError
+		... NotFoundError
+		... InvalidInputError
+	}
+}
+fragment GrantCategoryDetails on GrantCategory {
+	id
+	createdAt
+	modifiedAt
+	isSystem
+	name
+	description
+	icon
+	isDefault
+	canCreate
+	allowDuplicateNames
+	multiDataSource
+	defaultTypePerDataSource {
+		... GrantCategoryTypeForDataSource
+	}
+	allowedWhoItems {
+		... GrantCategoryAllowedWhoItems
+	}
+	allowedWhatItems {
+		... GrantCategoryAllowedWhatItems
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
+	message
+}
+fragment GrantCategoryTypeForDataSource on GrantCategoryTypeForDataSource {
+	DataSource
+	Type
+}
+fragment GrantCategoryAllowedWhoItems on GrantCategoryAllowedWhoItems {
+	user
+	group
+	inheritance
+	self
+	categories
+}
+fragment GrantCategoryAllowedWhatItems on GrantCategoryAllowedWhatItems {
+	dataObject
+}
+`
+
+func CreateGrantCategory(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	input GrantCategoryInput,
+) (*CreateGrantCategoryResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "CreateGrantCategory",
+		Query:  CreateGrantCategory_Operation,
+		Variables: &__CreateGrantCategoryInput{
+			Input: input,
+		},
+	}
+	var err_ error
+
+	var data_ CreateGrantCategoryResponse
 	resp_ := &graphql.Response{Data: &data_}
 
 	err_ = client_.MakeRequest(
@@ -40890,6 +46361,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -40915,6 +46389,12 @@ fragment NotFoundError on NotFoundError {
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -41015,6 +46495,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -41040,6 +46523,12 @@ fragment NotFoundError on NotFoundError {
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -41165,6 +46654,57 @@ func DeleteDataSource(
 	return &data_, err_
 }
 
+// The query or mutation executed by DeleteGrantCategory.
+const DeleteGrantCategory_Operation = `
+mutation DeleteGrantCategory ($id: ID!) {
+	deleteGrantCategory(id: $id) {
+		__typename
+		... DeleteGrantCategoryResult
+		... PermissionDeniedError
+		... NotFoundError
+		... InvalidInputError
+	}
+}
+fragment DeleteGrantCategoryResult on DeleteGrantCategory {
+	success
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
+	message
+}
+`
+
+func DeleteGrantCategory(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	id string,
+) (*DeleteGrantCategoryResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "DeleteGrantCategory",
+		Query:  DeleteGrantCategory_Operation,
+		Variables: &__DeleteGrantCategoryInput{
+			Id: id,
+		},
+	}
+	var err_ error
+
+	var data_ DeleteGrantCategoryResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
 // The query or mutation executed by DeleteIdentityStore.
 const DeleteIdentityStore_Operation = `
 mutation DeleteIdentityStore ($id: ID!) {
@@ -41268,6 +46808,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -41293,6 +46836,12 @@ fragment PermissionDeniedError on PermissionDeniedError {
 }
 fragment NotFoundError on NotFoundError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -41427,6 +46976,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -41446,6 +46998,12 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -41839,6 +47397,90 @@ func GetDataSource(
 	return &data_, err_
 }
 
+// The query or mutation executed by GetGrantCategory.
+const GetGrantCategory_Operation = `
+query GetGrantCategory ($id: ID!) {
+	grantCategory(id: $id) {
+		__typename
+		... GrantCategoryDetails
+		... PermissionDeniedError
+		... NotFoundError
+		... InvalidInputError
+	}
+}
+fragment GrantCategoryDetails on GrantCategory {
+	id
+	createdAt
+	modifiedAt
+	isSystem
+	name
+	description
+	icon
+	isDefault
+	canCreate
+	allowDuplicateNames
+	multiDataSource
+	defaultTypePerDataSource {
+		... GrantCategoryTypeForDataSource
+	}
+	allowedWhoItems {
+		... GrantCategoryAllowedWhoItems
+	}
+	allowedWhatItems {
+		... GrantCategoryAllowedWhatItems
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
+	message
+}
+fragment GrantCategoryTypeForDataSource on GrantCategoryTypeForDataSource {
+	DataSource
+	Type
+}
+fragment GrantCategoryAllowedWhoItems on GrantCategoryAllowedWhoItems {
+	user
+	group
+	inheritance
+	self
+	categories
+}
+fragment GrantCategoryAllowedWhatItems on GrantCategoryAllowedWhatItems {
+	dataObject
+}
+`
+
+func GetGrantCategory(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	id string,
+) (*GetGrantCategoryResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "GetGrantCategory",
+		Query:  GetGrantCategory_Operation,
+		Variables: &__GetGrantCategoryInput{
+			Id: id,
+		},
+	}
+	var err_ error
+
+	var data_ GetGrantCategoryResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
 // The query or mutation executed by GetIdentityStore.
 const GetIdentityStore_Operation = `
 query GetIdentityStore ($id: ID!) {
@@ -42217,6 +47859,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -42236,6 +47881,12 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -42458,6 +48109,73 @@ func ListDataSources(
 	var err_ error
 
 	var data_ ListDataSourcesResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
+// The query or mutation executed by ListGrantCategories.
+const ListGrantCategories_Operation = `
+query ListGrantCategories {
+	grantCategories {
+		... GrantCategoryDetails
+	}
+}
+fragment GrantCategoryDetails on GrantCategory {
+	id
+	createdAt
+	modifiedAt
+	isSystem
+	name
+	description
+	icon
+	isDefault
+	canCreate
+	allowDuplicateNames
+	multiDataSource
+	defaultTypePerDataSource {
+		... GrantCategoryTypeForDataSource
+	}
+	allowedWhoItems {
+		... GrantCategoryAllowedWhoItems
+	}
+	allowedWhatItems {
+		... GrantCategoryAllowedWhatItems
+	}
+}
+fragment GrantCategoryTypeForDataSource on GrantCategoryTypeForDataSource {
+	DataSource
+	Type
+}
+fragment GrantCategoryAllowedWhoItems on GrantCategoryAllowedWhoItems {
+	user
+	group
+	inheritance
+	self
+	categories
+}
+fragment GrantCategoryAllowedWhatItems on GrantCategoryAllowedWhatItems {
+	dataObject
+}
+`
+
+func ListGrantCategories(
+	ctx_ context.Context,
+	client_ graphql.Client,
+) (*ListGrantCategoriesResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "ListGrantCategories",
+		Query:  ListGrantCategories_Operation,
+	}
+	var err_ error
+
+	var data_ ListGrantCategoriesResponse
 	resp_ := &graphql.Response{Data: &data_}
 
 	err_ = client_.MakeRequest(
@@ -43373,7 +49091,7 @@ func SetGlobalRolesForUser(
 
 // The query or mutation executed by SetUserPassword.
 const SetUserPassword_Operation = `
-mutation SetUserPassword ($uId: ID!, $password: ID!) {
+mutation SetUserPassword ($uId: ID!, $password: String!) {
 	setPassword(id: $uId, password: $password) {
 		__typename
 		... User
@@ -43715,6 +49433,9 @@ fragment AccessProvider on AccessProvider {
 	namingHint
 	state
 	action
+	category {
+		... GrantCategory
+	}
 	description
 	policyRule
 	external
@@ -43737,6 +49458,12 @@ fragment AccessProvider on AccessProvider {
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
 }
 fragment WhatAbacRule on WhatAbacRule {
 	permissions
@@ -43870,6 +49597,92 @@ func UpdateDataSource(
 	var err_ error
 
 	var data_ UpdateDataSourceResponse
+	resp_ := &graphql.Response{Data: &data_}
+
+	err_ = client_.MakeRequest(
+		ctx_,
+		req_,
+		resp_,
+	)
+
+	return &data_, err_
+}
+
+// The query or mutation executed by UpdateGrantCategory.
+const UpdateGrantCategory_Operation = `
+mutation UpdateGrantCategory ($id: ID!, $input: GrantCategoryInput!) {
+	updateGrantCategory(id: $id, input: $input) {
+		__typename
+		... GrantCategoryDetails
+		... PermissionDeniedError
+		... NotFoundError
+		... InvalidInputError
+	}
+}
+fragment GrantCategoryDetails on GrantCategory {
+	id
+	createdAt
+	modifiedAt
+	isSystem
+	name
+	description
+	icon
+	isDefault
+	canCreate
+	allowDuplicateNames
+	multiDataSource
+	defaultTypePerDataSource {
+		... GrantCategoryTypeForDataSource
+	}
+	allowedWhoItems {
+		... GrantCategoryAllowedWhoItems
+	}
+	allowedWhatItems {
+		... GrantCategoryAllowedWhatItems
+	}
+}
+fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
+	message
+}
+fragment GrantCategoryTypeForDataSource on GrantCategoryTypeForDataSource {
+	DataSource
+	Type
+}
+fragment GrantCategoryAllowedWhoItems on GrantCategoryAllowedWhoItems {
+	user
+	group
+	inheritance
+	self
+	categories
+}
+fragment GrantCategoryAllowedWhatItems on GrantCategoryAllowedWhatItems {
+	dataObject
+}
+`
+
+func UpdateGrantCategory(
+	ctx_ context.Context,
+	client_ graphql.Client,
+	id string,
+	input GrantCategoryInput,
+) (*UpdateGrantCategoryResponse, error) {
+	req_ := &graphql.Request{
+		OpName: "UpdateGrantCategory",
+		Query:  UpdateGrantCategory_Operation,
+		Variables: &__UpdateGrantCategoryInput{
+			Id:    id,
+			Input: input,
+		},
+	}
+	var err_ error
+
+	var data_ UpdateGrantCategoryResponse
 	resp_ := &graphql.Response{Data: &data_}
 
 	err_ = client_.MakeRequest(

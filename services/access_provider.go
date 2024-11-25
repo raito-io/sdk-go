@@ -24,7 +24,7 @@ func NewAccessProviderClient(client graphql.Client) AccessProviderClient {
 }
 
 // CreateAccessProvider creates a new AccessProvider in Raito Cloud.
-// They valid AccessProvider is returned if the creation is successful.
+// The valid AccessProvider is returned if the creation is successful.
 // Otherwise, an error is returned
 func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap types.AccessProviderInput) (*types.AccessProvider, error) {
 	result, err := schema.CreateAccessProvider(ctx, a.client, ap)

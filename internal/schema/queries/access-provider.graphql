@@ -7,6 +7,11 @@ fragment AccessProvider on AccessProvider {
     namingHint
     state
     action
+
+    category {
+        ...GrantCategory
+    }
+
     description
     policyRule
     external
