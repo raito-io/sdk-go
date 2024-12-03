@@ -1,7 +1,8 @@
 module github.com/raito-io/sdk-go
 
-go 1.21
-toolchain go1.22.5
+go 1.23.0
+
+toolchain go1.23.3
 
 require (
 	github.com/Khan/genqlient v0.7.0
