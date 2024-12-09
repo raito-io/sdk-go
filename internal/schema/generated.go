@@ -40273,10 +40273,14 @@ func __marshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptional
 	case *UpdateAccessProviderUpdateAccessProviderNotFoundError:
 		typename = "NotFoundError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*UpdateAccessProviderUpdateAccessProviderNotFoundError
-		}{typename, v}
+			*__premarshalUpdateAccessProviderUpdateAccessProviderNotFoundError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *UpdateAccessProviderUpdateAccessProviderPermissionDeniedError:
 		typename = "PermissionDeniedError"
@@ -40363,12 +40367,65 @@ func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) __premarshal
 
 // UpdateAccessProviderUpdateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type UpdateAccessProviderUpdateAccessProviderNotFoundError struct {
-	Typename *string `json:"__typename"`
+	Typename      *string `json:"__typename"`
+	NotFoundError `json:"-"`
 }
 
 // GetTypename returns UpdateAccessProviderUpdateAccessProviderNotFoundError.Typename, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns UpdateAccessProviderUpdateAccessProviderNotFoundError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) GetMessage() string {
+	return v.NotFoundError.Message
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateAccessProviderUpdateAccessProviderNotFoundError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateAccessProviderUpdateAccessProviderNotFoundError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.NotFoundError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateAccessProviderUpdateAccessProviderNotFoundError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderNotFoundError) __premarshalJSON() (*__premarshalUpdateAccessProviderUpdateAccessProviderNotFoundError, error) {
+	var retval __premarshalUpdateAccessProviderUpdateAccessProviderNotFoundError
+
+	retval.Typename = v.Typename
+	retval.Message = v.NotFoundError.Message
+	return &retval, nil
 }
 
 // UpdateAccessProviderUpdateAccessProviderPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
@@ -49785,6 +49842,7 @@ mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!, $overrideLoc
 		}
 		... PermissionDeniedError
 		... InvalidInputError
+		... NotFoundError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -49823,6 +49881,9 @@ fragment PermissionDeniedError on PermissionDeniedError {
 	message
 }
 fragment InvalidInputError on InvalidInputError {
+	message
+}
+fragment NotFoundError on NotFoundError {
 	message
 }
 fragment GrantCategory on GrantCategory {

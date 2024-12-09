@@ -199,6 +199,7 @@ mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!, $overrideLock
         }
         ... PermissionDeniedError
         ... InvalidInputError
+        ... NotFoundError
     }
 }
 

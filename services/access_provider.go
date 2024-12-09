@@ -79,6 +79,8 @@ func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id stri
 		return nil, types.NewErrPermissionDenied("updateAccessProvider", response.Message)
 	case *schema.UpdateAccessProviderUpdateAccessProviderInvalidInputError:
 		return nil, types.NewErrInvalidInput(response.Message)
+	case *schema.UpdateAccessProviderUpdateAccessProviderNotFoundError:
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.UpdateAccessProvider)
 	}
