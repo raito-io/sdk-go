@@ -125,10 +125,10 @@ func (a *GrantCategoryClient) ListGrantCategories(ctx context.Context) ([]types.
 		return nil, types.NewErrClient(err)
 	}
 
-	var grantCategories []types.GrantCategoryDetails
+	grantCategories := make([]types.GrantCategoryDetails, 0, len(result.GrantCategories))
 
-	for _, response := range result.GrantCategories {
-		grantCategories = append(grantCategories, response.GrantCategoryDetails)
+	for i := range result.GrantCategories {
+		grantCategories = append(grantCategories, result.GrantCategories[i].GrantCategoryDetails)
 	}
 
 	return grantCategories, nil
