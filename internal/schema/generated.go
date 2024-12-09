@@ -8746,10 +8746,14 @@ func __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(v
 	case *ActivateAccessProviderActivateAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*ActivateAccessProviderActivateAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalActivateAccessProviderActivateAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *ActivateAccessProviderActivateAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -8785,12 +8789,65 @@ func __marshalActivateAccessProviderActivateAccessProviderAccessProviderResult(v
 
 // ActivateAccessProviderActivateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type ActivateAccessProviderActivateAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns ActivateAccessProviderActivateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns ActivateAccessProviderActivateAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*ActivateAccessProviderActivateAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.ActivateAccessProviderActivateAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalActivateAccessProviderActivateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *ActivateAccessProviderActivateAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalActivateAccessProviderActivateAccessProviderInvalidInputError, error) {
+	var retval __premarshalActivateAccessProviderActivateAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
 }
 
 // ActivateAccessProviderActivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -11954,10 +12011,14 @@ func __marshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptional
 	case *CreateAccessProviderCreateAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*CreateAccessProviderCreateAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalCreateAccessProviderCreateAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *CreateAccessProviderCreateAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -11989,12 +12050,65 @@ func __marshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptional
 
 // CreateAccessProviderCreateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type CreateAccessProviderCreateAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns CreateAccessProviderCreateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns CreateAccessProviderCreateAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*CreateAccessProviderCreateAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.CreateAccessProviderCreateAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalCreateAccessProviderCreateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *CreateAccessProviderCreateAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalCreateAccessProviderCreateAccessProviderInvalidInputError, error) {
+	var retval __premarshalCreateAccessProviderCreateAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
 }
 
 // CreateAccessProviderCreateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -19633,10 +19747,14 @@ func __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResu
 	case *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*DeactivateAccessProviderDeactivateAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalDeactivateAccessProviderDeactivateAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *DeactivateAccessProviderDeactivateAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -19672,12 +19790,65 @@ func __marshalDeactivateAccessProviderDeactivateAccessProviderAccessProviderResu
 
 // DeactivateAccessProviderDeactivateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type DeactivateAccessProviderDeactivateAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns DeactivateAccessProviderDeactivateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns DeactivateAccessProviderDeactivateAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeactivateAccessProviderDeactivateAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeactivateAccessProviderDeactivateAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeactivateAccessProviderDeactivateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeactivateAccessProviderDeactivateAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalDeactivateAccessProviderDeactivateAccessProviderInvalidInputError, error) {
+	var retval __premarshalDeactivateAccessProviderDeactivateAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
 }
 
 // DeactivateAccessProviderDeactivateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -20164,10 +20335,14 @@ func __marshalDeleteAccessProviderDeleteAccessProviderAccessProviderResult(v *De
 	case *DeleteAccessProviderDeleteAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*DeleteAccessProviderDeleteAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalDeleteAccessProviderDeleteAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *DeleteAccessProviderDeleteAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -20203,12 +20378,65 @@ func __marshalDeleteAccessProviderDeleteAccessProviderAccessProviderResult(v *De
 
 // DeleteAccessProviderDeleteAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type DeleteAccessProviderDeleteAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns DeleteAccessProviderDeleteAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns DeleteAccessProviderDeleteAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DeleteAccessProviderDeleteAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DeleteAccessProviderDeleteAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDeleteAccessProviderDeleteAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DeleteAccessProviderDeleteAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalDeleteAccessProviderDeleteAccessProviderInvalidInputError, error) {
+	var retval __premarshalDeleteAccessProviderDeleteAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
 }
 
 // DeleteAccessProviderDeleteAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -21940,10 +22168,14 @@ func __marshalGetAccessProviderAccessProviderAccessProviderResult(v *GetAccessPr
 	case *GetAccessProviderAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*GetAccessProviderAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalGetAccessProviderAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *GetAccessProviderAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -21979,11 +22211,64 @@ func __marshalGetAccessProviderAccessProviderAccessProviderResult(v *GetAccessPr
 
 // GetAccessProviderAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type GetAccessProviderAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns GetAccessProviderAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *GetAccessProviderAccessProviderInvalidInputError) GetTypename() *string { return v.Typename }
+
+// GetMessage returns GetAccessProviderAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *GetAccessProviderAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*GetAccessProviderAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.GetAccessProviderAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalGetAccessProviderAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *GetAccessProviderAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *GetAccessProviderAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalGetAccessProviderAccessProviderInvalidInputError, error) {
+	var retval __premarshalGetAccessProviderAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
+}
 
 // GetAccessProviderAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
 type GetAccessProviderAccessProviderNotFoundError struct {
@@ -39976,10 +40261,14 @@ func __marshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptional
 	case *UpdateAccessProviderUpdateAccessProviderInvalidInputError:
 		typename = "InvalidInputError"
 
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
 		result := struct {
 			TypeName string `json:"__typename"`
-			*UpdateAccessProviderUpdateAccessProviderInvalidInputError
-		}{typename, v}
+			*__premarshalUpdateAccessProviderUpdateAccessProviderInvalidInputError
+		}{typename, premarshaled}
 		return json.Marshal(result)
 	case *UpdateAccessProviderUpdateAccessProviderNotFoundError:
 		typename = "NotFoundError"
@@ -40011,12 +40300,65 @@ func __marshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptional
 
 // UpdateAccessProviderUpdateAccessProviderInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type UpdateAccessProviderUpdateAccessProviderInvalidInputError struct {
-	Typename *string `json:"__typename"`
+	Typename          *string `json:"__typename"`
+	InvalidInputError `json:"-"`
 }
 
 // GetTypename returns UpdateAccessProviderUpdateAccessProviderInvalidInputError.Typename, and is useful for accessing the field via an interface.
 func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) GetTypename() *string {
 	return v.Typename
+}
+
+// GetMessage returns UpdateAccessProviderUpdateAccessProviderInvalidInputError.Message, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) GetMessage() string {
+	return v.InvalidInputError.Message
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*UpdateAccessProviderUpdateAccessProviderInvalidInputError
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.UpdateAccessProviderUpdateAccessProviderInvalidInputError = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.InvalidInputError)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalUpdateAccessProviderUpdateAccessProviderInvalidInputError struct {
+	Typename *string `json:"__typename"`
+
+	Message string `json:"message"`
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *UpdateAccessProviderUpdateAccessProviderInvalidInputError) __premarshalJSON() (*__premarshalUpdateAccessProviderUpdateAccessProviderInvalidInputError, error) {
+	var retval __premarshalUpdateAccessProviderUpdateAccessProviderInvalidInputError
+
+	retval.Typename = v.Typename
+	retval.Message = v.InvalidInputError.Message
+	return &retval, nil
 }
 
 // UpdateAccessProviderUpdateAccessProviderNotFoundError includes the requested fields of the GraphQL type NotFoundError.
@@ -45293,6 +45635,7 @@ mutation ActivateAccessProvider ($id: ID!) {
 		... AccessProvider
 		... NotFoundError
 		... PermissionDeniedError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -45331,6 +45674,9 @@ fragment NotFoundError on NotFoundError {
 	message
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
@@ -45753,6 +46099,7 @@ mutation CreateAccessProvider ($ap: AccessProviderInput!) {
 			}
 		}
 		... PermissionDeniedError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -45788,6 +46135,9 @@ fragment AccessProvider on AccessProvider {
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
@@ -46350,6 +46700,7 @@ mutation DeactivateAccessProvider ($id: ID!) {
 		... AccessProvider
 		... NotFoundError
 		... PermissionDeniedError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -46388,6 +46739,9 @@ fragment NotFoundError on NotFoundError {
 	message
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
@@ -46484,6 +46838,7 @@ mutation DeleteAccessProvider ($id: ID!, $overrideLocks: Boolean) {
 		... AccessProvider
 		... NotFoundError
 		... PermissionDeniedError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -46522,6 +46877,9 @@ fragment NotFoundError on NotFoundError {
 	message
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
@@ -46797,6 +47155,7 @@ query GetAccessProvider ($id: ID!) {
 		... AccessProvider
 		... PermissionDeniedError
 		... NotFoundError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -46835,6 +47194,9 @@ fragment PermissionDeniedError on PermissionDeniedError {
 	message
 }
 fragment NotFoundError on NotFoundError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
@@ -49422,6 +49784,7 @@ mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!, $overrideLoc
 			}
 		}
 		... PermissionDeniedError
+		... InvalidInputError
 	}
 }
 fragment AccessProvider on AccessProvider {
@@ -49457,6 +49820,9 @@ fragment AccessProvider on AccessProvider {
 	}
 }
 fragment PermissionDeniedError on PermissionDeniedError {
+	message
+}
+fragment InvalidInputError on InvalidInputError {
 	message
 }
 fragment GrantCategory on GrantCategory {
