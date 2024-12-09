@@ -24,7 +24,7 @@ func NewAccessProviderClient(client graphql.Client) AccessProviderClient {
 }
 
 // CreateAccessProvider creates a new AccessProvider in Raito Cloud.
-// They valid AccessProvider is returned if the creation is successful.
+// The valid AccessProvider is returned if the creation is successful.
 // Otherwise, an error is returned
 func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap types.AccessProviderInput) (*types.AccessProvider, error) {
 	result, err := schema.CreateAccessProvider(ctx, a.client, ap)
@@ -39,6 +39,8 @@ func (a *AccessProviderClient) CreateAccessProvider(ctx context.Context, ap type
 		return &response.AccessProvider.AccessProvider, nil
 	case *schema.CreateAccessProviderCreateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("createAccessProvider", response.Message)
+	case *schema.CreateAccessProviderCreateAccessProviderInvalidInputError:
+		return nil, types.NewErrInvalidInput(response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.CreateAccessProvider)
 	}
@@ -75,6 +77,10 @@ func (a *AccessProviderClient) UpdateAccessProvider(ctx context.Context, id stri
 		return &response.AccessProvider.AccessProvider, nil
 	case *schema.UpdateAccessProviderUpdateAccessProviderPermissionDeniedError:
 		return nil, types.NewErrPermissionDenied("updateAccessProvider", response.Message)
+	case *schema.UpdateAccessProviderUpdateAccessProviderInvalidInputError:
+		return nil, types.NewErrInvalidInput(response.Message)
+	case *schema.UpdateAccessProviderUpdateAccessProviderNotFoundError:
+		return nil, types.NewErrNotFound(id, response.Typename, response.Message)
 	default:
 		return nil, fmt.Errorf("unexpected response type: %T", result.UpdateAccessProvider)
 	}
@@ -101,6 +107,8 @@ func (a *AccessProviderClient) DeleteAccessProvider(ctx context.Context, id stri
 		return types.NewErrPermissionDenied("deleteAccessProvider", response.Message)
 	case *schema.DeleteAccessProviderDeleteAccessProviderNotFoundError:
 		return types.NewErrNotFound(id, response.Typename, response.Message)
+	case *schema.DeleteAccessProviderDeleteAccessProviderInvalidInputError:
+		return types.NewErrInvalidInput(response.Message)
 	default:
 		return fmt.Errorf("unexpected response type: %T", result.DeleteAccessProvider)
 	}

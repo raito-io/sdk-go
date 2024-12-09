@@ -7,6 +7,11 @@ fragment AccessProvider on AccessProvider {
     namingHint
     state
     action
+
+    category {
+        ...GrantCategory
+    }
+
     description
     policyRule
     external
@@ -179,6 +184,7 @@ mutation CreateAccessProvider($ap: AccessProviderInput!) {
             }
         }
         ... PermissionDeniedError
+        ... InvalidInputError
     }
 }
 
@@ -192,6 +198,8 @@ mutation UpdateAccessProvider($id: ID!, $ap: AccessProviderInput!, $overrideLock
             }
         }
         ... PermissionDeniedError
+        ... InvalidInputError
+        ... NotFoundError
     }
 }
 
@@ -201,6 +209,7 @@ mutation DeleteAccessProvider($id: ID!, $overrideLocks: Boolean) {
         ...AccessProvider
         ... NotFoundError
         ... PermissionDeniedError
+        ... InvalidInputError
     }
 }
 
@@ -209,6 +218,7 @@ mutation ActivateAccessProvider($id: ID!) {
         ...AccessProvider
         ...NotFoundError
         ...PermissionDeniedError
+        ...InvalidInputError
     }
 }
 
@@ -217,6 +227,7 @@ mutation DeactivateAccessProvider($id: ID!) {
         ...AccessProvider
         ...NotFoundError
         ...PermissionDeniedError
+        ...InvalidInputError
     }
 }
 
@@ -226,6 +237,7 @@ query GetAccessProvider($id: ID!) {
         ... AccessProvider
         ... PermissionDeniedError
         ... NotFoundError
+        ... InvalidInputError
     }
 }
 

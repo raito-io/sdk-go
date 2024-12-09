@@ -21,7 +21,7 @@ linters-settings:
       - paramTypeCombine
 
   govet:
-    check-shadowing: true
+    shadowing: true
 
   revive:
     rules:
@@ -82,6 +82,7 @@ linters:
   enable:
     - asasalint
     - bodyclose
+    - copyloopvar
     # - cyclop #To be enabled in the future
     #- depguard #We should create a correct config to enabe depguard
     - dogsled
@@ -90,7 +91,6 @@ linters:
     - durationcheck
     - errcheck
     - errorlint
-    - exportloopref
     - exhaustive
     - forbidigo
     - goconst
@@ -129,7 +129,8 @@ run:
 output:
   path-prefix: ""
   sort-results: true
-  format: tab
+  formats:
+    - format: colored-line-number
   print-issued-lines: false
   print-linter-name: true
   uniq-by-line: false
