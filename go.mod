@@ -11,7 +11,7 @@ require (
 	github.com/alexflint/go-scalar v1.2.0
 	github.com/aws/aws-sdk-go-v2 v1.32.6
 	github.com/aws/aws-sdk-go-v2/config v1.28.6
-	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.47.1
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.48.1
 	github.com/aws/smithy-go v1.22.1
 	github.com/raito-io/enumer v0.1.4
 	github.com/stretchr/testify v1.10.0
