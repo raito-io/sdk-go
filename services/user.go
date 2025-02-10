@@ -39,7 +39,20 @@ func (c *UserClient) GetUser(ctx context.Context, id string) (*types.User, error
 		return nil, types.NewErrClient(err)
 	}
 
-	return &result.User.User, nil
+	switch r := result.User.(type) {
+	case *schema.GetUserUser:
+		return &r.User, nil
+	case *schema.GetUserUserNotFoundError:
+		return nil, types.NewErrNotFound(id, r.Typename, r.Message)
+	case *schema.GetUserUserPermissionDeniedError:
+		return nil, types.NewErrPermissionDenied("getUser", r.Message)
+	case *schema.GetUserUserInvalidEmailError:
+		return nil, types.NewErrInvalidEmail(r.ErrEmail, r.Message)
+	case *schema.GetUserUserInvalidInputError:
+		return nil, types.NewErrInvalidInput(r.Message)
+	default:
+		return nil, types.NewErrClient(fmt.Errorf("unexpected result type: %T", r))
+	}
 }
 
 // GetUserByEmail Get a user by their email address.

@@ -1,9 +1,9 @@
 name: Release Raito SDK
 run-name: Running Release for Raito SDK
 on:
-  create:
+  push:
     tags:
-      - v*
+      - 'v*'
 
 jobs:
   release:

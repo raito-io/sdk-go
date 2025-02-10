@@ -14,6 +14,10 @@ fragment InvalidEmailError on InvalidEmailError {
 query GetUser($id: ID!) {
     user(id: $id) {
         ...User
+        ...NotFoundError
+        ...PermissionDeniedError
+        ...InvalidEmailError
+        ...InvalidInputError
     }
 }
 

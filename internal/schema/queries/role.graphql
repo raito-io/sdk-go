@@ -120,9 +120,15 @@ query ListRoleAssignmentsOnAccessProvider($apId: ID!, $after: String, $limit: In
 
 query ListRoleAssignmentsOnUser($userId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
     user(id: $userId) {
-        roleAssignments(after: $after, limit: $limit, filter: $filter, order: $order) {
-          ... RoleAssignmentPage
+        ... on User {
+            roleAssignments(after: $after, limit: $limit, filter: $filter, order: $order) {
+                ... RoleAssignmentPage
+            }
         }
+        ...InvalidInputError
+        ...InvalidEmailError
+        ...PermissionDeniedError
+        ...NotFoundError
     }
 }
 
