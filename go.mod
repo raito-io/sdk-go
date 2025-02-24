@@ -9,7 +9,7 @@ require (
 	github.com/agnivade/levenshtein v1.2.1
 	github.com/alexflint/go-arg v1.5.1
 	github.com/alexflint/go-scalar v1.2.0
-	github.com/aws/aws-sdk-go-v2 v1.36.1
+	github.com/aws/aws-sdk-go-v2 v1.36.2
 	github.com/aws/aws-sdk-go-v2/config v1.29.6
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.49.4
 	github.com/aws/smithy-go v1.22.2
