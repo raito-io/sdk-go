@@ -54,8 +54,8 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 	// Iterate through the file's declarations
 	for _, decl := range file.Decls {
 		if d, ok := decl.(*ast.GenDecl); ok {
-			if d.Tok == token.TYPE {
-				// Iterate through type specs
+			switch d.Tok { //nolint:exhaustive
+			case token.TYPE:
 				for _, spec := range d.Specs {
 					if ts, ok := spec.(*ast.TypeSpec); ok {
 						// Check if it is a struct
@@ -65,7 +65,7 @@ func generateAliases(inputFilePath, outputFilePath string) error {
 						}
 					}
 				}
-			} else if d.Tok == token.CONST {
+			case token.CONST:
 				var assignments []string
 
 				// Iterator through const specs
