@@ -58,6 +58,16 @@ const (
 	AbacComparisonExpressionComparisonOperatorPropertycontains   AbacComparisonExpressionComparisonOperator = "PropertyContains"
 )
 
+var AllAbacComparisonExpressionComparisonOperator = []AbacComparisonExpressionComparisonOperator{
+	AbacComparisonExpressionComparisonOperatorPropertyequals,
+	AbacComparisonExpressionComparisonOperatorPropertyin,
+	AbacComparisonExpressionComparisonOperatorHastag,
+	AbacComparisonExpressionComparisonOperatorContainstag,
+	AbacComparisonExpressionComparisonOperatorPropertystartswith,
+	AbacComparisonExpressionComparisonOperatorPropertyendswith,
+	AbacComparisonExpressionComparisonOperatorPropertycontains,
+}
+
 type AbacComparisonExpressionInput struct {
 	Literal         *bool                                         `json:"literal,omitempty"`
 	Comparison      *AbacComparisonExpressionComparisonInput      `json:"comparison,omitempty"`
@@ -450,6 +460,15 @@ const (
 	AccessProviderLockOwnerlock       AccessProviderLock = "OwnerLock"
 )
 
+var AllAccessProviderLock = []AccessProviderLock{
+	AccessProviderLockWholock,
+	AccessProviderLockInheritancelock,
+	AccessProviderLockWhatlock,
+	AccessProviderLockNamelock,
+	AccessProviderLockDeletelock,
+	AccessProviderLockOwnerlock,
+}
+
 type AccessProviderLockDataInput struct {
 	LockKey AccessProviderLock              `json:"lockKey"`
 	Details *AccessProviderLockDetailsInput `json:"details,omitempty"`
@@ -486,6 +505,11 @@ const (
 	AccessProviderLockTypeImportexport AccessProviderLockType = "ImportExport"
 	AccessProviderLockTypeUseronly     AccessProviderLockType = "UserOnly"
 )
+
+var AllAccessProviderLockType = []AccessProviderLockType{
+	AccessProviderLockTypeImportexport,
+	AccessProviderLockTypeUseronly,
+}
 
 // AccessProviderLocks includes the GraphQL fields of AccessProviderLockData requested by the fragment AccessProviderLocks.
 type AccessProviderLocks struct {
@@ -8823,10 +8847,11 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 }
 
 type AccessWhatFilterInput struct {
-	Search         *string     `json:"search,omitempty"`
-	IncludeDeleted *bool       `json:"includeDeleted,omitempty"`
-	Owners         []string    `json:"owners"`
-	HasTags        []TagFilter `json:"hasTags"`
+	Search           *string     `json:"search,omitempty"`
+	IncludeDeleted   *bool       `json:"includeDeleted,omitempty"`
+	Owners           []string    `json:"owners"`
+	HasTags          []TagFilter `json:"hasTags"`
+	TargetDataObject *string     `json:"targetDataObject,omitempty"`
 }
 
 // GetSearch returns AccessWhatFilterInput.Search, and is useful for accessing the field via an interface.
@@ -8841,6 +8866,9 @@ func (v *AccessWhatFilterInput) GetOwners() []string { return v.Owners }
 // GetHasTags returns AccessWhatFilterInput.HasTags, and is useful for accessing the field via an interface.
 func (v *AccessWhatFilterInput) GetHasTags() []TagFilter { return v.HasTags }
 
+// GetTargetDataObject returns AccessWhatFilterInput.TargetDataObject, and is useful for accessing the field via an interface.
+func (v *AccessWhatFilterInput) GetTargetDataObject() *string { return v.TargetDataObject }
+
 type AccessWhatOrderByInput struct {
 	Name *Sort `json:"name,omitempty"`
 }
@@ -8854,6 +8882,11 @@ const (
 	AccessWhoItemTypeWhogrant   AccessWhoItemType = "WhoGrant"
 	AccessWhoItemTypeWhopromise AccessWhoItemType = "WhoPromise"
 )
+
+var AllAccessWhoItemType = []AccessWhoItemType{
+	AccessWhoItemTypeWhogrant,
+	AccessWhoItemTypeWhopromise,
+}
 
 // ActivateAccessProviderActivateAccessProvider includes the requested fields of the GraphQL type AccessProvider.
 type ActivateAccessProviderActivateAccessProvider struct {
@@ -11878,11 +11911,20 @@ const (
 	BinaryExpressionAggregatorOperatorOr  BinaryExpressionAggregatorOperator = "Or"
 )
 
+var AllBinaryExpressionAggregatorOperator = []BinaryExpressionAggregatorOperator{
+	BinaryExpressionAggregatorOperatorAnd,
+	BinaryExpressionAggregatorOperatorOr,
+}
+
 type BinaryExpressionUnaryExpressionOperator string
 
 const (
 	BinaryExpressionUnaryExpressionOperatorNot BinaryExpressionUnaryExpressionOperator = "Not"
 )
+
+var AllBinaryExpressionUnaryExpressionOperator = []BinaryExpressionUnaryExpressionOperator{
+	BinaryExpressionUnaryExpressionOperatorNot,
+}
 
 type CanLinkFilter struct {
 	Action              models.AccessProviderAction `json:"action"`
@@ -14769,12 +14811,26 @@ const (
 	DataComparisonExpressionComparisonOperatorGreaterthanorequal DataComparisonExpressionComparisonOperator = "GreaterThanOrEqual"
 )
 
+var AllDataComparisonExpressionComparisonOperator = []DataComparisonExpressionComparisonOperator{
+	DataComparisonExpressionComparisonOperatorEqual,
+	DataComparisonExpressionComparisonOperatorNotequal,
+	DataComparisonExpressionComparisonOperatorLessthan,
+	DataComparisonExpressionComparisonOperatorLessthanorequal,
+	DataComparisonExpressionComparisonOperatorGreaterthan,
+	DataComparisonExpressionComparisonOperatorGreaterthanorequal,
+}
+
 type DataComparisonExpressionEntityType string
 
 const (
 	DataComparisonExpressionEntityTypeDataobject            DataComparisonExpressionEntityType = "DataObject"
 	DataComparisonExpressionEntityTypeColumnreferencebyname DataComparisonExpressionEntityType = "ColumnReferenceByName"
 )
+
+var AllDataComparisonExpressionEntityType = []DataComparisonExpressionEntityType{
+	DataComparisonExpressionEntityTypeDataobject,
+	DataComparisonExpressionEntityTypeColumnreferencebyname,
+}
 
 type DataComparisonExpressionInput struct {
 	Literal         *bool                                         `json:"literal,omitempty"`
@@ -16321,6 +16377,7 @@ func (v *DataObjectDataSource) GetId() string { return v.Id }
 type DataObjectFilterInput struct {
 	DataSources       []string    `json:"dataSources"`
 	Parents           []string    `json:"parents"`
+	Ancestors         []string    `json:"ancestors"`
 	Types             []string    `json:"types"`
 	FullNames         []string    `json:"fullNames"`
 	Search            *string     `json:"search,omitempty"`
@@ -16340,6 +16397,9 @@ func (v *DataObjectFilterInput) GetDataSources() []string { return v.DataSources
 
 // GetParents returns DataObjectFilterInput.Parents, and is useful for accessing the field via an interface.
 func (v *DataObjectFilterInput) GetParents() []string { return v.Parents }
+
+// GetAncestors returns DataObjectFilterInput.Ancestors, and is useful for accessing the field via an interface.
+func (v *DataObjectFilterInput) GetAncestors() []string { return v.Ancestors }
 
 // GetTypes returns DataObjectFilterInput.Types, and is useful for accessing the field via an interface.
 func (v *DataObjectFilterInput) GetTypes() []string { return v.Types }
@@ -17812,6 +17872,12 @@ const (
 	DataSourceFeaturesRowfiltering  DataSourceFeatures = "RowFiltering"
 	DataSourceFeaturesDatasharing   DataSourceFeatures = "DataSharing"
 )
+
+var AllDataSourceFeatures = []DataSourceFeatures{
+	DataSourceFeaturesColumnmasking,
+	DataSourceFeaturesRowfiltering,
+	DataSourceFeaturesDatasharing,
+}
 
 type DataSourceFilterInput struct {
 	Types                 []string              `json:"types"`
@@ -20105,6 +20171,11 @@ const (
 	DataSourceSyncMethodOnPrem             DataSourceSyncMethod = "ON_PREM"
 	DataSourceSyncMethodCloudManualTrigger DataSourceSyncMethod = "CLOUD_MANUAL_TRIGGER"
 )
+
+var AllDataSourceSyncMethod = []DataSourceSyncMethod{
+	DataSourceSyncMethodOnPrem,
+	DataSourceSyncMethodCloudManualTrigger,
+}
 
 type DataSourceTypeInfo struct {
 	DataSource         string  `json:"dataSource"`
@@ -28121,7 +28192,7 @@ type GrantCategoryInput struct {
 	AllowedWhatItems         *GrantCategoryAllowedWhatItemsInput   `json:"allowedWhatItems,omitempty"`
 	NameRegEx                *string                               `json:"nameRegEx,omitempty"`
 	NameRegExMsg             *string                               `json:"nameRegExMsg,omitempty"`
-	NamingHintRexEx          *string                               `json:"namingHintRexEx,omitempty"`
+	NamingHintRegEx          *string                               `json:"namingHintRegEx,omitempty"`
 	NamingHintRegExMsg       *string                               `json:"namingHintRegExMsg,omitempty"`
 	LocksOnCreate            []AccessProviderLock                  `json:"locksOnCreate"`
 }
@@ -28171,8 +28242,8 @@ func (v *GrantCategoryInput) GetNameRegEx() *string { return v.NameRegEx }
 // GetNameRegExMsg returns GrantCategoryInput.NameRegExMsg, and is useful for accessing the field via an interface.
 func (v *GrantCategoryInput) GetNameRegExMsg() *string { return v.NameRegExMsg }
 
-// GetNamingHintRexEx returns GrantCategoryInput.NamingHintRexEx, and is useful for accessing the field via an interface.
-func (v *GrantCategoryInput) GetNamingHintRexEx() *string { return v.NamingHintRexEx }
+// GetNamingHintRegEx returns GrantCategoryInput.NamingHintRegEx, and is useful for accessing the field via an interface.
+func (v *GrantCategoryInput) GetNamingHintRegEx() *string { return v.NamingHintRegEx }
 
 // GetNamingHintRegExMsg returns GrantCategoryInput.NamingHintRegExMsg, and is useful for accessing the field via an interface.
 func (v *GrantCategoryInput) GetNamingHintRegExMsg() *string { return v.NamingHintRegExMsg }
@@ -39243,6 +39314,11 @@ const (
 	SortDesc Sort = "desc"
 )
 
+var AllSort = []Sort{
+	SortAsc,
+	SortDesc,
+}
+
 // SyncData includes the GraphQL fields of SyncData requested by the fragment SyncData.
 type SyncData struct {
 	DataSource         SyncDataDataSource          `json:"dataSource"`
@@ -39449,6 +39525,15 @@ const (
 	SyncStatusInProgress   SyncStatus = "IN_PROGRESS"
 	SyncStatusSynced       SyncStatus = "SYNCED"
 )
+
+var AllSyncStatus = []SyncStatus{
+	SyncStatusNotConnected,
+	SyncStatusFailed,
+	SyncStatusOutOfDate,
+	SyncStatusOutOfSync,
+	SyncStatusInProgress,
+	SyncStatusSynced,
+}
 
 type TagFilter struct {
 	Key         *string `json:"key,omitempty"`
@@ -46435,6 +46520,11 @@ const (
 	UserTypeMachine UserType = "Machine"
 )
 
+var AllUserType = []UserType{
+	UserTypeHuman,
+	UserTypeMachine,
+}
+
 // WhatAbacRule includes the GraphQL fields of WhatAbacRule requested by the fragment WhatAbacRule.
 type WhatAbacRule struct {
 	Permissions       []string `json:"permissions"`
@@ -46516,6 +46606,12 @@ const (
 	WhoAndWhatTypeDynamic WhoAndWhatType = "Dynamic"
 	WhoAndWhatTypeUnknown WhoAndWhatType = "Unknown"
 )
+
+var AllWhoAndWhatType = []WhoAndWhatType{
+	WhoAndWhatTypeStatic,
+	WhoAndWhatTypeDynamic,
+	WhoAndWhatTypeUnknown,
+}
 
 type WhoItemInput struct {
 	User            *string            `json:"user,omitempty"`
@@ -47480,7 +47576,7 @@ func (v *__UpdateUserInput) GetUId() string { return v.UId }
 // GetInput returns __UpdateUserInput.Input, and is useful for accessing the field via an interface.
 func (v *__UpdateUserInput) GetInput() UserInput { return v.Input }
 
-// The query or mutation executed by ActivateAccessProvider.
+// The mutation executed by ActivateAccessProvider.
 const ActivateAccessProvider_Operation = `
 mutation ActivateAccessProvider ($id: ID!) {
 	activateAccessProvider(id: $id) {
@@ -47596,7 +47692,7 @@ func ActivateAccessProvider(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*ActivateAccessProviderResponse, error) {
+) (data_ *ActivateAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ActivateAccessProvider",
 		Query:  ActivateAccessProvider_Operation,
@@ -47604,10 +47700,9 @@ func ActivateAccessProvider(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ ActivateAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ActivateAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47615,10 +47710,10 @@ func ActivateAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AddIdentityStoreToDataSource.
+// The mutation executed by AddIdentityStoreToDataSource.
 const AddIdentityStoreToDataSource_Operation = `
 mutation AddIdentityStoreToDataSource ($dsId: ID!, $isId: ID!) {
 	addIdentityStoreToDataSource(dsId: $dsId, isId: $isId) {
@@ -47654,7 +47749,7 @@ func AddIdentityStoreToDataSource(
 	client_ graphql.Client,
 	dsId string,
 	isId string,
-) (*AddIdentityStoreToDataSourceResponse, error) {
+) (data_ *AddIdentityStoreToDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AddIdentityStoreToDataSource",
 		Query:  AddIdentityStoreToDataSource_Operation,
@@ -47663,10 +47758,9 @@ func AddIdentityStoreToDataSource(
 			IsId: isId,
 		},
 	}
-	var err_ error
 
-	var data_ AddIdentityStoreToDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AddIdentityStoreToDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47674,10 +47768,10 @@ func AddIdentityStoreToDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AssignGlobalRole.
+// The mutation executed by AssignGlobalRole.
 const AssignGlobalRole_Operation = `
 mutation AssignGlobalRole ($role: ID!, $to: [ID!]!) {
 	assignGlobalRole(role: $role, to: $to) {
@@ -47705,7 +47799,7 @@ func AssignGlobalRole(
 	client_ graphql.Client,
 	role string,
 	to []string,
-) (*AssignGlobalRoleResponse, error) {
+) (data_ *AssignGlobalRoleResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AssignGlobalRole",
 		Query:  AssignGlobalRole_Operation,
@@ -47714,10 +47808,9 @@ func AssignGlobalRole(
 			To:   to,
 		},
 	}
-	var err_ error
 
-	var data_ AssignGlobalRoleResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AssignGlobalRoleResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47725,10 +47818,10 @@ func AssignGlobalRole(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AssignRoleOnAccessProvider.
+// The mutation executed by AssignRoleOnAccessProvider.
 const AssignRoleOnAccessProvider_Operation = `
 mutation AssignRoleOnAccessProvider ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	assignRoleOnAccessProvider(role: $role, resourceId: $resourceId, to: $to) {
@@ -47757,7 +47850,7 @@ func AssignRoleOnAccessProvider(
 	role string,
 	resourceId string,
 	to []string,
-) (*AssignRoleOnAccessProviderResponse, error) {
+) (data_ *AssignRoleOnAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AssignRoleOnAccessProvider",
 		Query:  AssignRoleOnAccessProvider_Operation,
@@ -47767,10 +47860,9 @@ func AssignRoleOnAccessProvider(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ AssignRoleOnAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AssignRoleOnAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47778,10 +47870,10 @@ func AssignRoleOnAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AssignRoleOnDataObject.
+// The mutation executed by AssignRoleOnDataObject.
 const AssignRoleOnDataObject_Operation = `
 mutation AssignRoleOnDataObject ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	assignRoleOnDataObject(role: $role, resourceId: $resourceId, to: $to) {
@@ -47810,7 +47902,7 @@ func AssignRoleOnDataObject(
 	role string,
 	resourceId string,
 	to []string,
-) (*AssignRoleOnDataObjectResponse, error) {
+) (data_ *AssignRoleOnDataObjectResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AssignRoleOnDataObject",
 		Query:  AssignRoleOnDataObject_Operation,
@@ -47820,10 +47912,9 @@ func AssignRoleOnDataObject(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ AssignRoleOnDataObjectResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AssignRoleOnDataObjectResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47831,10 +47922,10 @@ func AssignRoleOnDataObject(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AssignRoleOnDataSource.
+// The mutation executed by AssignRoleOnDataSource.
 const AssignRoleOnDataSource_Operation = `
 mutation AssignRoleOnDataSource ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	assignRoleOnDataSource(role: $role, resourceId: $resourceId, to: $to) {
@@ -47863,7 +47954,7 @@ func AssignRoleOnDataSource(
 	role string,
 	resourceId string,
 	to []string,
-) (*AssignRoleOnDataSourceResponse, error) {
+) (data_ *AssignRoleOnDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AssignRoleOnDataSource",
 		Query:  AssignRoleOnDataSource_Operation,
@@ -47873,10 +47964,9 @@ func AssignRoleOnDataSource(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ AssignRoleOnDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AssignRoleOnDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47884,10 +47974,10 @@ func AssignRoleOnDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by AssignRoleOnIdentityStore.
+// The mutation executed by AssignRoleOnIdentityStore.
 const AssignRoleOnIdentityStore_Operation = `
 mutation AssignRoleOnIdentityStore ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	assignRoleOnIdentityStore(role: $role, resourceId: $resourceId, to: $to) {
@@ -47916,7 +48006,7 @@ func AssignRoleOnIdentityStore(
 	role string,
 	resourceId string,
 	to []string,
-) (*AssignRoleOnIdentityStoreResponse, error) {
+) (data_ *AssignRoleOnIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "AssignRoleOnIdentityStore",
 		Query:  AssignRoleOnIdentityStore_Operation,
@@ -47926,10 +48016,9 @@ func AssignRoleOnIdentityStore(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ AssignRoleOnIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &AssignRoleOnIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -47937,10 +48026,10 @@ func AssignRoleOnIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CreateAccessProvider.
+// The mutation executed by CreateAccessProvider.
 const CreateAccessProvider_Operation = `
 mutation CreateAccessProvider ($ap: AccessProviderInput!) {
 	createAccessProvider(input: $ap, enableAdditionalAccessRequests: false) {
@@ -48057,7 +48146,7 @@ func CreateAccessProvider(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	ap AccessProviderInput,
-) (*CreateAccessProviderResponse, error) {
+) (data_ *CreateAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CreateAccessProvider",
 		Query:  CreateAccessProvider_Operation,
@@ -48065,10 +48154,9 @@ func CreateAccessProvider(
 			Ap: ap,
 		},
 	}
-	var err_ error
 
-	var data_ CreateAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CreateAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48076,10 +48164,10 @@ func CreateAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CreateDataSource.
+// The mutation executed by CreateDataSource.
 const CreateDataSource_Operation = `
 mutation CreateDataSource ($input: DataSourceInput!) {
 	createDataSource(input: $input) {
@@ -48114,7 +48202,7 @@ func CreateDataSource(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	input DataSourceInput,
-) (*CreateDataSourceResponse, error) {
+) (data_ *CreateDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CreateDataSource",
 		Query:  CreateDataSource_Operation,
@@ -48122,10 +48210,9 @@ func CreateDataSource(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ CreateDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CreateDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48133,10 +48220,10 @@ func CreateDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CreateGrantCategory.
+// The mutation executed by CreateGrantCategory.
 const CreateGrantCategory_Operation = `
 mutation CreateGrantCategory ($input: GrantCategoryInput!) {
 	createGrantCategory(input: $input) {
@@ -48198,7 +48285,7 @@ func CreateGrantCategory(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	input GrantCategoryInput,
-) (*CreateGrantCategoryResponse, error) {
+) (data_ *CreateGrantCategoryResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CreateGrantCategory",
 		Query:  CreateGrantCategory_Operation,
@@ -48206,10 +48293,9 @@ func CreateGrantCategory(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ CreateGrantCategoryResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CreateGrantCategoryResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48217,10 +48303,10 @@ func CreateGrantCategory(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CreateIdentityStore.
+// The mutation executed by CreateIdentityStore.
 const CreateIdentityStore_Operation = `
 mutation CreateIdentityStore ($input: IdentityStoreInput!) {
 	createIdentityStore(input: $input) {
@@ -48257,7 +48343,7 @@ func CreateIdentityStore(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	input IdentityStoreInput,
-) (*CreateIdentityStoreResponse, error) {
+) (data_ *CreateIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CreateIdentityStore",
 		Query:  CreateIdentityStore_Operation,
@@ -48265,10 +48351,9 @@ func CreateIdentityStore(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ CreateIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CreateIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48276,10 +48361,10 @@ func CreateIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CreateUser.
+// The mutation executed by CreateUser.
 const CreateUser_Operation = `
 mutation CreateUser ($input: UserInput!) {
 	createUser(input: $input) {
@@ -48313,7 +48398,7 @@ func CreateUser(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	input UserInput,
-) (*CreateUserResponse, error) {
+) (data_ *CreateUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CreateUser",
 		Query:  CreateUser_Operation,
@@ -48321,10 +48406,9 @@ func CreateUser(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ CreateUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CreateUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48332,10 +48416,10 @@ func CreateUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by CurrentUser.
+// The query executed by CurrentUser.
 const CurrentUser_Operation = `
 query CurrentUser {
 	currentUser {
@@ -48354,15 +48438,14 @@ fragment User on User {
 func CurrentUser(
 	ctx_ context.Context,
 	client_ graphql.Client,
-) (*CurrentUserResponse, error) {
+) (data_ *CurrentUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "CurrentUser",
 		Query:  CurrentUser_Operation,
 	}
-	var err_ error
 
-	var data_ CurrentUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &CurrentUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48370,10 +48453,10 @@ func CurrentUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DataObjectByExternalId.
+// The query executed by DataObjectByExternalId.
 const DataObjectByExternalId_Operation = `
 query DataObjectByExternalId ($fullname: String!, $dataSourceId: ID!) {
 	dataObjects(filter: {fullNames:[$fullname],dataSources:[$dataSourceId]}) {
@@ -48404,7 +48487,7 @@ func DataObjectByExternalId(
 	client_ graphql.Client,
 	fullname string,
 	dataSourceId string,
-) (*DataObjectByExternalIdResponse, error) {
+) (data_ *DataObjectByExternalIdResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DataObjectByExternalId",
 		Query:  DataObjectByExternalId_Operation,
@@ -48413,10 +48496,9 @@ func DataObjectByExternalId(
 			DataSourceId: dataSourceId,
 		},
 	}
-	var err_ error
 
-	var data_ DataObjectByExternalIdResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DataObjectByExternalIdResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48424,10 +48506,10 @@ func DataObjectByExternalId(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DataSourceIdentityStores.
+// The query executed by DataSourceIdentityStores.
 const DataSourceIdentityStores_Operation = `
 query DataSourceIdentityStores ($id: ID!) {
 	dataSource(id: $id) {
@@ -48463,7 +48545,7 @@ func DataSourceIdentityStores(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DataSourceIdentityStoresResponse, error) {
+) (data_ *DataSourceIdentityStoresResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DataSourceIdentityStores",
 		Query:  DataSourceIdentityStores_Operation,
@@ -48471,10 +48553,9 @@ func DataSourceIdentityStores(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DataSourceIdentityStoresResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DataSourceIdentityStoresResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48482,10 +48563,10 @@ func DataSourceIdentityStores(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DataSourceMaskInformation.
+// The query executed by DataSourceMaskInformation.
 const DataSourceMaskInformation_Operation = `
 query DataSourceMaskInformation ($id: ID!) {
 	dataSource(id: $id) {
@@ -48523,7 +48604,7 @@ func DataSourceMaskInformation(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DataSourceMaskInformationResponse, error) {
+) (data_ *DataSourceMaskInformationResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DataSourceMaskInformation",
 		Query:  DataSourceMaskInformation_Operation,
@@ -48531,10 +48612,9 @@ func DataSourceMaskInformation(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DataSourceMaskInformationResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DataSourceMaskInformationResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48542,10 +48622,10 @@ func DataSourceMaskInformation(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeactivateAccessProvider.
+// The mutation executed by DeactivateAccessProvider.
 const DeactivateAccessProvider_Operation = `
 mutation DeactivateAccessProvider ($id: ID!) {
 	deactivateAccessProvider(id: $id) {
@@ -48661,7 +48741,7 @@ func DeactivateAccessProvider(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DeactivateAccessProviderResponse, error) {
+) (data_ *DeactivateAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeactivateAccessProvider",
 		Query:  DeactivateAccessProvider_Operation,
@@ -48669,10 +48749,9 @@ func DeactivateAccessProvider(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DeactivateAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeactivateAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48680,10 +48759,10 @@ func DeactivateAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeleteAccessProvider.
+// The mutation executed by DeleteAccessProvider.
 const DeleteAccessProvider_Operation = `
 mutation DeleteAccessProvider ($id: ID!, $overrideLocks: Boolean) {
 	deleteAccessProvider(id: $id, overrideLocks: $overrideLocks) {
@@ -48800,7 +48879,7 @@ func DeleteAccessProvider(
 	client_ graphql.Client,
 	id string,
 	overrideLocks *bool,
-) (*DeleteAccessProviderResponse, error) {
+) (data_ *DeleteAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteAccessProvider",
 		Query:  DeleteAccessProvider_Operation,
@@ -48809,10 +48888,9 @@ func DeleteAccessProvider(
 			OverrideLocks: overrideLocks,
 		},
 	}
-	var err_ error
 
-	var data_ DeleteAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeleteAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48820,10 +48898,10 @@ func DeleteAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeleteDataSource.
+// The mutation executed by DeleteDataSource.
 const DeleteDataSource_Operation = `
 mutation DeleteDataSource ($id: ID!) {
 	deleteDataSource(id: $id) {
@@ -48843,7 +48921,7 @@ func DeleteDataSource(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DeleteDataSourceResponse, error) {
+) (data_ *DeleteDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteDataSource",
 		Query:  DeleteDataSource_Operation,
@@ -48851,10 +48929,9 @@ func DeleteDataSource(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DeleteDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeleteDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48862,10 +48939,10 @@ func DeleteDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeleteGrantCategory.
+// The mutation executed by DeleteGrantCategory.
 const DeleteGrantCategory_Operation = `
 mutation DeleteGrantCategory ($id: ID!) {
 	deleteGrantCategory(id: $id) {
@@ -48894,7 +48971,7 @@ func DeleteGrantCategory(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DeleteGrantCategoryResponse, error) {
+) (data_ *DeleteGrantCategoryResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteGrantCategory",
 		Query:  DeleteGrantCategory_Operation,
@@ -48902,10 +48979,9 @@ func DeleteGrantCategory(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DeleteGrantCategoryResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeleteGrantCategoryResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48913,10 +48989,10 @@ func DeleteGrantCategory(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeleteIdentityStore.
+// The mutation executed by DeleteIdentityStore.
 const DeleteIdentityStore_Operation = `
 mutation DeleteIdentityStore ($id: ID!) {
 	deleteIdentityStore(id: $id) {
@@ -48936,7 +49012,7 @@ func DeleteIdentityStore(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*DeleteIdentityStoreResponse, error) {
+) (data_ *DeleteIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteIdentityStore",
 		Query:  DeleteIdentityStore_Operation,
@@ -48944,10 +49020,9 @@ func DeleteIdentityStore(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ DeleteIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeleteIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48955,10 +49030,10 @@ func DeleteIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by DeleteUser.
+// The mutation executed by DeleteUser.
 const DeleteUser_Operation = `
 mutation DeleteUser ($uId: ID!) {
 	deleteUser(id: $uId) {
@@ -48978,7 +49053,7 @@ func DeleteUser(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	uId string,
-) (*DeleteUserResponse, error) {
+) (data_ *DeleteUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "DeleteUser",
 		Query:  DeleteUser_Operation,
@@ -48986,10 +49061,9 @@ func DeleteUser(
 			UId: uId,
 		},
 	}
-	var err_ error
 
-	var data_ DeleteUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &DeleteUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -48997,10 +49071,10 @@ func DeleteUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetAccessProvider.
+// The query executed by GetAccessProvider.
 const GetAccessProvider_Operation = `
 query GetAccessProvider ($id: ID!) {
 	accessProvider(id: $id) {
@@ -49116,7 +49190,7 @@ func GetAccessProvider(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetAccessProviderResponse, error) {
+) (data_ *GetAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetAccessProvider",
 		Query:  GetAccessProvider_Operation,
@@ -49124,10 +49198,9 @@ func GetAccessProvider(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49135,10 +49208,10 @@ func GetAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetAccessProviderWhatAccessProviders.
+// The query executed by GetAccessProviderWhatAccessProviders.
 const GetAccessProviderWhatAccessProviders_Operation = `
 query GetAccessProviderWhatAccessProviders ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!], $filter: AccessProviderWhatAccessProviderFilterInput) {
 	accessProvider(id: $id) {
@@ -49283,7 +49356,7 @@ func GetAccessProviderWhatAccessProviders(
 	search *string,
 	order []AccessWhatOrderByInput,
 	filter *AccessProviderWhatAccessProviderFilterInput,
-) (*GetAccessProviderWhatAccessProvidersResponse, error) {
+) (data_ *GetAccessProviderWhatAccessProvidersResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhatAccessProviders",
 		Query:  GetAccessProviderWhatAccessProviders_Operation,
@@ -49296,10 +49369,9 @@ func GetAccessProviderWhatAccessProviders(
 			Filter: filter,
 		},
 	}
-	var err_ error
 
-	var data_ GetAccessProviderWhatAccessProvidersResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetAccessProviderWhatAccessProvidersResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49307,10 +49379,10 @@ func GetAccessProviderWhatAccessProviders(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetAccessProviderWhatDataObjectList.
+// The query executed by GetAccessProviderWhatDataObjectList.
 const GetAccessProviderWhatDataObjectList_Operation = `
 query GetAccessProviderWhatDataObjectList ($id: ID!, $after: String, $limit: Int, $filter: AccessWhatFilterInput, $order: [AccessWhatOrderByInput!]) {
 	accessProvider(id: $id) {
@@ -49377,7 +49449,7 @@ func GetAccessProviderWhatDataObjectList(
 	limit *int,
 	filter *AccessWhatFilterInput,
 	order []AccessWhatOrderByInput,
-) (*GetAccessProviderWhatDataObjectListResponse, error) {
+) (data_ *GetAccessProviderWhatDataObjectListResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhatDataObjectList",
 		Query:  GetAccessProviderWhatDataObjectList_Operation,
@@ -49389,10 +49461,9 @@ func GetAccessProviderWhatDataObjectList(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ GetAccessProviderWhatDataObjectListResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetAccessProviderWhatDataObjectListResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49400,10 +49471,10 @@ func GetAccessProviderWhatDataObjectList(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetAccessProviderWhoList.
+// The query executed by GetAccessProviderWhoList.
 const GetAccessProviderWhoList_Operation = `
 query GetAccessProviderWhoList ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessProviderWhoOrderByInput!]) {
 	accessProvider(id: $id) {
@@ -49482,7 +49553,7 @@ func GetAccessProviderWhoList(
 	limit *int,
 	search *string,
 	order []AccessProviderWhoOrderByInput,
-) (*GetAccessProviderWhoListResponse, error) {
+) (data_ *GetAccessProviderWhoListResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetAccessProviderWhoList",
 		Query:  GetAccessProviderWhoList_Operation,
@@ -49494,10 +49565,9 @@ func GetAccessProviderWhoList(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ GetAccessProviderWhoListResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetAccessProviderWhoListResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49505,10 +49575,10 @@ func GetAccessProviderWhoList(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetDataObject.
+// The query executed by GetDataObject.
 const GetDataObject_Operation = `
 query GetDataObject ($dataObjectId: ID!) {
 	dataObject(id: $dataObjectId) {
@@ -49533,7 +49603,7 @@ func GetDataObject(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	dataObjectId string,
-) (*GetDataObjectResponse, error) {
+) (data_ *GetDataObjectResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetDataObject",
 		Query:  GetDataObject_Operation,
@@ -49541,10 +49611,9 @@ func GetDataObject(
 			DataObjectId: dataObjectId,
 		},
 	}
-	var err_ error
 
-	var data_ GetDataObjectResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetDataObjectResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49552,10 +49621,10 @@ func GetDataObject(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetDataSource.
+// The query executed by GetDataSource.
 const GetDataSource_Operation = `
 query GetDataSource ($id: ID!) {
 	dataSource(id: $id) {
@@ -49590,7 +49659,7 @@ func GetDataSource(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetDataSourceResponse, error) {
+) (data_ *GetDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetDataSource",
 		Query:  GetDataSource_Operation,
@@ -49598,10 +49667,9 @@ func GetDataSource(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49609,10 +49677,10 @@ func GetDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetGrantCategory.
+// The query executed by GetGrantCategory.
 const GetGrantCategory_Operation = `
 query GetGrantCategory ($id: ID!) {
 	grantCategory(id: $id) {
@@ -49674,7 +49742,7 @@ func GetGrantCategory(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetGrantCategoryResponse, error) {
+) (data_ *GetGrantCategoryResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetGrantCategory",
 		Query:  GetGrantCategory_Operation,
@@ -49682,10 +49750,9 @@ func GetGrantCategory(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetGrantCategoryResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetGrantCategoryResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49693,10 +49760,10 @@ func GetGrantCategory(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetIdentityStore.
+// The query executed by GetIdentityStore.
 const GetIdentityStore_Operation = `
 query GetIdentityStore ($id: ID!) {
 	identityStore(id: $id) {
@@ -49733,7 +49800,7 @@ func GetIdentityStore(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetIdentityStoreResponse, error) {
+) (data_ *GetIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetIdentityStore",
 		Query:  GetIdentityStore_Operation,
@@ -49741,10 +49808,9 @@ func GetIdentityStore(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49752,10 +49818,10 @@ func GetIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetRole.
+// The query executed by GetRole.
 const GetRole_Operation = `
 query GetRole ($id: ID!) {
 	role(id: $id) {
@@ -49773,7 +49839,7 @@ func GetRole(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetRoleResponse, error) {
+) (data_ *GetRoleResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetRole",
 		Query:  GetRole_Operation,
@@ -49781,10 +49847,9 @@ func GetRole(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetRoleResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetRoleResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49792,10 +49857,10 @@ func GetRole(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetUser.
+// The query executed by GetUser.
 const GetUser_Operation = `
 query GetUser ($id: ID!) {
 	user(id: $id) {
@@ -49833,7 +49898,7 @@ func GetUser(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	id string,
-) (*GetUserResponse, error) {
+) (data_ *GetUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetUser",
 		Query:  GetUser_Operation,
@@ -49841,10 +49906,9 @@ func GetUser(
 			Id: id,
 		},
 	}
-	var err_ error
 
-	var data_ GetUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49852,10 +49916,10 @@ func GetUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by GetUserByEmail.
+// The query executed by GetUserByEmail.
 const GetUserByEmail_Operation = `
 query GetUserByEmail ($email: String!) {
 	userByEmail(email: $email) {
@@ -49889,7 +49953,7 @@ func GetUserByEmail(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	email string,
-) (*GetUserByEmailResponse, error) {
+) (data_ *GetUserByEmailResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "GetUserByEmail",
 		Query:  GetUserByEmail_Operation,
@@ -49897,10 +49961,9 @@ func GetUserByEmail(
 			Email: email,
 		},
 	}
-	var err_ error
 
-	var data_ GetUserByEmailResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &GetUserByEmailResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49908,10 +49971,10 @@ func GetUserByEmail(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by InviteAsRaitoUser.
+// The mutation executed by InviteAsRaitoUser.
 const InviteAsRaitoUser_Operation = `
 mutation InviteAsRaitoUser ($uId: ID!, $noPassword: Boolean) {
 	inviteAsRaitoUser(id: $uId, noPassword: $noPassword) {
@@ -49946,7 +50009,7 @@ func InviteAsRaitoUser(
 	client_ graphql.Client,
 	uId string,
 	noPassword *bool,
-) (*InviteAsRaitoUserResponse, error) {
+) (data_ *InviteAsRaitoUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "InviteAsRaitoUser",
 		Query:  InviteAsRaitoUser_Operation,
@@ -49955,10 +50018,9 @@ func InviteAsRaitoUser(
 			NoPassword: noPassword,
 		},
 	}
-	var err_ error
 
-	var data_ InviteAsRaitoUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &InviteAsRaitoUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -49966,10 +50028,10 @@ func InviteAsRaitoUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListAccessProviderAbacWhatScope.
+// The query executed by ListAccessProviderAbacWhatScope.
 const ListAccessProviderAbacWhatScope_Operation = `
 query ListAccessProviderAbacWhatScope ($id: ID!, $after: String, $limit: Int, $search: String, $order: [AccessWhatOrderByInput!]) {
 	accessProvider(id: $id) {
@@ -50029,7 +50091,7 @@ func ListAccessProviderAbacWhatScope(
 	limit *int,
 	search *string,
 	order []AccessWhatOrderByInput,
-) (*ListAccessProviderAbacWhatScopeResponse, error) {
+) (data_ *ListAccessProviderAbacWhatScopeResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListAccessProviderAbacWhatScope",
 		Query:  ListAccessProviderAbacWhatScope_Operation,
@@ -50041,10 +50103,9 @@ func ListAccessProviderAbacWhatScope(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListAccessProviderAbacWhatScopeResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListAccessProviderAbacWhatScopeResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50052,10 +50113,10 @@ func ListAccessProviderAbacWhatScope(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListAccessProviders.
+// The query executed by ListAccessProviders.
 const ListAccessProviders_Operation = `
 query ListAccessProviders ($after: String, $limit: Int, $filter: AccessProviderFilterInput, $order: [AccessProviderOrderByInput!]) {
 	accessProviders(after: $after, limit: $limit, filter: $filter, order: $order) {
@@ -50182,7 +50243,7 @@ func ListAccessProviders(
 	limit *int,
 	filter *AccessProviderFilterInput,
 	order []AccessProviderOrderByInput,
-) (*ListAccessProvidersResponse, error) {
+) (data_ *ListAccessProvidersResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListAccessProviders",
 		Query:  ListAccessProviders_Operation,
@@ -50193,10 +50254,9 @@ func ListAccessProviders(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListAccessProvidersResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListAccessProvidersResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50204,10 +50264,10 @@ func ListAccessProviders(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListDataObjects.
+// The query executed by ListDataObjects.
 const ListDataObjects_Operation = `
 query ListDataObjects ($after: String, $limit: Int, $filter: DataObjectFilterInput, $order: [DataObjectOrderByInput!]) {
 	dataObjects(after: $after, limit: $limit, filter: $filter, order: $order) {
@@ -50251,7 +50311,7 @@ func ListDataObjects(
 	limit *int,
 	filter *DataObjectFilterInput,
 	order []DataObjectOrderByInput,
-) (*ListDataObjectsResponse, error) {
+) (data_ *ListDataObjectsResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListDataObjects",
 		Query:  ListDataObjects_Operation,
@@ -50262,10 +50322,9 @@ func ListDataObjects(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListDataObjectsResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListDataObjectsResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50273,10 +50332,10 @@ func ListDataObjects(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListDataSources.
+// The query executed by ListDataSources.
 const ListDataSources_Operation = `
 query ListDataSources ($after: String, $limit: Int, $filter: DataSourceFilterInput, $search: String, $order: [DataSourceOrderByInput!]) {
 	dataSources(after: $after, limit: $limit, filter: $filter, order: $order, search: $search) {
@@ -50327,7 +50386,7 @@ func ListDataSources(
 	filter *DataSourceFilterInput,
 	search *string,
 	order []DataSourceOrderByInput,
-) (*ListDataSourcesResponse, error) {
+) (data_ *ListDataSourcesResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListDataSources",
 		Query:  ListDataSources_Operation,
@@ -50339,10 +50398,9 @@ func ListDataSources(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListDataSourcesResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListDataSourcesResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50350,10 +50408,10 @@ func ListDataSources(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListGrantCategories.
+// The query executed by ListGrantCategories.
 const ListGrantCategories_Operation = `
 query ListGrantCategories {
 	grantCategories {
@@ -50401,15 +50459,14 @@ fragment GrantCategoryAllowedWhatItems on GrantCategoryAllowedWhatItems {
 func ListGrantCategories(
 	ctx_ context.Context,
 	client_ graphql.Client,
-) (*ListGrantCategoriesResponse, error) {
+) (data_ *ListGrantCategoriesResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListGrantCategories",
 		Query:  ListGrantCategories_Operation,
 	}
-	var err_ error
 
-	var data_ ListGrantCategoriesResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListGrantCategoriesResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50417,10 +50474,10 @@ func ListGrantCategories(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListIdentityStores.
+// The query executed by ListIdentityStores.
 const ListIdentityStores_Operation = `
 query ListIdentityStores ($after: String, $limit: Int, $search: String, $filter: IdentityStoreFilterInput, $order: [IdentityStoreOrderByInput!]) {
 	identityStores(after: $after, limit: $limit, search: $search, filter: $filter, order: $order) {
@@ -50468,7 +50525,7 @@ func ListIdentityStores(
 	search *string,
 	filter *IdentityStoreFilterInput,
 	order []IdentityStoreOrderByInput,
-) (*ListIdentityStoresResponse, error) {
+) (data_ *ListIdentityStoresResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListIdentityStores",
 		Query:  ListIdentityStores_Operation,
@@ -50480,10 +50537,9 @@ func ListIdentityStores(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListIdentityStoresResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListIdentityStoresResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50491,10 +50547,10 @@ func ListIdentityStores(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignments.
+// The query executed by ListRoleAssignments.
 const ListRoleAssignments_Operation = `
 query ListRoleAssignments ($after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	roleAssignments(after: $after, limit: $limit, filter: $filter, order: $order) {
@@ -50562,7 +50618,7 @@ func ListRoleAssignments(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsResponse, error) {
+) (data_ *ListRoleAssignmentsResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignments",
 		Query:  ListRoleAssignments_Operation,
@@ -50573,10 +50629,9 @@ func ListRoleAssignments(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50584,10 +50639,10 @@ func ListRoleAssignments(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignmentsOnAccessProvider.
+// The query executed by ListRoleAssignmentsOnAccessProvider.
 const ListRoleAssignmentsOnAccessProvider_Operation = `
 query ListRoleAssignmentsOnAccessProvider ($apId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	accessProvider(id: $apId) {
@@ -50666,7 +50721,7 @@ func ListRoleAssignmentsOnAccessProvider(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsOnAccessProviderResponse, error) {
+) (data_ *ListRoleAssignmentsOnAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnAccessProvider",
 		Query:  ListRoleAssignmentsOnAccessProvider_Operation,
@@ -50678,10 +50733,9 @@ func ListRoleAssignmentsOnAccessProvider(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsOnAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsOnAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50689,10 +50743,10 @@ func ListRoleAssignmentsOnAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignmentsOnDataObject.
+// The query executed by ListRoleAssignmentsOnDataObject.
 const ListRoleAssignmentsOnDataObject_Operation = `
 query ListRoleAssignmentsOnDataObject ($doId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	dataObject(id: $doId) {
@@ -50763,7 +50817,7 @@ func ListRoleAssignmentsOnDataObject(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsOnDataObjectResponse, error) {
+) (data_ *ListRoleAssignmentsOnDataObjectResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnDataObject",
 		Query:  ListRoleAssignmentsOnDataObject_Operation,
@@ -50775,10 +50829,9 @@ func ListRoleAssignmentsOnDataObject(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsOnDataObjectResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsOnDataObjectResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50786,10 +50839,10 @@ func ListRoleAssignmentsOnDataObject(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignmentsOnDataSource.
+// The query executed by ListRoleAssignmentsOnDataSource.
 const ListRoleAssignmentsOnDataSource_Operation = `
 query ListRoleAssignmentsOnDataSource ($dsId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	dataSource(id: $dsId) {
@@ -50868,7 +50921,7 @@ func ListRoleAssignmentsOnDataSource(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsOnDataSourceResponse, error) {
+) (data_ *ListRoleAssignmentsOnDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnDataSource",
 		Query:  ListRoleAssignmentsOnDataSource_Operation,
@@ -50880,10 +50933,9 @@ func ListRoleAssignmentsOnDataSource(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsOnDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsOnDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -50891,10 +50943,10 @@ func ListRoleAssignmentsOnDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignmentsOnIdentityStore.
+// The query executed by ListRoleAssignmentsOnIdentityStore.
 const ListRoleAssignmentsOnIdentityStore_Operation = `
 query ListRoleAssignmentsOnIdentityStore ($isId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	identityStore(id: $isId) {
@@ -50978,7 +51030,7 @@ func ListRoleAssignmentsOnIdentityStore(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsOnIdentityStoreResponse, error) {
+) (data_ *ListRoleAssignmentsOnIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnIdentityStore",
 		Query:  ListRoleAssignmentsOnIdentityStore_Operation,
@@ -50990,10 +51042,9 @@ func ListRoleAssignmentsOnIdentityStore(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsOnIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsOnIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51001,10 +51052,10 @@ func ListRoleAssignmentsOnIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoleAssignmentsOnUser.
+// The query executed by ListRoleAssignmentsOnUser.
 const ListRoleAssignmentsOnUser_Operation = `
 query ListRoleAssignmentsOnUser ($userId: ID!, $after: String, $limit: Int, $filter: RoleAssignmentFilterInput, $order: [RoleAssignmentOrderInput!]) {
 	user(id: $userId) {
@@ -51092,7 +51143,7 @@ func ListRoleAssignmentsOnUser(
 	limit *int,
 	filter *RoleAssignmentFilterInput,
 	order []RoleAssignmentOrderInput,
-) (*ListRoleAssignmentsOnUserResponse, error) {
+) (data_ *ListRoleAssignmentsOnUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoleAssignmentsOnUser",
 		Query:  ListRoleAssignmentsOnUser_Operation,
@@ -51104,10 +51155,9 @@ func ListRoleAssignmentsOnUser(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRoleAssignmentsOnUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRoleAssignmentsOnUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51115,10 +51165,10 @@ func ListRoleAssignmentsOnUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by ListRoles.
+// The query executed by ListRoles.
 const ListRoles_Operation = `
 query ListRoles ($after: String, $limit: Int, $filter: RoleFilterInput, $order: [RoleOrderByInput!]) {
 	roles(after: $after, limit: $limit, filter: $filter, order: $order) {
@@ -51155,7 +51205,7 @@ func ListRoles(
 	limit *int,
 	filter *RoleFilterInput,
 	order []RoleOrderByInput,
-) (*ListRolesResponse, error) {
+) (data_ *ListRolesResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "ListRoles",
 		Query:  ListRoles_Operation,
@@ -51166,10 +51216,9 @@ func ListRoles(
 			Order:  order,
 		},
 	}
-	var err_ error
 
-	var data_ ListRolesResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &ListRolesResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51177,10 +51226,10 @@ func ListRoles(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by RemoveAsRaitoUser.
+// The mutation executed by RemoveAsRaitoUser.
 const RemoveAsRaitoUser_Operation = `
 mutation RemoveAsRaitoUser ($uId: ID!) {
 	removeAsRaitoUser(id: $uId) {
@@ -51214,7 +51263,7 @@ func RemoveAsRaitoUser(
 	ctx_ context.Context,
 	client_ graphql.Client,
 	uId string,
-) (*RemoveAsRaitoUserResponse, error) {
+) (data_ *RemoveAsRaitoUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "RemoveAsRaitoUser",
 		Query:  RemoveAsRaitoUser_Operation,
@@ -51222,10 +51271,9 @@ func RemoveAsRaitoUser(
 			UId: uId,
 		},
 	}
-	var err_ error
 
-	var data_ RemoveAsRaitoUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &RemoveAsRaitoUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51233,10 +51281,10 @@ func RemoveAsRaitoUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by RemoveIdentityStoreFromDataSource.
+// The mutation executed by RemoveIdentityStoreFromDataSource.
 const RemoveIdentityStoreFromDataSource_Operation = `
 mutation RemoveIdentityStoreFromDataSource ($dsId: ID!, $isId: ID!) {
 	removeIdentityStoreFromDataSource(dsId: $dsId, isId: $isId) {
@@ -51272,7 +51320,7 @@ func RemoveIdentityStoreFromDataSource(
 	client_ graphql.Client,
 	dsId string,
 	isId string,
-) (*RemoveIdentityStoreFromDataSourceResponse, error) {
+) (data_ *RemoveIdentityStoreFromDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "RemoveIdentityStoreFromDataSource",
 		Query:  RemoveIdentityStoreFromDataSource_Operation,
@@ -51281,10 +51329,9 @@ func RemoveIdentityStoreFromDataSource(
 			IsId: isId,
 		},
 	}
-	var err_ error
 
-	var data_ RemoveIdentityStoreFromDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &RemoveIdentityStoreFromDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51292,10 +51339,10 @@ func RemoveIdentityStoreFromDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by SetGlobalRolesForUser.
+// The mutation executed by SetGlobalRolesForUser.
 const SetGlobalRolesForUser_Operation = `
 mutation SetGlobalRolesForUser ($user: ID!, $roles: [ID!]!) {
 	setGlobalRolesForUser(user: $user, roles: $roles) {
@@ -51316,7 +51363,7 @@ func SetGlobalRolesForUser(
 	client_ graphql.Client,
 	user string,
 	roles []string,
-) (*SetGlobalRolesForUserResponse, error) {
+) (data_ *SetGlobalRolesForUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "SetGlobalRolesForUser",
 		Query:  SetGlobalRolesForUser_Operation,
@@ -51325,10 +51372,9 @@ func SetGlobalRolesForUser(
 			Roles: roles,
 		},
 	}
-	var err_ error
 
-	var data_ SetGlobalRolesForUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &SetGlobalRolesForUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51336,10 +51382,10 @@ func SetGlobalRolesForUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by SetUserPassword.
+// The mutation executed by SetUserPassword.
 const SetUserPassword_Operation = `
 mutation SetUserPassword ($uId: ID!, $password: String!) {
 	setPassword(id: $uId, password: $password) {
@@ -51374,7 +51420,7 @@ func SetUserPassword(
 	client_ graphql.Client,
 	uId string,
 	password string,
-) (*SetUserPasswordResponse, error) {
+) (data_ *SetUserPasswordResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "SetUserPassword",
 		Query:  SetUserPassword_Operation,
@@ -51383,10 +51429,9 @@ func SetUserPassword(
 			Password: password,
 		},
 	}
-	var err_ error
 
-	var data_ SetUserPasswordResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &SetUserPasswordResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51394,10 +51439,10 @@ func SetUserPassword(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UnassignGlobalRole.
+// The mutation executed by UnassignGlobalRole.
 const UnassignGlobalRole_Operation = `
 mutation UnassignGlobalRole ($role: ID!, $to: [ID!]!) {
 	unassignGlobalRole(role: $role, to: $to) {
@@ -51425,7 +51470,7 @@ func UnassignGlobalRole(
 	client_ graphql.Client,
 	role string,
 	to []string,
-) (*UnassignGlobalRoleResponse, error) {
+) (data_ *UnassignGlobalRoleResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UnassignGlobalRole",
 		Query:  UnassignGlobalRole_Operation,
@@ -51434,10 +51479,9 @@ func UnassignGlobalRole(
 			To:   to,
 		},
 	}
-	var err_ error
 
-	var data_ UnassignGlobalRoleResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UnassignGlobalRoleResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51445,10 +51489,10 @@ func UnassignGlobalRole(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UnassignRoleFromAccessProvider.
+// The mutation executed by UnassignRoleFromAccessProvider.
 const UnassignRoleFromAccessProvider_Operation = `
 mutation UnassignRoleFromAccessProvider ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	unassignRoleFromAccessProvider(role: $role, resourceId: $resourceId, to: $to) {
@@ -51477,7 +51521,7 @@ func UnassignRoleFromAccessProvider(
 	role string,
 	resourceId string,
 	to []string,
-) (*UnassignRoleFromAccessProviderResponse, error) {
+) (data_ *UnassignRoleFromAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromAccessProvider",
 		Query:  UnassignRoleFromAccessProvider_Operation,
@@ -51487,10 +51531,9 @@ func UnassignRoleFromAccessProvider(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ UnassignRoleFromAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UnassignRoleFromAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51498,10 +51541,10 @@ func UnassignRoleFromAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UnassignRoleFromDataObject.
+// The mutation executed by UnassignRoleFromDataObject.
 const UnassignRoleFromDataObject_Operation = `
 mutation UnassignRoleFromDataObject ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	unassignRoleFromDataObject(role: $role, resourceId: $resourceId, to: $to) {
@@ -51530,7 +51573,7 @@ func UnassignRoleFromDataObject(
 	role string,
 	resourceId string,
 	to []string,
-) (*UnassignRoleFromDataObjectResponse, error) {
+) (data_ *UnassignRoleFromDataObjectResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromDataObject",
 		Query:  UnassignRoleFromDataObject_Operation,
@@ -51540,10 +51583,9 @@ func UnassignRoleFromDataObject(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ UnassignRoleFromDataObjectResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UnassignRoleFromDataObjectResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51551,10 +51593,10 @@ func UnassignRoleFromDataObject(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UnassignRoleFromDataSource.
+// The mutation executed by UnassignRoleFromDataSource.
 const UnassignRoleFromDataSource_Operation = `
 mutation UnassignRoleFromDataSource ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	unassignRoleFromDataSource(role: $role, resourceId: $resourceId, to: $to) {
@@ -51583,7 +51625,7 @@ func UnassignRoleFromDataSource(
 	role string,
 	resourceId string,
 	to []string,
-) (*UnassignRoleFromDataSourceResponse, error) {
+) (data_ *UnassignRoleFromDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromDataSource",
 		Query:  UnassignRoleFromDataSource_Operation,
@@ -51593,10 +51635,9 @@ func UnassignRoleFromDataSource(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ UnassignRoleFromDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UnassignRoleFromDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51604,10 +51645,10 @@ func UnassignRoleFromDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UnassignRoleFromIdentityStore.
+// The mutation executed by UnassignRoleFromIdentityStore.
 const UnassignRoleFromIdentityStore_Operation = `
 mutation UnassignRoleFromIdentityStore ($role: ID!, $resourceId: ID!, $to: [ID!]!) {
 	unassignRoleFromIdentityStore(role: $role, resourceId: $resourceId, to: $to) {
@@ -51636,7 +51677,7 @@ func UnassignRoleFromIdentityStore(
 	role string,
 	resourceId string,
 	to []string,
-) (*UnassignRoleFromIdentityStoreResponse, error) {
+) (data_ *UnassignRoleFromIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UnassignRoleFromIdentityStore",
 		Query:  UnassignRoleFromIdentityStore_Operation,
@@ -51646,10 +51687,9 @@ func UnassignRoleFromIdentityStore(
 			To:         to,
 		},
 	}
-	var err_ error
 
-	var data_ UnassignRoleFromIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UnassignRoleFromIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51657,10 +51697,10 @@ func UnassignRoleFromIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateAccessProvider.
+// The mutation executed by UpdateAccessProvider.
 const UpdateAccessProvider_Operation = `
 mutation UpdateAccessProvider ($id: ID!, $ap: AccessProviderInput!, $overrideLocks: Boolean) {
 	updateAccessProvider(id: $id, input: $ap, enableAdditionalAccessRequests: false, overrideLocks: $overrideLocks) {
@@ -51783,7 +51823,7 @@ func UpdateAccessProvider(
 	id string,
 	ap AccessProviderInput,
 	overrideLocks *bool,
-) (*UpdateAccessProviderResponse, error) {
+) (data_ *UpdateAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateAccessProvider",
 		Query:  UpdateAccessProvider_Operation,
@@ -51793,10 +51833,9 @@ func UpdateAccessProvider(
 			OverrideLocks: overrideLocks,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51804,10 +51843,10 @@ func UpdateAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateDataSource.
+// The mutation executed by UpdateDataSource.
 const UpdateDataSource_Operation = `
 mutation UpdateDataSource ($id: ID!, $input: DataSourceInput!) {
 	updateDataSource(id: $id, input: $input) {
@@ -51843,7 +51882,7 @@ func UpdateDataSource(
 	client_ graphql.Client,
 	id string,
 	input DataSourceInput,
-) (*UpdateDataSourceResponse, error) {
+) (data_ *UpdateDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateDataSource",
 		Query:  UpdateDataSource_Operation,
@@ -51852,10 +51891,9 @@ func UpdateDataSource(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51863,10 +51901,10 @@ func UpdateDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateGrantCategory.
+// The mutation executed by UpdateGrantCategory.
 const UpdateGrantCategory_Operation = `
 mutation UpdateGrantCategory ($id: ID!, $input: GrantCategoryInput!) {
 	updateGrantCategory(id: $id, input: $input) {
@@ -51929,7 +51967,7 @@ func UpdateGrantCategory(
 	client_ graphql.Client,
 	id string,
 	input GrantCategoryInput,
-) (*UpdateGrantCategoryResponse, error) {
+) (data_ *UpdateGrantCategoryResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateGrantCategory",
 		Query:  UpdateGrantCategory_Operation,
@@ -51938,10 +51976,9 @@ func UpdateGrantCategory(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateGrantCategoryResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateGrantCategoryResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -51949,10 +51986,10 @@ func UpdateGrantCategory(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateIdentityStore.
+// The mutation executed by UpdateIdentityStore.
 const UpdateIdentityStore_Operation = `
 mutation UpdateIdentityStore ($id: ID!, $input: IdentityStoreInput!) {
 	updateIdentityStore(id: $id, input: $input) {
@@ -51990,7 +52027,7 @@ func UpdateIdentityStore(
 	client_ graphql.Client,
 	id string,
 	input IdentityStoreInput,
-) (*UpdateIdentityStoreResponse, error) {
+) (data_ *UpdateIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateIdentityStore",
 		Query:  UpdateIdentityStore_Operation,
@@ -51999,10 +52036,9 @@ func UpdateIdentityStore(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52010,10 +52046,10 @@ func UpdateIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateIdentityStoreMasterFlag.
+// The mutation executed by UpdateIdentityStoreMasterFlag.
 const UpdateIdentityStoreMasterFlag_Operation = `
 mutation UpdateIdentityStoreMasterFlag ($id: ID!, $master: Boolean!) {
 	updateIdentityStoreMasterFlag(id: $id, master: $master) {
@@ -52051,7 +52087,7 @@ func UpdateIdentityStoreMasterFlag(
 	client_ graphql.Client,
 	id string,
 	master bool,
-) (*UpdateIdentityStoreMasterFlagResponse, error) {
+) (data_ *UpdateIdentityStoreMasterFlagResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateIdentityStoreMasterFlag",
 		Query:  UpdateIdentityStoreMasterFlag_Operation,
@@ -52060,10 +52096,9 @@ func UpdateIdentityStoreMasterFlag(
 			Master: master,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateIdentityStoreMasterFlagResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateIdentityStoreMasterFlagResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52071,10 +52106,10 @@ func UpdateIdentityStoreMasterFlag(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateRoleAssigneesOnAccessProvider.
+// The mutation executed by UpdateRoleAssigneesOnAccessProvider.
 const UpdateRoleAssigneesOnAccessProvider_Operation = `
 mutation UpdateRoleAssigneesOnAccessProvider ($apId: ID!, $roleID: ID!, $assignees: [ID!]!) {
 	updateRoleAssigneesOnAccessProvider(accessProvider: $apId, roleInput: {roleID:$roleID,assignees:$assignees}) {
@@ -52103,7 +52138,7 @@ func UpdateRoleAssigneesOnAccessProvider(
 	apId string,
 	roleID string,
 	assignees []string,
-) (*UpdateRoleAssigneesOnAccessProviderResponse, error) {
+) (data_ *UpdateRoleAssigneesOnAccessProviderResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnAccessProvider",
 		Query:  UpdateRoleAssigneesOnAccessProvider_Operation,
@@ -52113,10 +52148,9 @@ func UpdateRoleAssigneesOnAccessProvider(
 			Assignees: assignees,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateRoleAssigneesOnAccessProviderResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateRoleAssigneesOnAccessProviderResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52124,10 +52158,10 @@ func UpdateRoleAssigneesOnAccessProvider(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateRoleAssigneesOnDataObject.
+// The mutation executed by UpdateRoleAssigneesOnDataObject.
 const UpdateRoleAssigneesOnDataObject_Operation = `
 mutation UpdateRoleAssigneesOnDataObject ($doId: ID!, $roleID: ID!, $assignees: [ID!]!) {
 	updateRoleAssigneesOnDataObject(dataObject: $doId, roleInput: {roleID:$roleID,assignees:$assignees}) {
@@ -52156,7 +52190,7 @@ func UpdateRoleAssigneesOnDataObject(
 	doId string,
 	roleID string,
 	assignees []string,
-) (*UpdateRoleAssigneesOnDataObjectResponse, error) {
+) (data_ *UpdateRoleAssigneesOnDataObjectResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnDataObject",
 		Query:  UpdateRoleAssigneesOnDataObject_Operation,
@@ -52166,10 +52200,9 @@ func UpdateRoleAssigneesOnDataObject(
 			Assignees: assignees,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateRoleAssigneesOnDataObjectResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateRoleAssigneesOnDataObjectResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52177,10 +52210,10 @@ func UpdateRoleAssigneesOnDataObject(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateRoleAssigneesOnDataSource.
+// The mutation executed by UpdateRoleAssigneesOnDataSource.
 const UpdateRoleAssigneesOnDataSource_Operation = `
 mutation UpdateRoleAssigneesOnDataSource ($dsId: ID!, $roleID: ID!, $assignees: [ID!]!) {
 	updateRoleAssigneesOnDataSource(dataSource: $dsId, roleInput: {roleID:$roleID,assignees:$assignees}) {
@@ -52209,7 +52242,7 @@ func UpdateRoleAssigneesOnDataSource(
 	dsId string,
 	roleID string,
 	assignees []string,
-) (*UpdateRoleAssigneesOnDataSourceResponse, error) {
+) (data_ *UpdateRoleAssigneesOnDataSourceResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnDataSource",
 		Query:  UpdateRoleAssigneesOnDataSource_Operation,
@@ -52219,10 +52252,9 @@ func UpdateRoleAssigneesOnDataSource(
 			Assignees: assignees,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateRoleAssigneesOnDataSourceResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateRoleAssigneesOnDataSourceResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52230,10 +52262,10 @@ func UpdateRoleAssigneesOnDataSource(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateRoleAssigneesOnIdentityStore.
+// The mutation executed by UpdateRoleAssigneesOnIdentityStore.
 const UpdateRoleAssigneesOnIdentityStore_Operation = `
 mutation UpdateRoleAssigneesOnIdentityStore ($isId: ID!, $roleID: ID!, $assignees: [ID!]!) {
 	updateRoleAssigneesOnIdentityStore(identityStore: $isId, roleInput: {roleID:$roleID,assignees:$assignees}) {
@@ -52262,7 +52294,7 @@ func UpdateRoleAssigneesOnIdentityStore(
 	isId string,
 	roleID string,
 	assignees []string,
-) (*UpdateRoleAssigneesOnIdentityStoreResponse, error) {
+) (data_ *UpdateRoleAssigneesOnIdentityStoreResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateRoleAssigneesOnIdentityStore",
 		Query:  UpdateRoleAssigneesOnIdentityStore_Operation,
@@ -52272,10 +52304,9 @@ func UpdateRoleAssigneesOnIdentityStore(
 			Assignees: assignees,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateRoleAssigneesOnIdentityStoreResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateRoleAssigneesOnIdentityStoreResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52283,10 +52314,10 @@ func UpdateRoleAssigneesOnIdentityStore(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }
 
-// The query or mutation executed by UpdateUser.
+// The mutation executed by UpdateUser.
 const UpdateUser_Operation = `
 mutation UpdateUser ($uId: ID!, $input: UserInput!) {
 	updateUser(id: $uId, input: $input) {
@@ -52321,7 +52352,7 @@ func UpdateUser(
 	client_ graphql.Client,
 	uId string,
 	input UserInput,
-) (*UpdateUserResponse, error) {
+) (data_ *UpdateUserResponse, err_ error) {
 	req_ := &graphql.Request{
 		OpName: "UpdateUser",
 		Query:  UpdateUser_Operation,
@@ -52330,10 +52361,9 @@ func UpdateUser(
 			Input: input,
 		},
 	}
-	var err_ error
 
-	var data_ UpdateUserResponse
-	resp_ := &graphql.Response{Data: &data_}
+	data_ = &UpdateUserResponse{}
+	resp_ := &graphql.Response{Data: data_}
 
 	err_ = client_.MakeRequest(
 		ctx_,
@@ -52341,5 +52371,5 @@ func UpdateUser(
 		resp_,
 	)
 
-	return &data_, err_
+	return data_, err_
 }

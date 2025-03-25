@@ -149,7 +149,7 @@ func (c *RoleClient) ListRoleAssignmentsOnIdentityStore(ctx context.Context, ide
 
 		switch is := output.IdentityStore.(type) {
 		case *schema.ListRoleAssignmentsOnIdentityStoreIdentityStore:
-			return &is.RoleAssignments.RoleAssignmentPage.PageInfo.PageInfo, is.RoleAssignments.RoleAssignmentPage.Edges, nil
+			return &is.RoleAssignments.PageInfo.PageInfo, is.RoleAssignments.Edges, nil
 		case *schema.ListRoleAssignmentsOnIdentityStoreIdentityStoreAlreadyExistsError:
 			return nil, nil, types.NewErrAlreadyExists("listRoleAssignmentsOnIdentityStore", is.Message)
 		case *schema.ListRoleAssignmentsOnIdentityStoreIdentityStoreNotFoundError:
@@ -181,7 +181,7 @@ func (c *RoleClient) ListRoleAssignmentsOnDataObject(ctx context.Context, object
 			return nil, nil, types.NewErrClient(err)
 		}
 
-		return &output.DataObject.RoleAssignments.RoleAssignmentPage.PageInfo.PageInfo, output.DataObject.RoleAssignments.RoleAssignmentPage.Edges, nil
+		return &output.DataObject.RoleAssignments.PageInfo.PageInfo, output.DataObject.RoleAssignments.Edges, nil
 	}
 
 	return internal.PaginationExecutor(ctx, loadPageFn, roleAssignmentsEdgeFn)
@@ -206,7 +206,7 @@ func (c *RoleClient) ListRoleAssignmentsOnDataSource(ctx context.Context, dataSo
 
 		switch ds := output.DataSource.(type) {
 		case *schema.ListRoleAssignmentsOnDataSourceDataSource:
-			return &ds.RoleAssignments.RoleAssignmentPage.PageInfo.PageInfo, ds.RoleAssignments.RoleAssignmentPage.Edges, nil
+			return &ds.RoleAssignments.PageInfo.PageInfo, ds.RoleAssignments.Edges, nil
 		case *schema.ListRoleAssignmentsOnDataSourceDataSourcePermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("listRoleAssignmentsOnDataSource", ds.Message)
 		case *schema.ListRoleAssignmentsOnDataSourceDataSourceNotFoundError:
@@ -238,7 +238,7 @@ func (c *RoleClient) ListRoleAssignmentsOnAccessProvider(ctx context.Context, ac
 
 		switch ap := output.AccessProvider.(type) {
 		case *schema.ListRoleAssignmentsOnAccessProviderAccessProvider:
-			return &ap.RoleAssignments.RoleAssignmentPage.PageInfo.PageInfo, ap.RoleAssignments.RoleAssignmentPage.Edges, nil
+			return &ap.RoleAssignments.PageInfo.PageInfo, ap.RoleAssignments.Edges, nil
 		case *schema.ListRoleAssignmentsOnAccessProviderAccessProviderPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("listRoleAssignmentsOnAccessProvider", ap.Message)
 		case *schema.ListRoleAssignmentsOnAccessProviderAccessProviderNotFoundError:
@@ -270,7 +270,7 @@ func (c *RoleClient) ListRoleAssignmentsOnUser(ctx context.Context, userId strin
 
 		switch r := output.User.(type) {
 		case *schema.ListRoleAssignmentsOnUserUser:
-			return &r.RoleAssignments.RoleAssignmentPage.PageInfo.PageInfo, r.RoleAssignments.RoleAssignmentPage.Edges, nil
+			return &r.RoleAssignments.PageInfo.PageInfo, r.RoleAssignments.Edges, nil
 		case *schema.ListRoleAssignmentsOnUserUserPermissionDeniedError:
 			return nil, nil, types.NewErrPermissionDenied("listRoleAssignmentsOnUser", r.Message)
 		case *schema.ListRoleAssignmentsOnUserUserNotFoundError:
