@@ -14,7 +14,7 @@ require (
 	github.com/Khan/genqlient v0.8.0
 	github.com/aws/aws-sdk-go-v2 v1.36.3
 	github.com/aws/aws-sdk-go-v2/config v1.29.10
-	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.51.3
+	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v1.51.4
 	github.com/aws/smithy-go v1.22.3
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/tools v0.31.0
