@@ -34,10 +34,11 @@ query ListDataObjects($after: String, $limit: Int, $filter: DataObjectFilterInpu
     }
 }
 
-query DataObjectByExternalId($fullname: String!, $dataSourceId: ID!) {
+query DataObjectByExternalId($fullname: String!, $dataSourceId: ID!, $includeDataSource: Boolean!) {
     dataObjects(filter: {
         fullNames: [$fullname]
         dataSources: [$dataSourceId]
+        includeDataSource: $includeDataSource
     }) {
         edges {
             node {

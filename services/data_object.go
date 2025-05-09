@@ -86,9 +86,24 @@ func (c *DataObjectClient) ListDataObjects(ctx context.Context, ops ...func(opti
 	return internal.PaginationExecutor(ctx, loadPageFn, edgeFn)
 }
 
+type DataObjectByExternalIdOptions struct {
+	IncludeDataSource bool
+}
+
+func WithDataObjectByExternalIdIncludeDataSource() func(options *DataObjectByExternalIdOptions) {
+	return func(options *DataObjectByExternalIdOptions) {
+		options.IncludeDataSource = true
+	}
+}
+
 // GetDataObjectIdByName returns the ID of the DataObject with the given name and dataSource.
-func (c *DataObjectClient) GetDataObjectIdByName(ctx context.Context, fullname string, dataSource string) (string, error) {
-	result, err := schema.DataObjectByExternalId(ctx, c.client, fullname, dataSource)
+func (c *DataObjectClient) GetDataObjectIdByName(ctx context.Context, fullname string, dataSource string, ops ...func(options *DataObjectByExternalIdOptions)) (string, error) {
+	options := DataObjectByExternalIdOptions{}
+	for _, op := range ops {
+		op(&options)
+	}
+
+	result, err := schema.DataObjectByExternalId(ctx, c.client, fullname, dataSource, options.IncludeDataSource)
 	if err != nil {
 		return "", types.NewErrClient(err)
 	}
