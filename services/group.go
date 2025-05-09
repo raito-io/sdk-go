@@ -55,7 +55,7 @@ func WithGroupListFilter(input *types.GroupFilterInput) func(options *GroupListO
 // A filter can be specified with WithGroupListFilter
 // A channel is returned that can be used to receive the list of GroupListItem
 // To close the channel ensure to cancel the context
-func (g GroupClient) ListGroups(ctx context.Context, ops ...func(options *GroupListOptions)) <-chan types.ListItem[types.Group] {
+func (g GroupClient) ListGroups(ctx context.Context, ops ...func(options *GroupListOptions)) <-chan types.ListItem[types.Group] { //nolint:dupl
 	options := GroupListOptions{}
 	for _, op := range ops {
 		op(&options)
