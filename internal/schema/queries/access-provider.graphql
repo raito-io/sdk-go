@@ -34,6 +34,8 @@ fragment AccessProvider on AccessProvider {
     syncData {
        ...SyncData
     }
+
+    currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 
 fragment SyncData on SyncData {

@@ -134,26 +134,27 @@ func (v *AbacComparisonExpressionUnaryExpressionInput) GetOperand() AbacComparis
 
 // AccessProvider includes the GraphQL fields of AccessProvider requested by the fragment AccessProvider.
 type AccessProvider struct {
-	Id                string                                      `json:"id"`
-	IsSample          bool                                        `json:"isSample"`
-	CreatedAt         time.Time                                   `json:"createdAt"`
-	ModifiedAt        time.Time                                   `json:"modifiedAt"`
-	Name              string                                      `json:"name"`
-	NamingHint        *string                                     `json:"namingHint"`
-	State             models.AccessProviderState                  `json:"state"`
-	Action            models.AccessProviderAction                 `json:"action"`
-	Category          *AccessProviderCategoryGrantCategory        `json:"category"`
-	Description       string                                      `json:"description"`
-	PolicyRule        *string                                     `json:"policyRule"`
-	External          bool                                        `json:"external"`
-	WhatType          WhoAndWhatType                              `json:"whatType"`
-	WhatAbacRule      *AccessProviderWhatAbacRule                 `json:"whatAbacRule"`
-	WhoType           WhoAndWhatType                              `json:"whoType"`
-	WhoAbacRule       *AccessProviderWhoAbacRule                  `json:"whoAbacRule"`
-	NotInternalizable bool                                        `json:"notInternalizable"`
-	Complete          *bool                                       `json:"complete"`
-	Locks             []AccessProviderLocksAccessProviderLockData `json:"locks"`
-	SyncData          []AccessProviderSyncData                    `json:"syncData"`
+	Id                   string                                      `json:"id"`
+	IsSample             bool                                        `json:"isSample"`
+	CreatedAt            time.Time                                   `json:"createdAt"`
+	ModifiedAt           time.Time                                   `json:"modifiedAt"`
+	Name                 string                                      `json:"name"`
+	NamingHint           *string                                     `json:"namingHint"`
+	State                models.AccessProviderState                  `json:"state"`
+	Action               models.AccessProviderAction                 `json:"action"`
+	Category             *AccessProviderCategoryGrantCategory        `json:"category"`
+	Description          string                                      `json:"description"`
+	PolicyRule           *string                                     `json:"policyRule"`
+	External             bool                                        `json:"external"`
+	WhatType             WhoAndWhatType                              `json:"whatType"`
+	WhatAbacRule         *AccessProviderWhatAbacRule                 `json:"whatAbacRule"`
+	WhoType              WhoAndWhatType                              `json:"whoType"`
+	WhoAbacRule          *AccessProviderWhoAbacRule                  `json:"whoAbacRule"`
+	NotInternalizable    bool                                        `json:"notInternalizable"`
+	Complete             *bool                                       `json:"complete"`
+	Locks                []AccessProviderLocksAccessProviderLockData `json:"locks"`
+	SyncData             []AccessProviderSyncData                    `json:"syncData"`
+	CurrentUserPartOfWho *bool                                       `json:"currentUserPartOfWho"`
 }
 
 // GetId returns AccessProvider.Id, and is useful for accessing the field via an interface.
@@ -215,6 +216,9 @@ func (v *AccessProvider) GetLocks() []AccessProviderLocksAccessProviderLockData 
 
 // GetSyncData returns AccessProvider.SyncData, and is useful for accessing the field via an interface.
 func (v *AccessProvider) GetSyncData() []AccessProviderSyncData { return v.SyncData }
+
+// GetCurrentUserPartOfWho returns AccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *AccessProvider) GetCurrentUserPartOfWho() *bool { return v.CurrentUserPartOfWho }
 
 // AccessProviderCategoryGrantCategory includes the requested fields of the GraphQL type GrantCategory.
 type AccessProviderCategoryGrantCategory struct {
@@ -868,6 +872,11 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetSyncData() []AccessPr
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns AccessProviderPageEdgesEdgeNodeAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -935,6 +944,8 @@ type __premarshalAccessProviderPageEdgesEdgeNodeAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) MarshalJSON() ([]byte, error) {
@@ -969,6 +980,7 @@ func (v *AccessProviderPageEdgesEdgeNodeAccessProvider) __premarshalJSON() (*__p
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -8859,6 +8871,11 @@ func (v *AccessWhatAccessProviderItemAccessProvider) GetSyncData() []AccessProvi
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns AccessWhatAccessProviderItemAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *AccessWhatAccessProviderItemAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *AccessWhatAccessProviderItemAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -8924,6 +8941,8 @@ type __premarshalAccessWhatAccessProviderItemAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *AccessWhatAccessProviderItemAccessProvider) MarshalJSON() ([]byte, error) {
@@ -8957,6 +8976,7 @@ func (v *AccessWhatAccessProviderItemAccessProvider) __premarshalJSON() (*__prem
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -9107,6 +9127,11 @@ func (v *ActivateAccessProviderActivateAccessProvider) GetSyncData() []AccessPro
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns ActivateAccessProviderActivateAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *ActivateAccessProviderActivateAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *ActivateAccessProviderActivateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -9174,6 +9199,8 @@ type __premarshalActivateAccessProviderActivateAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *ActivateAccessProviderActivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -9208,6 +9235,7 @@ func (v *ActivateAccessProviderActivateAccessProvider) __premarshalJSON() (*__pr
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -12172,6 +12200,11 @@ func (v *CreateAccessProviderCreateAccessProvider) GetSyncData() []AccessProvide
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns CreateAccessProviderCreateAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *CreateAccessProviderCreateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -12239,6 +12272,8 @@ type __premarshalCreateAccessProviderCreateAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *CreateAccessProviderCreateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -12273,6 +12308,7 @@ func (v *CreateAccessProviderCreateAccessProvider) __premarshalJSON() (*__premar
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -12397,6 +12433,11 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -12462,6 +12503,8 @@ type __premarshalCreateAccessProviderCreateAccessProviderAccessProviderWithOptio
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -12495,6 +12538,7 @@ func (v *CreateAccessProviderCreateAccessProviderAccessProviderWithOptionalAcces
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -20483,6 +20527,11 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) GetSyncData() []Acces
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns DeactivateAccessProviderDeactivateAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *DeactivateAccessProviderDeactivateAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *DeactivateAccessProviderDeactivateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -20550,6 +20599,8 @@ type __premarshalDeactivateAccessProviderDeactivateAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *DeactivateAccessProviderDeactivateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -20584,6 +20635,7 @@ func (v *DeactivateAccessProviderDeactivateAccessProvider) __premarshalJSON() (*
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -21071,6 +21123,11 @@ func (v *DeleteAccessProviderDeleteAccessProvider) GetSyncData() []AccessProvide
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns DeleteAccessProviderDeleteAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *DeleteAccessProviderDeleteAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *DeleteAccessProviderDeleteAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -21138,6 +21195,8 @@ type __premarshalDeleteAccessProviderDeleteAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *DeleteAccessProviderDeleteAccessProvider) MarshalJSON() ([]byte, error) {
@@ -21172,6 +21231,7 @@ func (v *DeleteAccessProviderDeleteAccessProvider) __premarshalJSON() (*__premar
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -22904,6 +22964,11 @@ func (v *GetAccessProviderAccessProvider) GetSyncData() []AccessProviderSyncData
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns GetAccessProviderAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *GetAccessProviderAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *GetAccessProviderAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -22971,6 +23036,8 @@ type __premarshalGetAccessProviderAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *GetAccessProviderAccessProvider) MarshalJSON() ([]byte, error) {
@@ -23005,6 +23072,7 @@ func (v *GetAccessProviderAccessProvider) __premarshalJSON() (*__premarshalGetAc
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -43546,6 +43614,11 @@ func (v *UpdateAccessProviderUpdateAccessProvider) GetSyncData() []AccessProvide
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns UpdateAccessProviderUpdateAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *UpdateAccessProviderUpdateAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -43613,6 +43686,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProvider struct {
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProvider) MarshalJSON() ([]byte, error) {
@@ -43647,6 +43722,7 @@ func (v *UpdateAccessProviderUpdateAccessProvider) __premarshalJSON() (*__premar
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -43771,6 +43847,11 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	return v.AccessProvider.SyncData
 }
 
+// GetCurrentUserPartOfWho returns UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider.CurrentUserPartOfWho, and is useful for accessing the field via an interface.
+func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) GetCurrentUserPartOfWho() *bool {
+	return v.AccessProvider.CurrentUserPartOfWho
+}
+
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -43836,6 +43917,8 @@ type __premarshalUpdateAccessProviderUpdateAccessProviderAccessProviderWithOptio
 	Locks []AccessProviderLocksAccessProviderLockData `json:"locks"`
 
 	SyncData []AccessProviderSyncData `json:"syncData"`
+
+	CurrentUserPartOfWho *bool `json:"currentUserPartOfWho"`
 }
 
 func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAccessRequestsAccessProvider) MarshalJSON() ([]byte, error) {
@@ -43869,6 +43952,7 @@ func (v *UpdateAccessProviderUpdateAccessProviderAccessProviderWithOptionalAcces
 	retval.Complete = v.AccessProvider.Complete
 	retval.Locks = v.AccessProvider.Locks
 	retval.SyncData = v.AccessProvider.SyncData
+	retval.CurrentUserPartOfWho = v.AccessProvider.CurrentUserPartOfWho
 	return &retval, nil
 }
 
@@ -49478,6 +49562,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -49935,6 +50020,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
@@ -50529,6 +50615,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -50666,6 +50753,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment NotFoundError on NotFoundError {
 	message
@@ -50978,6 +51066,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
@@ -51148,6 +51237,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment GrantCategory on GrantCategory {
 	id
@@ -52078,6 +52168,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment GrantCategory on GrantCategory {
 	id
@@ -53713,6 +53804,7 @@ fragment AccessProvider on AccessProvider {
 	syncData {
 		... SyncData
 	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
 }
 fragment PermissionDeniedError on PermissionDeniedError {
 	message
