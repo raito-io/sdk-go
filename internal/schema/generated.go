@@ -2657,6 +2657,11 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetDataSource()
 	return v.DataObject.DataSource
 }
 
+// GetParent returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Parent, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetParent() *DataObjectParentDataObject {
+	return v.DataObject.Parent
+}
+
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -2700,6 +2705,8 @@ type __premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject struct {
 	Description string `json:"description"`
 
 	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -2722,6 +2729,7 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) __premarshalJSO
 	retval.Deleted = v.DataObject.Deleted
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
+	retval.Parent = v.DataObject.Parent
 	return &retval, nil
 }
 
@@ -6731,6 +6739,11 @@ func (v *AccessProviderWhatListItemDataObject) GetDataSource() *DataObjectDataSo
 	return v.DataObject.DataSource
 }
 
+// GetParent returns AccessProviderWhatListItemDataObject.Parent, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListItemDataObject) GetParent() *DataObjectParentDataObject {
+	return v.DataObject.Parent
+}
+
 func (v *AccessProviderWhatListItemDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -6772,6 +6785,8 @@ type __premarshalAccessProviderWhatListItemDataObject struct {
 	Description string `json:"description"`
 
 	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 func (v *AccessProviderWhatListItemDataObject) MarshalJSON() ([]byte, error) {
@@ -6793,6 +6808,7 @@ func (v *AccessProviderWhatListItemDataObject) __premarshalJSON() (*__premarshal
 	retval.Deleted = v.DataObject.Deleted
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
+	retval.Parent = v.DataObject.Parent
 	return &retval, nil
 }
 
@@ -15092,6 +15108,8 @@ type DataObject struct {
 	Description string  `json:"description"`
 	// Returns the data source linked to the data object. This can be linked through its parents.
 	DataSource *DataObjectDataSource `json:"dataSource"`
+	// Returns the direct parent data object
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 // GetId returns DataObject.Id, and is useful for accessing the field via an interface.
@@ -15117,6 +15135,9 @@ func (v *DataObject) GetDescription() string { return v.Description }
 
 // GetDataSource returns DataObject.DataSource, and is useful for accessing the field via an interface.
 func (v *DataObject) GetDataSource() *DataObjectDataSource { return v.DataSource }
+
+// GetParent returns DataObject.Parent, and is useful for accessing the field via an interface.
+func (v *DataObject) GetParent() *DataObjectParentDataObject { return v.Parent }
 
 // DataObjectByExternalIdDataObjectsPagedResult includes the requested fields of the GraphQL type PagedResult.
 type DataObjectByExternalIdDataObjectsPagedResult struct {
@@ -15415,6 +15436,11 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) Ge
 	return v.DataObject.DataSource
 }
 
+// GetParent returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.Parent, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) GetParent() *DataObjectParentDataObject {
+	return v.DataObject.Parent
+}
+
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -15458,6 +15484,8 @@ type __premarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataOb
 	Description string `json:"description"`
 
 	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -15480,6 +15508,7 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) __
 	retval.Deleted = v.DataObject.Deleted
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
+	retval.Parent = v.DataObject.Parent
 	return &retval, nil
 }
 
@@ -16908,6 +16937,11 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) GetDataSource() *DataObjectDataS
 	return v.DataObject.DataSource
 }
 
+// GetParent returns DataObjectPageEdgesEdgeNodeDataObject.Parent, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeDataObject) GetParent() *DataObjectParentDataObject {
+	return v.DataObject.Parent
+}
+
 func (v *DataObjectPageEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -16951,6 +16985,8 @@ type __premarshalDataObjectPageEdgesEdgeNodeDataObject struct {
 	Description string `json:"description"`
 
 	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 func (v *DataObjectPageEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -16973,6 +17009,7 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) __premarshalJSON() (*__premarsha
 	retval.Deleted = v.DataObject.Deleted
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
+	retval.Parent = v.DataObject.Parent
 	return &retval, nil
 }
 
@@ -18038,6 +18075,14 @@ func (v *DataObjectPagePageInfo) __premarshalJSON() (*__premarshalDataObjectPage
 	retval.StartCursor = v.PageInfo.StartCursor
 	return &retval, nil
 }
+
+// DataObjectParentDataObject includes the requested fields of the GraphQL type DataObject.
+type DataObjectParentDataObject struct {
+	Id string `json:"id"`
+}
+
+// GetId returns DataObjectParentDataObject.Id, and is useful for accessing the field via an interface.
+func (v *DataObjectParentDataObject) GetId() string { return v.Id }
 
 // DataSource includes the GraphQL fields of DataSource requested by the fragment DataSource.
 type DataSource struct {
@@ -25477,6 +25522,9 @@ func (v *GetDataObjectDataObject) GetDataSource() *DataObjectDataSource {
 	return v.DataObject.DataSource
 }
 
+// GetParent returns GetDataObjectDataObject.Parent, and is useful for accessing the field via an interface.
+func (v *GetDataObjectDataObject) GetParent() *DataObjectParentDataObject { return v.DataObject.Parent }
+
 func (v *GetDataObjectDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -25518,6 +25566,8 @@ type __premarshalGetDataObjectDataObject struct {
 	Description string `json:"description"`
 
 	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
 }
 
 func (v *GetDataObjectDataObject) MarshalJSON() ([]byte, error) {
@@ -25539,6 +25589,7 @@ func (v *GetDataObjectDataObject) __premarshalJSON() (*__premarshalGetDataObject
 	retval.Deleted = v.DataObject.Deleted
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
+	retval.Parent = v.DataObject.Parent
 	return &retval, nil
 }
 
@@ -50425,6 +50476,9 @@ fragment DataObject on DataObject {
 	dataSource {
 		id
 	}
+	parent {
+		id
+	}
 }
 `
 
@@ -51390,6 +51444,9 @@ fragment DataObject on DataObject {
 	dataSource {
 		id
 	}
+	parent {
+		id
+	}
 }
 `
 
@@ -51546,6 +51603,9 @@ fragment DataObject on DataObject {
 	deleted
 	description
 	dataSource {
+		id
+	}
+	parent {
 		id
 	}
 }
@@ -52073,6 +52133,9 @@ fragment DataObject on DataObject {
 	dataSource {
 		id
 	}
+	parent {
+		id
+	}
 }
 `
 
@@ -52293,6 +52356,9 @@ fragment DataObject on DataObject {
 	deleted
 	description
 	dataSource {
+		id
+	}
+	parent {
 		id
 	}
 }

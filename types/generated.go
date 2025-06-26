@@ -576,6 +576,7 @@ type DataObjectPageEdgesEdgeNodeUserInsightsResult = schema.DataObjectPageEdgesE
 type DataObjectPageEdgesEdgeNodeUserSubtask = schema.DataObjectPageEdgesEdgeNodeUserSubtask
 type DataObjectPageEdgesEdgeNodeUserTask = schema.DataObjectPageEdgesEdgeNodeUserTask
 type DataObjectPagePageInfo = schema.DataObjectPagePageInfo
+type DataObjectParentDataObject = schema.DataObjectParentDataObject
 type DataSource = schema.DataSource
 type DataSourceFeatures = schema.DataSourceFeatures
 

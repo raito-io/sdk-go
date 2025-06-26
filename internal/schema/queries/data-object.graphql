@@ -9,6 +9,9 @@ fragment DataObject on DataObject {
     dataSource {
         id
     }
+    parent {
+        id
+    }
 }
 
 fragment DataObjectPage on PagedResult {
