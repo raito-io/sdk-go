@@ -12,6 +12,11 @@ fragment DataObject on DataObject {
     parent {
         id
     }
+	accessibility {
+		... on PagedResult {
+			limitedCount
+		}
+	}
 }
 
 fragment DataObjectPage on PagedResult {

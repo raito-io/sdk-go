@@ -2662,6 +2662,11 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetParent() *Da
 	return v.DataObject.Parent
 }
 
+// GetAccessibility returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetAccessibility() *DataObjectAccessibilityPagedResults {
+	return v.DataObject.Accessibility
+}
+
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -2707,6 +2712,8 @@ type __premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject struct {
 	DataSource *DataObjectDataSource `json:"dataSource"`
 
 	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
 }
 
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -2730,6 +2737,20 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) __premarshalJSO
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
 	retval.Parent = v.DataObject.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.DataObject.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
+			}
+		}
+	}
 	return &retval, nil
 }
 
@@ -6744,6 +6765,11 @@ func (v *AccessProviderWhatListItemDataObject) GetParent() *DataObjectParentData
 	return v.DataObject.Parent
 }
 
+// GetAccessibility returns AccessProviderWhatListItemDataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListItemDataObject) GetAccessibility() *DataObjectAccessibilityPagedResults {
+	return v.DataObject.Accessibility
+}
+
 func (v *AccessProviderWhatListItemDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -6787,6 +6813,8 @@ type __premarshalAccessProviderWhatListItemDataObject struct {
 	DataSource *DataObjectDataSource `json:"dataSource"`
 
 	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
 }
 
 func (v *AccessProviderWhatListItemDataObject) MarshalJSON() ([]byte, error) {
@@ -6809,6 +6837,20 @@ func (v *AccessProviderWhatListItemDataObject) __premarshalJSON() (*__premarshal
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
 	retval.Parent = v.DataObject.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.DataObject.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal AccessProviderWhatListItemDataObject.DataObject.Accessibility: %w", err)
+			}
+		}
+	}
 	return &retval, nil
 }
 
@@ -15109,7 +15151,8 @@ type DataObject struct {
 	// Returns the data source linked to the data object. This can be linked through its parents.
 	DataSource *DataObjectDataSource `json:"dataSource"`
 	// Returns the direct parent data object
-	Parent *DataObjectParentDataObject `json:"parent"`
+	Parent        *DataObjectParentDataObject          `json:"parent"`
+	Accessibility *DataObjectAccessibilityPagedResults `json:"-"`
 }
 
 // GetId returns DataObject.Id, and is useful for accessing the field via an interface.
@@ -15138,6 +15181,239 @@ func (v *DataObject) GetDataSource() *DataObjectDataSource { return v.DataSource
 
 // GetParent returns DataObject.Parent, and is useful for accessing the field via an interface.
 func (v *DataObject) GetParent() *DataObjectParentDataObject { return v.Parent }
+
+// GetAccessibility returns DataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *DataObject) GetAccessibility() *DataObjectAccessibilityPagedResults { return v.Accessibility }
+
+func (v *DataObject) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataObject
+		Accessibility json.RawMessage `json:"accessibility"`
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataObject = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	{
+		dst := &v.Accessibility
+		src := firstPass.Accessibility
+		if len(src) != 0 && string(src) != "null" {
+			*dst = new(DataObjectAccessibilityPagedResults)
+			err = __unmarshalDataObjectAccessibilityPagedResults(
+				src, *dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal DataObject.Accessibility: %w", err)
+			}
+		}
+	}
+	return nil
+}
+
+type __premarshalDataObject struct {
+	Id string `json:"id"`
+
+	Name string `json:"name"`
+
+	FullName string `json:"fullName"`
+
+	Type string `json:"type"`
+
+	DataType *string `json:"dataType"`
+
+	Deleted bool `json:"deleted"`
+
+	Description string `json:"description"`
+
+	DataSource *DataObjectDataSource `json:"dataSource"`
+
+	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
+}
+
+func (v *DataObject) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataObject) __premarshalJSON() (*__premarshalDataObject, error) {
+	var retval __premarshalDataObject
+
+	retval.Id = v.Id
+	retval.Name = v.Name
+	retval.FullName = v.FullName
+	retval.Type = v.Type
+	retval.DataType = v.DataType
+	retval.Deleted = v.Deleted
+	retval.Description = v.Description
+	retval.DataSource = v.DataSource
+	retval.Parent = v.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal DataObject.Accessibility: %w", err)
+			}
+		}
+	}
+	return &retval, nil
+}
+
+// DataObjectAccessibilityInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DataObjectAccessibilityInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessibilityInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessibilityInvalidInputError) GetTypename() *string { return v.Typename }
+
+// DataObjectAccessibilityNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DataObjectAccessibilityNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessibilityNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessibilityNotFoundError) GetTypename() *string { return v.Typename }
+
+// DataObjectAccessibilityPagedResult includes the requested fields of the GraphQL type PagedResult.
+type DataObjectAccessibilityPagedResult struct {
+	Typename     *string `json:"__typename"`
+	LimitedCount *string `json:"limitedCount"`
+}
+
+// GetTypename returns DataObjectAccessibilityPagedResult.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessibilityPagedResult) GetTypename() *string { return v.Typename }
+
+// GetLimitedCount returns DataObjectAccessibilityPagedResult.LimitedCount, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessibilityPagedResult) GetLimitedCount() *string { return v.LimitedCount }
+
+// DataObjectAccessibilityPagedResults includes the requested fields of the GraphQL interface PagedResults.
+//
+// DataObjectAccessibilityPagedResults is implemented by the following types:
+// DataObjectAccessibilityInvalidInputError
+// DataObjectAccessibilityNotFoundError
+// DataObjectAccessibilityPagedResult
+// DataObjectAccessibilityPermissionDeniedError
+type DataObjectAccessibilityPagedResults interface {
+	implementsGraphQLInterfaceDataObjectAccessibilityPagedResults()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *DataObjectAccessibilityInvalidInputError) implementsGraphQLInterfaceDataObjectAccessibilityPagedResults() {
+}
+func (v *DataObjectAccessibilityNotFoundError) implementsGraphQLInterfaceDataObjectAccessibilityPagedResults() {
+}
+func (v *DataObjectAccessibilityPagedResult) implementsGraphQLInterfaceDataObjectAccessibilityPagedResults() {
+}
+func (v *DataObjectAccessibilityPermissionDeniedError) implementsGraphQLInterfaceDataObjectAccessibilityPagedResults() {
+}
+
+func __unmarshalDataObjectAccessibilityPagedResults(b []byte, v *DataObjectAccessibilityPagedResults) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(DataObjectAccessibilityInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DataObjectAccessibilityNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PagedResult":
+		*v = new(DataObjectAccessibilityPagedResult)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(DataObjectAccessibilityPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing PagedResults.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for DataObjectAccessibilityPagedResults: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalDataObjectAccessibilityPagedResults(v *DataObjectAccessibilityPagedResults) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *DataObjectAccessibilityInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessibilityInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectAccessibilityNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessibilityNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectAccessibilityPagedResult:
+		typename = "PagedResult"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessibilityPagedResult
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectAccessibilityPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessibilityPermissionDeniedError
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for DataObjectAccessibilityPagedResults: "%T"`, v)
+	}
+}
+
+// DataObjectAccessibilityPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type DataObjectAccessibilityPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessibilityPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessibilityPermissionDeniedError) GetTypename() *string { return v.Typename }
 
 // DataObjectByExternalIdDataObjectsPagedResult includes the requested fields of the GraphQL type PagedResult.
 type DataObjectByExternalIdDataObjectsPagedResult struct {
@@ -15441,6 +15717,11 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) Ge
 	return v.DataObject.Parent
 }
 
+// GetAccessibility returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) GetAccessibility() *DataObjectAccessibilityPagedResults {
+	return v.DataObject.Accessibility
+}
+
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -15486,6 +15767,8 @@ type __premarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataOb
 	DataSource *DataObjectDataSource `json:"dataSource"`
 
 	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
 }
 
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -15509,6 +15792,20 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) __
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
 	retval.Parent = v.DataObject.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.DataObject.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
+			}
+		}
+	}
 	return &retval, nil
 }
 
@@ -16942,6 +17239,11 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) GetParent() *DataObjectParentDat
 	return v.DataObject.Parent
 }
 
+// GetAccessibility returns DataObjectPageEdgesEdgeNodeDataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeDataObject) GetAccessibility() *DataObjectAccessibilityPagedResults {
+	return v.DataObject.Accessibility
+}
+
 func (v *DataObjectPageEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -16987,6 +17289,8 @@ type __premarshalDataObjectPageEdgesEdgeNodeDataObject struct {
 	DataSource *DataObjectDataSource `json:"dataSource"`
 
 	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
 }
 
 func (v *DataObjectPageEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -17010,6 +17314,20 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) __premarshalJSON() (*__premarsha
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
 	retval.Parent = v.DataObject.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.DataObject.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal DataObjectPageEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
+			}
+		}
+	}
 	return &retval, nil
 }
 
@@ -25525,6 +25843,11 @@ func (v *GetDataObjectDataObject) GetDataSource() *DataObjectDataSource {
 // GetParent returns GetDataObjectDataObject.Parent, and is useful for accessing the field via an interface.
 func (v *GetDataObjectDataObject) GetParent() *DataObjectParentDataObject { return v.DataObject.Parent }
 
+// GetAccessibility returns GetDataObjectDataObject.Accessibility, and is useful for accessing the field via an interface.
+func (v *GetDataObjectDataObject) GetAccessibility() *DataObjectAccessibilityPagedResults {
+	return v.DataObject.Accessibility
+}
+
 func (v *GetDataObjectDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -25568,6 +25891,8 @@ type __premarshalGetDataObjectDataObject struct {
 	DataSource *DataObjectDataSource `json:"dataSource"`
 
 	Parent *DataObjectParentDataObject `json:"parent"`
+
+	Accessibility json.RawMessage `json:"accessibility"`
 }
 
 func (v *GetDataObjectDataObject) MarshalJSON() ([]byte, error) {
@@ -25590,6 +25915,20 @@ func (v *GetDataObjectDataObject) __premarshalJSON() (*__premarshalGetDataObject
 	retval.Description = v.DataObject.Description
 	retval.DataSource = v.DataObject.DataSource
 	retval.Parent = v.DataObject.Parent
+	{
+
+		dst := &retval.Accessibility
+		src := v.DataObject.Accessibility
+		if src != nil {
+			var err error
+			*dst, err = __marshalDataObjectAccessibilityPagedResults(
+				src)
+			if err != nil {
+				return nil, fmt.Errorf(
+					"unable to marshal GetDataObjectDataObject.DataObject.Accessibility: %w", err)
+			}
+		}
+	}
 	return &retval, nil
 }
 
@@ -50479,6 +50818,12 @@ fragment DataObject on DataObject {
 	parent {
 		id
 	}
+	accessibility {
+		__typename
+		... on PagedResult {
+			limitedCount
+		}
+	}
 }
 `
 
@@ -51447,6 +51792,12 @@ fragment DataObject on DataObject {
 	parent {
 		id
 	}
+	accessibility {
+		__typename
+		... on PagedResult {
+			limitedCount
+		}
+	}
 }
 `
 
@@ -51607,6 +51958,12 @@ fragment DataObject on DataObject {
 	}
 	parent {
 		id
+	}
+	accessibility {
+		__typename
+		... on PagedResult {
+			limitedCount
+		}
 	}
 }
 `
@@ -52136,6 +52493,12 @@ fragment DataObject on DataObject {
 	parent {
 		id
 	}
+	accessibility {
+		__typename
+		... on PagedResult {
+			limitedCount
+		}
+	}
 }
 `
 
@@ -52360,6 +52723,12 @@ fragment DataObject on DataObject {
 	}
 	parent {
 		id
+	}
+	accessibility {
+		__typename
+		... on PagedResult {
+			limitedCount
+		}
 	}
 }
 `
