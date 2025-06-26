@@ -2667,6 +2667,11 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetAccessibilit
 	return v.DataObject.Accessibility
 }
 
+// GetAccessProviders returns AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.DataObject.AccessProviders
+}
+
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -2714,6 +2719,8 @@ type __premarshalAccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject struct {
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -2749,6 +2756,18 @@ func (v *AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject) __premarshalJSO
 				return nil, fmt.Errorf(
 					"unable to marshal AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
 			}
+		}
+	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.DataObject.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal AccessProviderWhatAbacScopeListEdgesEdgeNodeDataObject.DataObject.AccessProviders: %w", err)
 		}
 	}
 	return &retval, nil
@@ -6770,6 +6789,11 @@ func (v *AccessProviderWhatListItemDataObject) GetAccessibility() *DataObjectAcc
 	return v.DataObject.Accessibility
 }
 
+// GetAccessProviders returns AccessProviderWhatListItemDataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *AccessProviderWhatListItemDataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.DataObject.AccessProviders
+}
+
 func (v *AccessProviderWhatListItemDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -6815,6 +6839,8 @@ type __premarshalAccessProviderWhatListItemDataObject struct {
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *AccessProviderWhatListItemDataObject) MarshalJSON() ([]byte, error) {
@@ -6849,6 +6875,18 @@ func (v *AccessProviderWhatListItemDataObject) __premarshalJSON() (*__premarshal
 				return nil, fmt.Errorf(
 					"unable to marshal AccessProviderWhatListItemDataObject.DataObject.Accessibility: %w", err)
 			}
+		}
+	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.DataObject.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal AccessProviderWhatListItemDataObject.DataObject.AccessProviders: %w", err)
 		}
 	}
 	return &retval, nil
@@ -15151,8 +15189,9 @@ type DataObject struct {
 	// Returns the data source linked to the data object. This can be linked through its parents.
 	DataSource *DataObjectDataSource `json:"dataSource"`
 	// Returns the direct parent data object
-	Parent        *DataObjectParentDataObject          `json:"parent"`
-	Accessibility *DataObjectAccessibilityPagedResults `json:"-"`
+	Parent          *DataObjectParentDataObject           `json:"parent"`
+	Accessibility   *DataObjectAccessibilityPagedResults  `json:"-"`
+	AccessProviders DataObjectAccessProvidersPagedResults `json:"-"`
 }
 
 // GetId returns DataObject.Id, and is useful for accessing the field via an interface.
@@ -15185,6 +15224,11 @@ func (v *DataObject) GetParent() *DataObjectParentDataObject { return v.Parent }
 // GetAccessibility returns DataObject.Accessibility, and is useful for accessing the field via an interface.
 func (v *DataObject) GetAccessibility() *DataObjectAccessibilityPagedResults { return v.Accessibility }
 
+// GetAccessProviders returns DataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *DataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.AccessProviders
+}
+
 func (v *DataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -15193,7 +15237,8 @@ func (v *DataObject) UnmarshalJSON(b []byte) error {
 
 	var firstPass struct {
 		*DataObject
-		Accessibility json.RawMessage `json:"accessibility"`
+		Accessibility   json.RawMessage `json:"accessibility"`
+		AccessProviders json.RawMessage `json:"accessProviders"`
 		graphql.NoUnmarshalJSON
 	}
 	firstPass.DataObject = v
@@ -15213,6 +15258,19 @@ func (v *DataObject) UnmarshalJSON(b []byte) error {
 			if err != nil {
 				return fmt.Errorf(
 					"unable to unmarshal DataObject.Accessibility: %w", err)
+			}
+		}
+	}
+
+	{
+		dst := &v.AccessProviders
+		src := firstPass.AccessProviders
+		if len(src) != 0 && string(src) != "null" {
+			err = __unmarshalDataObjectAccessProvidersPagedResults(
+				src, dst)
+			if err != nil {
+				return fmt.Errorf(
+					"unable to unmarshal DataObject.AccessProviders: %w", err)
 			}
 		}
 	}
@@ -15239,6 +15297,8 @@ type __premarshalDataObject struct {
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *DataObject) MarshalJSON() ([]byte, error) {
@@ -15275,8 +15335,218 @@ func (v *DataObject) __premarshalJSON() (*__premarshalDataObject, error) {
 			}
 		}
 	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DataObject.AccessProviders: %w", err)
+		}
+	}
 	return &retval, nil
 }
+
+// DataObjectAccessProvidersInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
+type DataObjectAccessProvidersInvalidInputError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessProvidersInvalidInputError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersInvalidInputError) GetTypename() *string { return v.Typename }
+
+// DataObjectAccessProvidersNotFoundError includes the requested fields of the GraphQL type NotFoundError.
+type DataObjectAccessProvidersNotFoundError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessProvidersNotFoundError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersNotFoundError) GetTypename() *string { return v.Typename }
+
+// DataObjectAccessProvidersPagedResult includes the requested fields of the GraphQL type PagedResult.
+type DataObjectAccessProvidersPagedResult struct {
+	Typename           *string `json:"__typename"`
+	AccessProviderPage `json:"-"`
+}
+
+// GetTypename returns DataObjectAccessProvidersPagedResult.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersPagedResult) GetTypename() *string { return v.Typename }
+
+// GetPageInfo returns DataObjectAccessProvidersPagedResult.PageInfo, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersPagedResult) GetPageInfo() *AccessProviderPagePageInfo {
+	return v.AccessProviderPage.PageInfo
+}
+
+// GetEdges returns DataObjectAccessProvidersPagedResult.Edges, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersPagedResult) GetEdges() []AccessProviderPageEdgesEdge {
+	return v.AccessProviderPage.Edges
+}
+
+func (v *DataObjectAccessProvidersPagedResult) UnmarshalJSON(b []byte) error {
+
+	if string(b) == "null" {
+		return nil
+	}
+
+	var firstPass struct {
+		*DataObjectAccessProvidersPagedResult
+		graphql.NoUnmarshalJSON
+	}
+	firstPass.DataObjectAccessProvidersPagedResult = v
+
+	err := json.Unmarshal(b, &firstPass)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(
+		b, &v.AccessProviderPage)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+type __premarshalDataObjectAccessProvidersPagedResult struct {
+	Typename *string `json:"__typename"`
+
+	PageInfo *AccessProviderPagePageInfo `json:"pageInfo"`
+
+	Edges []AccessProviderPageEdgesEdge `json:"edges"`
+}
+
+func (v *DataObjectAccessProvidersPagedResult) MarshalJSON() ([]byte, error) {
+	premarshaled, err := v.__premarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+	return json.Marshal(premarshaled)
+}
+
+func (v *DataObjectAccessProvidersPagedResult) __premarshalJSON() (*__premarshalDataObjectAccessProvidersPagedResult, error) {
+	var retval __premarshalDataObjectAccessProvidersPagedResult
+
+	retval.Typename = v.Typename
+	retval.PageInfo = v.AccessProviderPage.PageInfo
+	retval.Edges = v.AccessProviderPage.Edges
+	return &retval, nil
+}
+
+// DataObjectAccessProvidersPagedResults includes the requested fields of the GraphQL interface PagedResults.
+//
+// DataObjectAccessProvidersPagedResults is implemented by the following types:
+// DataObjectAccessProvidersInvalidInputError
+// DataObjectAccessProvidersNotFoundError
+// DataObjectAccessProvidersPagedResult
+// DataObjectAccessProvidersPermissionDeniedError
+type DataObjectAccessProvidersPagedResults interface {
+	implementsGraphQLInterfaceDataObjectAccessProvidersPagedResults()
+	// GetTypename returns the receiver's concrete GraphQL type-name (see interface doc for possible values).
+	GetTypename() *string
+}
+
+func (v *DataObjectAccessProvidersInvalidInputError) implementsGraphQLInterfaceDataObjectAccessProvidersPagedResults() {
+}
+func (v *DataObjectAccessProvidersNotFoundError) implementsGraphQLInterfaceDataObjectAccessProvidersPagedResults() {
+}
+func (v *DataObjectAccessProvidersPagedResult) implementsGraphQLInterfaceDataObjectAccessProvidersPagedResults() {
+}
+func (v *DataObjectAccessProvidersPermissionDeniedError) implementsGraphQLInterfaceDataObjectAccessProvidersPagedResults() {
+}
+
+func __unmarshalDataObjectAccessProvidersPagedResults(b []byte, v *DataObjectAccessProvidersPagedResults) error {
+	if string(b) == "null" {
+		return nil
+	}
+
+	var tn struct {
+		TypeName string `json:"__typename"`
+	}
+	err := json.Unmarshal(b, &tn)
+	if err != nil {
+		return err
+	}
+
+	switch tn.TypeName {
+	case "InvalidInputError":
+		*v = new(DataObjectAccessProvidersInvalidInputError)
+		return json.Unmarshal(b, *v)
+	case "NotFoundError":
+		*v = new(DataObjectAccessProvidersNotFoundError)
+		return json.Unmarshal(b, *v)
+	case "PagedResult":
+		*v = new(DataObjectAccessProvidersPagedResult)
+		return json.Unmarshal(b, *v)
+	case "PermissionDeniedError":
+		*v = new(DataObjectAccessProvidersPermissionDeniedError)
+		return json.Unmarshal(b, *v)
+	case "":
+		return fmt.Errorf(
+			"response was missing PagedResults.__typename")
+	default:
+		return fmt.Errorf(
+			`unexpected concrete type for DataObjectAccessProvidersPagedResults: "%v"`, tn.TypeName)
+	}
+}
+
+func __marshalDataObjectAccessProvidersPagedResults(v *DataObjectAccessProvidersPagedResults) ([]byte, error) {
+
+	var typename string
+	switch v := (*v).(type) {
+	case *DataObjectAccessProvidersInvalidInputError:
+		typename = "InvalidInputError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessProvidersInvalidInputError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectAccessProvidersNotFoundError:
+		typename = "NotFoundError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessProvidersNotFoundError
+		}{typename, v}
+		return json.Marshal(result)
+	case *DataObjectAccessProvidersPagedResult:
+		typename = "PagedResult"
+
+		premarshaled, err := v.__premarshalJSON()
+		if err != nil {
+			return nil, err
+		}
+		result := struct {
+			TypeName string `json:"__typename"`
+			*__premarshalDataObjectAccessProvidersPagedResult
+		}{typename, premarshaled}
+		return json.Marshal(result)
+	case *DataObjectAccessProvidersPermissionDeniedError:
+		typename = "PermissionDeniedError"
+
+		result := struct {
+			TypeName string `json:"__typename"`
+			*DataObjectAccessProvidersPermissionDeniedError
+		}{typename, v}
+		return json.Marshal(result)
+	case nil:
+		return []byte("null"), nil
+	default:
+		return nil, fmt.Errorf(
+			`unexpected concrete type for DataObjectAccessProvidersPagedResults: "%T"`, v)
+	}
+}
+
+// DataObjectAccessProvidersPermissionDeniedError includes the requested fields of the GraphQL type PermissionDeniedError.
+type DataObjectAccessProvidersPermissionDeniedError struct {
+	Typename *string `json:"__typename"`
+}
+
+// GetTypename returns DataObjectAccessProvidersPermissionDeniedError.Typename, and is useful for accessing the field via an interface.
+func (v *DataObjectAccessProvidersPermissionDeniedError) GetTypename() *string { return v.Typename }
 
 // DataObjectAccessibilityInvalidInputError includes the requested fields of the GraphQL type InvalidInputError.
 type DataObjectAccessibilityInvalidInputError struct {
@@ -15722,6 +15992,11 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) Ge
 	return v.DataObject.Accessibility
 }
 
+// GetAccessProviders returns DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.DataObject.AccessProviders
+}
+
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -15769,6 +16044,8 @@ type __premarshalDataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataOb
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -15804,6 +16081,18 @@ func (v *DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject) __
 				return nil, fmt.Errorf(
 					"unable to marshal DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
 			}
+		}
+	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.DataObject.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DataObjectByExternalIdDataObjectsPagedResultEdgesEdgeNodeDataObject.DataObject.AccessProviders: %w", err)
 		}
 	}
 	return &retval, nil
@@ -17244,6 +17533,11 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) GetAccessibility() *DataObjectAc
 	return v.DataObject.Accessibility
 }
 
+// GetAccessProviders returns DataObjectPageEdgesEdgeNodeDataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *DataObjectPageEdgesEdgeNodeDataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.DataObject.AccessProviders
+}
+
 func (v *DataObjectPageEdgesEdgeNodeDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -17291,6 +17585,8 @@ type __premarshalDataObjectPageEdgesEdgeNodeDataObject struct {
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *DataObjectPageEdgesEdgeNodeDataObject) MarshalJSON() ([]byte, error) {
@@ -17326,6 +17622,18 @@ func (v *DataObjectPageEdgesEdgeNodeDataObject) __premarshalJSON() (*__premarsha
 				return nil, fmt.Errorf(
 					"unable to marshal DataObjectPageEdgesEdgeNodeDataObject.DataObject.Accessibility: %w", err)
 			}
+		}
+	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.DataObject.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal DataObjectPageEdgesEdgeNodeDataObject.DataObject.AccessProviders: %w", err)
 		}
 	}
 	return &retval, nil
@@ -25848,6 +26156,11 @@ func (v *GetDataObjectDataObject) GetAccessibility() *DataObjectAccessibilityPag
 	return v.DataObject.Accessibility
 }
 
+// GetAccessProviders returns GetDataObjectDataObject.AccessProviders, and is useful for accessing the field via an interface.
+func (v *GetDataObjectDataObject) GetAccessProviders() DataObjectAccessProvidersPagedResults {
+	return v.DataObject.AccessProviders
+}
+
 func (v *GetDataObjectDataObject) UnmarshalJSON(b []byte) error {
 
 	if string(b) == "null" {
@@ -25893,6 +26206,8 @@ type __premarshalGetDataObjectDataObject struct {
 	Parent *DataObjectParentDataObject `json:"parent"`
 
 	Accessibility json.RawMessage `json:"accessibility"`
+
+	AccessProviders json.RawMessage `json:"accessProviders"`
 }
 
 func (v *GetDataObjectDataObject) MarshalJSON() ([]byte, error) {
@@ -25927,6 +26242,18 @@ func (v *GetDataObjectDataObject) __premarshalJSON() (*__premarshalGetDataObject
 				return nil, fmt.Errorf(
 					"unable to marshal GetDataObjectDataObject.DataObject.Accessibility: %w", err)
 			}
+		}
+	}
+	{
+
+		dst := &retval.AccessProviders
+		src := v.DataObject.AccessProviders
+		var err error
+		*dst, err = __marshalDataObjectAccessProvidersPagedResults(
+			&src)
+		if err != nil {
+			return nil, fmt.Errorf(
+				"unable to marshal GetDataObjectDataObject.DataObject.AccessProviders: %w", err)
 		}
 	}
 	return &retval, nil
@@ -50824,6 +51151,117 @@ fragment DataObject on DataObject {
 			limitedCount
 		}
 	}
+	accessProviders {
+		__typename
+		... AccessProviderPage
+	}
+}
+fragment AccessProviderPage on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessProvider
+		}
+	}
+}
+fragment PageInfo on PageInfo {
+	hasNextPage
+	startCursor
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	category {
+		... GrantCategory
+	}
+	description
+	policyRule
+	external
+	whatType
+	whatAbacRule {
+		... WhatAbacRule
+	}
+	whoType
+	whoAbacRule {
+		... WhoAbacRule
+	}
+	notInternalizable
+	complete
+	locks {
+		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
+	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
+}
+fragment WhatAbacRule on WhatAbacRule {
+	permissions
+	globalPermissions
+	doTypes
+	ruleJson
+}
+fragment WhoAbacRule on WhoAbacRule {
+	promiseDuration
+	type
+	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	accessProviderType {
+		type
+	}
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
@@ -51798,6 +52236,113 @@ fragment DataObject on DataObject {
 			limitedCount
 		}
 	}
+	accessProviders {
+		__typename
+		... AccessProviderPage
+	}
+}
+fragment AccessProviderPage on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessProvider
+		}
+	}
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	category {
+		... GrantCategory
+	}
+	description
+	policyRule
+	external
+	whatType
+	whatAbacRule {
+		... WhatAbacRule
+	}
+	whoType
+	whoAbacRule {
+		... WhoAbacRule
+	}
+	notInternalizable
+	complete
+	locks {
+		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
+	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
+}
+fragment WhatAbacRule on WhatAbacRule {
+	permissions
+	globalPermissions
+	doTypes
+	ruleJson
+}
+fragment WhoAbacRule on WhoAbacRule {
+	promiseDuration
+	type
+	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	accessProviderType {
+		type
+	}
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
@@ -51965,6 +52510,117 @@ fragment DataObject on DataObject {
 			limitedCount
 		}
 	}
+	accessProviders {
+		__typename
+		... AccessProviderPage
+	}
+}
+fragment AccessProviderPage on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessProvider
+		}
+	}
+}
+fragment PageInfo on PageInfo {
+	hasNextPage
+	startCursor
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	category {
+		... GrantCategory
+	}
+	description
+	policyRule
+	external
+	whatType
+	whatAbacRule {
+		... WhatAbacRule
+	}
+	whoType
+	whoAbacRule {
+		... WhoAbacRule
+	}
+	notInternalizable
+	complete
+	locks {
+		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
+	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
+}
+fragment WhatAbacRule on WhatAbacRule {
+	permissions
+	globalPermissions
+	doTypes
+	ruleJson
+}
+fragment WhoAbacRule on WhoAbacRule {
+	promiseDuration
+	type
+	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	accessProviderType {
+		type
+	}
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
@@ -52499,6 +53155,113 @@ fragment DataObject on DataObject {
 			limitedCount
 		}
 	}
+	accessProviders {
+		__typename
+		... AccessProviderPage
+	}
+}
+fragment AccessProviderPage on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessProvider
+		}
+	}
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	category {
+		... GrantCategory
+	}
+	description
+	policyRule
+	external
+	whatType
+	whatAbacRule {
+		... WhatAbacRule
+	}
+	whoType
+	whoAbacRule {
+		... WhoAbacRule
+	}
+	notInternalizable
+	complete
+	locks {
+		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
+	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
+}
+fragment WhatAbacRule on WhatAbacRule {
+	permissions
+	globalPermissions
+	doTypes
+	ruleJson
+}
+fragment WhoAbacRule on WhoAbacRule {
+	promiseDuration
+	type
+	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	accessProviderType {
+		type
+	}
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 
@@ -52730,6 +53493,113 @@ fragment DataObject on DataObject {
 			limitedCount
 		}
 	}
+	accessProviders {
+		__typename
+		... AccessProviderPage
+	}
+}
+fragment AccessProviderPage on PagedResult {
+	pageInfo {
+		... PageInfo
+	}
+	edges {
+		cursor
+		node {
+			__typename
+			... AccessProvider
+		}
+	}
+}
+fragment AccessProvider on AccessProvider {
+	id
+	isSample
+	createdAt
+	modifiedAt
+	name
+	namingHint
+	state
+	action
+	category {
+		... GrantCategory
+	}
+	description
+	policyRule
+	external
+	whatType
+	whatAbacRule {
+		... WhatAbacRule
+	}
+	whoType
+	whoAbacRule {
+		... WhoAbacRule
+	}
+	notInternalizable
+	complete
+	locks {
+		... AccessProviderLocks
+	}
+	syncData {
+		... SyncData
+	}
+	currentUserPartOfWho: entityPartOfWho(direct: true)
+}
+fragment GrantCategory on GrantCategory {
+	id
+	name
+	isSystem
+	isDefault
+}
+fragment WhatAbacRule on WhatAbacRule {
+	permissions
+	globalPermissions
+	doTypes
+	ruleJson
+}
+fragment WhoAbacRule on WhoAbacRule {
+	promiseDuration
+	type
+	ruleJson
+}
+fragment AccessProviderLocks on AccessProviderLockData {
+	lockKey
+	details {
+		... AccessProviderLockDetails
+	}
+}
+fragment SyncData on SyncData {
+	dataSource {
+		... DataSource
+	}
+	accessProviderType {
+		type
+	}
+	actualName
+	maskType {
+		... MaskType
+	}
+	syncStatus
+}
+fragment AccessProviderLockDetails on AccessProviderLockDetails {
+	reason
+}
+fragment DataSource on DataSource {
+	id
+	name
+	type
+	description
+	createdAt
+	modifiedAt
+	description
+	syncMethod
+	parent {
+		id
+	}
+}
+fragment MaskType on MaskType {
+	externalId
+	displayName
+	description
+	dataTypes
 }
 `
 

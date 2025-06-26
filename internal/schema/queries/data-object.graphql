@@ -13,9 +13,13 @@ fragment DataObject on DataObject {
         id
     }
 	accessibility {
+		__typename
 		... on PagedResult {
 			limitedCount
 		}
+	}
+	accessProviders {
+		...AccessProviderPage
 	}
 }
 
